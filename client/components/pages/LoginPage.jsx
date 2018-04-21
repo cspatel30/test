@@ -11,6 +11,8 @@ export default class LoginPage extends Component {
     super(props);
 
     this.state = {
+      forgot: false,
+      forgotEmail: '',
       tabIndex: 0,
       loginForm: {
         email: "",
@@ -19,7 +21,8 @@ export default class LoginPage extends Component {
       loginFormError: {
         email: "",
         password: ""
-      }
+      },
+      activeTab: "cust"
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -60,23 +63,25 @@ export default class LoginPage extends Component {
   }
 
   render() {
-
+    const { activeTab, forgot, forgotEmail } = this.state;
+    const activeTabStyle= { background: '#1475af', color: '#fff' }
   	const { userToken , userProfile } = this.props;
 
   	if(userToken && userProfile) {
   		this.props.history.push('/');
-  	}
-
+    }
+    
 	return (
           <div className="page">
-          	<h1>Login</h1>
           	<div className="login-page">
+              <h1>Login to ShipInspectors.com</h1>
               <form className="contact-form"  onSubmit={this.handleSubmit} action="/" method="post">
+                <div className="" style={{ color: '#1475af', marginBottom: '15px', fontSize: '18px' }}>Select Client or Inspector</div>
                 <div className="error">{this.props.error}</div>
                 <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
                   <TabList> 
-                    <Tab>Customer</Tab>
-                    <Tab>Inspector</Tab>
+                    <Tab style={activeTab === 'cust' ? activeTabStyle : {}} onClick={() => this.setState({ activeTab: 'cust' })}>Client</Tab>
+                    <Tab style={activeTab === 'insp' ? activeTabStyle : {}} onClick={() => this.setState({ activeTab: 'insp' })}>Inspector</Tab>
                   </TabList>
                   <TabPanel>
                     <div className="label">Email</div>
@@ -103,11 +108,27 @@ export default class LoginPage extends Component {
                     </div>
                   </TabPanel>
                 </Tabs>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  { !forgot
+                    ?
+                    <div className="forgot-pass" onClick={() => this.setState({ forgot: true })} style={{ color: '#1475af', fontSize: '16px', cursor: 'pointer' }}>Forgot Password ?</div>
+                    :
+                    <div style={{ display: 'flex'}}>
+                      <div className="field">
+                        <input className="inputField" type="text" placeholder="Type your registered email" name="forgotEmail" value={forgotEmail} onChange={e => this.setState({ forgotEmail: e.target.value })}/>
+                        <div className="errorField"></div>
+                      </div>
+                      <button style={{padding: '10px', height: '40%', marginLeft: '15px'}}>Reset</button>
+                    </div>
+                  }
+                  <div style={{ color: '#1475af', fontSize: '16px' }}>New User <span style={{ cursor: 'pointer', fontWeight: 'bold' }}>SIGN UP.</span></div>
+                </div>
                 <div className="btn"><button>Login</button></div>
-                <div className="clear"></div>
               </form>
             </div>  
-
+            <div className="ship-inspector-logo">
+              <a href="/"><img alt="ShipInspector" src="https://s3-ap-southeast-1.amazonaws.com/sinotechmarineassets/public/shipinspectors-logo.png" width="150" height="150" style={{ float: 'right'}}/></a>
+            </div>
           </div>
       );
   }

@@ -4,7 +4,8 @@
   "description": "shipinspector",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect --harmony app.js"
+    "start": "nodemon --inspect --harmony app.js",
+    "watch": "webpack --progress --watch --config=webpack.dev.js"
   },
   "author": "sanjayyadav",
   "license": "ISC",
