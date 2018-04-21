@@ -36,30 +36,29 @@ export default class LoginPage extends Component {
   }
 
   handleSubmit(event) {
-
     event.preventDefault();
-
     var error = false;
-
     var loginFormError = {  email: "", password: "" };
 
     if(this.state.loginForm.email == "") {
       error = true;
       loginFormError.email = "This field is mandatory";
     }
-
     if(this.state.loginForm.password == "") {
       loginFormError.password = "This field is mandatory";
       error = true;
     }
-
     this.setState( (state) => { state.loginFormError = loginFormError});
-
+    
     if(error) 
       return;
-
     this.props.logMeIn(this.state.tabIndex, this.state.loginForm);
-
+  }
+  onForgotPass(email) {
+    if (email !== '') {
+      this.props.forgotPassword(email);
+    }
+    return;
   }
 
   render() {
@@ -118,12 +117,12 @@ export default class LoginPage extends Component {
                         <input className="inputField" type="text" placeholder="Type your registered email" name="forgotEmail" value={forgotEmail} onChange={e => this.setState({ forgotEmail: e.target.value })}/>
                         <div className="errorField"></div>
                       </div>
-                      <button style={{padding: '10px', height: '40%', marginLeft: '15px'}}>Reset</button>
+                      <div onClick={() => this.onForgotPass(forgotEmail)} style={{cursor: 'pointer', padding: '10px', height: '40%', marginLeft: '15px', background: 'gray'}}>Reset</div>
                     </div>
                   }
                   <div style={{ color: '#1475af', fontSize: '16px' }}>New User <span style={{ cursor: 'pointer', fontWeight: 'bold' }}>SIGN UP.</span></div>
                 </div>
-                <div className="btn"><button>Login</button></div>
+                <div className="btn"><button type="submit">Login</button></div>
               </form>
             </div>  
             <div className="ship-inspector-logo">

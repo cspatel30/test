@@ -8,7 +8,7 @@ import {initAppSuccess, initAppFailure} from '../../actions/app';
 
 import {sendContactUsEmailSuccess, sendContactUsEmailFailure} from '../../actions/contactus';
 
-import { loginSuccess, loginFailure, verifyTokenSuccess, verifyTokenFailure, 
+import { loginSuccess, loginFailure, forgotPasswordSuccess, forgotPasswordFailure, verifyTokenSuccess, verifyTokenFailure, 
 		logoutSuccess, registerSuccess, registerFailure, setupAccountSuccess, setupAccountFailure,
 		verifyEmailSuccess, verifyEmailFailure } from '../../actions/auth';
 
@@ -60,6 +60,11 @@ function loginApi(payload) {
             { timeout: 2000, headers: { "Content-Type": "application/json", "Accept": "application/json", "Authorization": "Basic YTpi"} }
   );
 }
+function forgoPasswordApi(email) {
+	return publicApiInstance.get(`/api/user/forgotPassword/${email}`,
+			  { headers: { "Content-Type": "application/json", "Accept": "application/json"} }
+	);
+  }
 
 function logoutApi() {
   return publicApiInstance.get('/api/auth/logout/',
@@ -194,6 +199,7 @@ function getUserOrdersApi(userType) {
 
 function* makeApiCall(action, apiFn, apiSuccessCb, apiFailureCb) {
 	try {
+		console.log('...make api');
 		switch(action.type) {
 			case 'INIT_APP':
 				var apiResponse = yield apiFn();
@@ -209,6 +215,11 @@ function* makeApiCall(action, apiFn, apiSuccessCb, apiFailureCb) {
 				var apiResponse = yield apiFn(action.payload);
 				cookies.set("si.at", apiResponse.token, {path: "/", maxAge: 24*60*60});
 				yield put (apiSuccessCb(apiResponse.token, apiResponse.userProfile));
+				break;
+			
+			case 'FORGOT_PASSWORD':
+				var apiResponse = yield apiFn(action.payload);
+				yield put (apiSuccessCb('successData')); // write what you need at front end @success
 				break;
 
 			case 'LOGOUT':
@@ -334,6 +345,9 @@ export default function* performAction(action) {
 			break;
 		case 'LOGIN' :
 			yield makeApiCall(action, loginApi, loginSuccess, loginFailure);
+			break;
+		case 'FORGOT_PASSWORD' :
+			yield makeApiCall(action, forgoPasswordApi, forgotPasswordSuccess, forgotPasswordFailure);
 			break;
 		case 'VERIFY_TOKEN' :
 			yield makeApiCall(action, validateTokenApi, verifyTokenSuccess, verifyTokenFailure);
