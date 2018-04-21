@@ -101,9 +101,9 @@ export default class Header extends Component {
   renderLoginRegisterButton(userProfile, login) {
     if(!userProfile) {
       if(login)  
-        return (<div className="login"><NavLink className="menu-button" key="link_login" to="/login/"><button>Login</button></NavLink></div>);
+        return (<div className="login"><NavLink className="menu-button" key="link_login" to="/login/">Login</NavLink></div>);
       else 
-        return (<div className="register"><NavLink className="menu-button" key="link_register" to="/register/"><button>Sign Up</button></NavLink></div>);
+        return (<div className="register"><NavLink className="menu-button" key="link_register" to="/register/">Sign Up</NavLink></div>);
     }
   }
 
@@ -142,18 +142,15 @@ export default class Header extends Component {
       <div className="header">
         <div className="left-section">
           <div className="logo-image">
-            <a href="/"><img alt="SinoTechMarine" src="https://s3-ap-southeast-1.amazonaws.com/sinotechmarineassets/public/sinotech-logo.png" width="150" height="100"/></a>
-          </div>
-          <div className="logo-image">
-            <a href="/"><img alt="ShipInspector" src="https://s3-ap-southeast-1.amazonaws.com/sinotechmarineassets/public/shipinspectors-logo.png" width="180" height="100"/></a>
+            <a href="/"><img alt="SinoTechMarine" src="https://s3-ap-southeast-1.amazonaws.com/sinotechmarineassets/public/sinotech-logo.png" width="200" height="100"/></a>
           </div>
           <div className="clear"></div>
         </div>
         <div className="right-section">
           <div className="login-section">
-              {this.renderQuoteButton(userProfile)}
               {this.renderLoginRegisterButton(userProfile, true)}
               {this.renderLoginRegisterButton(userProfile, false)}
+              {this.renderQuoteButton(userProfile)}
               {this.renderUserActionSection(userProfile)}
               <div className="clear"></div>
           </div>
