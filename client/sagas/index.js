@@ -7,6 +7,7 @@ function* nevtopSaga() {
 	yield takeLatest('INIT_APP', performAction);
 	yield takeLatest('REGISTER', performAction);
 	yield takeLatest('LOGIN', performAction);
+	yield takeLatest('FORGOT_PASSWORD', performAction);
 	yield takeLatest('VERIFY_TOKEN', performAction);
 	yield takeLatest('LOGOUT', performAction);
 	yield takeLatest('CREATE_ENQUIRY', performAction);

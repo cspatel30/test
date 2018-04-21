@@ -28,6 +28,25 @@ export function login(payload) {
   };
 }
 
+export function forgotPassword(email) {
+  return {
+    type: 'FORGOT_PASSWORD',
+    payload : email
+  };
+}
+export function forgotPasswordSuccess(msg) {
+  return {
+    type: 'FORGOT_PASSWORD_SUCCESS',
+    payload : msg
+  };
+}
+export function forgotPasswordFailure(error) {
+  return {
+    type: 'FORGOT_PASSWORD_FAILURE',
+    payload : error
+  };
+}
+
 export function loginSuccess(token, user) {
   return {
     type: LOGIN_SUCCESS,
