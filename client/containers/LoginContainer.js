@@ -5,8 +5,8 @@ import { login, forgotPassword } from '../actions/auth';
 
 
 const mapStateToProps = (state) => {
-	const { userToken, userProfile, error } = state;
-  	return {userToken, userProfile, error};
+	const { userToken, userProfile, error, pwdReset, pwdResetFailed } = state;
+  	return {userToken, userProfile, error, pwdReset, pwdResetFailed };
 }
 
 const mapDispatchToProps = (dispatch) => {
