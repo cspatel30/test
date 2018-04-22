@@ -14,7 +14,7 @@ global.inspectionTypes = {
   "PICI": "P&I Condition Inspection",
   "BS": "Bunker Survey",
   "OHCS": "On Hire & Off-hire Condition Survey",
-  "RDI": "Re-delivery Inspection" 
+  "RDI": "Re-delivery Inspection"
 };
 
 global.vesselTypes = {
@@ -44,7 +44,7 @@ global.vesselTypes = {
   "IN_WAT_TANK": "Inland Waterways Tanker" ,
   "IN_WAT_DRY_CAR": "Inland Waterways Dry Cargo" ,
   "NON_PROP": "Non Propelled" ,
-  "OIL_SPLILL_RV": "Oil Spill Recovery Vessels"                   
+  "OIL_SPLILL_RV": "Oil Spill Recovery Vessels"
 };
 
 global.inspectorPositions = {
@@ -88,10 +88,9 @@ global.mysqlConfig = {
 };
 
 global.appConfig = {
-  emailTemplatesPath : '/Users/m00265/code/node/shipinspector-web/service/emailtemplates/',
+  emailTemplatesPath : 'D:/personnel/shipinspector/web/service/emailtemplates/',
   accessKeyId: 'AKIAIFENAUAFOPXUTNQQ',
   secretAccessKey: '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',
   defaultFrom: 'Team ShipInspector <noreply@shipinspectors.com>',
   serverHost: 'http://localhost:7100'
 }
-
