@@ -4,7 +4,7 @@ require('../constants');
 var countryDAO = require('../dao/countryDAO');
 
 const inspectorStringFields = ['profilePic', 'qualification', 'position', 'passport', 'nationality', 'skills', 'background', 'highestRankOnboard',
-                                'highestRankAshore', 'cvDoc', 'passportDoc', 'seamanBookDoc', 'qualificationDoc', 'medicalInsuranceDoc', 
+                                'highestRankAshore', 'cvDoc', 'passportDoc', 'seamanBookDoc', 'qualificationDoc', 'medicalInsuranceDoc',
                                 'shoreServiceCert', 'medicalFitnessDoc', 'profIndemnityCert', 'identityProofDoc', 'idProofDocType',
                                 'coveredAreasKeys', 'approvedVesselTypesKeys', 'approvedInspectionTypesKeys'];
 
@@ -13,50 +13,50 @@ const inspectorDateFields = ['dob'];
 const inspectorBooleanFields = ['validMedicalInsurance', 'validIndemnityInsurance', 'validEmploymentMedicalCert'];
 
 const inspectorEntryToEntityFieldMapping = {
-  userId: 'user_id', 
-  seaport: 'seaport',   
+  userId: 'user_id',
+  seaport: 'seaport',
   profilePic: 'profile_pic',
-  qualification: 'qualification',   
+  qualification: 'qualification',
   position: 'position',
-  passport: 'passport',   
-  dob: 'dob',   
-  nationality: 'nationality',   
-  validMedicalInsurance: 'valid_medical_insurance',   
-  validIndemnityInsurance: 'valid_indemnity_insurance',   
+  passport: 'passport',
+  dob: 'dob',
+  nationality: 'nationality',
+  validMedicalInsurance: 'valid_medical_insurance',
+  validIndemnityInsurance: 'valid_indemnity_insurance',
   validEmploymentMedicalCert : 'valid_employment_medical_cert',
-  skills: 'skills', 
+  skills: 'skills',
   approvedVesselTypesKeys: 'approved_vessel_types',
   approvedInspectionTypesKeys: 'approved_inspection_types',
   coveredAreasKeys: 'covered_area',
   background: 'background',
-  highestRankOnboard: 'highest_rank_onboard',   
+  highestRankOnboard: 'highest_rank_onboard',
   highestRankAshore: 'highest_rank_ashore',
-  experienceYears: 'experience_yrs',   
+  experienceYears: 'experience_yrs',
   totalInspections: 'total_inspection_done',
-  cvDoc: 'cv_doc',   
+  cvDoc: 'cv_doc',
   rating: 'rating',
-  passportDoc: 'passport_doc',   
-  seamanBookDoc: 'seaman_book_doc',   
-  qualificationDoc: 'qualification_doc',   
+  passportDoc: 'passport_doc',
+  seamanBookDoc: 'seaman_book_doc',
+  qualificationDoc: 'qualification_doc',
   medicalInsuranceDoc: 'medical_insurance_doc',
-  shoreServiceCert: 'shore_service_cert',   
+  shoreServiceCert: 'shore_service_cert',
   medicalFitnessDoc: 'medical_fitness_cert',
-  profIndemnityCert: 'prof_indemnity_cert',   
+  profIndemnityCert: 'prof_indemnity_cert',
   idProofDocType: 'identity_proof_doc_type',
-  identityProofDoc: 'identity_proof_doc',   
+  identityProofDoc: 'identity_proof_doc',
   cvDoc: 'cv_doc'
 }
 
 const userEntryToEntityFieldMapping = {
-  id: 'id', 
-  name: 'name', 
+  id: 'id',
+  name: 'name',
   email: 'email',
   type: 'type',
-  company: 'company', 
-  phone: 'phone', 
+  company: 'company',
+  phone: 'phone',
   building: 'building',
   street: 'street',
-  city: 'city', 
+  city: 'city',
   countryCode: 'country',
   status: 'status',
   registeredOn: 'registered_on'
@@ -98,7 +98,7 @@ function update_user_profile(userId, payload) {
   var setOps = [];
 
   Object.keys(userEntryToEntityFieldMapping).map((key) => {
-    if(payload[key] && payload[key] !== "") {
+    if(payload[key] && payload[key] !== "" && key !== "id") {
       if(userNumberFields.includes(key)) {
         setOps.push(userEntryToEntityFieldMapping[key]+" = "+ parseInt(payload[key]));
       } else if (userDateFields.includes(key)) {
@@ -113,7 +113,7 @@ function update_user_profile(userId, payload) {
   if(payload.password && payload.password.trim() !== "") {
     setOps.push("password = '"+payload['password']+"'");
   }
-  
+
   if(setOps.length > 0) {
     var updateQuery = "UPDATE user SET "+ setOps.join(",") +" WHERE id = "+ userId;
     console.log("Run user update query = ", updateQuery);
@@ -124,7 +124,7 @@ function update_user_profile(userId, payload) {
 }
 
 function signup_inspector(userId, payload) {
-  return db.mysql_insert_query("insert into inspector_profile (user_id, seaport, position, qualification ) VALUES ? ", 
+  return db.mysql_insert_query("insert into inspector_profile (user_id, seaport, position, qualification ) VALUES ? ",
             [[userId, payload.seaport, payload.position, payload.qualification]]);
 }
 
@@ -145,7 +145,7 @@ function update_inspector_profile(userId, payload) {
       }
     }
   });
-  
+
   if(setOps.length > 0) {
     var updateQuery = "UPDATE inspector_profile SET "+ setOps.join(",") +" WHERE user_id = "+ userId;
     console.log("Run inspector update query = ", updateQuery);
@@ -187,7 +187,7 @@ function search_inspectors(region_code, inspection_type) {
 function fetch_customer_enquiry_inspectors(enquiryIds) {
   var csvIds = enquiryIds.join(',');
   console.log("Fetch inspectors for enquiry ids - ", csvIds);
-  return db.mysql_query("select ip.*, u.name, u.company, u.phone, u.email, u.city, u.country, eim.enquiry_id as enquiry_id from enquiry_inspector_mapping eim, inspector_profile ip, user u where eim.inspector_user_id = ip.user_id and ip.user_id = u.id and eim.status = 'ACCEPTED' and eim.enquiry_id in ("+csvIds+")"); 
+  return db.mysql_query("select ip.*, u.name, u.company, u.phone, u.email, u.city, u.country, eim.enquiry_id as enquiry_id from enquiry_inspector_mapping eim, inspector_profile ip, user u where eim.inspector_user_id = ip.user_id and ip.user_id = u.id and eim.status = 'ACCEPTED' and eim.enquiry_id in ("+csvIds+")");
 }
 
 async function transformUserProfile(userDTOs) {
@@ -196,8 +196,8 @@ async function transformUserProfile(userDTOs) {
     for(var i= 0 ; i < userDTOs.length ; i++) {
       var countryData = await countryDAO.get_country_by_code(userDTOs[i]['country']);
 
-      profiles.push({id: userDTOs[i]['id'], name: userDTOs[i]['name'], email: userDTOs[i]['email'], 'type': userDTOs[i]['type'], 
-                      company: userDTOs[i]['company'], phone: userDTOs[i]['phone'], city: userDTOs[i]['city'], 
+      profiles.push({id: userDTOs[i]['id'], name: userDTOs[i]['name'], email: userDTOs[i]['email'], 'type': userDTOs[i]['type'],
+                      company: userDTOs[i]['company'], phone: userDTOs[i]['phone'], city: userDTOs[i]['city'],
                       'countryCode': userDTOs[i]['country'], 'country': countryData, 'approved': userDTOs[i]['approved_client']});
     }
   }
@@ -213,15 +213,15 @@ function getReverseMapping(object) {
 }
 
 async function transformInspectorProfile(inspectorDTOs) {
-  
+
   var inspectorEntityToEntryMapping = getReverseMapping(inspectorEntryToEntityFieldMapping);
   var userEntityToEntryMapping = getReverseMapping(userEntryToEntityFieldMapping);
-  
+
   if(inspectorDTOs.length > 0) {
     var inspectors = [];
-    
+
     for(var i = 0; i < inspectorDTOs.length; i++) {
-      
+
       var profile = {'id': inspectorDTOs[i]['id']};
       Object.keys(inspectorEntityToEntryMapping).map((key) => {
         if(inspectorDTOs[i][key])
@@ -235,9 +235,9 @@ async function transformInspectorProfile(inspectorDTOs) {
       /*var profile = { userId: inspectorDTOs[i]['user_id'], seaport: inspectorDTOs[i]['seaport'], profilePic: inspectorDTOs[i]['profile_pic'],
                       qualification: inspectorDTOs[i]['qualification'], position: inspectorDTOs[i]['position'],
                       qualificationDisplayName: inspectorQualifications[inspectorDTOs[i]['qualification']],
-                      positionDisplayName: inspectorPositions[inspectorDTOs[i]['position']], 
-                      passport: inspectorDTOs[i]['passport'], dob: inspectorDTOs[i]['dob'], 
-                      nationality: inspectorDTOs[i]['nationality'], validMedicalInsurance: inspectorDTOs[i]['valid_medical_insurance'], 
+                      positionDisplayName: inspectorPositions[inspectorDTOs[i]['position']],
+                      passport: inspectorDTOs[i]['passport'], dob: inspectorDTOs[i]['dob'],
+                      nationality: inspectorDTOs[i]['nationality'], validMedicalInsurance: inspectorDTOs[i]['valid_medical_insurance'],
                       validIndemnityInsurance: inspectorDTOs[i]['valid_indemnity_insurance'], validEmploymentMedicalCert : inspectorDTOs[i]['valid_employment_medical_cert'],
                       skills: inspectorDTOs[i]['skills'], background: inspectorDTOs[i]['background'],
                       highestRankOnboard: inspectorDTOs[i]['highest_rank_onboard'], highestRankAshore: inspectorDTOs[i]['highest_rank_ashore'],
@@ -245,18 +245,18 @@ async function transformInspectorProfile(inspectorDTOs) {
                       cvDoc: inspectorDTOs[i]['cv_doc'], rating: inspectorDTOs[i]['rating'],
                       name: inspectorDTOs[i]['name'], email: inspectorDTOs[i]['email'], company: inspectorDTOs[i]['company'],
                       phone: inspectorDTOs[i]['phone'], city: inspectorDTOs[i]['city'],
-                      passportDoc: inspectorDTOs[i]['passport_doc'], seamanBookDoc: inspectorDTOs[i]['seaman_book_doc'], 
+                      passportDoc: inspectorDTOs[i]['passport_doc'], seamanBookDoc: inspectorDTOs[i]['seaman_book_doc'],
                       qualificationDoc: inspectorDTOs[i]['qualification_doc'], medicalInsuranceDoc: inspectorDTOs[i]['medical_insurance_doc'],
                       shoreServiceCert: inspectorDTOs[i]['shore_service_cert'], medicalFitnessDoc: inspectorDTOs[i]['medical_fitness_cert'],
                       profIndemnityCert: inspectorDTOs[i]['prof_indemnity_cert'], idProofDocType: inspectorDTOs[i]['identity_proof_doc_type'],
                       identityProofDoc: inspectorDTOs[i]['identity_proof_doc'], cvDoc: inspectorDTOs[i]['cv_doc']
                     };*/
-      
+
       if(profile.position) {
-        profile['positionDisplayName'] = inspectorPositions[profile.position]; 
+        profile['positionDisplayName'] = inspectorPositions[profile.position];
       }
       if(profile.qualification) {
-        profile['qualificationDisplayName'] = inspectorQualifications[profile.qualification]; 
+        profile['qualificationDisplayName'] = inspectorQualifications[profile.qualification];
       }
 
       if(profile.approvedVesselTypesKeys) {
@@ -286,7 +286,7 @@ async function transformInspectorProfile(inspectorDTOs) {
 
       var countryData = await countryDAO.get_country_by_code(profile.countryCode);
       profile['country'] = countryData;
-      
+
       inspectors.push(profile);
     }
 

@@ -10,7 +10,7 @@ module.exports = async (req,res, next) => {
       var userId = encryptionUtil.decryptToken(req.cookies['si.at']);
       console.log("User Profile for token - " + userId);
       if(!userId) {
-      	console.log("Token is invalid : No user found for token");		
+      	console.log("Token is invalid : No user found for token");
 		    res.sendStatus(401);
 		    res.end();
       } else {
@@ -26,12 +26,12 @@ module.exports = async (req,res, next) => {
         }
       }
     } catch( error) {
-      console.log("Token is invalid : ", error);		
+      console.log("Token is invalid : ", error);
 	    res.sendStatus(401);
 	    res.end();
     }
   } else {
-    console.log("Token is invalid : No token found for user in cookies");		
+    console.log("Token is invalid : No token found for user in cookies");
 	  res.sendStatus(401);
 	  res.end();
   }
