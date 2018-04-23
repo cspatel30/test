@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import InspectorProfilePage from '../components/pages/InspectorProfilePage.jsx';
+// import InspectorProfilePage from '../components/pages/InspectorProfilePage.jsx';
+import InspectorProfilePage from '../components/pages/InspectorProfilePage1.jsx';
 
 import { getProfile, uploadDocument, updateInspectorProfile } from '../actions/inspector';
 
