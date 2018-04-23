@@ -219,7 +219,6 @@ function* makeApiCall(action, apiFn, apiSuccessCb, apiFailureCb) {
 			
 			case 'FORGOT_PASSWORD':
 				var apiResponse = yield apiFn(action.payload);
-				console.log('api response from backend...', apiResponse);
 				yield put (apiSuccessCb(apiResponse)); // write what you need at front end @success
 				break;
 

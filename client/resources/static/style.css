@@ -76,9 +76,15 @@ a {
   margin: 10px 20px 0px 10px;
 }
 
+.user-action-wrap {
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+}
+
 .user-actions {
-  float: right;
-  margin: 10px 20px 0px 10px; 
+  /* float: right; */
+  margin: 0px 20px 0px 10px; 
 }
  .login a, .register a {
    color: #1475af;
@@ -753,7 +759,7 @@ p {
 
 .desktop-user {
     position: relative;
-    padding-top: 5px;
+    /* padding-top: 5px; */
 }
 
 .desktop-userIconsContainer {
@@ -1088,6 +1094,7 @@ p {
   /* width: 25%;
   float: right; */
 }
+
 .contact-form .forgot-pass {
   color: #1475af;
   font-size: 16px; 
@@ -1208,6 +1215,20 @@ p {
 .hide {
   display: none;
 }
+
+/* ---------------------------------------------------- inspector profile page start------------------------------------------------------------- */
+.inspector-profile-page {
+  margin: 0 5rem;
+}
+.inspector-profile-data-wrap {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+.render-profile-middle-row span, .render-profile-middle-row div {
+  margin-bottom: 3px;
+  font-size: 14px;
+  font-weight: bolder;
+}
+/* ---------------------------------------------------- inspector profile page end------------------------------------------------------------- */
 
 .inspector-profile-menu {
   width: 30%;

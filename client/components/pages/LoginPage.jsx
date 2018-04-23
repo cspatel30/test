@@ -13,6 +13,7 @@ export default class LoginPage extends Component {
     this.state = {
       forgot: false,
       forgotEmail: '',
+      fgpwdMsg: '',
       tabIndex: 0,
       loginForm: {
         email: "",
@@ -29,12 +30,20 @@ export default class LoginPage extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
   } 
-
+  componentWillReceiveProps(nextProps) {
+    this.setState({ fgpwdMsg: nextProps.fgpwdMsg });
+  }
   handleInputChange (event) {
     event.persist();
     this.setState((state) => { state.loginForm[event.target.name] = event.target.value });
   }
-
+  toggleTab (tab) {
+    let { activeTab, fgpwdMsg, forgot, forgotEmail } = this.state;
+    if (activeTab !== tab) {
+      fgpwdMsg = '', forgot=false, forgotEmail='';
+    }
+    this.setState({ activeTab: tab, fgpwdMsg, forgot, forgotEmail });
+  }
   handleSubmit(event) {
     event.preventDefault();
     var error = false;
@@ -54,6 +63,26 @@ export default class LoginPage extends Component {
       return;
     this.props.logMeIn(this.state.tabIndex, this.state.loginForm);
   }
+  forgotPwd() {
+    const { activeTab, forgot, forgotEmail, fgpwdMsg } = this.state;
+    if (!forgot) {
+      return <div className="forgot-pass" onClick={() => this.setState({ forgot: true })} style={{ color: '#1475af', fontSize: '16px', cursor: 'pointer' }}>Forgot Password ?</div>
+    } else {
+      return (
+        <div>
+          <div className="label">Enter Your Registered Email</div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="field" style={{ margin: 0}}>
+              <input className="inputField" type="text" placeholder="Enter Your Registered Email" name="forgotEmail" value={forgotEmail} onChange={e => this.setState({ forgotEmail: e.target.value })}/>
+              <div className="errorField">{fgpwdMsg}</div>
+            </div>
+            <div onClick={() => this.onForgotPass(forgotEmail)} style={{cursor: 'pointer', padding: '15px', marginLeft: '15px', background: '#1475af', color: '#fff'}}>Reset</div>
+            <div onClick={() => this.setState({forgot: false, forgotEmail: '', fgpwdMsg: ''})} style={{cursor: 'pointer', padding: '15px', marginLeft: '15px', background: '#1475af', color: '#fff'}}>Cancel</div>
+          </div>
+        </div>
+      )
+    }
+  }
   onForgotPass(email) {
     if (email !== '') {
       this.props.forgotPassword(email);
@@ -62,7 +91,7 @@ export default class LoginPage extends Component {
   }
 
   render() {
-    const { activeTab, forgot, forgotEmail } = this.state;
+    const { activeTab, forgot } = this.state;
     const activeTabStyle= { background: '#1475af', color: '#fff' }
   	const { userToken , userProfile } = this.props;
 
@@ -79,8 +108,8 @@ export default class LoginPage extends Component {
                 <div className="error">{this.props.error}</div>
                 <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
                   <TabList> 
-                    <Tab style={activeTab === 'cust' ? activeTabStyle : {}} onClick={() => this.setState({ activeTab: 'cust' })}>Client</Tab>
-                    <Tab style={activeTab === 'insp' ? activeTabStyle : {}} onClick={() => this.setState({ activeTab: 'insp' })}>Inspector</Tab>
+                    <Tab style={activeTab === 'cust' ? activeTabStyle : {}} onClick={() => this.toggleTab('cust')}>Client</Tab>
+                    <Tab style={activeTab === 'insp' ? activeTabStyle : {}} onClick={() => this.toggleTab('insp')}>Inspector</Tab>
                   </TabList>
                   <TabPanel>
                     <div className="label">Email</div>
@@ -108,23 +137,12 @@ export default class LoginPage extends Component {
                   </TabPanel>
                 </Tabs>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                  { !forgot
-                    ?
-                    <div className="forgot-pass" onClick={() => this.setState({ forgot: true })} style={{ color: '#1475af', fontSize: '16px', cursor: 'pointer' }}>Forgot Password ?</div>
-                    :
-                    <div style={{ display: 'flex'}}>
-                      <div className="field">
-                        <input className="inputField" type="text" placeholder="Type your registered email" name="forgotEmail" value={forgotEmail} onChange={e => this.setState({ forgotEmail: e.target.value })}/>
-                        <div className="errorField"></div>
-                      </div>
-                      <div onClick={() => this.onForgotPass(forgotEmail)} style={{cursor: 'pointer', padding: '10px', height: '40%', marginLeft: '15px', background: 'gray'}}>Reset</div>
-                    </div>
-                  }
+                  {this.forgotPwd()}
                   <div style={{ color: '#1475af', fontSize: '16px' }}>New User <span style={{ cursor: 'pointer', fontWeight: 'bold' }}>SIGN UP.</span></div>
                 </div>
-                <div className="btn"><button type="submit">Login</button></div>
+                <div className="btn"><button type="submit" style={{ cursor: forgot && 'not-allowed'}} disabled={forgot}>Login</button></div>
               </form>
-            </div>  
+            </div>
             <div className="ship-inspector-logo">
               <a href="/"><img alt="ShipInspector" src="https://s3-ap-southeast-1.amazonaws.com/sinotechmarineassets/public/shipinspectors-logo.png" width="150" height="150" style={{ float: 'right'}}/></a>
             </div>
