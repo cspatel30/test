@@ -48,7 +48,7 @@ class InspectorProfilePage extends Component {
         dataArray = data ? data.split(",") : null;
       }
       if (dataArray && dataArray.length > 0) return dataArray.map((i, key) => (
-        <Chip key={key} style={{margin: 5, float: 'left'}} labelColor='#fff' backgroundColor={blue500}>{i}</Chip>
+        <Chip className="mb-2 mr-2" key={key} style={{float: 'left'}} labelColor='#fff' backgroundColor={blue500}>{i}</Chip>
       ))
     }
     renderMyProfile(inspe, user) {
@@ -60,7 +60,6 @@ class InspectorProfilePage extends Component {
               <div>{this.renderProfilePicAvatar(inspe)}</div>
               <div className="d-flex flex-column mt-2" style={{ fontSize: '14px'}}>
                 <b style={{ color: '#000000'}}>BRIAN MICHAEL DIAS</b>
-                <b style={{ color: '#000000'}}>(CHIEF MARINE ENGINEER)</b>
                 <div>Profile Verified</div>
                 <div>Display rating here</div>
               </div>
@@ -98,9 +97,9 @@ class InspectorProfilePage extends Component {
     }
 
     renderWorkHistory(inspe, user) {
-      const arr = ['Job Title', 'Vessel Name', 'IMO Number', 'Type of Ship', 'Client\'s Rating', 'Client\'s Name'];
+      const arr = ['Job Title', 'Vessel Name', 'IMO Number', 'Type of Vessel', 'Client\'s Rating', 'Client\'s Name'];
       const title = arr.map((i, key) => (
-        <div style={{flex: 1, fontWeight: 'bold'}} key={key}>{i}</div>
+        <div style={{flex: 1, fontWeight: 'bold', fontSize: '18px'}} key={key}>{i}</div>
       ));
       return (
         <div>
@@ -108,8 +107,8 @@ class InspectorProfilePage extends Component {
           <div className="px-5 py-4">
           {
               ([1,2,3] || []).map((o, key) => (
-                <div key={key}>
-                  <div className="d-flex pl-5 pr-2 py-2 mb-2" style={{background: blue500, color: '#fff'}}>{title}</div>
+                <div key={key} style={{ borderBottom: '1px solid #d8e1e8' }}>
+                  <div className="d-flex pl-5 pr-2 py-2 mb-2" style={{ color: '#000'}}>{title}</div>
                   <div className="d-flex pl-5 pr-2 py-2 mb-2">data...</div>
                   <div className="mb-4"><strong className="p-1" style={{color: '#fff', background: blue500}}>Client Feedback: </strong>........</div>
                 </div>
@@ -123,7 +122,7 @@ class InspectorProfilePage extends Component {
     renderEducaAndQuali(inspe, user) {
       const arr = ['Level', 'Cource Name', 'Institution/University', 'Country'];
       const title = arr.map((i, key) => (
-        <div style={{flex: 1, fontWeight: 'bold'}} key={key}>{i}</div>
+        <div style={{flex: 1, fontWeight: 'bold', fontSize: '18px'}} key={key}>{i}</div>
       ));
       return (
         <div>
@@ -132,8 +131,8 @@ class InspectorProfilePage extends Component {
             <h3 className="mb-3">Highest Qualifications</h3>
           {
               ([1,2,3] || []).map((o, key) => (
-                <div key={key}>
-                  <div className="d-flex pl-5 pr-2 py-2 mb-2" style={{background: blue500, color: '#fff'}}>{title}</div>
+                <div key={key} style={{ borderBottom: '1px solid #d8e1e8' }}>
+                  <div className="d-flex pl-5 pr-2 py-2 mb-2" style={{ color: '#000'}}>{title}</div>
                   <div className="d-flex pl-5 pr-2 py-2 mb-4">data...</div>
                 </div>
               ))
