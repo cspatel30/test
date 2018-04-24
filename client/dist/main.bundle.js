@@ -54777,7 +54777,7 @@ var InspectorProfilePage = function (_Component) {
       if (dataArray && dataArray.length > 0) return dataArray.map(function (i, key) {
         return _react2.default.createElement(
           _Chip2.default,
-          { key: key, style: { margin: 5, float: 'left' }, labelColor: '#fff', backgroundColor: _colors.blue500 },
+          { className: 'mb-2 mr-2', key: key, style: { float: 'left' }, labelColor: '#fff', backgroundColor: _colors.blue500 },
           i
         );
       });
@@ -54811,11 +54811,6 @@ var InspectorProfilePage = function (_Component) {
                 'b',
                 { style: { color: '#000000' } },
                 'BRIAN MICHAEL DIAS'
-              ),
-              _react2.default.createElement(
-                'b',
-                { style: { color: '#000000' } },
-                '(CHIEF MARINE ENGINEER)'
               ),
               _react2.default.createElement(
                 'div',
@@ -54921,11 +54916,11 @@ var InspectorProfilePage = function (_Component) {
   }, {
     key: 'renderWorkHistory',
     value: function renderWorkHistory(inspe, user) {
-      var arr = ['Job Title', 'Vessel Name', 'IMO Number', 'Type of Ship', 'Client\'s Rating', 'Client\'s Name'];
+      var arr = ['Job Title', 'Vessel Name', 'IMO Number', 'Type of Vessel', 'Client\'s Rating', 'Client\'s Name'];
       var title = arr.map(function (i, key) {
         return _react2.default.createElement(
           'div',
-          { style: { flex: 1, fontWeight: 'bold' }, key: key },
+          { style: { flex: 1, fontWeight: 'bold', fontSize: '18px' }, key: key },
           i
         );
       });
@@ -54943,10 +54938,10 @@ var InspectorProfilePage = function (_Component) {
           ([1, 2, 3] || []).map(function (o, key) {
             return _react2.default.createElement(
               'div',
-              { key: key },
+              { key: key, style: { borderBottom: '1px solid #d8e1e8' } },
               _react2.default.createElement(
                 'div',
-                { className: 'd-flex pl-5 pr-2 py-2 mb-2', style: { background: _colors.blue500, color: '#fff' } },
+                { className: 'd-flex pl-5 pr-2 py-2 mb-2', style: { color: '#000' } },
                 title
               ),
               _react2.default.createElement(
@@ -54976,7 +54971,7 @@ var InspectorProfilePage = function (_Component) {
       var title = arr.map(function (i, key) {
         return _react2.default.createElement(
           'div',
-          { style: { flex: 1, fontWeight: 'bold' }, key: key },
+          { style: { flex: 1, fontWeight: 'bold', fontSize: '18px' }, key: key },
           i
         );
       });
@@ -54999,10 +54994,10 @@ var InspectorProfilePage = function (_Component) {
           ([1, 2, 3] || []).map(function (o, key) {
             return _react2.default.createElement(
               'div',
-              { key: key },
+              { key: key, style: { borderBottom: '1px solid #d8e1e8' } },
               _react2.default.createElement(
                 'div',
-                { className: 'd-flex pl-5 pr-2 py-2 mb-2', style: { background: _colors.blue500, color: '#fff' } },
+                { className: 'd-flex pl-5 pr-2 py-2 mb-2', style: { color: '#000' } },
                 title
               ),
               _react2.default.createElement(
