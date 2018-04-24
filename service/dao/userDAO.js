@@ -66,6 +66,41 @@ const userStringFields = ['name', 'email', 'type', 'company', 'phone', 'building
 const userNumberFields = ['id'];
 const userDateFields = ['registeredOn'];
 
+const educationEntryToEntityFieldMapping = {
+  id: 'id',
+  userId: 'user_id',
+  inspectorId: 'inspector_id',
+  level: 'level',
+  courseName: 'course_name',
+  institution: 'institution',
+  country: 'country',
+  startDate: 'start_date',
+  endDate: 'end_date'
+}
+
+const educationStringFields = ['level', 'courseName', 'institution', 'country'];
+const educationNumberFields = ['id', 'userId', 'inspectorId'];
+const educationDateFields = ['startDate', 'endDate'];
+
+const employmentEntryToEntityFieldMapping = {
+  id: 'id',
+  userId: 'user_id',
+  inspectorId: 'inspector_id',
+  jobTitle: 'job_title',
+  companyName: 'company_name',
+  shipType: 'ship_type',
+  department: 'department',
+  city: 'city',
+  country: 'country',
+  startDate: 'start_date',
+  endDate: 'end_date'
+}
+
+const employmentStringFields = ['jobTitle', 'companyName', 'shipType', 'department', 'city', 'country'];
+const employmentNumberFields = ['id', 'userId', 'inspectorId'];
+const employmentDateFields = ['startDate', 'endDate'];
+
+
 function signup(payload) {
 
   payload['status'] = 'CREATED';
@@ -175,6 +210,14 @@ function fetchInspectorPublicProfile(userId) {
   return db.mysql_query('select ip.*, u.name, u.company, u.phone, u.email, u.city, u.country from inspector_profile ip, user u where ip.user_id = u.id and u.id = ' + userId);
 }
 
+function fetchInspectorEducation(inspectorId) {
+  return db.mysql_query('select * from inspector_education_qualification edu where edu.inspector_id = ' + inspectorId);
+}
+
+function fetchInspectorEmployment(inspectorId) {
+  return db.mysql_query('select * from inspector_employment_history emp where emp.inspector_id = ' + inspectorId);
+}
+
 function fetchInspectors(pageNo) {
   var offset = (pageNo - 1)*5;
   return db.mysql_query('select ip.*, u.name, u.company, u.phone, u.email, u.city, u.country from inspector_profile ip, user u where ip.user_id = u.id limit '+offset+' , 5');
@@ -210,6 +253,38 @@ function getReverseMapping(object) {
     reverseMapping[object[key]] = key;
   });
   return reverseMapping;
+}
+
+async function transformEducation(educationDTOs) {
+  var educationEntityToEntryMapping = getReverseMapping(educationEntryToEntityFieldMapping);
+  var education = [];
+  if(educationDTOs.length > 0) {
+    for(var i = 0; i < educationDTOs.length; i++) {
+      var educationRecord = {'id': educationDTOs[i]['id']};
+      Object.keys(educationEntityToEntryMapping).map((key) => {
+        if(educationDTOs[i][key])
+          educationRecord[educationEntityToEntryMapping[key]] = educationDTOs[i][key];
+      });
+      education.push(educationRecord);
+    }
+  }
+  return education;
+}
+
+async function transformEmployment(employmentDTOs) {
+  var employmentEntityToEntryMapping = getReverseMapping(employmentEntryToEntityFieldMapping);
+  var employment = [];
+  if(employmentDTOs.length > 0) {
+    for(var i = 0; i < employmentDTOs.length; i++) {
+      var employmentRecord = {'id': employmentDTOs[i]['id']};
+      Object.keys(employmentEntityToEntryMapping).map((key) => {
+        if(employmentDTOs[i][key])
+          employmentRecord[employmentEntityToEntryMapping[key]] = employmentDTOs[i][key];
+      });
+      employment.push(employmentRecord);
+    }
+  }
+  return employment;
 }
 
 async function transformInspectorProfile(inspectorDTOs) {
@@ -287,6 +362,14 @@ async function transformInspectorProfile(inspectorDTOs) {
       var countryData = await countryDAO.get_country_by_code(profile.countryCode);
       profile['country'] = countryData;
 
+      var rowsEducation = await this.fetchInspectorEducation(inspectorDTOs[i]['id']);
+      var education = await this.transformEducation(rowsEducation);
+      var rowsEmployment = await this.fetchInspectorEmployment(inspectorDTOs[i]['id']);
+      var employment = await this.transformEmployment(rowsEmployment);
+
+      profile['education'] = education;
+      profile['employment'] = employment;
+
       inspectors.push(profile);
     }
 
@@ -310,5 +393,9 @@ module.exports = {
   search_inspectors: search_inspectors,
   fetch_customer_enquiry_inspectors: fetch_customer_enquiry_inspectors,
   transformInspectorProfile: transformInspectorProfile,
-  transformUserProfile: transformUserProfile
+  transformUserProfile: transformUserProfile,
+  fetchInspectorEducation: fetchInspectorEducation,
+  fetchInspectorEmployment: fetchInspectorEmployment,
+  transformEducation: transformEducation,
+  transformEmployment: transformEmployment
 }
