@@ -11,13 +11,13 @@ CREATE TABLE `user` (
   `street` varchar(45) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   `country` varchar(45) DEFAULT NULL,
-  
+
   `type` varchar(45) NOT NULL,
   `status` varchar(45) NOT NULL,
   `approved_client` int(1) NOT NULL DEFAULT 0,
 
   `registered_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  
+
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_idx` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
@@ -26,7 +26,7 @@ CREATE TABLE `user` (
 CREATE TABLE `inspector_profile` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
-  
+
   `profile_pic` varchar(255) DEFAULT NULL,
   `passport` varchar(255) DEFAULT NULL,
   `dob` datetime DEFAULT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `inspector_profile` (
   `valid_medical_insurance` int(1) DEFAULT 0,
   `valid_indemnity_insurance` int(1) DEFAULT 0,
   `valid_employment_medical_cert` int(1) DEFAULT 0,
-  
+
   `seaport` varchar(45) DEFAULT NULL,
 
   `position` varchar(45) DEFAULT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `inspector_profile` (
 
   `background` longtext DEFAULT NULL,
   `covered_area` varchar(255) DEFAULT NULL,
-  
+
   `highest_rank_onboard` varchar(255) DEFAULT NULL,
   `highest_rank_ashore` varchar(255) DEFAULT NULL,
   `experience_yrs` int(5) DEFAULT NULL,
@@ -56,12 +56,12 @@ CREATE TABLE `inspector_profile` (
   `seaman_book_doc` varchar(255) DEFAULT NULL,
   `qualification_doc` varchar(255) DEFAULT NULL,
   `shore_service_cert` varchar(255) DEFAULT NULL,
-  `medical_fitness_cert` varchar(255) DEFAULT NULL, 
-  `medical_insurance_doc` varchar(255) DEFAULT NULL, 
-  `prof_indemnity_cert` varchar(255) DEFAULT NULL, 
-  `identity_proof_doc_type` varchar(255) DEFAULT NULL, 
-  `identity_proof_doc` varchar(255) DEFAULT NULL, 
-  `cv_doc` varchar(255) DEFAULT NULL, 
+  `medical_fitness_cert` varchar(255) DEFAULT NULL,
+  `medical_insurance_doc` varchar(255) DEFAULT NULL,
+  `prof_indemnity_cert` varchar(255) DEFAULT NULL,
+  `identity_proof_doc_type` varchar(255) DEFAULT NULL,
+  `identity_proof_doc` varchar(255) DEFAULT NULL,
+  `cv_doc` varchar(255) DEFAULT NULL,
 
   `rating` double(2,1) NOT NULL DEFAULT 0.0,
 
@@ -79,7 +79,7 @@ CREATE TABLE `inspector_reviews` (
   PRIMARY KEY (`id`),
   KEY `user_idx` (`user_id`),
   KEY `inspector_user_idx` (`inspector_user_id`)
-  
+
 )ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `enquiry` (
@@ -189,3 +189,39 @@ CREATE TABLE `country` (
   UNIQUE KEY `idx_code` (`code`) USING BTREE,
   KEY `idx_continent_code` (`continent_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+CREATE TABLE `inspector_education_qualification` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT NULL,
+  `inspector_id` bigint(20) DEFAULT NULL,
+  `level` varchar(200) DEFAULT NULL,
+  `course_name` varchar(200) DEFAULT NULL,
+  `institution` varchar(200) DEFAULT NULL,
+  `country` varchar(200) DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `education_user_idx` (`user_id`),
+  KEY `education_inspector_idx` (`inspector_id`),
+  CONSTRAINT `education_inspector` FOREIGN KEY (`inspector_id`) REFERENCES `inspector_profile` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `education_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `inspector_employment_history` (
+  `id` bigint(19) NOT NULL AUTO_INCREMENT,
+  `job_title` varchar(200) DEFAULT NULL,
+  `company_name` varchar(200) DEFAULT NULL,
+  `ship_type` varchar(200) DEFAULT NULL,
+  `department` varchar(200) DEFAULT NULL,
+  `city` varchar(200) DEFAULT NULL,
+  `country` varchar(200) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `inspector_id` bigint(20) DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `employment_user_idx` (`user_id`),
+  KEY `employment_inspector_idx` (`inspector_id`),
+  CONSTRAINT `employment_inspector` FOREIGN KEY (`inspector_id`) REFERENCES `inspector_profile` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `employment_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Ship inspector employment history';
