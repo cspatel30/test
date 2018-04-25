@@ -52,7 +52,7 @@
     "jsonwebtoken": "^8.2.1",
     "material-ui": "^0.18.1",
     "material-ui-rating": "^1.4.1",
-    "moment": "^2.18.1",
+    "moment": "^2.22.1",
     "morgan": "^1.8.1",
     "mysql": "^2.13.0",
     "net": "^1.0.2",
