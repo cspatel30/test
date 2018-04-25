@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
-import {green500, red500, blue500, yellow600, orange600, fullWhite} from 'material-ui/styles/colors';
+import { Rating } from 'material-ui-rating';
+import { ReadMore } from 'react-read-more';
+import {blue500} from 'material-ui/styles/colors';
 import { isArray } from 'util';
 
 class InspectorProfilePage extends Component {
@@ -60,8 +62,8 @@ class InspectorProfilePage extends Component {
               <div>{this.renderProfilePicAvatar(inspe)}</div>
               <div className="d-flex flex-column mt-2" style={{ fontSize: '14px'}}>
                 <b style={{ color: '#000000'}}>{inspe.name}</b>
-                <div>Profile Verified</div>
-                <div>Display rating here: {inspe.rating}</div>
+                <div style={{ color: '#28a428' }}>Profile Verified</div>
+                <div className="profile-rating"><Rating readOnly={true} value={inspe.rating} max={5} /></div>
               </div>
             </div>
             <div className="col-6 d-flex flex-column pt-3 render-profile-middle-row">
@@ -80,7 +82,9 @@ class InspectorProfilePage extends Component {
               <div>Display map</div>
             </div>
           </div>
-          <p className="mt-4 mx-5" style={{ textAlign:'center', fontStyle: 'italic', color: '#000', fontSize: '14px' }}>{inspe.background || ''}</p>
+          <div className="mt-4 mx-5 mb-3" style={{ textAlign:'center', fontStyle: 'italic', color: '#000', fontSize: '14px' }}>
+            <ReadMore lines={3} text="Read more">{inspe.background || ''}</ReadMore>
+          </div>
         </div>
       )
     }
@@ -197,7 +201,7 @@ class InspectorProfilePage extends Component {
     }
     render() {
       const { userProfile, inspectorProfile, error } = this.props;
-      console.log('........data.......', inspectorProfile);
+      console.log('........data.......', inspectorProfile, userProfile);
       if (userProfile && inspectorProfile) {
         return (
           <div className="inspector-profile-page mt-3 mb-5">

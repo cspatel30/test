@@ -1220,6 +1220,11 @@ p {
 .inspector-profile-page {
   margin: 0 5rem;
 }
+.profile-rating button {
+  padding: 0 !important;
+  border: 0 !important;
+  width: 28px !important;
+}
 .inspector-profile-data-wrap {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
