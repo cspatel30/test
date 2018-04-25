@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
+import moment from 'moment';
 import { Rating } from 'material-ui-rating';
 import { ReadMore } from 'react-read-more';
 import {blue500} from 'material-ui/styles/colors';
@@ -111,18 +112,50 @@ class InspectorProfilePage extends Component {
           <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Work History and Client's Feedback</h3>
           <div className="px-5 py-4">
           {
-              (inspe.employment || []).map((o, key) => (
+              ([1,2] || []).map((o, key) => (
                 <div key={key} style={{ borderBottom: '1px solid #d8e1e8' }}>
                   <div className="d-flex pl-5 pr-2 py-2 mb-2" style={{ color: '#000'}}>{title}</div>
                   <div className="d-flex pl-5 pr-2 mb-4">
-                    <span style={itemStyle}>{o.jobTitle}</span>
+                    <span style={itemStyle}>{'ABC'}</span>
                     <span style={itemStyle}>{'vName'}</span>
                     <span style={itemStyle}>{'IMO No.'}</span>
-                    <span style={itemStyle}>{o.shipType}</span>
+                    <span style={itemStyle}>{'A'}</span>
                     <span style={itemStyle}>{'rating'}</span>
                     <span style={itemStyle}>{'client name'}</span>
                   </div>
                   <div className="mb-4"><strong className="p-1" style={{color: '#fff', background: blue500}}>Client Feedback: </strong>........</div>
+                </div>
+              ))
+          }
+          </div>
+        </div>
+      )
+    }
+    renderEmploymentHistory(inspe, user) {
+      const arr = ['Position', 'Company Name', 'Ship Type', 'Department', 'City', 'Country'];
+      const title = arr.map((i, key) => (
+        <div style={{flex: 1, fontWeight: 'bold', fontSize: '18px'}} key={key}>{i}</div>
+      ));
+      const itemStyle = { flex: 1, fontSize: '16px', color: '#555' };
+      return (
+        <div>
+          <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Employment History</h3>
+          <div className="px-5 py-4">
+          {
+              (inspe.employment || []).map((o, key) => (
+                <div key={key} style={{ borderBottom: '1px solid #d8e1e8' }}>
+                  <div className="d-flex pl-5 pr-2 py-2 mb-2" style={{ color: '#000'}}>{title}</div>
+                  <div className="d-flex pl-5 pr-2 mb-4">
+                    <span className="d-flex flex-column" style={itemStyle}>
+                      <span className="mb-1">{o.jobTitle}</span>
+                      <span style={{fontSize:'12px'}}>{moment(o.startDate).format('MMM YYYY')} - {moment(o.endDate).format('MMM YYYY')}</span>
+                    </span>
+                    <span style={itemStyle}>{o.companyName}</span>
+                    <span style={itemStyle}>{o.shipType}</span>
+                    <span style={itemStyle}>{o.department}</span>
+                    <span style={itemStyle}>{o.city}</span>
+                    <span style={itemStyle}>{o.country}</span>
+                  </div>
                 </div>
               ))
           }
@@ -173,7 +206,7 @@ class InspectorProfilePage extends Component {
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Name as per Passport : </b>xyz</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nationality : </b>{inspe.nationality}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Passport Number : </b>{inspe.passport}</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Date of Birth : </b>{inspe.dob.toLocaleString()}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Date of Birth : </b>{moment(inspe.dob).format('MMM Do YYYY')}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Country of Residence : </b>{inspe.country.name}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Sea Port : </b>{`port name`}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Airport : </b>{`airport name`}</div>
@@ -210,6 +243,7 @@ class InspectorProfilePage extends Component {
               {this.renderMyProfile(inspectorProfile, userProfile)}
               {this.renderSkills(inspectorProfile, userProfile)}
               {this.renderWorkHistory(inspectorProfile, userProfile)}
+              {this.renderEmploymentHistory(inspectorProfile, userProfile)}
               {this.renderEducaAndQuali(inspectorProfile, userProfile)}
               {this.renderPersonalDetails(inspectorProfile, userProfile)}
             </div>

@@ -55063,6 +55063,10 @@ var _Chip = __webpack_require__(228);
 
 var _Chip2 = _interopRequireDefault(_Chip);
 
+var _moment = __webpack_require__(4);
+
+var _moment2 = _interopRequireDefault(_moment);
+
 var _materialUiRating = __webpack_require__(227);
 
 var _reactReadMore = __webpack_require__(1156);
@@ -55311,7 +55315,7 @@ var InspectorProfilePage = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'px-5 py-4' },
-          (inspe.employment || []).map(function (o, key) {
+          ([1, 2] || []).map(function (o, key) {
             return _react2.default.createElement(
               'div',
               { key: key, style: { borderBottom: '1px solid #d8e1e8' } },
@@ -55326,7 +55330,7 @@ var InspectorProfilePage = function (_Component) {
                 _react2.default.createElement(
                   'span',
                   { style: itemStyle },
-                  o.jobTitle
+                  'ABC'
                 ),
                 _react2.default.createElement(
                   'span',
@@ -55341,7 +55345,7 @@ var InspectorProfilePage = function (_Component) {
                 _react2.default.createElement(
                   'span',
                   { style: itemStyle },
-                  o.shipType
+                  'A'
                 ),
                 _react2.default.createElement(
                   'span',
@@ -55363,6 +55367,88 @@ var InspectorProfilePage = function (_Component) {
                   'Client Feedback: '
                 ),
                 '........'
+              )
+            );
+          })
+        )
+      );
+    }
+  }, {
+    key: 'renderEmploymentHistory',
+    value: function renderEmploymentHistory(inspe, user) {
+      var arr = ['Position', 'Company Name', 'Ship Type', 'Department', 'City', 'Country'];
+      var title = arr.map(function (i, key) {
+        return _react2.default.createElement(
+          'div',
+          { style: { flex: 1, fontWeight: 'bold', fontSize: '18px' }, key: key },
+          i
+        );
+      });
+      var itemStyle = { flex: 1, fontSize: '16px', color: '#555' };
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h3',
+          { className: 'py-3 px-5', style: { color: '#fff', background: '#1475af' } },
+          'Employment History'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'px-5 py-4' },
+          (inspe.employment || []).map(function (o, key) {
+            return _react2.default.createElement(
+              'div',
+              { key: key, style: { borderBottom: '1px solid #d8e1e8' } },
+              _react2.default.createElement(
+                'div',
+                { className: 'd-flex pl-5 pr-2 py-2 mb-2', style: { color: '#000' } },
+                title
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'd-flex pl-5 pr-2 mb-4' },
+                _react2.default.createElement(
+                  'span',
+                  { className: 'd-flex flex-column', style: itemStyle },
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'mb-1' },
+                    o.jobTitle
+                  ),
+                  _react2.default.createElement(
+                    'span',
+                    { style: { fontSize: '12px' } },
+                    (0, _moment2.default)(o.startDate).format('MMM YYYY'),
+                    ' - ',
+                    (0, _moment2.default)(o.endDate).format('MMM YYYY')
+                  )
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.companyName
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.shipType
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.department
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.city
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.country
+                )
               )
             );
           })
@@ -55498,7 +55584,7 @@ var InspectorProfilePage = function (_Component) {
                 { className: 'p-1', style: { color: '#000', fontSize: '15px' } },
                 'Date of Birth : '
               ),
-              inspe.dob.toLocaleString()
+              (0, _moment2.default)(inspe.dob).format('MMM Do YYYY')
             ),
             _react2.default.createElement(
               'div',
@@ -55605,6 +55691,7 @@ var InspectorProfilePage = function (_Component) {
             this.renderMyProfile(inspectorProfile, userProfile),
             this.renderSkills(inspectorProfile, userProfile),
             this.renderWorkHistory(inspectorProfile, userProfile),
+            this.renderEmploymentHistory(inspectorProfile, userProfile),
             this.renderEducaAndQuali(inspectorProfile, userProfile),
             this.renderPersonalDetails(inspectorProfile, userProfile)
           )
