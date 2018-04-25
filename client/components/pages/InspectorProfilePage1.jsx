@@ -59,20 +59,20 @@ class InspectorProfilePage extends Component {
             <div className="col-3">
               <div>{this.renderProfilePicAvatar(inspe)}</div>
               <div className="d-flex flex-column mt-2" style={{ fontSize: '14px'}}>
-                <b style={{ color: '#000000'}}>BRIAN MICHAEL DIAS</b>
+                <b style={{ color: '#000000'}}>{inspe.name}</b>
                 <div>Profile Verified</div>
-                <div>Display rating here</div>
+                <div>Display rating here: {inspe.rating}</div>
               </div>
             </div>
             <div className="col-6 d-flex flex-column pt-3 render-profile-middle-row">
-              <span>Title: Other</span>
-              <span>Lives in: Sample city</span>
+              <span>{inspe.highestRankOnboard}</span>
+              <span>{`${inspe.city}, ${inspe.country.name}`}</span>
               <span>Approved inspection Type:</span>
               <div>{this.renderChips(inspe.approvedInspectionTypes)}</div>
               <span>approved for vessel Type:</span>
               <div>{this.renderChips(inspe.approvedVesselTypes)}</div>
-              <span>Years of experience: 10 years</span>
-              <span>Total jobs done: 123</span>
+              <span>Years of experience: {`${inspe.experienceYears} years`}</span>
+              <span>Total jobs done: {inspe.totalInspections}</span>
               <span>Last active: 00/00/00</span>
             </div>
             <div className="col-3 d-flex">
@@ -80,7 +80,7 @@ class InspectorProfilePage extends Component {
               <div>Display map</div>
             </div>
           </div>
-          <p className="mt-4 mx-5" style={{ textAlign:'center', fontStyle: 'italic', color: '#000', fontSize: '14px' }}>{inspe.background || 'An experienced Chief Engineer & Technical Superintendent, have worked for some of the biggest shipping companies. Have also worked with Wartsila as field service engineer. A very well-rounded and experienced individual, now doing all types of inspections on behalf of Sinotech Marine.'}</p>
+          <p className="mt-4 mx-5" style={{ textAlign:'center', fontStyle: 'italic', color: '#000', fontSize: '14px' }}>{inspe.background || ''}</p>
         </div>
       )
     }
@@ -101,15 +101,23 @@ class InspectorProfilePage extends Component {
       const title = arr.map((i, key) => (
         <div style={{flex: 1, fontWeight: 'bold', fontSize: '18px'}} key={key}>{i}</div>
       ));
+      const itemStyle = { flex: 1, fontSize: '16px', color: '#555' };
       return (
         <div>
           <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Work History and Client's Feedback</h3>
           <div className="px-5 py-4">
           {
-              ([1,2,3] || []).map((o, key) => (
+              (inspe.employment || []).map((o, key) => (
                 <div key={key} style={{ borderBottom: '1px solid #d8e1e8' }}>
                   <div className="d-flex pl-5 pr-2 py-2 mb-2" style={{ color: '#000'}}>{title}</div>
-                  <div className="d-flex pl-5 pr-2 py-2 mb-2">data...</div>
+                  <div className="d-flex pl-5 pr-2 mb-4">
+                    <span style={itemStyle}>{o.jobTitle}</span>
+                    <span style={itemStyle}>{'vName'}</span>
+                    <span style={itemStyle}>{'IMO No.'}</span>
+                    <span style={itemStyle}>{o.shipType}</span>
+                    <span style={itemStyle}>{'rating'}</span>
+                    <span style={itemStyle}>{'client name'}</span>
+                  </div>
                   <div className="mb-4"><strong className="p-1" style={{color: '#fff', background: blue500}}>Client Feedback: </strong>........</div>
                 </div>
               ))
@@ -124,16 +132,22 @@ class InspectorProfilePage extends Component {
       const title = arr.map((i, key) => (
         <div style={{flex: 1, fontWeight: 'bold', fontSize: '18px'}} key={key}>{i}</div>
       ));
+      const itemStyle = { flex: 1, fontSize: '16px', color: '#555' };
       return (
         <div>
           <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Education and Professional Qualifications</h3>
           <div className="px-5 pb-4 pt-2">
             <h3 className="mb-3">Highest Qualifications</h3>
           {
-              ([1,2,3] || []).map((o, key) => (
+              (inspe.education || []).map((o, key) => (
                 <div key={key} style={{ borderBottom: '1px solid #d8e1e8' }}>
                   <div className="d-flex pl-5 pr-2 py-2 mb-2" style={{ color: '#000'}}>{title}</div>
-                  <div className="d-flex pl-5 pr-2 py-2 mb-4">data...</div>
+                  <div className="d-flex pl-5 pr-2 mb-4">
+                    <span style={itemStyle}>{o.level}</span>
+                    <span style={itemStyle}>{o.courseName}</span>
+                    <span style={itemStyle}>{o.institution}</span>
+                    <span style={itemStyle}>{o.country}</span>
+                  </div>
                 </div>
               ))
           }
@@ -152,20 +166,24 @@ class InspectorProfilePage extends Component {
           <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Personal Details</h3>
           <div className="d-flex p-4">
             <div className="" style={{flex: 3}}>
-              <div className="mb-3"><b className="p-1" style={{color: '#fff', background: blue500}}>Name as per Passport : </b>.........</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#fff', background: blue500}}>Nationality : </b>.........</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#fff', background: blue500}}>Passport Number : </b>.........</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#fff', background: blue500}}>Date of Birth : </b>.........</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#fff', background: blue500}}>Country of Residence : </b>.........</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#fff', background: blue500}}>Nearest Sea Port : </b>.........</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#fff', background: blue500}}>Nearest Airport : </b>.........</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Name as per Passport : </b>xyz</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nationality : </b>{inspe.nationality}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Passport Number : </b>{inspe.passport}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Date of Birth : </b>{inspe.dob.toLocaleString()}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Country of Residence : </b>{inspe.country.name}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Sea Port : </b>{`port name`}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Airport : </b>{`airport name`}</div>
             </div>
             <div className="" style={{flex: 3}}>
               <div className="d-flex flex-column justify-content-center align-items-center" style={{ color: '#fff', background: blue500, width: '80%', margin: '0 auto' }}>
                 <b className="my-1">Areas Covered</b>
                 <b className="my-1">(Countries Name)</b>
               </div>
-              <div style={{ width: '80%', margin: '0 auto' }}>Rows..</div>
+              <div className="d-flex flex-column" style={{ width: '80%', margin: '0 auto' }}>
+              {
+                (inspe.coveredAreas || []).map((x, key) => (<div className="py-1 px-3 areas-covered" key={key} style={{  }}>{x}</div>))
+              }
+              </div>
             </div>
             <div className="" style={{flex: 4}}>
               <div className="d-flex flex-column" style={{ width: '80%', float: 'right' }}>

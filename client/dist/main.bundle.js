@@ -54810,7 +54810,7 @@ var InspectorProfilePage = function (_Component) {
               _react2.default.createElement(
                 'b',
                 { style: { color: '#000000' } },
-                'BRIAN MICHAEL DIAS'
+                inspe.name
               ),
               _react2.default.createElement(
                 'div',
@@ -54820,7 +54820,8 @@ var InspectorProfilePage = function (_Component) {
               _react2.default.createElement(
                 'div',
                 null,
-                'Display rating here'
+                'Display rating here: ',
+                inspe.rating
               )
             )
           ),
@@ -54830,12 +54831,12 @@ var InspectorProfilePage = function (_Component) {
             _react2.default.createElement(
               'span',
               null,
-              'Title: Other'
+              inspe.highestRankOnboard
             ),
             _react2.default.createElement(
               'span',
               null,
-              'Lives in: Sample city'
+              inspe.city + ', ' + inspe.country.name
             ),
             _react2.default.createElement(
               'span',
@@ -54860,12 +54861,14 @@ var InspectorProfilePage = function (_Component) {
             _react2.default.createElement(
               'span',
               null,
-              'Years of experience: 10 years'
+              'Years of experience: ',
+              inspe.experienceYears + ' years'
             ),
             _react2.default.createElement(
               'span',
               null,
-              'Total jobs done: 123'
+              'Total jobs done: ',
+              inspe.totalInspections
             ),
             _react2.default.createElement(
               'span',
@@ -54891,7 +54894,7 @@ var InspectorProfilePage = function (_Component) {
         _react2.default.createElement(
           'p',
           { className: 'mt-4 mx-5', style: { textAlign: 'center', fontStyle: 'italic', color: '#000', fontSize: '14px' } },
-          inspe.background || 'An experienced Chief Engineer & Technical Superintendent, have worked for some of the biggest shipping companies. Have also worked with Wartsila as field service engineer. A very well-rounded and experienced individual, now doing all types of inspections on behalf of Sinotech Marine.'
+          inspe.background || ''
         )
       );
     }
@@ -54924,6 +54927,7 @@ var InspectorProfilePage = function (_Component) {
           i
         );
       });
+      var itemStyle = { flex: 1, fontSize: '16px', color: '#555' };
       return _react2.default.createElement(
         'div',
         null,
@@ -54935,7 +54939,7 @@ var InspectorProfilePage = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'px-5 py-4' },
-          ([1, 2, 3] || []).map(function (o, key) {
+          (inspe.employment || []).map(function (o, key) {
             return _react2.default.createElement(
               'div',
               { key: key, style: { borderBottom: '1px solid #d8e1e8' } },
@@ -54946,8 +54950,37 @@ var InspectorProfilePage = function (_Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'd-flex pl-5 pr-2 py-2 mb-2' },
-                'data...'
+                { className: 'd-flex pl-5 pr-2 mb-4' },
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.jobTitle
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  'vName'
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  'IMO No.'
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.shipType
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  'rating'
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  'client name'
+                )
               ),
               _react2.default.createElement(
                 'div',
@@ -54975,6 +55008,7 @@ var InspectorProfilePage = function (_Component) {
           i
         );
       });
+      var itemStyle = { flex: 1, fontSize: '16px', color: '#555' };
       return _react2.default.createElement(
         'div',
         null,
@@ -54991,7 +55025,7 @@ var InspectorProfilePage = function (_Component) {
             { className: 'mb-3' },
             'Highest Qualifications'
           ),
-          ([1, 2, 3] || []).map(function (o, key) {
+          (inspe.education || []).map(function (o, key) {
             return _react2.default.createElement(
               'div',
               { key: key, style: { borderBottom: '1px solid #d8e1e8' } },
@@ -55002,8 +55036,27 @@ var InspectorProfilePage = function (_Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'd-flex pl-5 pr-2 py-2 mb-4' },
-                'data...'
+                { className: 'd-flex pl-5 pr-2 mb-4' },
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.level
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.courseName
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.institution
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { style: itemStyle },
+                  o.country
+                )
               )
             );
           })
@@ -55040,70 +55093,70 @@ var InspectorProfilePage = function (_Component) {
               { className: 'mb-3' },
               _react2.default.createElement(
                 'b',
-                { className: 'p-1', style: { color: '#fff', background: _colors.blue500 } },
+                { className: 'p-1', style: { color: '#000', fontSize: '15px' } },
                 'Name as per Passport : '
               ),
-              '.........'
+              'xyz'
             ),
             _react2.default.createElement(
               'div',
               { className: 'mb-3' },
               _react2.default.createElement(
                 'b',
-                { className: 'p-1', style: { color: '#fff', background: _colors.blue500 } },
+                { className: 'p-1', style: { color: '#000', fontSize: '15px' } },
                 'Nationality : '
               ),
-              '.........'
+              inspe.nationality
             ),
             _react2.default.createElement(
               'div',
               { className: 'mb-3' },
               _react2.default.createElement(
                 'b',
-                { className: 'p-1', style: { color: '#fff', background: _colors.blue500 } },
+                { className: 'p-1', style: { color: '#000', fontSize: '15px' } },
                 'Passport Number : '
               ),
-              '.........'
+              inspe.passport
             ),
             _react2.default.createElement(
               'div',
               { className: 'mb-3' },
               _react2.default.createElement(
                 'b',
-                { className: 'p-1', style: { color: '#fff', background: _colors.blue500 } },
+                { className: 'p-1', style: { color: '#000', fontSize: '15px' } },
                 'Date of Birth : '
               ),
-              '.........'
+              inspe.dob.toLocaleString()
             ),
             _react2.default.createElement(
               'div',
               { className: 'mb-3' },
               _react2.default.createElement(
                 'b',
-                { className: 'p-1', style: { color: '#fff', background: _colors.blue500 } },
+                { className: 'p-1', style: { color: '#000', fontSize: '15px' } },
                 'Country of Residence : '
               ),
-              '.........'
+              inspe.country.name
             ),
             _react2.default.createElement(
               'div',
               { className: 'mb-3' },
               _react2.default.createElement(
                 'b',
-                { className: 'p-1', style: { color: '#fff', background: _colors.blue500 } },
+                { className: 'p-1', style: { color: '#000', fontSize: '15px' } },
                 'Nearest Sea Port : '
               ),
-              '.........'
+              'port name'
             ),
             _react2.default.createElement(
               'div',
               { className: 'mb-3' },
               _react2.default.createElement(
                 'b',
-                { className: 'p-1', style: { color: '#fff', background: _colors.blue500 } },
+                { className: 'p-1', style: { color: '#000', fontSize: '15px' } },
                 'Nearest Airport : '
               ),
-              '.........'
+              'airport name'
             )
           ),
           _react2.default.createElement(
@@ -55125,8 +55178,14 @@ var InspectorProfilePage = function (_Component) {
             ),
             _react2.default.createElement(
               'div',
-              { style: { width: '80%', margin: '0 auto' } },
-              'Rows..'
+              { className: 'd-flex flex-column', style: { width: '80%', margin: '0 auto' } },
+              (inspe.coveredAreas || []).map(function (x, key) {
+                return _react2.default.createElement(
+                  'div',
+                  { className: 'py-1 px-3 areas-covered', key: key, style: {} },
+                  x
+                );
+              })
             )
           ),
           _react2.default.createElement(

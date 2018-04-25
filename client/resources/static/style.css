@@ -1228,6 +1228,9 @@ p {
   font-size: 14px;
   font-weight: bolder;
 }
+.areas-covered:nth-child(odd) {
+  background: lightgray;
+}
 /* ---------------------------------------------------- inspector profile page end------------------------------------------------------------- */
 
 .inspector-profile-menu {
