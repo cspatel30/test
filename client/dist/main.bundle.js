@@ -61254,6 +61254,7 @@ var mapStateToProps = function mapStateToProps(state) {
         profileUpdateSuccess = state.profileUpdateSuccess;
 
     return { userProfile: userProfile, inspectorProfile: inspectorProfile, error: error, ports: ports, countries: countries, vesselTypes: vesselTypes, inspectorPositions: inspectorPositions, inspectorQualifications: inspectorQualifications,
+        inspectorSkills: inspectorSkills, inspectorTitles: inspectorTitles, region: region, inspectorLevel: inspectorLevel,
         regionCodes: regionCodes, inspectionTypes: inspectionTypes, profileUpdateSuccess: profileUpdateSuccess };
 };
 
@@ -61655,7 +61656,9 @@ exports.default = function () {
       return _extends({}, state, { ports: action.payload.ports, countries: action.payload.countries,
         inspectionTypes: action.payload.inspectionTypes, vesselTypes: action.payload.vesselTypes,
         inspectorPositions: action.payload.inspectorPositions, inspectorQualifications: action.payload.inspectorQualifications,
-        regionCodes: action.payload.regionCodes });
+        inspectorTitles: action.payload.inspectorTitles, inspectorSkills: action.payload.inspectorSkills,
+        region: action.payload.region,
+        inspectorLevel: action.payload.inspectorLevel, regionCodes: action.payload.regionCodes });
 
     case _app.INIT_APP_FAILURE:
       return _extends({}, state, { ports: [], error: action.payload });
@@ -62880,6 +62883,11 @@ var INITIAL_STATE = {
   vesselTypes: [],
   inspectorPositions: [],
   inspectorQualifications: [],
+  inspectorTitles: [],
+  inspectorSkills: [],
+  region: [],
+  regionCodes: [],
+  inspectorLevel: [],
   userToken: cookies.get("si.at"),
   userProfile: null,
   inspectorProfile: null,
