@@ -114,7 +114,7 @@ export default class EditInspectorProfile extends Component {
 
   	if(this.state.inspectorProfile) {
 		return (
-          <div className="page">
+          <div className="page d-flex flex-column">
           	<div className="error">{this.props.error}</div>
           	<h1>Edit Profile</h1>
           	<div className="leftHalf">
@@ -187,6 +187,39 @@ export default class EditInspectorProfile extends Component {
 	                      	<div className="clear"></div>
 		      			</div>
 		      			
+						<div className="edit-line">
+	      					<label>Approved Vessel Types :</label>
+	      					<div className="value">
+	      						<VirtualizedSelect labelKey='name' multi={true} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.approvedVesselTypesKeys = selectedValue; })}
+          						options={this.props.vesselTypes} searchable={true} simpleValue value={this.state.inspectorProfile.approvedVesselTypesKeys} valueKey='id'/>
+	      					</div>
+	      					<div className="clear"></div>
+	      				</div>
+
+						<div className="edit-line">
+							<label>Approved Inspection Types :</label>
+							<div className="value">
+								<VirtualizedSelect labelKey='name' multi={true} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.approvedInspectionTypesKeys = selectedValue; })}
+								options={this.props.inspectionTypes} searchable={true} simpleValue value={this.state.inspectorProfile.approvedInspectionTypesKeys} valueKey='id'/>
+							</div>
+							<div className="clear"></div>
+						</div>
+
+						<div className="edit-line">
+							<label>No Of Years:</label>
+							<div className="value">
+								<input type="text" name="experienceYears" value={this.state.inspectorProfile.experienceYears} onChange={this.handleInspectorInputChange}/>
+							</div>
+							<div className="clear"></div>
+						</div>
+						<div className="edit-line">
+							<label>Total Inspections:</label>
+							<div className="value">
+								<input type="text" name="totalInspections" value={this.state.inspectorProfile.totalInspections} onChange={this.handleInspectorInputChange}/>
+							</div>
+							<div className="clear"></div>
+						</div>
+
 		      			<div className="edit-line">
 		      				<label>Background:</label>
 		      				<div className="value">
@@ -201,20 +234,6 @@ export default class EditInspectorProfile extends Component {
 	          	<Paper className="inspector-profile-section" zDepth={1}>
 	          		<h3>Work Experience and Skill Details</h3>
 
-	          		<div className="edit-line">
-	      				<label>No Of Years:</label>
-	      				<div className="value">
-	      					<input type="text" name="experienceYears" value={this.state.inspectorProfile.experienceYears} onChange={this.handleInspectorInputChange}/>
-	      				</div>
-	      				<div className="clear"></div>
-	      			</div>
-	      			<div className="edit-line">
-	      				<label>Total Inspections:</label>
-	      				<div className="value">
-	      					<input type="text" name="totalInspections" value={this.state.inspectorProfile.totalInspections} onChange={this.handleInspectorInputChange}/>
-	      				</div>
-	      				<div className="clear"></div>
-	      			</div>
 	      			<div className="edit-line">
 	      				<label>Highest Rank Onboard:</label>
 	      				<div className="value">
@@ -233,7 +252,8 @@ export default class EditInspectorProfile extends Component {
 	      			<div className="edit-line">
 	      				<label>Skills :</label> 
 	      				<div className="value">
-	      					<input type="text" name="skills" value={this.state.inspectorProfile.skills} onChange={this.handleInspectorInputChange}/>
+						  	<VirtualizedSelect labelKey='name' multi={true} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.skills = selectedValue; })}
+							options={this.props.skills} searchable={true} simpleValue value={this.state.inspectorProfile.skills} valueKey='id'/>
 	      				</div>
 	      				<div className="clear"></div>
 	      			</div>
@@ -246,26 +266,9 @@ export default class EditInspectorProfile extends Component {
           				</div>
           				<div className="clear"></div>
 	      			</div>
-	      			
-	      			<div className="edit-line">
-	      				<label>Approved Vessel Types :</label>
-	      				<div className="value">
-	      					<VirtualizedSelect labelKey='name' multi={true} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.approvedVesselTypesKeys = selectedValue; })}
-          						options={this.props.vesselTypes} searchable={true} simpleValue value={this.state.inspectorProfile.approvedVesselTypesKeys} valueKey='id'/>
-	      				</div>
-	      				<div className="clear"></div>
-	      			</div>
-
-	      			<div className="edit-line">
-	      				<label>Approved Inspection Types :</label>
-	      				<div className="value">
-	      					<VirtualizedSelect labelKey='name' multi={true} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.approvedInspectionTypesKeys = selectedValue; })}
-          						options={this.props.inspectionTypes} searchable={true} simpleValue value={this.state.inspectorProfile.approvedInspectionTypesKeys} valueKey='id'/>
-	      				</div>
-	      				<div className="clear"></div>
-	      			</div>
 	          	</Paper>
 	        </div>
+
 	        <div className="clear"></div>
 	        <div className="leftHalf">
 	          	<Paper className="inspector-profile-section" zDepth={1}>
@@ -400,7 +403,7 @@ export default class EditInspectorProfile extends Component {
           	<div className="clear"></div>
           	<div className="actions-bar">
 	  			<RaisedButton style={{float: 'right', marginLeft: 10}} label="Save" primary={true}  onClick={this.saveProfile}/>
-	  			<RaisedButton style={{float: 'right'}} label="Cancel" primary={true}  onClick={this.props.cancelEdit}/>
+	  			<RaisedButton style={{float: 'right'}} label="Cancel" primary={true}  onClick={() => this.props.cancelEdit()}/>
 	  			<div className="clear"></div>
 	  		</div>
           </div>

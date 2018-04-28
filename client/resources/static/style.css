@@ -1227,6 +1227,7 @@ p {
 }
 .inspector-profile-data-wrap {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  position: relative;
 }
 .render-profile-middle-row span, .render-profile-middle-row div {
   margin-bottom: 3px;
