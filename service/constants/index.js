@@ -67,29 +67,6 @@ global.vesselTypes = {
   "TUG": "Tug Boats"
 };
 
-global.inspectorPositions = {
-    "TECH_SI": "Technical Superintendent",
-    "MARINE_SI": "Marine Superintendent",
-    "PORT_CAPTAIN": "Port Captain" ,
-    "CARGO_SURVERYOR": "Cargo Surveyor",
-    "SITE_MANAGER": "Site Manager",
-    "SHIP_OWNER_REP": "Ship Owner Representative",
-    "BANK_SURVEYOR": "Bunker Surveyor ",
-    "P&I INSPECTOR": "P&I Inspector",
-    "OTHERS": "Others"
-};
-
-global.inspectorQualifications = {
-  "CHIEF_MARINE_ENGG": "Chief Marine Engineer",
-  "MASTER_MARINER": "Master Mariner",
-  "SENIOR_MARINE_ENGG": "Senior Marine Engineer",
-  "CHIEF_MATE": "Chief Mate",
-  "GRAD_NAVAL_ARCH": "Graduate Naval Architect",
-  "GRAD_ELEC_ENGG": "Graduate Electrical Engineer",
-  "CERT_MARINE_SURVEYOR": "Certified Marine Surveyor",
-  "OTHERS": "Others"
-};
-
 global.inspectorSkills = {
   "CargoSurveying" : "Cargo Surveying ",
   "CrudeOilWashing" : "Crude Oil Washing ",
@@ -114,7 +91,7 @@ global.inspectorSkills = {
   "WarrantyClaimInspection" : "Warranty Claim Inspection "
 };
 
-global.inspectorHighQualification = {
+global.inspectorQualifications = {
   "BachelorinNauticalScience" : "Bachelor in Nautical Science",
   "CharteredshipBroker" : "Chartered ship Broker",
   "ChiefMarineEngineer" : "Chief Marine Engineer",
