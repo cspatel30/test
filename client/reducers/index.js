@@ -51,8 +51,10 @@ export default function(state = INITIAL_STATE, action) {
     case INIT_APP_SUCCESS:
       return { ...state, ports: action.payload.ports, countries: action.payload.countries, 
               inspectionTypes: action.payload.inspectionTypes, vesselTypes: action.payload.vesselTypes, 
-              inspectorPositions : action.payload.inspectorPositions, inspectorQualifications: action.payload.inspectorQualifications,
-              regionCodes: action.payload.regionCodes};    
+              inspectorPositions: action.payload.inspectorPositions, inspectorQualifications: action.payload.inspectorQualifications,
+              inspectorTitles: action.payload.inspectorTitles, inspectorSkills: action.payload.inspectorSkills,
+              region: action.payload.region,
+              inspectorLevel:action.payload.inspectorLevel, regionCodes: action.payload.regionCodes};    
 
     case INIT_APP_FAILURE:
       return { ...state, ports: [], error: action.payload};    
