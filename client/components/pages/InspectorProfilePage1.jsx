@@ -245,7 +245,8 @@ class InspectorProfilePage extends Component {
           handleFileUpload={this.props.handleFileUpload} ports={this.props.ports} countries={this.props.countries} 
           vesselTypes={this.props.vesselTypes} inspectorPositions={this.props.inspectorPositions} 
           inspectorQualifications={this.props.inspectorQualifications} regionCodes={this.props.regionCodes}
-          inspectionTypes={this.props.inspectionTypes} skills={this.props.skills}
+          inspectionTypes={this.props.inspectionTypes} inspectorSkills={this.props.inspectorSkills}
+          inspectorTitles={this.props.inspectorTitles} region={this.props.region} inspectorLevel={this.props.inspectorLevel}
           saveProfile={this.props.saveProfile}
           cancelEdit={this.cancelEdit.bind(this)} profileUpdateSuccess={this.props.profileUpdateSuccess}/>)
       }

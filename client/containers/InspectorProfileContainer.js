@@ -7,7 +7,7 @@ import { getProfile, uploadDocument, updateInspectorProfile } from '../actions/i
 
 const mapStateToProps = (state) => {
 	const { userProfile, inspectorProfile, error, ports, countries, vesselTypes, inspectorPositions, inspectorQualifications, 
-    regionCodes, inspectionTypes, profileUpdateSuccess } = state;
+    inspectorSkills, inspectorTitles, region, inspectorLevel, regionCodes, inspectionTypes, profileUpdateSuccess } = state;
     return { userProfile, inspectorProfile, error, ports, countries, vesselTypes, inspectorPositions, inspectorQualifications,
       inspectorSkills, inspectorTitles, region, inspectorLevel, 
       regionCodes, inspectionTypes, profileUpdateSuccess};

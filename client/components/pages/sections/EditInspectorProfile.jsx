@@ -1,6 +1,10 @@
 // import 'regenerator-runtime/runtime';
 
 import React, { Component } from 'react';
+import update from 'react-addons-update';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
 import { Switch, Route, Redirect } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import VirtualizedSelect from 'react-virtualized-select';
@@ -77,7 +81,13 @@ export default class EditInspectorProfile extends Component {
   	event.persist();
     this.setState((state) => { state.inspectorProfile[event.target.name] = event.target.value });
   }
- 
+  updateDOB(value, field) {
+	this.setState((state) => { state.inspectorProfile[field] = value });
+  }
+  onChange(arrName, index, field, value) {
+	this.setState((state) => { state.inspectorProfile[arrName][index][field] = value });  
+	// this.setState({ ...this.state, inspectorProfile: { [arrName]: update(this.state.inspectorProfile[arrName], { [index]: { [field]: { $set: value } } }) }  });
+  }
   renderSelectBox = (datasource, keyField='id', textField='name') => {
 	  var options = [];
 	  options.push(<option key="" value="">Select</option>);
@@ -166,15 +176,6 @@ export default class EditInspectorProfile extends Component {
 	                      	</div>
 	                      	<div className="clear"></div>
 	                    </div>
-		      			
-		      			<div className="edit-line">
-		      				<label>Nearest SeaPort:</label>
-		      				<div className="value"> 
-		                        <VirtualizedSelect labelKey='name' multi={false} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.seaport = selectedValue[0]; })}
-          							options={this.props.ports} searchable={true} simpleValue value={this.state.inspectorProfile.seaport} valueKey='id'/>
-	                      	</div>
-	                      	<div className="clear"></div>
-		      			</div>
 
 		      			<div className="edit-line"><label>City:</label><div className="value"><input type="text" name="city" value={this.state.inspectorProfile.city} onChange={this.handleInspectorInputChange}/></div><div className="clear"></div></div>
 		      			<div className="edit-line">
@@ -219,7 +220,14 @@ export default class EditInspectorProfile extends Component {
 							</div>
 							<div className="clear"></div>
 						</div>
-
+						<div className="edit-line">
+							<label>Covered Regions :</label> 
+							<div className="value">
+								<VirtualizedSelect labelKey='name' multi={true} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.coveredAreasKeys = selectedValue; })}
+									options={this.props.regionCodes} searchable={true} simpleValue value={this.state.inspectorProfile.coveredAreasKeys} valueKey='id'/>
+							</div>
+							<div className="clear"></div>
+						</div>
 		      			<div className="edit-line">
 		      				<label>Background:</label>
 		      				<div className="value">
@@ -232,8 +240,7 @@ export default class EditInspectorProfile extends Component {
 	        </div>
 	        <div className="rightHalf">  	
 	          	<Paper className="inspector-profile-section" zDepth={1}>
-	          		<h3>Work Experience and Skill Details</h3>
-
+	          		<h3>Skill Details</h3>
 	      			<div className="edit-line">
 	      				<label>Highest Rank Onboard:</label>
 	      				<div className="value">
@@ -252,31 +259,165 @@ export default class EditInspectorProfile extends Component {
 	      			<div className="edit-line">
 	      				<label>Skills :</label> 
 	      				<div className="value">
-						  	<VirtualizedSelect labelKey='name' multi={true} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.skills = selectedValue; })}
-							options={this.props.skills} searchable={true} simpleValue value={this.state.inspectorProfile.skills} valueKey='id'/>
+						  	<VirtualizedSelect labelKey='name' multi={true} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.skillsKeys = selectedValue; })}
+							options={this.props.inspectorSkills} searchable={true} simpleValue value={this.state.inspectorProfile.skillsKeys} valueKey='id'/>
 	      				</div>
 	      				<div className="clear"></div>
 	      			</div>
-	      			
-	      			<div className="edit-line">
-	      				<label>Covered Regions :</label> 
-	      				<div className="value">
-	      					<VirtualizedSelect labelKey='name' multi={true} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.coveredAreasKeys = selectedValue; })}
-          						options={this.props.regionCodes} searchable={true} simpleValue value={this.state.inspectorProfile.coveredAreasKeys} valueKey='id'/>
-          				</div>
-          				<div className="clear"></div>
-	      			</div>
+	          	</Paper>
+	        </div>
+			
+			<div className="rightHalf">  	
+	          	<Paper className="inspector-profile-section" zDepth={1}>
+	          		<h3>Education and Professional Qualifications</h3>
+	      			{
+						(this.state.inspectorProfile.education || []).map((o, key) => (
+						  <div className="p-3 mb-3" style={{border: '1px solid gray'}} key={key}>
+						  	<div className="edit-line">
+		      				  <label>Level:</label> 
+							  <div className="value"><div className="selectField">
+								<select name="level" value={o.level}  onChange={(e) => this.onChange('education', key, 'level', e.target.value)}>
+									{this.renderSelectBox(this.props.inspectorLevel, 'code', 'name')}
+								</select>
+							  </div></div>
+		      				</div>
+							<div className="edit-line">
+		      				  <label>Course Name:</label>
+							  <div className="value"><div className="selectField"> 
+								<select name="courseName" value={o.courseName} onChange={(e) => this.onChange('education', key, 'courseName', e.target.value)}>
+									{this.renderSelectBox(this.props.inspectorQualifications, 'code', 'name')}
+								</select>
+							  </div></div>
+		      				</div>
+							<div className="edit-line">
+							  <label>Institution/University:</label>
+							  <div className="value">
+							  	<input type="text" name="institution" value={o.institution} onChange={(e) => this.onChange('education', key, 'institution', e.target.value)} />
+							  </div>
+							</div>
+							<div className="edit-line">
+		      				  <label>Country:</label>
+							  <div className="value"><div className="selectField"> 
+								<select name="country" value={o.country}  onChange={(e) => this.onChange('education', key, 'country', e.target.value)}>
+									{this.renderSelectBox(this.props.countries, 'code', 'name')}
+								</select>
+							  </div></div>
+		      				</div>
+							<div className="edit-line">
+							  <label className="mr-3">Start Date:</label>
+								<DatePicker
+									selected={moment(o.startDate).isValid() ? moment(o.startDate) : undefined}
+									dateFormat="DD/MM/YYYY" placeholderText="Start Date"
+									onChange={v => this.onChange('education', key, 'startDate', v.toDate())}
+								/>
+							</div>
+							<div className="edit-line">
+							  <label className="mr-3">End Date:</label>
+							  <DatePicker
+								selected={moment(o.endDate).isValid() ? moment(o.endDate) : undefined}
+								dateFormat="DD/MM/YYYY" placeholderText="End Date"
+								onChange={v => this.onChange('education', key, 'endDate', v.toDate())}
+							  />
+							</div>
+						  </div>
+						))
+					}
 	          	</Paper>
 	        </div>
 
-	        <div className="clear"></div>
+			<div className="rightHalf">  	
+	          	<Paper className="inspector-profile-section" zDepth={1}>
+	          		<h3>Employment History</h3>
+	      			{
+						(this.state.inspectorProfile.employment || []).map((o, key) => (
+						  <div className="p-3 mb-3" style={{border: '1px solid gray'}} key={key}>
+						  	<div className="edit-line">
+		      				  <label>Position:</label>
+							  <div className="value"><div className="selectField">
+								<select name="jobTitle" value={o.jobTitle} onChange={(e) => this.onChange('employment', key, 'jobTitle', e.target.value)}>
+									{this.renderSelectBox(this.props.inspectorPositions, 'code', 'name')}
+								</select>
+							  </div></div>
+		      				</div>
+							<div className="edit-line">
+		      				  <label>Company Name:</label>
+								<div className="value"> 
+								  <input type="text" name="companyName" value={o.companyName} onChange={(e) => this.onChange('employment', key, 'companyName', e.target.value)} />
+								</div>
+							</div>
+							<div className="edit-line">
+							  <label>Ship Type:</label>
+							  <div className="value">
+							    <input type="text" name="shipType" value={o.shipType} onChange={(e) => this.onChange('employment', key, 'shipType', e.target.value)} />
+							  </div>
+							</div>
+							<div className="edit-line">
+							  <label>Department:</label>
+							  <div className="value">
+							    <input type="text" name="department" value={o.department} onChange={(e) => this.onChange('employment', key, 'department', e.target.value)} />
+							  </div>
+							</div>
+							<div className="edit-line">
+							  <label>City:</label>
+							  <div className="value">
+							    <input type="text" name="city" value={o.city} onChange={(e) => this.onChange('employment', key, 'city', e.target.value)}/>
+							  </div>
+							</div>
+							<div className="edit-line">
+		      				  <label>Country:</label>
+							  <div className="value"><div className="selectField"> 
+								<select name="country" value={o.country}  onChange={(e) => this.onChange('employment', key, 'country', e.target.value)}>
+									{this.renderSelectBox(this.props.countries, 'code', 'name')}
+								</select>
+							  </div></div>
+		      				</div>
+							<div className="edit-line">
+							  <label className="mr-3">Start Date:</label>
+							  <DatePicker
+								selected={moment(o.startDate).isValid() ? moment(o.startDate) : undefined}
+								dateFormat="DD/MM/YYYY" placeholderText="Start Date"
+								onChange={v => this.onChange('employment', key, 'startDate', v.toDate())}
+							  />
+							</div>
+							<div className="edit-line">
+							  <label className="mr-3">End Date:</label>
+							  <DatePicker
+								selected={moment(o.endDate).isValid() ? moment(o.endDate) : undefined}
+								dateFormat="DD/MM/YYYY" placeholderText="End Date"
+								onChange={v => this.onChange('employment', key, 'endDate', v.toDate())}
+							  />
+							</div>
+						  </div>
+						))
+					}
+	          	</Paper>
+	        </div>
+
 	        <div className="leftHalf">
 	          	<Paper className="inspector-profile-section" zDepth={1}>
 	          		<h3>Personal</h3>
 	          		
-	          		<div className="edit-line"><label>Passport:</label><div className="value"><input type="text" name="passport" value={this.state.inspectorProfile.passport} onChange={this.handleInspectorInputChange}/></div><div className="clear"></div></div>
-	          		<div className="edit-line"><label>Date Of Birth:</label><div className="value"><input type="text" name="dob" value={this.state.inspectorProfile.dob} onChange={this.handleInspectorInputChange}/></div><div className="clear"></div></div>
+					<div className="edit-line"><label>Name as per Passport:</label><div className="value"><input type="text" name="passportName" value={this.state.inspectorProfile.passportName} onChange={this.handleInspectorInputChange}/></div><div className="clear"></div></div>
+	          		<div className="edit-line"><label>Passport Number:</label><div className="value"><input type="text" name="passportNumber" value={this.state.inspectorProfile.passportNumber} onChange={this.handleInspectorInputChange}/></div><div className="clear"></div></div>
+					<div className="edit-line">
+					  <label className="mr-3">Date Of Birth:</label>
+					  <DatePicker
+						selected={moment(this.state.inspectorProfile.dob).isValid() ? moment(this.state.inspectorProfile.dob) : undefined}
+						dateFormat="DD/MM/YYYY" placeholderText="End Date"
+						onChange={v => this.updateDOB(v.toDate(), 'dob')}
+					  />
+					</div>
 	          		<div className="edit-line"><label>Nationality:</label><div className="value"><input type="text" name="nationality" value={this.state.inspectorProfile.nationality} onChange={this.handleInspectorInputChange}/></div><div className="clear"></div></div>
+					<div className="edit-line"><label>Residence Address: </label><div className="value"><input type="text" name="residenceAddress" value={this.state.inspectorProfile.residenceAddress} onChange={this.handleInspectorInputChange}/></div><div className="clear"></div></div>	
+					<div className="edit-line">
+						<label>Nearest SeaPort:</label>
+						<div className="value"> 
+							<VirtualizedSelect labelKey='name' multi={false} onChange={(selectedValue) => this.setState((state) => { state.inspectorProfile.seaport = selectedValue[0]; })}
+							options={this.props.ports} searchable={true} simpleValue value={this.state.inspectorProfile.seaport} valueKey='id'/>
+	                    </div>
+	                    <div className="clear"></div>
+		      		</div>
+					<div className="edit-line"><label>Nearest Airport: </label><div className="value"><input type="text" name="nearestAirport" value={this.state.inspectorProfile.nearestAirport} onChange={this.handleInspectorInputChange}/></div><div className="clear"></div></div>
 
 	          		<div className="edit-line">
 	          			<label>Valid Medical Insurance:</label>
