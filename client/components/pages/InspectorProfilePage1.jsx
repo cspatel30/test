@@ -3,10 +3,14 @@ import { NavLink } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import moment from 'moment';
+import IconButton from 'material-ui/IconButton';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import { Rating } from 'material-ui-rating';
 import { ReadMore } from 'react-read-more';
 import {blue500} from 'material-ui/styles/colors';
 import { isArray } from 'util';
+
+import EditInspectorProfile from './sections/EditInspectorProfile.jsx';
 
 class InspectorProfilePage extends Component {
     constructor(props) {
@@ -33,6 +37,7 @@ class InspectorProfilePage extends Component {
     }
   
     cancelEdit() {
+      console.log('cancel edit.......');
       this.setState((state) => { state.edit = false});	
     }
 
@@ -68,7 +73,7 @@ class InspectorProfilePage extends Component {
               </div>
             </div>
             <div className="col-6 d-flex flex-column pt-3 render-profile-middle-row">
-              <span>{inspe.highestRankOnboard}</span>
+              <span>{inspe.positionDisplayName}</span>
               <span>{`${inspe.city}, ${inspe.country.name}`}</span>
               <span>Approved inspection Type:</span>
               <div>{this.renderChips(inspe.approvedInspectionTypes)}</div>
@@ -235,11 +240,22 @@ class InspectorProfilePage extends Component {
     render() {
       const { userProfile, inspectorProfile, error } = this.props;
       console.log('........data.......', inspectorProfile, userProfile);
+      if(this.state.edit) {
+        return(<EditInspectorProfile userProfile={this.props.userProfile} inspectorProfile={this.props.inspectorProfile}
+          handleFileUpload={this.props.handleFileUpload} ports={this.props.ports} countries={this.props.countries} 
+          vesselTypes={this.props.vesselTypes} inspectorPositions={this.props.inspectorPositions} 
+          inspectorQualifications={this.props.inspectorQualifications} regionCodes={this.props.regionCodes}
+          inspectionTypes={this.props.inspectionTypes} skills={this.props.skills}
+          saveProfile={this.props.saveProfile}
+          cancelEdit={this.cancelEdit.bind(this)} profileUpdateSuccess={this.props.profileUpdateSuccess}/>)
+      }
+      
       if (userProfile && inspectorProfile) {
         return (
           <div className="inspector-profile-page mt-3 mb-5">
             <div className="error">{error}</div>
             <div className="inspector-profile-data-wrap">
+              <div style={{position:'absolute', left: '-50px'}}><IconButton iconStyle={{width: 30, height: 30}} onClick={() => {this.editProfile()}}><EditIcon color={blue500} /></IconButton></div>
               {this.renderMyProfile(inspectorProfile, userProfile)}
               {this.renderSkills(inspectorProfile, userProfile)}
               {this.renderWorkHistory(inspectorProfile, userProfile)}
