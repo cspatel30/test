@@ -3,7 +3,7 @@ var moment = require('moment');
 require('../constants');
 var countryDAO = require('../dao/countryDAO');
 
-const inspectorStringFields = ['profilePic', 'qualification', 'position', 'passport', 'nationality', 'skills', 'background', 'highestRankOnboard',
+const inspectorStringFields = ['profilePic', 'qualification', 'position', 'passportNumber', 'nationality', 'skillsKeys', 'background', 'highestRankOnboard',
                                 'highestRankAshore', 'cvDoc', 'passportDoc', 'seamanBookDoc', 'qualificationDoc', 'medicalInsuranceDoc',
                                 'shoreServiceCert', 'medicalFitnessDoc', 'profIndemnityCert', 'identityProofDoc', 'idProofDocType',
                                 'coveredAreasKeys', 'approvedVesselTypesKeys', 'approvedInspectionTypesKeys'];
@@ -18,13 +18,13 @@ const inspectorEntryToEntityFieldMapping = {
   profilePic: 'profile_pic',
   qualification: 'qualification',
   position: 'position',
-  passport: 'passport',
+  passportNumber: 'passport',
   dob: 'dob',
   nationality: 'nationality',
   validMedicalInsurance: 'valid_medical_insurance',
   validIndemnityInsurance: 'valid_indemnity_insurance',
   validEmploymentMedicalCert : 'valid_employment_medical_cert',
-  skills: 'skills',
+  skillsKeys: 'skills',
   approvedVesselTypesKeys: 'approved_vessel_types',
   approvedInspectionTypesKeys: 'approved_inspection_types',
   coveredAreasKeys: 'covered_area',
@@ -59,10 +59,13 @@ const userEntryToEntityFieldMapping = {
   city: 'city',
   countryCode: 'country',
   status: 'status',
-  registeredOn: 'registered_on'
+  registeredOn: 'registered_on',
+  passportName: 'passport_name',
+  residenceAddress: 'address',
+  nearestAirport: 'nearest_airport'
 }
 
-const userStringFields = ['name', 'email', 'type', 'company', 'phone', 'building', 'street', 'city', 'countryCode', 'status'];
+const userStringFields = ['nearestAirport', 'passportName', 'residenceAddress', 'name', 'email', 'type', 'company', 'phone', 'building', 'street', 'city', 'countryCode', 'status'];
 const userNumberFields = ['id'];
 const userDateFields = ['registeredOn'];
 
@@ -190,6 +193,122 @@ function update_inspector_profile(userId, payload) {
   return new Promise(function(resolve, reject) { resolve(true) });
 }
 
+function update_inspector_education(payload) {
+  var setOps = [];
+  console.log(payload);
+  if(payload && payload.length > 0) {
+    for(var i=0; i<payload.length; i++) {
+      var id = payload[i]['id'];
+      if(!id || id == "") {
+        insert_inspector_education(payload[i]);
+      } else {
+        Object.keys(educationEntryToEntityFieldMapping).map((key) => {
+          if(payload[i][key] && payload[i][key] !== "") {
+            if(educationNumberFields.includes(key)) {
+              setOps.push(educationEntryToEntityFieldMapping[key]+" = "+ parseInt(payload[i][key]));
+            } else if (educationDateFields.includes(key)) {
+              setOps.push(educationEntryToEntityFieldMapping[key]+" = '"+moment(payload[i][key]).format("YYYY-MM-DD HH:mm:ss")+"'");
+            } else if(educationStringFields.includes(key)) {
+              if(payload[i][key].trim() !== "")
+                setOps.push(educationEntryToEntityFieldMapping[key]+" = '"+payload[i][key].trim()+"'");
+            }
+          }
+        });
+
+        if(setOps.length > 0) {
+          var updateQuery = "UPDATE inspector_education_qualification SET "+ setOps.join(",") +" WHERE id = "+ id;
+          console.log("Run inspector update query = ", updateQuery);
+          db.mysql_update_query(updateQuery);
+        }
+      }
+    }
+    return true;
+  } else {
+    return false;
+  }
+  return new Promise(function(resolve, reject) { resolve(true) });
+}
+
+function insert_inspector_education(payload) {
+  console.log("inspector payload ", payload);
+
+  var keys = [];
+  var values = [];
+  Object.keys(educationEntryToEntityFieldMapping).map((key) => {
+    if(payload[key] && payload[key] !== "") {
+      keys.push(educationEntryToEntityFieldMapping[key]);
+      if(educationStringFields.includes(key)) {
+        if(payload[key].trim() !== "")
+          values.push(payload[key].trim());
+      } else if(educationNumberFields.includes(key)) {
+        values.push(parseInt(payload[key]));
+      } else if (educationDateFields.includes(key)) {
+        values.push(moment(payload[key]).format("YYYY-MM-DD HH:mm:ss"));
+      }
+    }
+  });
+  return db.mysql_insert_query("insert into inspector_education_qualification ("+keys.join(", ")+") values ? ", [values]);
+  return new Promise(function(resolve, reject) { resolve(true) });
+}
+
+function update_inspector_employment(payload) {
+  var setOps = [];
+  console.log(payload);
+  if(payload && payload.length > 0) {
+    for(var i=0; i<payload.length; i++) {
+      var id = payload[i]['id'];
+      if(!id || id == "") {
+        insert_inspector_employment(payload[i]);
+      } else {
+        Object.keys(employmentEntryToEntityFieldMapping).map((key) => {
+          if(payload[i][key] && payload[i][key] !== "") {
+            if(employmentNumberFields.includes(key)) {
+              setOps.push(employmentEntryToEntityFieldMapping[key]+" = "+ parseInt(payload[i][key]));
+            } else if (employmentDateFields.includes(key)) {
+              setOps.push(employmentEntryToEntityFieldMapping[key]+" = '"+moment(payload[i][key]).format("YYYY-MM-DD HH:mm:ss")+"'");
+            } else if(employmentStringFields.includes(key)) {
+              if(payload[i][key].trim() !== "")
+                setOps.push(employmentEntryToEntityFieldMapping[key]+" = '"+payload[i][key].trim()+"'");
+            }
+          }
+        });
+
+        if(setOps.length > 0) {
+          var updateQuery = "UPDATE inspector_employment_history SET "+ setOps.join(",") +" WHERE id = "+ id;
+          console.log("Run inspector update query = ", updateQuery);
+          db.mysql_update_query(updateQuery);
+        }
+      }
+    }
+    return true;
+  } else {
+    return false;
+  }
+  return new Promise(function(resolve, reject) { resolve(true) });
+}
+
+function insert_inspector_employment(payload) {
+  console.log("inspector payload ", payload);
+
+  var keys = [];
+  var values = [];
+  Object.keys(employmentEntryToEntityFieldMapping).map((key) => {
+    if(payload[key] && payload[key] !== "") {
+      keys.push(employmentEntryToEntityFieldMapping[key]);
+      if(employmentStringFields.includes(key)) {
+        if(payload[key].trim() !== "")
+          values.push(payload[key].trim());
+      } else if(employmentNumberFields.includes(key)) {
+        values.push(parseInt(payload[key]));
+      } else if (employmentDateFields.includes(key)) {
+        values.push(moment(payload[key]).format("YYYY-MM-DD HH:mm:ss"));
+      }
+    }
+  });
+  return db.mysql_insert_query("insert into inspector_employment_history ("+keys.join(", ")+") values ? ", [values]);
+  return new Promise(function(resolve, reject) { resolve(true) });
+}
+
 function login(payload) {
   return db.mysql_query("select * from user u where email = '" + payload.email + "' and type = '" + payload.userType + "'" );
 }
@@ -207,7 +326,7 @@ function fetchInspectorProfile(userId) {
 }
 
 function fetchInspectorPublicProfile(userId) {
-  return db.mysql_query('select ip.*, u.name, u.company, u.phone, u.email, u.city, u.country from inspector_profile ip, user u where ip.user_id = u.id and u.id = ' + userId);
+  return db.mysql_query('select ip.*, u.name, u.company, u.phone, u.email, u.city, u.country, u.passport_name, u.address, u.nearest_airport from inspector_profile ip, user u where ip.user_id = u.id and u.id = ' + userId);
 }
 
 function fetchInspectorEducation(inspectorId) {
@@ -241,7 +360,8 @@ async function transformUserProfile(userDTOs) {
 
       profiles.push({id: userDTOs[i]['id'], name: userDTOs[i]['name'], email: userDTOs[i]['email'], 'type': userDTOs[i]['type'],
                       company: userDTOs[i]['company'], phone: userDTOs[i]['phone'], city: userDTOs[i]['city'],
-                      'countryCode': userDTOs[i]['country'], 'country': countryData, 'approved': userDTOs[i]['approved_client']});
+                      'countryCode': userDTOs[i]['country'], 'country': countryData, 'approved': userDTOs[i]['approved_client'],
+                      'passportName':userDTOs[i]['passport_name'], 'residenceAddress':userDTOs[i]['address'], 'nearestAirport':userDTOs[i]['nearest_airport']});
     }
   }
   return profiles;
@@ -397,5 +517,9 @@ module.exports = {
   fetchInspectorEducation: fetchInspectorEducation,
   fetchInspectorEmployment: fetchInspectorEmployment,
   transformEducation: transformEducation,
-  transformEmployment: transformEmployment
+  transformEmployment: transformEmployment,
+  update_inspector_education : update_inspector_education,
+  insert_inspector_education : insert_inspector_education,
+  insert_inspector_employment : insert_inspector_employment,
+  update_inspector_employment : update_inspector_employment
 }
