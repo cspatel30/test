@@ -129,3 +129,17 @@ exports.forgotPassword = async (req, resp) => {
   }
   resp.json({status: {success: false, message: "No user found with given email id."}});
 }
+
+exports.deleteEducation = async (req, resp) => {
+  var id = req.params.id;
+  console.log(id);
+  var result = await userDAO.delete_education(id);
+  resp.json({status: {success: true, message: "Delete success", id: id}});
+}
+
+exports.deleteEmployment = async (req, resp) => {
+  var id = req.params.id;
+  console.log(id);
+  var result = await userDAO.delete_employment(id);
+  resp.json({status: {success: true, message: "Delete success", id: id}});
+}
