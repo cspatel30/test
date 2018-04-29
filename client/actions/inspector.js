@@ -121,7 +121,6 @@ export function deleteEducationItemSuccess(item) {
 }
 
 export function deleteEducationItemFailure(error) {
-  console.log('error......', error);
   return {
     type: 'DELETE_EDUCATION_ITEM_FAILURE',
     payload: error
