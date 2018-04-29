@@ -92,6 +92,8 @@ exports.updateProfile = async (req, resp) => {
   var newProfile = req.body;
   var result1 = await userDAO.update_inspector_profile(resp.locals.userProfile.id, newProfile);
   var result2 = await userDAO.update_user_profile(resp.locals.userProfile.id, newProfile);
+  var result3 = await userDAO.update_inspector_education(newProfile['education']);
+  var result4 = await userDAO.update_inspector_employment(newProfile['employment']);
 
   var userDTOs = await userDAO.fetchUserProfile(resp.locals.userProfile.id);
   var profiles = await userDAO.transformUserProfile(userDTOs);
