@@ -35,6 +35,8 @@ module.exports = function(app) {
   //logged in user apis
   app.route('/api/my/profile/').get(asyncMiddleware(userApi.getInspectorProfile));
   app.route('/api/my/profile/').put(asyncMiddleware(userApi.updateProfile));
+  app.route('/api/my/deleteEducation/:id').put(asyncMiddleware(userApi.deleteEducation));
+  app.route('/api/my/deleteEmployment/:id').put(asyncMiddleware(userApi.deleteEmployment));
 
   app.route('/api/my/enquiries/').get(asyncMiddleware(enquiryApi.getUserEnquiries));
   app.route('/api/my/enquiry/:id').put(asyncMiddleware(enquiryApi.updateCustomerEnquiry));
