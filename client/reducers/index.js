@@ -173,8 +173,22 @@ export default function(state = INITIAL_STATE, action) {
     case UPDATE_INSPECTOR_PROFILE_FAILURE:
       return {...state, loading: false, error: action.payload};
     
+    case 'DELETE_EDUCATION_ITEM_SUCCESS':
+      console.log('reducer : deleted item education', action.payload);
+      return {...state, loading: false, deletedItemFromEdu: action.payload};
+
+    case 'DELETE_EDUCATION_ITEM_FAILURE':
+      return {...state, loading: false, error: action.payload};
+    
+    case 'DELETE_EMPLOYMENT_ITEM_SUCCESS':
+      console.log('reducer : deleted item employemnt', action.payload);
+      return {...state, loading: false, deletedItemFromEmp: action.payload};
+
+    case 'DELETE_EMPLOYMENT_ITEM_FAILURE':
+      return {...state, loading: false, error: action.payload};
+    
     case UPDATE_INSPECTOR_PROFILE:
-      return {...state, profileUpdateSuccess: false, inspectorProfile: null}
+      return {...state, profileUpdateSuccess: false, inspectorProfile: null};
 
     case CONTACT_US_EMAIL_SUCCESS:
       return {...state, contactUsEmailSuccess: true, loading: false, error: null};

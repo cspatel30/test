@@ -23,6 +23,8 @@ function* nevtopSaga() {
 	yield takeLatest('ASSIGN_INSPECTORS_FOR_ENQUIRY', performAction);
 	yield takeLatest('ACCEPT_REJECT_ENQUIRY_QUOTE', performAction);
 	yield takeLatest('UPDATE_INSPECTOR_PROFILE', performAction);
+	yield takeLatest('DELETE_EDUCATION_ITEM', performAction);
+	yield takeLatest('DELETE_EMPLOYMENT_ITEM', performAction);
 	yield takeLatest('CONTACT_US_EMAIL', performAction);
 	yield takeLatest('SETUP_ACCOUNT', performAction);
 	yield takeLatest('VERIFY_EMAIL', performAction);

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 // import InspectorProfilePage from '../components/pages/InspectorProfilePage.jsx';
 import InspectorProfilePage from '../components/pages/InspectorProfilePage1.jsx';
 
-import { getProfile, uploadDocument, updateInspectorProfile } from '../actions/inspector';
+import { getProfile, uploadDocument, updateInspectorProfile, deleteEducationItem, deleteEmploymentItem } from '../actions/inspector';
 
 
 const mapStateToProps = (state) => {
@@ -32,6 +32,14 @@ const mapDispatchToProps = (dispatch) => {
 
       saveProfile: (inspectorProfile) => {
         dispatch(updateInspectorProfile(inspectorProfile));
+      },
+
+      deleteRecord: (arrName, id) => {
+        if (arrName === 'education') {
+          dispatch(deleteEducationItem(id));
+        } else {
+          dispatch(deleteEmploymentItem(id));
+        }
       }
 	};
 }

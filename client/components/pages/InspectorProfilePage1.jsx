@@ -100,7 +100,7 @@ class InspectorProfilePage extends Component {
         <div>
           <h3 className="py-3 px-5 m-0" style={{ color: '#fff', background: '#1475af' }}>Skills</h3>
           <div className="d-flex p-4">
-            {this.renderChips(inspe.skills)}
+            {this.renderChips(inspe.skillsKeys)}
           </div>
         </div>
       )
@@ -208,13 +208,13 @@ class InspectorProfilePage extends Component {
           <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Personal Details</h3>
           <div className="d-flex p-4">
             <div className="" style={{flex: 3}}>
-              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Name as per Passport : </b>xyz</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Name as per Passport : </b>{inspe.passportName}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nationality : </b>{inspe.nationality}</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Passport Number : </b>{inspe.passport}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Passport Number : </b>{inspe.passportNumber}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Date of Birth : </b>{moment(inspe.dob).format('MMM Do YYYY')}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Country of Residence : </b>{inspe.country.name}</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Sea Port : </b>{`port name`}</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Airport : </b>{`airport name`}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Sea Port : </b>{inspe.seaport}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Airport : </b>{inspe.nearestAirport}</div>
             </div>
             <div className="" style={{flex: 3}}>
               <div className="d-flex flex-column justify-content-center align-items-center" style={{ color: '#fff', background: blue500, width: '80%', margin: '0 auto' }}>
@@ -240,6 +240,7 @@ class InspectorProfilePage extends Component {
     render() {
       const { userProfile, inspectorProfile, error } = this.props;
       console.log('........data.......', inspectorProfile, userProfile);
+      // console.log('........ports option.......', this.props.ports);
       if(this.state.edit) {
         return(<EditInspectorProfile userProfile={this.props.userProfile} inspectorProfile={this.props.inspectorProfile}
           handleFileUpload={this.props.handleFileUpload} ports={this.props.ports} countries={this.props.countries} 
@@ -247,7 +248,7 @@ class InspectorProfilePage extends Component {
           inspectorQualifications={this.props.inspectorQualifications} regionCodes={this.props.regionCodes}
           inspectionTypes={this.props.inspectionTypes} inspectorSkills={this.props.inspectorSkills}
           inspectorTitles={this.props.inspectorTitles} region={this.props.region} inspectorLevel={this.props.inspectorLevel}
-          saveProfile={this.props.saveProfile}
+          saveProfile={this.props.saveProfile} deleteRecord={this.props.deleteRecord}
           cancelEdit={this.cancelEdit.bind(this)} profileUpdateSuccess={this.props.profileUpdateSuccess}/>)
       }
       

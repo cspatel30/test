@@ -106,6 +106,48 @@ export function getInspectorsFailure(error) {
   };
 }
 
+export function deleteEducationItem(id) {
+  return {
+    type: 'DELETE_EDUCATION_ITEM',
+    payload: id
+  };
+}
+
+export function deleteEducationItemSuccess(item) {
+  return {
+    type: 'DELETE_EDUCATION_ITEM_SUCCESS',
+    payload: item
+  };
+}
+
+export function deleteEducationItemFailure(error) {
+  return {
+    type: 'DELETE_EDUCATION_ITEM_FAILURE',
+    payload: error
+  };
+}
+
+export function deleteEmploymentItem(id) {
+  return {
+    type: 'DELETE_EMPLOYMENT_ITEM',
+    payload: id
+  };
+}
+
+export function deleteEmploymentItemSuccess(item) {
+  return {
+    type: 'DELETE_EMPLOYMENT_ITEM_SUCCESS',
+    payload: item
+  };
+}
+
+export function deleteEmploymentItemFailure(error) {
+  return {
+    type: 'DELETE_EMPLOYMENT_ITEM_FAILURE',
+    payload: error
+  };
+}
+
 export function updateInspectorProfile(inspectorProfile) {
   return {
     type: UPDATE_INSPECTOR_PROFILE,
