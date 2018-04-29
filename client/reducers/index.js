@@ -174,8 +174,7 @@ export default function(state = INITIAL_STATE, action) {
       return {...state, loading: false, error: action.payload};
     
     case 'DELETE_EDUCATION_ITEM_SUCCESS':
-      console.log('reducer : deleted item education', action.payload);
-      const newArr = state.inspectorProfile.education.filter(x => x.id === action.payload.id);
+      const newArr = state.inspectorProfile.education.filter(x => x.id != action.payload.id);
       const obj = {...state.inspectorProfile, education: newArr };
       return {...state, loading: false, deletedItemFromEdu: action.payload, inspectorProfile: obj };
 
@@ -183,10 +182,9 @@ export default function(state = INITIAL_STATE, action) {
       return {...state, loading: false, error: action.payload};
     
     case 'DELETE_EMPLOYMENT_ITEM_SUCCESS':
-      console.log('reducer : deleted item employemnt', action.payload);
-      const newArr1 = state.inspectorProfile.employment.filter(x => x.id === action.payload.id);
-      const obj1 = {...state.inspectorProfile, employment: newArr };
-      return {...state, loading: false, deletedItemFromEdu: action.payload, inspectorProfile: obj };
+      const newArr1 = state.inspectorProfile.employment.filter(x => x.id != action.payload.id);
+      const obj1 = {...state.inspectorProfile, employment: newArr1 };
+      return {...state, loading: false, deletedItemFromEdu: action.payload, inspectorProfile: obj1 };
 
     case 'DELETE_EMPLOYMENT_ITEM_FAILURE':
       return {...state, loading: false, error: action.payload};

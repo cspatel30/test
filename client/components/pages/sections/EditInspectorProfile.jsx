@@ -87,9 +87,10 @@ export default class EditInspectorProfile extends Component {
 	}
 	
 	addRecord(arrName) {
-		// education   employment
-		const eduObj = {country: '', courseName: '', endDate: '', startDate: '', institution: '', level: ''};
-		const empObj = {city: '', companyName: '', country: '', department: '', endDate: '', startDate: '', jobTitle: '', shipType: ''};
+		// education   employment  inspectorId userId
+		const { userProfile, inspectorProfile } = this.props;
+		const eduObj = {country: '', courseName: '', endDate: '', startDate: '', institution: '', level: '', inspectorId: inspectorProfile.id, userId: userProfile.id};
+		const empObj = {city: '', companyName: '', country: '', department: '', endDate: '', startDate: '', jobTitle: '', shipType: '', inspectorId: inspectorProfile.id, userId: userProfile.id};
 		const newArr = arrName === 'education' ? [eduObj, ...this.state.inspectorProfile[arrName]] : [empObj, ...this.state.inspectorProfile[arrName]];
 		this.setState((state) => { state.inspectorProfile[arrName] = newArr });
 	}
