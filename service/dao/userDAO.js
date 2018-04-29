@@ -161,6 +161,24 @@ function update_user_profile(userId, payload) {
   return new Promise(function(resolve, reject) { resolve(true) });
 }
 
+function delete_education(id) {
+  if(id) {
+    var updateQuery = "delete from inspector_education_qualification WHERE id = "+ id;
+    console.log("Run education delete = ", updateQuery);
+    return db.mysql_update_query(updateQuery);
+  }
+  return new Promise(function(resolve, reject) { resolve(true) });
+}
+
+function delete_employment(id) {
+  if(id) {
+    var updateQuery = "delete from inspector_employment_history WHERE id = "+ id;
+    console.log("Run employment delete = ", updateQuery);
+    return db.mysql_update_query(updateQuery);
+  }
+  return new Promise(function(resolve, reject) { resolve(true) });
+}
+
 function signup_inspector(userId, payload) {
   return db.mysql_insert_query("insert into inspector_profile (user_id, seaport, position, qualification ) VALUES ? ",
             [[userId, payload.seaport, payload.position, payload.qualification]]);
@@ -521,5 +539,7 @@ module.exports = {
   update_inspector_education : update_inspector_education,
   insert_inspector_education : insert_inspector_education,
   insert_inspector_employment : insert_inspector_employment,
-  update_inspector_employment : update_inspector_employment
+  update_inspector_employment : update_inspector_employment,
+  delete_employment : delete_employment,
+  delete_education : delete_education
 }
