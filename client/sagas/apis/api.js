@@ -22,7 +22,8 @@ import { actionInProgress, sessionExpired} from '../../actions/common';
 
 import { getProfileSuccess, getProfileFailure, uploadDocumentSuccess, uploadDocumentFailure,
 getInspectorsSuccess, getInspectorsFailure, getPublicProfileSuccess, getPublicProfileFailure,
-downloadDocumentSuccess, downloadDocumentFailure, updateInspectorProfileSuccess, updateInspectorProfileFailure} from '../../actions/inspector';
+downloadDocumentSuccess, downloadDocumentFailure, updateInspectorProfileSuccess, updateInspectorProfileFailure,
+deleteEducationItemSuccess, deleteEducationItemFailure, deleteEmploymentItemSuccess, deleteEmploymentItemFailure} from '../../actions/inspector';
 
 import {createOrderSuccess, createOrderFailure, getUserOrdersSuccess, getUserOrdersFailure} from '../../actions/order';
 
@@ -155,6 +156,18 @@ function updateInspectorProfileApi(payload) {
   return publicApiInstance.put('/api/my/profile/',
 			payload,
             { headers: { "Content-Type": "application/json", "Accept": "application/json"} }
+  );
+}
+
+function deleteEducationItemApi(id) {
+  return publicApiInstance.delete(`/api/my/deleteEducation/${id}`,
+			{ headers: { "Content-Type": "application/json", "Accept": "application/json"} }
+  );
+}
+
+function deleteEmploymentItemApi(id) {
+  return publicApiInstance.delete(`/api/my/deleteEmployment/${id}`,
+			  { headers: { "Content-Type": "application/json", "Accept": "application/json"} }
   );
 }
 
@@ -293,6 +306,14 @@ function* makeApiCall(action, apiFn, apiSuccessCb, apiFailureCb) {
 				var apiResponse = yield apiFn(action.payload);
 				yield put (apiSuccessCb(apiResponse.userProfile, apiResponse.inspectorProfile));
 				break;
+			case 'DELETE_EDUCATION_ITEM':
+				var apiResponse = yield apiFn(action.payload);
+				yield put (apiSuccessCb(apiResponse));
+				break;
+			case 'DELETE_EMPLOYMENT_ITEM':
+				var apiResponse = yield apiFn(action.payload);
+				yield put (apiSuccessCb(apiResponse));
+				break;
 			case 'CONTACT_US_EMAIL':
 				var apiResponse = yield apiFn(action.payload);
 				yield put (apiSuccessCb());
@@ -396,6 +417,12 @@ export default function* performAction(action) {
 			break;
 		case 'UPDATE_INSPECTOR_PROFILE':
 			yield makeApiCall(action, updateInspectorProfileApi, updateInspectorProfileSuccess, updateInspectorProfileFailure)
+			break;
+		case 'DELETE_EDUCATION_ITEM':
+			yield makeApiCall(action, deleteEducationItemApi, deleteEducationItemSuccess, deleteEducationItemFailure)
+			break;
+		case 'DELETE_EMPLOYMENT_ITEM':
+			yield makeApiCall(action, deleteEmploymentItemApi, deleteEmploymentItemSuccess, deleteEmploymentItemFailure)
 			break;
 		case 'CONTACT_US_EMAIL':
 			yield makeApiCall(action, sendContactUsEmailApi, sendContactUsEmailSuccess, sendContactUsEmailFailure)

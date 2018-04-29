@@ -80,10 +80,24 @@ export default class EditInspectorProfile extends Component {
   handleInspectorInputChange(event) {
   	event.persist();
     this.setState((state) => { state.inspectorProfile[event.target.name] = event.target.value });
-  }
+	}
+	
   updateDOB(value, field) {
 	this.setState((state) => { state.inspectorProfile[field] = value });
-  }
+	}
+	
+	addRecord(arrName) {
+		// education   employment
+		const eduObj = {country: '', courseName: '', endDate: '', startDate: '', institution: '', level: ''};
+		const empObj = {city: '', companyName: '', country: '', department: '', endDate: '', startDate: '', jobTitle: '', shipType: ''};
+		const newArr = arrName === 'education' ? [eduObj, ...this.state.inspectorProfile[arrName]] : [empObj, ...this.state.inspectorProfile[arrName]];
+		this.setState((state) => { state.inspectorProfile[arrName] = newArr });
+	}
+	deleteRecord(arrName, id) {
+		this.props.deleteRecord(arrName, id);
+		// delete obj from arrName
+	}
+
   onChange(arrName, index, field, value) {
 	this.setState((state) => { state.inspectorProfile[arrName][index][field] = value });  
 	// this.setState({ ...this.state, inspectorProfile: { [arrName]: update(this.state.inspectorProfile[arrName], { [index]: { [field]: { $set: value } } }) }  });
@@ -270,9 +284,13 @@ export default class EditInspectorProfile extends Component {
 			<div className="rightHalf">  	
 	          	<Paper className="inspector-profile-section" zDepth={1}>
 	          		<h3>Education and Professional Qualifications</h3>
+								<div className="text-right mb-2"><button type="button" className="btn btn-primary" onClick={() => this.addRecord('education')}>Add New</button></div>
 	      			{
-						(this.state.inspectorProfile.education || []).map((o, key) => (
+						(this.state.inspectorProfile.education || []).map((o, key) => { 
+							console.log('level........', key, o.level);
+							return (
 						  <div className="p-3 mb-3" style={{border: '1px solid gray'}} key={key}>
+								<div className="text-right"><button type="button" className="btn btn-danger" onClick={() => this.deleteRecord('education', o)}>Delete</button></div>
 						  	<div className="edit-line">
 		      				  <label>Level:</label> 
 							  <div className="value"><div className="selectField">
@@ -320,7 +338,7 @@ export default class EditInspectorProfile extends Component {
 							  />
 							</div>
 						  </div>
-						))
+						)})
 					}
 	          	</Paper>
 	        </div>
@@ -328,9 +346,11 @@ export default class EditInspectorProfile extends Component {
 			<div className="rightHalf">  	
 	          	<Paper className="inspector-profile-section" zDepth={1}>
 	          		<h3>Employment History</h3>
+								<div className="text-right mb-2"><button type="button" className="btn btn-primary" onClick={() => this.addRecord('employment')}>Add New</button></div>
 	      			{
 						(this.state.inspectorProfile.employment || []).map((o, key) => (
 						  <div className="p-3 mb-3" style={{border: '1px solid gray'}} key={key}>
+								<div className="text-right"><button type="button" className="btn btn-danger" onClick={() => this.deleteRecord('employment', o)}>delete</button></div>
 						  	<div className="edit-line">
 		      				  <label>Position:</label>
 							  <div className="value"><div className="selectField">
