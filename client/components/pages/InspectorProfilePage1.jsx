@@ -199,6 +199,8 @@ class InspectorProfilePage extends Component {
     }
 
     renderPersonalDetails(inspe, user) {
+      const { ports } = this.props;
+      const port = ports.find((x) => x.id[0] == inspe.seaport && x);
       const arr = ['Document Name', 'Expiry', 'File Attachment'];
       const title = arr.map((i, key) => (
         <div style={{flex: 1, fontWeight: 'bold'}} key={key}>{i}</div>
@@ -213,7 +215,7 @@ class InspectorProfilePage extends Component {
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Passport Number : </b>{inspe.passportNumber}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Date of Birth : </b>{moment(inspe.dob).format('MMM Do YYYY')}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Country of Residence : </b>{inspe.country.name}</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Sea Port : </b>{inspe.seaport}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Sea Port : </b>{port.name}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Airport : </b>{inspe.nearestAirport}</div>
             </div>
             <div className="" style={{flex: 3}}>
@@ -240,7 +242,6 @@ class InspectorProfilePage extends Component {
     render() {
       const { userProfile, inspectorProfile, error } = this.props;
       console.log('........data.......', inspectorProfile, userProfile);
-      // console.log('........ports option.......', this.props.ports);
       if(this.state.edit) {
         return(<EditInspectorProfile userProfile={this.props.userProfile} inspectorProfile={this.props.inspectorProfile}
           handleFileUpload={this.props.handleFileUpload} ports={this.props.ports} countries={this.props.countries} 
