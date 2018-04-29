@@ -1,5 +1,5 @@
 import { LOCATION_CHANGE } from 'react-router-redux';
-
+import _ from 'lodash';
 import { ACTION_IN_PROGRESS, SESSION_EXPIRED } from '../actions/common';
 
 import { LOGIN_SUCCESS, LOGIN_FAILURE, VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAILURE, 
@@ -175,14 +175,18 @@ export default function(state = INITIAL_STATE, action) {
     
     case 'DELETE_EDUCATION_ITEM_SUCCESS':
       console.log('reducer : deleted item education', action.payload);
-      return {...state, loading: false, deletedItemFromEdu: action.payload};
+      const newArr = state.inspectorProfile.education.filter(x => x.id === action.payload.id);
+      const obj = {...state.inspectorProfile, education: newArr };
+      return {...state, loading: false, deletedItemFromEdu: action.payload, inspectorProfile: obj };
 
     case 'DELETE_EDUCATION_ITEM_FAILURE':
       return {...state, loading: false, error: action.payload};
     
     case 'DELETE_EMPLOYMENT_ITEM_SUCCESS':
       console.log('reducer : deleted item employemnt', action.payload);
-      return {...state, loading: false, deletedItemFromEmp: action.payload};
+      const newArr1 = state.inspectorProfile.employment.filter(x => x.id === action.payload.id);
+      const obj1 = {...state.inspectorProfile, employment: newArr };
+      return {...state, loading: false, deletedItemFromEdu: action.payload, inspectorProfile: obj };
 
     case 'DELETE_EMPLOYMENT_ITEM_FAILURE':
       return {...state, loading: false, error: action.payload};

@@ -307,7 +307,9 @@ function* makeApiCall(action, apiFn, apiSuccessCb, apiFailureCb) {
 				yield put (apiSuccessCb(apiResponse.userProfile, apiResponse.inspectorProfile));
 				break;
 			case 'DELETE_EDUCATION_ITEM':
+				console.log('delete api call...');
 				var apiResponse = yield apiFn(action.payload);
+				console.log('.....delete response', apiResponse);
 				yield put (apiSuccessCb(apiResponse));
 				break;
 			case 'DELETE_EMPLOYMENT_ITEM':

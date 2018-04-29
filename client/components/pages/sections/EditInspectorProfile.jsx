@@ -290,7 +290,7 @@ export default class EditInspectorProfile extends Component {
 							console.log('level........', key, o.level);
 							return (
 						  <div className="p-3 mb-3" style={{border: '1px solid gray'}} key={key}>
-								<div className="text-right"><button type="button" className="btn btn-danger" onClick={() => this.deleteRecord('education', o)}>Delete</button></div>
+								<div className="text-right"><button type="button" className="btn btn-danger" onClick={() => this.deleteRecord('education', o.id)}>Delete</button></div>
 						  	<div className="edit-line">
 		      				  <label>Level:</label> 
 							  <div className="value"><div className="selectField">
@@ -350,7 +350,7 @@ export default class EditInspectorProfile extends Component {
 	      			{
 						(this.state.inspectorProfile.employment || []).map((o, key) => (
 						  <div className="p-3 mb-3" style={{border: '1px solid gray'}} key={key}>
-								<div className="text-right"><button type="button" className="btn btn-danger" onClick={() => this.deleteRecord('employment', o)}>delete</button></div>
+								<div className="text-right"><button type="button" className="btn btn-danger" onClick={() => this.deleteRecord('employment', o.id)}>delete</button></div>
 						  	<div className="edit-line">
 		      				  <label>Position:</label>
 							  <div className="value"><div className="selectField">
