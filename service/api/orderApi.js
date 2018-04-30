@@ -18,9 +18,9 @@ exports.create = async (req, resp) => {
   	if(enquiryDTOs && enquiryDTOs.length > 0) {
   		var enquiry = enquiryDTOs[0];
 
-  		var order = {user_id: userId, email: resp.locals.userProfile.email, enquiry_id: enquiryId, inspection_type: enquiry.inspection_type, 
-  					vessel_name: enquiry.vessel_name, imo_number: enquiry.imo_number, port_id: enquiry.port_id, vessel_type: enquiry.vessel_type, 
-  					user_quote_amount: enquiry.customer_quote_amount, start_time: enquiry.start_time, end_time: enquiry.end_time, 
+  		var order = {user_id: userId, email: resp.locals.userProfile.email, enquiry_id: enquiryId, inspection_type: enquiry.inspection_type,
+  					vessel_name: enquiry.vessel_name, imo_number: enquiry.imo_number, port_id: enquiry.port_id, vessel_type: enquiry.vessel_type,
+  					user_quote_amount: enquiry.customer_quote_amount, start_time: enquiry.start_time, end_time: enquiry.end_time,
   					inspector_id: inspectorId, inspector_quote_amount: enquiry.inspector_quote_amount, status: 'CREATED' };
 
   		var result = await orderDAO.create(order);
@@ -31,20 +31,20 @@ exports.create = async (req, resp) => {
   			var emailSubject = 'Your ShipInspector Order Confirmation ('+ result.insertId +')';
   			var rows = await orderDAO.find_by_id(result.insertId);
   			var orders = await orderDAO.transform_order(rows);
-  			
-  			awsApi.sendEmail('customer-order-confirmation.jade', {subject: emailSubject, to: order.email, order: orders[0], 
+
+  			awsApi.sendEmail('customer-order-confirmation.jade', {subject: emailSubject, to: order.email, order: orders[0],
                 user: resp.locals.userProfile, server: appConfig.serverHost});
   			resp.json({ status: {success: true}, order: orders[0]});
   		} else {
-  			throw new Error("Failed to create order");  	
+  			throw new Error("Failed to create order");
   		}
 
   	} else {
-  		throw new Error("Cannot create order without an enquiry");  
+  		throw new Error("Cannot create order without an enquiry");
   	}
 
   } else {
-  	throw new Error("You are not authorized to place order");  
+  	throw new Error("You are not authorized to place order");
   }
 
 }
