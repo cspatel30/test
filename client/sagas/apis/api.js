@@ -25,7 +25,7 @@ getInspectorsSuccess, getInspectorsFailure, getPublicProfileSuccess, getPublicPr
 downloadDocumentSuccess, downloadDocumentFailure, updateInspectorProfileSuccess, updateInspectorProfileFailure,
 deleteEducationItemSuccess, deleteEducationItemFailure, deleteEmploymentItemSuccess, deleteEmploymentItemFailure} from '../../actions/inspector';
 
-import {createOrderSuccess, createOrderFailure, getUserOrdersSuccess, getUserOrdersFailure} from '../../actions/order';
+import {createOrderSuccess, createOrderFailure, getUserOrdersSuccess, getUserOrdersFailure, getAdminOrdersSuccess, getAdminOrdersFailure} from '../../actions/order';
 
 
 import Cookies from 'universal-cookie';
