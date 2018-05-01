@@ -47,8 +47,76 @@ export default class OrdersPage extends Component {
     return moment(dateTime).format("YYYY-MM-DD");
   }
   
+  renderUserOrders(user, orders) {
+    return (
+      (orders || []).map((x, key) => (
+        <div className="d-flex mb-4 p-3 order-row" key={key}>
+          <div className="col-4">
+            <div className="mb-2" style={{fontSize:'15px'}}><b style={{fontSize:'20px'}}>Enquiry No. : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Inspection Type : </b><span>{x.inspectionTypeDisplayName}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel Name : </b><span>{x.vesselName}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>IMO Number : </b><span>{x.imo}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel Type : </b><span>{x.vesselTypeDisplayName}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Port : </b><span>{x.portData.name}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>payment Status : </b><span>{`value`}</span></div>
+          </div>
+          <div className="col-4">
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Start Date : </b><span>{this.formatDate(x.startTimeFmt)}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>End Date : </b><span>{this.formatDate(x.endTimeFmt)}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Assigned Inspector : </b><span>{x.inspector.name}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Current Status : </b><span>{x.status}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Order Amount : </b><span>{x.customerQuote}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Amount Paid: </b><span>{`value`}</span></div>  
+          </div>
+          <div className="col-4 d-flex flex-column justify-content-around">
+            <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Cancel</button>
+            <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Submit Feedback</button>
+            <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Download Report</button>
+          </div>
+        </div>
+      ))
+    )
+  }
+  renderAdminOrder(admin, orders) {
+    const arr = [1,2,3];
+    return (
+      (arr || []).map((x, key) => (
+        <div className="d-flex mb-4 p-3 order-row" key={key}>
+          <div className="col-4">
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Enquiry No. : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Inspection Type : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Company : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Email : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Phone : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>PIC Name : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel Name : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>IMO Number : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel Type : </b><span>{`value`}</span></div>
+          </div>
+          <div className="col-4">
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Port : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Start Date : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>End Date : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Assigned Inspector : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Current Status : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Order Amount (Client) : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Order Amount (Inspector) : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Paid Status : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Amount Paid: </b><span>{`value`}</span></div>  
+          </div>
+          <div className="col-4 d-flex flex-column justify-content-around">
+            <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Edit Order Amount (Client)</button>
+            <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Cancel</button>
+            <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Request Feedback</button>
+            <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>View Report</button>
+            <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Edit Order Amount (Inspector)</button>
+          </div>
+        </div>
+      ))
+    )
+  }
+  
   renderOrders(userType, orders) {
-
   	var items = [];
   	for(var i=0; i < orders.length; i++) {
   		items.push(
@@ -87,15 +155,18 @@ export default class OrdersPage extends Component {
 
 
   render() {
-
+  const { userProfile } = this.props;
+  const { orders } = this.state;
+  console.log('..orders', this.state.orders, this.props.userProfile);  
 	if(this.props.userProfile) {
       if(this.state.orders && this.state.orders.length > 0) {
 		return (
-          <div className="page">
+          <div className="page d-flex flex-column">
           	<h1>Your Orders</h1>
           	<div className="orders"> 
           		<div className="error">{this.state.errorMsg}</div>
-          		{this.renderOrders(this.props.userProfile.type, this.state.orders)}
+              {/* {this.renderOrders(this.props.userProfile.type, this.state.orders)} */}
+              {userProfile.type === 'admin' ? this.renderAdminOrderOrders(userProfile, orders) : this.renderUserOrders(userProfile, orders)}
           	</div>
           </div>
       	);
