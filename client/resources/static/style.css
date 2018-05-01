@@ -1145,6 +1145,9 @@ p {
   color: #D21437;
   padding: 10px;
 }
+.order-row {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
 
 .enquiry {
   margin: 10px;
