@@ -68,8 +68,8 @@ export default class AdminOrderComponent extends Component {
             <div className="mb-2" style={{fontSize:'15px'}}><b>End Date : </b><span>{this.formatDate(x.endTimeFmt)}</span></div>
             <div className="mb-2" style={{fontSize:'15px'}}><b>Assigned Inspector : </b><span>{x.inspector.name}</span></div>
             <div className="mb-2" style={{fontSize:'15px'}}><b>Current Status : </b><span>{x.status}</span></div>
-            <div className="mb-2" style={{fontSize:'15px'}}><b>Order Amount (Client) : </b><span>{`value`}</span></div>
-            <div className="mb-2" style={{fontSize:'15px'}}><b>Order Amount (Inspector) : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Order Amount (Client) : </b><span>{x.customerQuote}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Order Amount (Inspector) : </b><span>{x.inspectorQuote}</span></div>
             <div className="mb-2" style={{fontSize:'15px'}}><b>Paid Status : </b><span>{`value`}</span></div>
             <div className="mb-2" style={{fontSize:'15px'}}><b>Amount Paid: </b><span>{`value`}</span></div>  
           </div>
