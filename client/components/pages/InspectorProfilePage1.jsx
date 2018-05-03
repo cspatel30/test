@@ -11,12 +11,14 @@ import {blue500} from 'material-ui/styles/colors';
 import { isArray } from 'util';
 
 import EditInspectorProfile from './sections/EditInspectorProfile.jsx';
+import DisplayRating from '../statelessCompo/DisplayRating.jsx';
 
 class InspectorProfilePage extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        edit: false
+        edit: false,
+        displayRating: false,
       };
     }
 
@@ -125,7 +127,7 @@ class InspectorProfilePage extends Component {
                     <span style={itemStyle}>{'vName'}</span>
                     <span style={itemStyle}>{'IMO No.'}</span>
                     <span style={itemStyle}>{'A'}</span>
-                    <span style={itemStyle}>{'rating'}</span>
+                    <span style={itemStyle}>{'rating'}<small className="ml-3 p-2" onClick={() => this.setState({displayRating: true})} style={{ background: '#1475af', color: '#fff', borderRadius: '3px', cursor: 'pointer' }}>view</small></span>
                     <span style={itemStyle}>{'client name'}</span>
                   </div>
                   <div className="mb-4"><strong className="p-1" style={{color: '#fff', background: blue500}}>Client Feedback: </strong>........</div>
@@ -133,6 +135,7 @@ class InspectorProfilePage extends Component {
               ))
           }
           </div>
+          <DisplayRating display={this.state.displayRating} />
         </div>
       )
     }

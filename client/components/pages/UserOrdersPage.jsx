@@ -77,7 +77,6 @@ export default class OrdersPage extends Component {
         open={dailog}
         autoScrollBodyContent={true}
       >
-        
         <div className="py-2" style={{color: '#000000'}}>
           <div className="d-flex mb-3">
             <div className="col-6">
@@ -130,8 +129,7 @@ export default class OrdersPage extends Component {
             <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Submit</button>
           </div>
         </div>  
-      </Dialog>
-            
+      </Dialog>       
     )
   }
 
