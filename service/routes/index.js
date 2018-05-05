@@ -45,8 +45,8 @@ module.exports = function(app) {
 
   app.route('/api/my/order').post(asyncMiddleware(orderApi.create));
   app.route('/api/my/orders').get(asyncMiddleware(orderApi.getUserOrders));
-  app.route('/api/feedback').post(asyncMiddleware(feedbackApi.addFeedback));
-  app.route('/api/feedback/:orderId').get(asyncMiddleware(feedbackApi.getFeedback));
+  app.route('/api/my/feedback').post(asyncMiddleware(feedbackApi.addFeedback));
+  app.route('/api/my/feedback/:orderId').get(asyncMiddleware(feedbackApi.getFeedback));
   //admin related actions apis
 
   app.route('/api/admin/enquiry/:enquiryId').put(asyncMiddleware(enquiryApi.updateEnquiry));
