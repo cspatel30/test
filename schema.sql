@@ -3,24 +3,22 @@ CREATE TABLE `user` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` text NOT NULL,
-
   `company` varchar(255) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
-
   `building` varchar(45) DEFAULT NULL,
   `street` varchar(45) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   `country` varchar(45) DEFAULT NULL,
-
   `type` varchar(45) NOT NULL,
   `status` varchar(45) NOT NULL,
-  `approved_client` int(1) NOT NULL DEFAULT 0,
-
   `registered_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
+  `approved_client` int(1) NOT NULL DEFAULT '0',
+  `passport_name` varchar(200) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `nearest_airport` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_idx` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 
 CREATE TABLE `inspector_profile` (
@@ -225,3 +223,18 @@ CREATE TABLE `inspector_employment_history` (
   CONSTRAINT `employment_inspector` FOREIGN KEY (`inspector_id`) REFERENCES `inspector_profile` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `employment_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Ship inspector employment history';
+
+
+CREATE TABLE `feedback` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `comment` varchar(255) DEFAULT NULL,
+  `inspector_id` bigint(20) NOT NULL,
+  `order_id` bigint(20) DEFAULT NULL,
+  `overall_rating` float DEFAULT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `availability` int(2) DEFAULT NULL,
+  `report_quality` int(2) DEFAULT NULL,
+  `skill_experience` int(2) DEFAULT NULL,
+  `deadline` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
