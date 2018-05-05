@@ -32,6 +32,27 @@ export function createOrderFailure(error) {
   };
 }
 
+export function submitFeedback(obj) {
+  return {
+    type: 'SUBMIT_FEEDBACK',
+    payload: obj
+  }
+}
+
+export function submitFeedbackSuccess(feedback) {
+  return {
+    type: 'SUBMIT_FEEDBACK_SUCCESS',
+    payload: feedback
+  }
+}
+
+export function submitFeedbackFailure(error) {
+  return {
+    type: 'SUBMIT_FEEDBACK_FAILURE',
+    payload: error
+  };
+}
+
 export function getUserOrders() {
   return {
     type: GET_USER_ORDERS
