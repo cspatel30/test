@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import UserOrdersPage from '../components/pages/UserOrdersPage.jsx';
 
-import {getUserOrders} from '../actions/order';
+import {getUserOrders, submitFeedback} from '../actions/order';
 
 const mapStateToProps = (state) => {
 	const { userProfile, error, orders } = state;
@@ -13,7 +13,10 @@ const mapDispatchToProps = (dispatch) => {
 	return {	
       getUserOrders: () => {
         dispatch(getUserOrders());
-      }
+	  },
+	  submitFeedback: (obj) => {
+		dispatch(submitFeedback(obj));
+	  }
 	};
 }
 
