@@ -8,8 +8,10 @@ class DisplayRating extends Component {
     this.state = {
       comment: '',
       display: props.display,
+      order: null,
     }  
   }
+
   componentWillReceiveProps(nextProps) {
     this.setState({ display: nextProps.display });
   }
@@ -26,13 +28,21 @@ class DisplayRating extends Component {
   }
 
   renderModal() {
+    const { order, feedback } = this.props;
+    console.log('feedback..........', feedback);
     const { display } = this.state;
     const arr = [
-      { label: 'Inspector\'s Availability', rating: 4 },
-      { label: 'Inspector\'s Reporting Quality', rating: 5 },
-      { label: 'Inspector\'s Skills and Experience', rating: 3 },
-      { label: 'Stick to Dead Line', rating: 4 },
+      { label: 'Inspector\'s Availability', rating: feedback && feedback[0].availability },
+      { label: 'Inspector\'s Reporting Quality', rating: feedback && feedback[0].reportQuality },
+      { label: 'Inspector\'s Skills and Experience', rating: feedback && feedback[0].skillAndExp },
+      { label: 'Stick to Dead Line', rating: feedback && feedback[0].deadline },
     ];
+    // const arr = [
+    //   { label: 'Inspector\'s Availability', rating: 2 },
+    //   { label: 'Inspector\'s Reporting Quality', rating: 3 },
+    //   { label: 'Inspector\'s Skills and Experience', rating: 4 },
+    //   { label: 'Stick to Dead Line', rating: 5 },
+    // ];
     return (
       <Dialog
         title="Display of Rating" modal={false} open={display}
@@ -41,20 +51,20 @@ class DisplayRating extends Component {
         <div className="py-2" style={{color: '#000000'}}>
           <div className="d-flex mb-3">
             <div className="col-6">
-              <div className="mb-2" style={{fontSize:'15px'}}><b>Order No. : </b><span>{`value`}</span></div>
+              <div className="mb-2" style={{fontSize:'15px'}}><b>Order No. : </b><span>{order.id}</span></div>
               <div className="mb-2" style={{fontSize:'15px'}}><b>Inspection Type : </b><span>{`value`}</span></div>
               <div className="mb-2" style={{fontSize:'15px'}}><b>Port : </b><span>{`value`}</span></div>
               <div className="mb-2" style={{fontSize:'15px'}}><b>From : </b><span>{`value`}</span></div>
             </div>
             <div className="col-6">
-              <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel : </b><span>{`value`}</span></div>
-              <div className="mb-2" style={{fontSize:'15px'}}><b>IMO : </b><span>{`value`}</span></div>
+              <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel : </b><span>{order.vesselName}</span></div>
+              <div className="mb-2" style={{fontSize:'15px'}}><b>IMO : </b><span>{order.imoNumber}</span></div>
               <div className="mb-2" style={{fontSize:'15px'}}><b>To : </b><span>{`value`}</span></div>
             </div>
           </div>
           <div className="mb-3 d-flex align-items-center">
             <span className="mr-2">Average Rating:</span>
-            <div className="profile-rating"><Rating readOnly={true} value={3} max={5} /></div>
+            <div className="profile-rating"><Rating readOnly={true} value={feedback && feedback[0].overallRating} max={5} /></div>
           </div>
           <div>
             {
@@ -68,7 +78,7 @@ class DisplayRating extends Component {
             }
             <div className="d-flex flex-column mt-4">
               <span className="mb-1">Comments</span>
-              <textarea className="px-3 py-2 mb-2" onChange={(e) => this.setState({comment: e.target.value})} rows="4" cols="50" maxLength={200}></textarea>
+              <div className="p-1 mb-2" style={{ border: '1px solid #000' }}>{feedback && feedback[0].comment}</div>
             </div>
           </div>
           <button type="button" style={{width: 'fit-content', float: 'right'}} className="btn btn-primary" onClick={() => this.setState({display: false})}>Close</button>

@@ -26,7 +26,8 @@ downloadDocumentSuccess, downloadDocumentFailure, updateInspectorProfileSuccess,
 deleteEducationItemSuccess, deleteEducationItemFailure, deleteEmploymentItemSuccess, deleteEmploymentItemFailure} from '../../actions/inspector';
 
 import {createOrderSuccess, createOrderFailure, getUserOrdersSuccess, getUserOrdersFailure,
-getAdminOrdersSuccess, getAdminOrdersFailure, submitFeedbackSuccess, submitFeedbackFailure } from '../../actions/order';
+getAdminOrdersSuccess, getAdminOrdersFailure, submitFeedbackSuccess, submitFeedbackFailure,
+getFeebackByOrderIdSuccess, getFeebackByOrderIdFailure } from '../../actions/order';
 
 
 import Cookies from 'universal-cookie';
@@ -218,6 +219,12 @@ function submitFeedbackApi(payload) {
   );
 }
 
+function getFeebackByOrderIdApi(orderId) {
+	return publicApiInstance.get(`/api/my/feedback/${orderId}`,
+            { headers: { "Content-Type": "application/json", "Accept": "application/json"} }
+  );
+}
+
 function* makeApiCall(action, apiFn, apiSuccessCb, apiFailureCb) {
 	try {
 		console.log('...make api');
@@ -350,6 +357,10 @@ function* makeApiCall(action, apiFn, apiSuccessCb, apiFailureCb) {
 				var apiResponse = yield apiFn(action.payload);
 				yield put (apiSuccessCb(apiResponse));
 				break;
+			case 'GET_FEEDBACK_BY_ORDERID':
+				var apiResponse = yield apiFn(action.payload);
+				yield put (apiSuccessCb(apiResponse));
+				break;
 		}
 	} catch (error) {
 		if(error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -456,6 +467,8 @@ export default function* performAction(action) {
 		case 'SUBMIT_FEEDBACK':
 			yield makeApiCall(action, submitFeedbackApi, submitFeedbackSuccess, submitFeedbackFailure)
 			break;
-
+		case 'GET_FEEDBACK_BY_ORDERID':
+			yield makeApiCall(action, getFeebackByOrderIdApi, getFeebackByOrderIdSuccess, getFeebackByOrderIdFailure)
+			break;
 	}
 }

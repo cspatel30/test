@@ -19,6 +19,7 @@ class InspectorProfilePage extends Component {
       this.state = {
         edit: false,
         displayRating: false,
+        activeOrderFeedback: null,
       };
     }
 
@@ -32,6 +33,11 @@ class InspectorProfilePage extends Component {
       if(!this.props.userProfile && props.userProfile) {
         this.props.getProfile();
       }
+    }
+
+    onViewFeedback(order) {
+      this.props.getFeebackByOrderId(order.orderId);
+      this.setState({displayRating: true, activeOrderFeedback: order });
     }
 
     editProfile() {
@@ -109,6 +115,7 @@ class InspectorProfilePage extends Component {
     }
 
     renderWorkHistory(inspe, user) {
+      const { displayRating, activeOrderFeedback } = this.state;
       const arr = ['Job Title', 'Vessel Name', 'IMO Number', 'Type of Vessel', 'Client\'s Rating', 'Client\'s Name'];
       const title = arr.map((i, key) => (
         <div style={{flex: 1, fontWeight: 'bold', fontSize: '18px'}} key={key}>{i}</div>
@@ -119,23 +126,23 @@ class InspectorProfilePage extends Component {
           <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Work History and Client's Feedback</h3>
           <div className="px-5 py-4">
           {
-              ([1,2] || []).map((o, key) => (
+              (inspe.workAndFeedback || []).map((o, key) => (
                 <div key={key} style={{ borderBottom: '1px solid #d8e1e8' }}>
                   <div className="d-flex pl-5 pr-2 py-2 mb-2" style={{ color: '#000'}}>{title}</div>
                   <div className="d-flex pl-5 pr-2 mb-4">
-                    <span style={itemStyle}>{'ABC'}</span>
-                    <span style={itemStyle}>{'vName'}</span>
-                    <span style={itemStyle}>{'IMO No.'}</span>
-                    <span style={itemStyle}>{'A'}</span>
-                    <span style={itemStyle}>{'rating'}<small className="ml-3 p-2" onClick={() => this.setState({displayRating: true})} style={{ background: '#1475af', color: '#fff', borderRadius: '3px', cursor: 'pointer' }}>view</small></span>
-                    <span style={itemStyle}>{'client name'}</span>
+                    <span style={itemStyle}>{o.jobTitle}</span>
+                    <span style={itemStyle}>{o.vesselName}</span>
+                    <span style={itemStyle}>{o.imoNumber}</span>
+                    <span style={itemStyle}>{o.vesselType}</span>
+                    <span style={itemStyle}>{o.clientRating}<small className="ml-3 p-2" onClick={() => this.onViewFeedback(o)} style={{ background: '#1475af', color: '#fff', borderRadius: '3px', cursor: 'pointer' }}>view</small></span>
+                    <span style={itemStyle}>{o.clientName}</span>
                   </div>
                   <div className="mb-4"><strong className="p-1" style={{color: '#fff', background: blue500}}>Client Feedback: </strong>........</div>
                 </div>
               ))
           }
           </div>
-          <DisplayRating display={this.state.displayRating} />
+          { displayRating && <DisplayRating display={displayRating} order={activeOrderFeedback} feedback={this.props.feedbackbyOrderId} />}
         </div>
       )
     }
