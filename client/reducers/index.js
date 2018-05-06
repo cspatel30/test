@@ -226,7 +226,19 @@ export default function(state = INITIAL_STATE, action) {
       return {...state, loading: false, orders: action.payload};
 
     case GET_ADMIN_ORDERS_FAILURE:
-      return {...state, loading: false, error: action.payload};      
+      return {...state, loading: false, error: action.payload};
+    
+    case 'SUBMIT_FEEDBACK_SUCCESS':
+      return {...state, loading: false, feedback: action.payload};
+
+    case 'SUBMIT_FEEDBACK_FAILURE':
+      return {...state, loading: false, error: action.payload};
+    
+    case 'GET_FEEDBACK_BY_ORDERID_SUCCESS':
+      return {...state, loading: false, feedbackbyOrderId: action.payload.feedback};
+
+    case 'GET_FEEDBACK_BY_ORDERID_FAILURE':
+      return {...state, loading: false, error: action.payload};
 
   	default:
     	return state;

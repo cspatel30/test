@@ -113,7 +113,7 @@ export default class OrdersPage extends Component {
               <div className="mb-2" style={{fontSize:'15px'}}><b>From : </b><span>{`value`}</span></div>
             </div>
             <div className="col-6">
-              <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel : </b><span>{activeOrderForFeeback.vesselTypeDisplayName}</span></div>
+              <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel : </b><span>{activeOrderForFeeback.vesselName}</span></div>
               <div className="mb-2" style={{fontSize:'15px'}}><b>IMO : </b><span>{activeOrderForFeeback.imo}</span></div>
               <div className="mb-2" style={{fontSize:'15px'}}><b>To : </b><span>{`value`}</span></div>
             </div>
@@ -301,7 +301,7 @@ export default class OrdersPage extends Component {
 
   render() {
   const { userProfile } = this.props;
-  const { orders, dailog } = this.state;
+  const { orders, dailog, activeOrderForFeeback } = this.state;
   console.log('..orders', this.state.orders, this.props.userProfile);  
 	if(this.props.userProfile) {
       if(this.state.orders && this.state.orders.length > 0) {
@@ -311,7 +311,7 @@ export default class OrdersPage extends Component {
           	<div className="orders"> 
           		<div className="error">{this.state.errorMsg}</div>
               {this.renderUserOrders(userProfile, orders)}
-              {this.renderModal()}
+              {activeOrderForFeeback && this.renderModal()}
               {this.renderUploadReport()}
               {this.renderDownloadReport()}
           	</div>

@@ -53,6 +53,27 @@ export function submitFeedbackFailure(error) {
   };
 }
 
+export function getFeebackByOrderId(orderId) {
+  return {
+    type: 'GET_FEEDBACK_BY_ORDERID',
+    payload: orderId
+  }
+}
+
+export function getFeebackByOrderIdSuccess(feedback) {
+  return {
+    type: 'GET_FEEDBACK_BY_ORDERID_SUCCESS',
+    payload: feedback
+  }
+}
+
+export function getFeebackByOrderIdFailure(error) {
+  return {
+    type: 'GET_FEEDBACK_BY_ORDERID_FAILURE',
+    payload: error
+  };
+}
+
 export function getUserOrders() {
   return {
     type: GET_USER_ORDERS
