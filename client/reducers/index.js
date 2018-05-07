@@ -67,10 +67,11 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, userToken: null, error: action.payload, loading: false}; 
       
     case 'FORGOT_PASSWORD_SUCCESS':
-      return { ...state, fgpwdMsg: action.payload, loading: false};
+      return { ...state, fgpwdMsg: action.payload.status.message, loading: false};
     
     case 'FORGOT_PASSWORD_FAILURE':
       error = action.payload;
+      console.log('forgot pass error....', error);
       return { ...state, fgpwdMsg: error, loading: false};
     
     case REGISTER_SUCCESS:

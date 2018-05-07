@@ -219,7 +219,16 @@ a {
   width: 90%;
   margin: 0 auto;
   padding-top: 20px;
-  display: flex;
+  /* display: flex; */
+}
+
+.page h1 {
+  font-size: 26px;
+  padding: 10px 0;
+  text-transform: uppercase;
+  color: #1f9bed;
+  margin: 0;
+  margin-bottom: 10px;
 }
 
 .page p {
