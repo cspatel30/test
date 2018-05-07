@@ -370,6 +370,10 @@ function fetch_customer_enquiry_inspectors(enquiryIds) {
   return db.mysql_query("select ip.*, u.name, u.company, u.phone, u.email, u.city, u.country, eim.enquiry_id as enquiry_id from enquiry_inspector_mapping eim, inspector_profile ip, user u where eim.inspector_user_id = ip.user_id and ip.user_id = u.id and eim.status = 'ACCEPTED' and eim.enquiry_id in ("+csvIds+")");
 }
 
+function fetch_work_and_feedback(inspector_id) {
+  return db.mysql_query('select co.id, co.inspection_type, co.vessel_name, co.imo_number, co.vessel_type, fb.overall_rating, u.name, co.start_time, co.end_time, fb.comment from feedback fb, customer_order co, user u where fb.order_id = co.id and u.id = co.user_id and fb.inspector_id = ' + inspector_id);
+}
+
 async function transformUserProfile(userDTOs) {
   var profiles = [];
   if(userDTOs && userDTOs.length > 0) {
@@ -383,6 +387,20 @@ async function transformUserProfile(userDTOs) {
     }
   }
   return profiles;
+}
+
+async function transformWorkAndFeedback(workAndFeedbackDTO) {
+  var workAndFeedback = [];
+  if(workAndFeedbackDTO && workAndFeedbackDTO.length > 0) {
+    for(var i= 0 ; i < workAndFeedbackDTO.length ; i++) {
+      workAndFeedback.push({orderId: workAndFeedbackDTO[i]['id'], jobTitle: workAndFeedbackDTO[i]['inspection_type'],
+      vesselName: workAndFeedbackDTO[i]['vessel_name'], imoNumber: workAndFeedbackDTO[i]['imo_number'],
+      'vesselType': workAndFeedbackDTO[i]['vessel_type'], clientRating: workAndFeedbackDTO[i]['overall_rating'],
+      clientName: workAndFeedbackDTO[i]['name'], startTime: workAndFeedbackDTO[i]['start_time'],
+      'endTime': workAndFeedbackDTO[i]['end_time'], comment: workAndFeedbackDTO[i]['comment']});
+    }
+  }
+  return workAndFeedback;
 }
 
 function getReverseMapping(object) {
@@ -504,10 +522,12 @@ async function transformInspectorProfile(inspectorDTOs) {
       var education = await this.transformEducation(rowsEducation);
       var rowsEmployment = await this.fetchInspectorEmployment(inspectorDTOs[i]['id']);
       var employment = await this.transformEmployment(rowsEmployment);
-
+      var rowsWorkAndFeedback = await this.fetch_work_and_feedback(inspectorDTOs[i]['id']);
+      var workAndFeedback = await this.transformWorkAndFeedback(rowsWorkAndFeedback);
+      console.log(workAndFeedback);
       profile['education'] = education;
       profile['employment'] = employment;
-
+      profile['workAndFeedback'] = workAndFeedback;
       inspectors.push(profile);
     }
 
@@ -541,5 +561,7 @@ module.exports = {
   insert_inspector_employment : insert_inspector_employment,
   update_inspector_employment : update_inspector_employment,
   delete_employment : delete_employment,
-  delete_education : delete_education
+  delete_education : delete_education,
+  fetch_work_and_feedback : fetch_work_and_feedback,
+  transformWorkAndFeedback : transformWorkAndFeedback
 }

@@ -12,6 +12,7 @@ var appApi = require('../api/appApi');
 var awsApi = require('../api/awsApi');
 var enquiryApi = require('../api/enquiryApi');
 var orderApi = require('../api/orderApi');
+var feedbackApi = require('../api/feedbackApi');
 
 module.exports = function(app) {
 
@@ -44,8 +45,8 @@ module.exports = function(app) {
 
   app.route('/api/my/order').post(asyncMiddleware(orderApi.create));
   app.route('/api/my/orders').get(asyncMiddleware(orderApi.getUserOrders));
-
-
+  app.route('/api/my/feedback').post(asyncMiddleware(feedbackApi.addFeedback));
+  app.route('/api/my/feedback/:orderId').get(asyncMiddleware(feedbackApi.getFeedback));
   //admin related actions apis
 
   app.route('/api/admin/enquiry/:enquiryId').put(asyncMiddleware(enquiryApi.updateEnquiry));

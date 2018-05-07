@@ -31,6 +31,9 @@ function* nevtopSaga() {
 	yield takeLatest('CREATE_ORDER', performAction);
 	yield takeLatest('GET_USER_ORDERS', performAction);
 	yield takeLatest('GET_ADMIN_ORDERS', performAction);
+	yield takeLatest('SUBMIT_FEEDBACK', performAction);
+	yield takeLatest('GET_FEEDBACK_BY_ORDERID', performAction);
+	
 	
 }
 

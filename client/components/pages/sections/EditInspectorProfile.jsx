@@ -244,7 +244,7 @@ export default class EditInspectorProfile extends Component {
 							<div className="clear"></div>
 						</div>
 		      			<div className="edit-line">
-		      				<label>Background:</label>
+		      				<label>Career Summary:</label>
 		      				<div className="value">
 		      					<textArea style={{width: '90%', border: '1px solid #ccc', minHeight: 120}} name="background" value={this.state.inspectorProfile.background} onChange={this.handleInspectorInputChange}/>
 		      				</div>

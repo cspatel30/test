@@ -1,7 +1,7 @@
 // import 'regenerator-runtime/runtime';
 
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -100,7 +100,7 @@ export default class LoginPage extends Component {
     }
     
 	return (
-          <div className="page">
+          <div className="page d-flex">
           	<div className="login-page">
               <h1>Login to ShipInspectors.com</h1>
               <form className="contact-form"  onSubmit={this.handleSubmit} action="/" method="post">
@@ -138,7 +138,7 @@ export default class LoginPage extends Component {
                 </Tabs>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                   {this.forgotPwd()}
-                  <div style={{ color: '#1475af', fontSize: '16px' }}>New User <span style={{ cursor: 'pointer', fontWeight: 'bold' }}>SIGN UP.</span></div>
+                  <div style={{ color: '#1475af', fontSize: '16px' }}><Link to="/register/">New User <span style={{ cursor: 'pointer', fontWeight: 'bold' }}>SIGN UP.</span></Link></div>
                 </div>
                 <div className="btn"><button type="submit" style={{ cursor: forgot && 'not-allowed'}} disabled={forgot}>Login</button></div>
               </form>

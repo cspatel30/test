@@ -235,9 +235,9 @@ export default class QuoteEnquiryPage extends Component {
       return (
           <div className="page">
           	<h1>Create Your Enquiry</h1>
-              <form className="contact-form" onSubmit={this.handleSubmit} action="/" method="post">
+              <form className="contact-form " onSubmit={this.handleSubmit} action="/" method="post">
                 <div className="error">{this.state.enquiryErrorMsg}</div>
-                <div className="leftHalf">  
+                <div className="leftHalf pr-3">  
                   <div className="label">Inspection Type</div>
                   <div className="field"> 
                     <VirtualizedSelect
@@ -270,7 +270,7 @@ export default class QuoteEnquiryPage extends Component {
                   </div>
                 </div>
 
-                <div className="leftHalf"> 
+                <div className="leftHalf pr-3"> 
                   <div className="label">Port Name</div>
                   <div className="field">
                     <VirtualizedSelect
