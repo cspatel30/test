@@ -100,7 +100,7 @@ export default class LoginPage extends Component {
     }
     
 	return (
-          <div className="page">
+          <div className="page d-flex">
           	<div className="login-page">
               <h1>Login to ShipInspectors.com</h1>
               <form className="contact-form"  onSubmit={this.handleSubmit} action="/" method="post">
