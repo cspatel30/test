@@ -64,6 +64,7 @@ export default class RegisterPage extends Component {
         password: "",
         confirmpassword: "",
         company: "",
+        phone: "",
         position: "",
         qualification: "",
         seaport: "",
@@ -119,6 +120,14 @@ export default class RegisterPage extends Component {
     }); 
   }
 
+  validate() {
+    if (!this.state.registerForm.email.includes("@")) {
+      this.setState((state) => state.registerFormError.email = 'Invalid Email');
+    } else {
+      this.setState((state) => state.registerFormError.email = '');
+    }
+  }
+
   handleInputChange (event) {
     event.persist();
     this.setState((state) => { state.registerForm[event.target.name] = event.target.value });
@@ -142,7 +151,7 @@ export default class RegisterPage extends Component {
     console.log(this.state);
 
     var registerFormError = {  name: "", email: "", password: "", confirmpassword: "", company: "",
-        position: "", qualification: "", location: {seaport: "", city: "", country: ""} };
+        position: "", phone: "", qualification: "", location: {seaport: "", city: "", country: ""} };
 
     if(this.state.registerForm.name == "") {
       error = true;
@@ -173,6 +182,11 @@ export default class RegisterPage extends Component {
       this.state.registerForm.password !== this.state.registerForm.confirmpassword) {
       error = true;
       registerFormError.confirmpassword = "Both passwords do not match";
+    }
+
+    if(this.state.registerForm.phone == "") {
+      registerFormError.phone = "This field is mandatory";
+      error = true;
     }
 
     if(this.state.userType == 'inspector') {
@@ -307,7 +321,12 @@ export default class RegisterPage extends Component {
 
   renderActionMessage = () =>  {
     if(this.state.signUpSuccess) {
-      return (<div className="success">You account has been created successfully!! Please login to your email account to verify your email. You will be able to login post email verification.</div>)
+      return (
+        <div className="success d-flex flex-column">
+          <span className="my-1">You account has been created successfully!!</span>
+          <span className="my-1">Please login to your email account to verify your email. You will be able to login post email verification.</span>
+        </div>
+      )
     } else if(this.state.signUpErrorMsg && this.state.signUpErrorMsg.trim() !== "") {
       return (<div className="error">{this.state.signUpErrorMsg}</div>)
     } else {
@@ -325,7 +344,7 @@ export default class RegisterPage extends Component {
           <form className="contact-form"  onSubmit={this.handleSubmit} action="/" method="post">
             <Tabs className="tabs" tabItemContainerStyle={styles.tabs}>
               
-              <Tab label="Customer" buttonStyle={this.getTabButtonClassName('customer')} className="tab" data-person="customer" onActive={this.handleActive}>
+              <Tab label="Client" buttonStyle={this.getTabButtonClassName('customer')} className="tab" data-person="customer" onActive={this.handleActive}>
                 <div className="label">Full Name</div>
                 <div className="field">  
                   <input className="inputField" type="text" placeholder="name" name="name" value={this.state.registerForm.name} onChange={this.handleInputChange}/>
@@ -333,7 +352,7 @@ export default class RegisterPage extends Component {
                 </div>  
                 <div className="label">Email</div>
                 <div className="field">  
-                  <input className="inputField" type="text" placeholder="email" name="email" value={this.state.registerForm.email} onChange={this.handleInputChange}/>
+                  <input className="inputField" type="text" placeholder="email" name="email" value={this.state.registerForm.email} onChange={this.handleInputChange} onBlur={() => this.validate()}/>
                   <div className="errorField">{this.state.registerFormError.email}</div>
                 </div> 
                 <div className="label">Password</div>
@@ -343,26 +362,14 @@ export default class RegisterPage extends Component {
                 </div>
                 <div className="label">Re-Enter Password</div>
                 <div className="field">  
-                  <input className="inputField" type="password" placeholder="confirmpassword" name="confirmpassword" value={this.state.registerForm.confirmpassword} onChange={this.handleInputChange}/>
+                  <input className="inputField" type="password" placeholder="Confirm Password" name="confirmpassword" value={this.state.registerForm.confirmpassword} onChange={this.handleInputChange}/>
                   <div className="errorField">{this.state.registerFormError.confirmpassword}</div>
                 </div> 
                 <div className="label">Company</div>
                 <div className="field">  
                   <input className="inputField" type="text" placeholder="company name" name="company" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
                   <div className="errorField">{this.state.registerFormError.company}</div>
-                </div> 
-                <div className="label">Phone Number</div>
-                <div className="field">
-                  <div className="phone-country">
-                    <VirtualizedSelect labelKey='phoneCode' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
-                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
-                    optionRenderer={this.phoneOptionRenderer}  clearable={false}/>
-                  </div>
-                  <div className="phone-value">
-                    <input type="text" placeholder="phone" name="phone" value={this.state.registerForm.phone} onChange={this.handleInputChange}/>
-                  </div>
-                  <div className="clear"></div>
-                </div>  
+                </div>   
 
                 <div className="label">Office Address</div>
                 <div className="field">  
@@ -378,9 +385,23 @@ export default class RegisterPage extends Component {
                   
                 </div>
                 <div className="field">  
-                  <VirtualizedSelect labelKey='name' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
+                  <VirtualizedSelect placeholder="Country" labelKey='name' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
                     options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
                     optionRenderer={this.countryOptionRenderer}  clearable={false}/>
+                </div>
+
+                <div className="label">Phone Number</div>
+                <div className="field">
+                  <div className="phone-country">
+                    <VirtualizedSelect labelKey='phoneCode' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
+                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
+                    optionRenderer={this.phoneOptionRenderer}  clearable={false}/>
+                  </div>
+                  <div className="phone-value">
+                    <input type="text" placeholder="phone" name="phone" value={this.state.registerForm.phone} onChange={this.handleInputChange}/>
+                    <div className="errorField">{this.state.registerFormError.phone}</div>
+                  </div>
+                  <div className="clear"></div>
                 </div>
               </Tab>
 
@@ -411,21 +432,8 @@ export default class RegisterPage extends Component {
                   <div className="errorField">{this.state.registerFormError.company}</div>
                 </div>
                 
-
-                <div className="label">Phone Number</div>
-                <div className="field"> 
-                  <div className="phone-country">
-                    <VirtualizedSelect labelKey='phoneCode' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
-                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
-                    optionRenderer={this.phoneOptionRenderer}  clearable={false}/>
-                  </div>
-                  <div className="phone-value">
-                    <input type="text" placeholder="phone" name="phone" value={this.state.registerForm.phone} onChange={this.handleInputChange}/>
-                  </div>
-                  <div className="errorField">{this.state.registerFormError.phone}</div>
-                  <div className="clear"></div>
-                </div>  
-                <div className="label">Position</div>
+  
+                <div className="label">Title</div>
                 <div className="field">  
                   <div className="selectField"> 
                     <select name="position" value={this.state.registerForm.position} onChange={this.handleInputChange}>
@@ -465,12 +473,25 @@ export default class RegisterPage extends Component {
                     options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
                     optionRenderer={this.countryOptionRenderer}  clearable={false}/>
                   <div className="errorField">{this.state.registerFormError.countryCode}</div>
+                </div>
+                <div className="label">Phone Number</div>
+                <div className="field"> 
+                  <div className="phone-country">
+                    <VirtualizedSelect labelKey='phoneCode' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
+                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
+                    optionRenderer={this.phoneOptionRenderer}  clearable={false}/>
+                  </div>
+                  <div className="phone-value">
+                    <input type="text" placeholder="phone" name="phone" value={this.state.registerForm.phone} onChange={this.handleInputChange}/>
+                    <div className="errorField">{this.state.registerFormError.phone}</div>
+                  </div>
+                  <div className="clear"></div>
                 </div>  
               </Tab>
             </Tabs>
             <div className="label">
               <input className="checkbox" type="checkbox" checked={this.state.termsAgreed} onChange={this.toggleAgreementCheckBox}/>
-                &nbsp; &nbsp; I agree with all <a className="link" onClick={this.handleAgreementPopupOpen}>Terms & Conditions</a>
+                &nbsp; &nbsp;I have read and agreed Sinotech Marine's <a className="link" onClick={this.handleAgreementPopupOpen}>Terms and Conditions</a>
             </div>
             <div className="btn"><button>Sign Up</button></div>
             <div className="clear"></div>
