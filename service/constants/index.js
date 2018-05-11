@@ -91,18 +91,28 @@ global.inspectorSkills = {
   "WarrantyClaimInspection" : "Warranty Claim Inspection "
 };
 
+global.inspectorCompany = {
+  "SelfEmployedUnincorporated": "Self Employed- Unincorporated",
+  "EmployedByAgency": "Employed by Agency",
+  "SelfEmployedCorporatedRegistered": "Self Employed - Corporated /Registered",
+  "AShipInspectionCompany": "A Ship Inspection Company"
+}
+
 global.inspectorQualifications = {
-  "BachelorinNauticalScience" : "Bachelor in Nautical Science",
-  "CharteredshipBroker" : "Chartered ship Broker",
-  "ChiefMarineEngineer" : "Chief Marine Engineer",
-  "MarineElectricalEngineer" : "Marine Electrical Engineer ",
-  "MarineEngineer" : "Marine Engineer",
-  "MarineMechanicalEngineer" : "Marine Mechanical Engineer",
-  "MaritimeLawyer" : "Maritime Lawyer ",
-  "MasterMariner" : "Master Mariner",
-  "NavalArchitect" : "Naval Architect",
-  "PostGraduateinEngineer" : "Post Graduate in Engineer",
-  "PostGraduateinNavalArchitect" : "Post Graduate in Naval Architect"
+"GraduatePGNauticalScience": "Graduate/Post Graduate -Nautical Science", 
+"GraduatePGMarineEngineer": "Graduate/Post Graduate - Marine Engineer",
+"UGMaritimeStudies": "Undergraduate - Maritime Studies",
+"DiplomaMaritimeStudies": "Diploma - Maritime Studies",
+"MasterMarinerLicense ": "Master Mariner License",
+"ChiefMarineEngineerLicense": "Chief Marine Engineer License", 
+"CertifiedCDIInspector": "Certified CDI- Inspector",
+"CertifiedRightShipInspector": "Certified  Right Ship Inspector",
+"CertifiedOCIMFInspector": "Certified OCIMF Inspector",
+"CertifiedISMISOAuditor": "Certified ISM/ISO Auditor",
+"GraduatePGEnMechEle": "Graduate/Post Graduate - Engineer ( Mechanical/Electrical)",
+"GraduatePGNavalArchitect": "Graduate/Post Graduate - Naval Architect",
+"DiplomaInMarineSurveying": "Diploma in Marine Surveying",
+"Other": "Other"
 };
 
 global.region = {
@@ -148,15 +158,45 @@ global.inspectorLevel = {
 };
 
 global.inspectorPositions = {
-  "FleetManager" : "Fleet Manager ",
-  "MarineAuditor" : "Marine Auditor",
-  "MarineSuperintendent" : "Marine Superintendent ",
-  "MarineSurveyor" : "Marine Surveyor ",
-  "NavalArchitect" : "Naval Architect ",
-  "ProjectManager" : "Project Manager",
-  "SiteManager" : "Site Manager",
-  "TechnicalSuperintendent" : "Technical Superintendent"
+  "PrePurchaseConditionInspector": "Pre-Purchase Condition Inspector",
+  "FlagStateInspector": "Flag State Inspector",
+  "IIMAuditor": "ISM /ISPS/ MLC Auditor",
+  "MarineEnvironmentalInspector": "Marine Environmental Inspector", 
+  "MarineConsultant": "Marine Consultant",
+  "NavalArchitect": "Naval Architect",
+  "MarineEngineerConsultant": "Marine Engineer Consultant", 
+  "NewBuildingConsultant": "New Building Consultant",
+  "ShipRepairSupervisor": "Ship Repair Supervisor",
+  "WarrantyClaimsInspector": "Warranty Claims Inspector",
+  "MarineElectricalEngineer": "Marine Electrical Engineer",
+  "MaritimeArbitrator": "Maritime Arbitrator",
+  "DrybulkOperationExpert": "Dry-bulk Operation Expert", 
+  "OilTankerOperationExpert": "Oil Tanker Operation Expert",
+  "PreVettingInspector": "Pre- Vetting Inspector",
+  "VettingInspector": "Vetting Inspector",
+  "PetroleumInspector": "Petroleum Inspector",
+  "LNGLPGTankInspector": "LNG/LPG Tank Inspector",
+  "PassengerShipInspectors": "Passenger Ship Inspectors",
+  "NewBuildingConstructionSurveyor": "New Building Construction Surveyor",
+  "OffshoreVesselInspector": "Off-shore Vessel Inspector",
+  "ShipRepairProjectManager": "Ship Repair Project Manager",
+  "NewBuildingProjectManager": "New Building Project Manager",
+  "MarineAccidentCasualtyInspector": "Marine Accident / Casualty Inspector",
+  "MarineSafetyRiskAnalyst": "Marine Safety Risk Analyst",
+  "ShipMooringMaster": "Ship Mooring Master",
+  "MasterMariner": "Master Mariner",
+  "ChiefMarineEngineer": "Chief Marine Engineer", 
+  "BunkerSurveyor": "Bunker Surveyor",
+  "CDIInspector": "CDI Inspector",
+  "VesselITExpert": "Vessel IT Expert",
+  "MarineEngineer": "Marine Engineer",
+  "AutomationEngineer": "Automation Engineer",
+  "ShipNavigator": "Ship Navigator",
+  "ShipRepairEngineer": "Ship Repair Engineer",
+  "CrewAccommodationInspector": "Crew Accommodation Inspector",
 };
+
+
 
 global.regionCodes = {
   "AF": "Africa",
