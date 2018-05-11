@@ -1,6 +1,7 @@
 // import 'regenerator-runtime/runtime';
 
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -246,7 +247,7 @@ export default class RegisterPage extends Component {
   renderSelectBox = (datasource, placeholder, keyField='id', textField='name') => {
       var options = [];
       var prefix = "";
-
+      datasource = _.sortBy(datasource, ['name']);    
       options.push(<option key="" value="">{"Select " + placeholder }</option>);
       datasource.map( (ds) => {
         options.push(<option key={ds[keyField]} value={ds[keyField]}>{prefix + ds[textField]}</option>);
@@ -428,16 +429,19 @@ export default class RegisterPage extends Component {
                 </div>
                 <div className="label">Company</div>
                 <div className="field">  
-                  <input className="inputField" type="text" placeholder="company name" name="company" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
+                  <div className="selectField"> 
+                    <select name="company" value={this.state.registerForm.company} onChange={this.handleInputChange}>
+                      {this.renderSelectBox(this.props.inspectorCompany, 'company')}
+                    </select>
+                  </div>
                   <div className="errorField">{this.state.registerFormError.company}</div>
                 </div>
-                
   
                 <div className="label">Title</div>
                 <div className="field">  
                   <div className="selectField"> 
                     <select name="position" value={this.state.registerForm.position} onChange={this.handleInputChange}>
-                      {this.renderSelectBox(this.props.inspectorPositions, 'Position')}
+                      {this.renderSelectBox(this.props.inspectorPositions, ' - How would you like to Title yourself')}
                     </select>
                   </div>
                   <div className="errorField">{this.state.registerFormError.position}</div>
@@ -509,7 +513,7 @@ export default class RegisterPage extends Component {
   }
 
   render() {
-
+    console.log('props...', this.props.inspectorPositions);
     const { userToken , userProfile } = this.props;
 
   	if(userToken && userProfile) {
