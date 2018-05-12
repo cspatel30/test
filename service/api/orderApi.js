@@ -68,3 +68,9 @@ exports.getUserOrders = async (req, resp) => {
 
   resp.json({ status: {success: true}, orders: orders });
 }
+
+exports.cancelOrder = async (req, resp) => {
+  var enquiryId = parseInt(req.params.id);
+  var result = await orderDAO.cancelOrder(enquiryId);
+  resp.json({ status: {success: true}, message: "Order canceled."});
+}
