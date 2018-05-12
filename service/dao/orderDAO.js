@@ -125,6 +125,10 @@ async function transform_order(orderDTOs) {
   return orders;
 }
 
+function cancelOrder(order_id) {
+  return db.mysql_update_query('UPDATE customer_order SET status = ? WHERE id = ?', ['CANCELED', order_id]) ;
+}
+
 module.exports = {
   create: create,
   update: update,
@@ -132,5 +136,6 @@ module.exports = {
   fetch_customer_orders: fetch_customer_orders,
   fetch_admin_orders: fetch_admin_orders,
   fetch_inspector_orders: fetch_inspector_orders,
-  transform_order: transform_order
+  transform_order: transform_order,
+  cancelOrder : cancelOrder
  }
