@@ -9,7 +9,7 @@ export default class Footer extends Component {
       <div className="footer">
 	      <div className="footer-section">
 	        <div className="left">
-	            Copyright © 2018 sinotechmarine.com & shipinspectors.com All Rights Reserved
+	            Copyright © 2018 shipinspectors.com All Rights Reserved
 	        </div>
 
 	        <div className="right">

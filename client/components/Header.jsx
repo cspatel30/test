@@ -135,7 +135,7 @@ export default class Header extends Component {
   render() {
 
     const { logout, userProfile } = this.props;
-
+    console.log('....see', userProfile);
     if(logout) {
   		alert("You have been logged out successfully");
   		window.location = "/";
@@ -162,7 +162,7 @@ export default class Header extends Component {
             <div id="box"></div>
             <ul>
               <li><NavLink className="menu-link" key="link_home" to="/">Home</NavLink></li>
-              <li><NavLink className="menu-link" key="inspector_link_profile" to="/my/profile/">My Profile</NavLink></li>
+              {userProfile && userProfile.type === 'inspector' && <li><NavLink className="menu-link" key="inspector_link_profile" to="/my/profile/">My Profile</NavLink></li>}
               <li><NavLink className="menu-link" key="inspector_link_enquiries" to="/my/enquiries/">Enquiries</NavLink></li>
               <li><NavLink className="menu-link" key="" to="">Jobs</NavLink></li>
               <li><NavLink className="menu-link" key="link_reports" to="/reports/">Sample Reports</NavLink></li>

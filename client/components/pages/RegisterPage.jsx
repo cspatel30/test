@@ -343,6 +343,7 @@ export default class RegisterPage extends Component {
       return (
         <div className="login-page">
           <form className="contact-form"  onSubmit={this.handleSubmit} action="/" method="post">
+            <div className="" style={{ color: '#1475af', marginBottom: '15px', fontSize: '18px' }}>Select Client or Inspector</div>
             <Tabs className="tabs" tabItemContainerStyle={styles.tabs}>
               
               <Tab label="Client" buttonStyle={this.getTabButtonClassName('customer')} className="tab" data-person="customer" onActive={this.handleActive}>
@@ -495,7 +496,7 @@ export default class RegisterPage extends Component {
             </Tabs>
             <div className="label">
               <input className="checkbox" type="checkbox" checked={this.state.termsAgreed} onChange={this.toggleAgreementCheckBox}/>
-                &nbsp; &nbsp;I have read and agreed Sinotech Marine's <a className="link" onClick={this.handleAgreementPopupOpen}>Terms and Conditions</a>
+                &nbsp; &nbsp;I have read and agreed with all <a className="link" onClick={this.handleAgreementPopupOpen}>terms and conditions and Privacy Policy of Sinotech Marine</a> as given on this website.
             </div>
             <div className="btn"><button>Sign Up</button></div>
             <div className="clear"></div>
@@ -513,7 +514,6 @@ export default class RegisterPage extends Component {
   }
 
   render() {
-    console.log('props...', this.props.inspectorPositions);
     const { userToken , userProfile } = this.props;
 
   	if(userToken && userProfile) {
@@ -522,7 +522,7 @@ export default class RegisterPage extends Component {
 
     return (
           <div className="page">
-          	<h1>Sign Up</h1>
+          	<h1 style={{ marginLeft: '15%' }}>Register on ShipInspectors.com</h1>
           	{this.renderActionMessage()}
             {this.renderForm()}
           </div>

@@ -5,8 +5,8 @@ import { createEnquiry } from '../actions/enquiry';
 
 
 const mapStateToProps = (state) => {
-	const { userProfile, error, createdEnquiry, ports, vesselTypes, inspectionTypes  } = state;
-  	return {userProfile, error, createdEnquiry, ports, vesselTypes, inspectionTypes};
+	const { userProfile, error, createdEnquiry, ports, vesselTypes, inspectionTypes, inspectorCompany } = state;
+  	return {userProfile, error, createdEnquiry, ports, vesselTypes, inspectionTypes, inspectorCompany };
 }
 
 const mapDispatchToProps = (dispatch) => {
