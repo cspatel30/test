@@ -70,7 +70,7 @@ class InspectorProfilePage extends Component {
     renderMyProfile(inspe, user) {
       return (
         <div>
-          <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>MY PROFILE</h3>
+          <h3 className="py-1 px-5" style={{ color: '#fff', background: '#1475af' }}>MY PROFILE</h3>
           <div className="d-flex mx-3 my-2">
             <div className="col-3">
               <div>{this.renderProfilePicAvatar(inspe)}</div>
@@ -106,7 +106,7 @@ class InspectorProfilePage extends Component {
     renderSkills(inspe, user) {
       return (
         <div>
-          <h3 className="py-3 px-5 m-0" style={{ color: '#fff', background: '#1475af' }}>Skills</h3>
+          <h3 className="py-1 px-5 m-0" style={{ color: '#fff', background: '#1475af' }}>Skills</h3>
           <div className="d-flex p-4">
             {this.renderChips(inspe.skillsKeys)}
           </div>
@@ -123,7 +123,7 @@ class InspectorProfilePage extends Component {
       const itemStyle = { flex: 1, fontSize: '16px', color: '#555' };
       return (
         <div>
-          <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Work History and Client's Feedback</h3>
+          <h3 className="py-1 px-5" style={{ color: '#fff', background: '#1475af' }}>Work History and Client's Feedback</h3>
           <div className="px-5 py-4">
           {
               (inspe.workAndFeedback || []).map((o, key) => (
@@ -154,7 +154,7 @@ class InspectorProfilePage extends Component {
       const itemStyle = { flex: 1, fontSize: '16px', color: '#555' };
       return (
         <div>
-          <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Employment History</h3>
+          <h3 className="py-1 px-5" style={{ color: '#fff', background: '#1475af' }}>Employment History</h3>
           <div className="px-5 py-4">
           {
               (inspe.employment || []).map((o, key) => (
@@ -187,9 +187,9 @@ class InspectorProfilePage extends Component {
       const itemStyle = { flex: 1, fontSize: '16px', color: '#555' };
       return (
         <div>
-          <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Education and Professional Qualifications</h3>
+          <h3 className="py-1 px-5" style={{ color: '#fff', background: '#1475af' }}>Education and Professional Qualifications</h3>
           <div className="px-5 pb-4 pt-2">
-            <h3 className="mb-3">Highest Qualifications</h3>
+            <h4 className="mb-3">Highest Qualifications</h4>
           {
               (inspe.education || []).map((o, key) => (
                 <div key={key} style={{ borderBottom: '1px solid #d8e1e8' }}>
@@ -217,7 +217,7 @@ class InspectorProfilePage extends Component {
       ));
       return (
         <div>
-          <h3 className="py-3 px-5" style={{ color: '#fff', background: '#1475af' }}>Personal Details</h3>
+          <h3 className="py-1 px-5" style={{ color: '#fff', background: '#1475af' }}>Personal Details</h3>
           <div className="d-flex p-4">
             <div className="" style={{flex: 3}}>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Name as per Passport : </b>{inspe.passportName}</div>

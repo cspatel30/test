@@ -57,7 +57,6 @@ export default class Header extends Component {
         break;
       case 'inspector':
         actions.push(<div key=""><NavLink className="link" to="" onClick={this.handleClose}>My Account</NavLink></div>);
-        actions.push(<div key="inspector_link_orders"><NavLink className="link" to="/my/orders/" onClick={this.handleClose}>Orders</NavLink></div>);
         actions.push(<div key="link_contact"><NavLink className="link" to="/contact/" onClick={this.handleClose}>Support</NavLink></div>);
         break;
     }
@@ -164,7 +163,7 @@ export default class Header extends Component {
               <li><NavLink className="menu-link" key="link_home" to="/">Home</NavLink></li>
               {userProfile && userProfile.type === 'inspector' && <li><NavLink className="menu-link" key="inspector_link_profile" to="/my/profile/">My Profile</NavLink></li>}
               <li><NavLink className="menu-link" key="inspector_link_enquiries" to="/my/enquiries/">Enquiries</NavLink></li>
-              <li><NavLink className="menu-link" key="" to="">Jobs</NavLink></li>
+              <li><NavLink className="menu-link" key="" to="/my/orders/">Jobs</NavLink></li>
               <li><NavLink className="menu-link" key="link_reports" to="/reports/">Sample Reports</NavLink></li>
               <li><NavLink className="menu-link" key="" to="">Message</NavLink></li>
             </ul>
