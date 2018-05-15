@@ -94,7 +94,7 @@ export default class QuoteEnquiryPage extends Component {
 
     var error = false;
 
-    var quoteFormError = {  inspectionType: "", vesselName: "", imo: "", portName: "", startTime: "", endTime: "", email: "", company: "", fullname, phone };
+    var quoteFormError = {  inspectionType: "", vesselName: "", imo: "", portName: "", startTime: "", endTime: "", email: "", company: "", fullname: "", phone: "" };
 
     var enquiry = {};
 
