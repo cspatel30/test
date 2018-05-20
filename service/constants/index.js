@@ -99,12 +99,12 @@ global.inspectorCompany = {
 }
 
 global.inspectorQualifications = {
-"GraduatePGNauticalScience": "Graduate/Post Graduate -Nautical Science", 
+"GraduatePGNauticalScience": "Graduate/Post Graduate -Nautical Science",
 "GraduatePGMarineEngineer": "Graduate/Post Graduate - Marine Engineer",
 "UGMaritimeStudies": "Undergraduate - Maritime Studies",
 "DiplomaMaritimeStudies": "Diploma - Maritime Studies",
 "MasterMarinerLicense ": "Master Mariner License",
-"ChiefMarineEngineerLicense": "Chief Marine Engineer License", 
+"ChiefMarineEngineerLicense": "Chief Marine Engineer License",
 "CertifiedCDIInspector": "Certified CDI- Inspector",
 "CertifiedRightShipInspector": "Certified  Right Ship Inspector",
 "CertifiedOCIMFInspector": "Certified OCIMF Inspector",
@@ -161,16 +161,16 @@ global.inspectorPositions = {
   "PrePurchaseConditionInspector": "Pre-Purchase Condition Inspector",
   "FlagStateInspector": "Flag State Inspector",
   "IIMAuditor": "ISM /ISPS/ MLC Auditor",
-  "MarineEnvironmentalInspector": "Marine Environmental Inspector", 
+  "MarineEnvironmentalInspector": "Marine Environmental Inspector",
   "MarineConsultant": "Marine Consultant",
   "NavalArchitect": "Naval Architect",
-  "MarineEngineerConsultant": "Marine Engineer Consultant", 
+  "MarineEngineerConsultant": "Marine Engineer Consultant",
   "NewBuildingConsultant": "New Building Consultant",
   "ShipRepairSupervisor": "Ship Repair Supervisor",
   "WarrantyClaimsInspector": "Warranty Claims Inspector",
   "MarineElectricalEngineer": "Marine Electrical Engineer",
   "MaritimeArbitrator": "Maritime Arbitrator",
-  "DrybulkOperationExpert": "Dry-bulk Operation Expert", 
+  "DrybulkOperationExpert": "Dry-bulk Operation Expert",
   "OilTankerOperationExpert": "Oil Tanker Operation Expert",
   "PreVettingInspector": "Pre- Vetting Inspector",
   "VettingInspector": "Vetting Inspector",
@@ -185,7 +185,7 @@ global.inspectorPositions = {
   "MarineSafetyRiskAnalyst": "Marine Safety Risk Analyst",
   "ShipMooringMaster": "Ship Mooring Master",
   "MasterMariner": "Master Mariner",
-  "ChiefMarineEngineer": "Chief Marine Engineer", 
+  "ChiefMarineEngineer": "Chief Marine Engineer",
   "BunkerSurveyor": "Bunker Surveyor",
   "CDIInspector": "CDI Inspector",
   "VesselITExpert": "Vessel IT Expert",
@@ -216,7 +216,7 @@ global.mysqlConfig = {
 };
 
 global.appConfig = {
-  emailTemplatesPath : 'C:/Users/Vivek/Desktop/web/service/emailtemplates/',
+  emailTemplatesPath : 'D:/personnel/shipinspector/web/service/emailtemplates/',
   accessKeyId: 'AKIAIFENAUAFOPXUTNQQ',
   secretAccessKey: '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',
   defaultFrom: 'Team ShipInspector <noreply@shipinspectors.com>',
