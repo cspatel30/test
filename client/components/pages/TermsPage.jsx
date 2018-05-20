@@ -10,99 +10,338 @@ export default class TermsPage extends Component {
 	return (
           <div className="page">
 
-          	<h1>Terms And Conditions</h1>
+          	<h1>Terms of Use</h1>
 
-          	<p>These Terms of Use are a legally binding agreement made by and between Nevtop infotourTM
-and you (whether you are joining for yourself or on behalf of a minor or a person to whom you
-are a caregiver) ("You" and as the context provides, "Your" and "Yourself"). These Terms of Use
-govern your access and/or use of the Site and you should read them carefully.This Terms of Use
-Agreement shall remain in effect at all times until you cease using the Site and/or delete any
-applications related to the Site from your mobile device. BY REGISTERING FOR ACCESS,
-ACCESSING, OR USING THE SITE OR ANY RELATED APPLICATIONS, YOU AGREE THAT
-YOU HAVE READ, UNDERSTOOD, AND AGREED TO BE BOUND BY THESE TERMS OF
-USE AND OUR PRIVACY POLICY. IF YOU DO NOT AGREE TO BE SO BOUND, DO NOT
-ACCESS OR USE THE SITE OR ANY RELATED APPLICATIONS.</p>
+          	<p>The following are terms of a legal agreement ("Agreement") between you and SINOTECH MARINE CORPORATION HK LIMITED ("Sinotech" or “Company” or “Supplier”). By accessing, browsing and/or using this web site ("Site") you acknowledge that you have read, understood and agree to be bound by these terms and to comply with all applicable laws and regulations. If you do not agree to these terms, do not use this Site. This Site may contain other proprietary notices and copyright information, the terms of which must be observed and followed. Information on this Site may contain technical inaccuracies or typographical errors. Please read this Agreement carefully and be aware that Sinotech may, in its sole discretion and without notice, revise these terms at any time by updating this posting.</p>
 
-          	<p>Nevtop infotourTM reserves the right, at its sole discretion, to make changes to portions or all of
-these Terms of Use and the Privacy Policy at any time. You are responsible for checking both
-Terms of Use and the Privacy Policy periodically for changes. Your continued use of the Site
-means that you agree to any new or modified provision of these Terms of Use or the Privacy
-Policy accessible through the site.</p>
+          	<p>By accessing or using the website, you signify your agreement to these Terms of Use (herein referred to as “Terms”) and to be bound by them. Sinotech reserves the right to update or modify these Terms at any time without prior notice. Your use of this website following any such change constitutes your agreement to follow and be bound by the Terms as and when they are changed. For the purpose of the Terms and wherever the context so requires, the words “you” and “your” shall mean any person who uses the Website or the Service in any manner whatsoever including persons browsing the Website and its content, posting comments or any content or responding to any advertisements or content on the Website. The terms “Client” and “you” would include the client visiting the Portal to take Services from the Company. By using the Service, you agree to comply with these Terms. Additionally, when using a portion of the Service, you agree to conform to any applicable posted guidelines for such Service, which may change or be updated from time to time at Sinotech’s sole discretion. You understand and agree that you are solely responsible for reviewing these Terms from time to time. Should you object to any term or condition of these Terms, any guideline, or any subsequent changes thereto or become unhappy with Sinotech or the Service in any way, your only choice is to immediately discontinue use of Sinotech. These Terms may be updated by Sinotech at any time at its sole discretion.</p>
 
-          	<p>Information found on this website is meant to support and not replace the relationship with your
-physician or another medical service provider(s). We are not a licensed medical care provider
-and have no expertise in diagnosing, examining, or treating medical conditions of any kind, or in
-determining the effect of any specific exercise on a medical condition. You should always
-consult a physician before starting a fitness program, changing your diet or if you have any
-questions regarding a medical condition. Nevtop infotour™ requires that you consult with your
-physician before following any training instructions you receive through the Website or
-participating in any event announced on the Website. Not all exercises or activities described on
-the website are suitable for everyone. You should understand that when participating in any
-exercise or exercise program, there is the possibility of physical injury and or death. If you feel
-discomfort or pain, immediately stop the activity causing such discomfort or pain. By using the
-website, you represent that you have received consent from your physician to participate in the
-programs, workouts, and exercises described on the Website.</p>
+          	<p>This electronic record is prepared in terms of Information Technology Act, 2000 and rules there under as applicable and the amended provisions pertaining to electronic records in various statutes as amended by the Information Technology Act, 2000 and all other relevant laws and provisions across the world under all jurisdictions. This electronic record is generated by a computer system and does not require any physical or digital signatures. This document is published in accordance with the provisions of Rule 3 (1) of the Information Technology (Intermediaries guidelines) Rules, 2011 that require publishing the rules and regulations, privacy policy and Terms of Use for access or usage of …………..  website. </p>
 
-          	<p>We are not responsible for any health problems that may result from training programs,
-products, or events you learn about through the website. If you engage in any exercise program
-you receive through the website you agree that you do so at your own risk and are voluntarily
-participating in these activities.</p>
+			<p>By your use of this website, you confirm your acceptance and it would be accepted as would a written agreement with your signature.</p>
 
-			<h3>For Trainee / Client —
-				By registering for a coach, YOU AGREE TO THE FOLLOWING</h3>
+          	<p>Definition</p>
+			<p>"Agreement" means the Client communication in respect to these Terms and Conditions 'Background IP' those works or parts of works severable from the Report and comprising those Intellectual Property Rights subsisting prior to the date of the Contract and developed independently of the Supplier’s obligations under the Contract or in connection with the Services including, without limitation, the template format of the report document on which the Report is to be completed.</p>
 
-          	<p>All the details you have mentioned on the site are correct, especially your past/illness details
-and that you understand the risks associated with mentioning wrong information/hiding details.
-The pictures uploaded on the site are yours and that in case someone their claims right on
-those, Nevtop infotour™ will not be held accountable.</p>
+			<p>'Business Day' a day (other than a Saturday, Sunday or public holiday) when banks are open for business.</p>
 
-          	<p>You understand that the coaches at Nevtop infotour™ are not doctors and their advice whether
-it be on the Nevtop infotour™ website, in the meal plans, exercise program's or via email, none
-of those are meant as a substitute for medical advice. You must consult your doctor before
-beginning ANY meal plan or exercise program, no exceptions. You will be choosing the coaches
-at your own risk and Nevtop infotour™ will not be held responsible for any injuries or health
-problems you may experience or even death as a result of using the advice given by the
-coaches.</p>
+			<p>'Charges' the charges payable by the Customer for the supply of the Services in accordance with this agreement.</p>
 
-          	<p>Refund requests will be processed only within 30 days from the date of enrolment with a valid
-reason. Not all packages are eligible for a refund. Nevtop infotour retains the sole discretion to
-process or not process a refund.</p>
+			<p>'Commencement Date' has the meaning set out in the agreement.</p>
 
-          	<p>Nevtop infotour ™ may use your results on its website, however, you will be asked for a read
-and agreed by consent form before doing so.</p>
+			<p>"Client" means the principal instructing party at whose request, or on whose behalf the Company shall perform the Services.</p>
 
-			<h3>Nevtop infotour ™ guidelines for trainees / clients -</h3>
-          	
-          	<p>You are to provide accurate details about your past illness/medical condition to the coach to
-ensure there are no health associated risks while following the program.</p>
+			<p>"Company" means any/or relevant entities of SINOTECH MARINE CORPORATION HK LIMITED (including all owned, associated, or affiliated companies) that will perform the Services, and as made clear to the Client at the time the instruction is confirmed.</p>
 
-          	<p>Make sure you do not share your account details with anyone else. If your coach tries to deal
-with you outside the system, please inform us. If you pay your coach outside the system, we will
-not be able to refund in case of anomalies and hence will be solely your own responsibility.</p>
+			<p>'Conditions' these terms and conditions as amended from time to time in accordance with</p>
 
-          	<p>Do not share your address details or make a physical appointment with your coach. In case you
-wish to do so, make sure you inform here at Nevtop infotour ™ to avoid any unforeseen
-situations. Remember the coaches are not legally bound to Nevtop infotour ™ and we can only
-terminate them or hold their payment, but cannot levy any charges against them for activities
-they perform outside Nevtop infotour ™.</p>
+			<p>'Contract' the contract between the Parties for the supply of Services in accordance with these Conditions.</p>
 
-			<h3>Jurisdiction as per Indian Laws</h3>
+			<p>'Customer' the person, firm or company, who purchases Services from the Supplier.</p>
 
-			<p>These conditions shall be governed by and construed in accordance with Indian laws. All
-disputes are subject to the jurisdiction of the courts of Delhi, India. This website can be
-accessed from any place around the world. However, by accessing this website you agree that
-the laws of India, without regard to rules relating to conflict of laws, will apply to all matters
-relating to your use of this website. Users of this website accessing it from places outside of
-India acknowledge that they do so voluntarily and are responsible for complying with local laws.
-Nevtop infotour ™ reserves the right at all times to disclose any information as necessary to
-satisfy any applicable law, regulation, legal process or governmental request, or to edit, refuse
-to post or to remove any information or materials, in whole or in part, at the sole discretion of
-Nevtop infotour ™ These Site Terms and conditions constitute the entire agreement between
-the parties with respect to the subject matter hereof and this supersedes and replaces all
-previous or coexisting understandings/agreements, written/oral, with respect to the subject
-matter. If any of these conditions is determined by a court of competent jurisdiction to be illegal,
-invalid or otherwise unenforceable, that provision shall be severed from these conditions and
-the remaining provisions shall continue in full force and effect.</p>
+			<p>"Disbursements" means the cost of all reasonable incidental expenses incurred by the Company in connection with the Agreement.</p>
+
+			<p>"Fees" means the fees payable by the Client to the Company, including any value added tax or local tax equivalent where applicable and any Disbursements.</p>
+
+			<p>'Intellectual Property Rights' all patents, rights to inventions, utility models, copyright and related rights, trademarks, service marks, trade, business and domain names, rights in trade dress or get-up, rights in goodwill or to sue for passing off, unfair competition rights, rights in designs, rights in computer software, database right, topography rights, moral rights, rights in confidential information (including know-how and trade secrets) and any other intellectual property rights, in each case whether registered or unregistered and including all applications for and renewals or extensions of such rights, and all similar or equivalent rights or forms of protection in any part of the world.</p>
+
+			<p>"Order" the Customer's order for Services as set out in the Customer's purchase order form, or the Customer's written acceptance of a quotation by the Supplier, or overleaf, as the case may be.</p>
+
+			<p>'Report' shall be the report to be prepared by the Supplier in accordance with the Specification and the Order.</p>
+
+			<p>'Services' the service supplied by the Supplier to the Customer as set out in the Order.</p>
+
+			<p>'Specification' the description or specification of the Services provided in Writing by the Supplier to the Customer.</p>
+
+			<p>"Third party" shall mean any party which is not a member of the Company or the Client</p>
+
+			<p>'Vessel' includes any floating unit or storage unit and any other man-made structure designed for use at sea and whether or not fixed to the seabed.</p>
+
+			<p><b>DESCRIPTION OF SERVICE & CONTENT POLICY</b></p>
+
+			<p>That Sinotech through this business assists in condition assessment of the property ( vessels- floating bodies in the sea like ship, rigs, drills, etc), carry out independent surveys etc. We define the quality and service delivery standards and ensure quality of the service we provide.</p>
+
+			<p><b>THIRD PARTY WEBSITE & LIABILITY</b></p>
+
+			<p>Sinotech makes no representations whatsoever about any other website which you may access through this one. When you access a third-party website, please understand that it is independent from Sinotech, and that Sinotech has no control over the content on that web site, even if Sinotech provides information or services to the owner of that website. In addition, a link to a third party website does not mean that Sinotech endorses or accepts any responsibility for the content or the use of such website. In fact, Sinotech disclaims any and all liability and responsibility for such content. It is up to you to take precautions to ensure that whatever you select for your use is free of such items as viruses, worms, trojan horses and other items of a destructive nature.</p>
+
+			<p><b>COPYRIGHTS AND USE OF SITE CONTENT</b></p>
+
+			<p>The copyright in all materials provided on this Site is held by Sinotech or by the original creator of the material. Except as stated herein, none of the materials may be copied, reproduced, distributed, republished, downloaded, displayed, posted or transmitted in any form or by any means, including, but not limited to, electronic, mechanical, photocopying, recording or otherwise, without the prior written permission of Sinotech or the copyright owner. You may not "mirror" any material contained on this Site without Sinotech's express written permission. Any unauthorized use of the materials contained on this Site may violate copyright laws, trademark laws, the laws of privacy and publicity and/or communications regulations and statutes. All content and functionality on this Site, including text, graphics, logos, icons, and images and the selection and arrangement thereof, are the exclusive property of Sinotech and is protected by Indian and international copyright laws and applicable treaties. All rights not expressly granted are reserved.</p>
+
+			<p><b>SUPPLY OF SERVICES</b></p>
+
+			<p>That the Supplier shall provide the Services to their Client in accordance with the Specification in all material respects. That the Supplier shall use all reasonable endeavours to meet specifications or quality requirements in the Order, and that any such dates shall be estimates only and time shall not be of the essence for performance of the Services.</p>
+
+			<p>The Supplier shall be entitled to procure performance of its obligations hereunder by appointing a suitably qualified and skilled substitute to perform the Services on its behalf. Any such performance of all and any of the Supplier’s obligations by the substitute shall be and constitute full and sufficient performance by the Supplier of its obligations under the Contract.</p>
+
+			<p>That the Supplier shall have the right to make changes to the Services which are to be necessarily complied with any applicable law or safety requirement, or do not materially affect the nature or quality of the Services, and the Supplier shall notify the Customer in any such event.</p>
+
+			<p>The Supplier warrants the Customer that the Services will be provided using reasonable care, skill and diligence and in accordance with normal professional standards within the shipping industry.</p>
+
+			<p>Any performance of the Supplier’s obligations by the substitute shall be without prejudice to the rights of the Customer for any failure in performance of the Supplier’s duties and obligations. Notwithstanding performance by the substitute, the Supplier shall remain solely responsible to the Customer for the performance of their obligations hereunder.</p>
+
+			<p>The Company shall perform the Services solely in accordance with the terms and conditions of this document/Agreement. In the event of conflict between the Agreement and any other terms and conditions (whether from the Client or otherwise), the former shall prevail unless expressly agreed by the Company in writing.</p>
+
+			<p>That this Agreement shall take effect on the earliest of the following events take place and shall subsist till this agreement is present on the website and continue till perpetuity - </p>
+
+			<p>i. when the Client provides written confirmation in an appropriate format, accepting the agreed scope of work and these Terms and Conditions; or </p>
+
+			<p>ii. when the Company commences the performance of the work.</p>
+
+			<p>iii in the event of continuing instructions to the Company from the Client.</p>
+
+			<p><b>BASIS OF CONTRACT</b></p>
+
+			<p>That the Order shall constitute an offer for the Customer to purchase Services in accordance with the following Conditions -</p>
+
+			<p>(a) The Order shall be deemed to be accepted only when the Supplier issues written acceptance of the Order at which point and on which date the Contract shall come into existence and the same shall be the 'Commencement Date'.</p>
+
+			<p>(b) The Contract constitutes the entire agreement between the parties. The Customer acknowledges that it has not relied on any statement, promise or representation made or given by or on behalf of the Supplier which is not set out in the Contract and was in fact set out prior to or subsequent to such Contract.</p>
+
+			<p>(c) Any samples, drawings, descriptive matter or advertising issued by the Supplier, and any descriptions or illustrations contained in the Supplier’s catalogues or brochures, are issued or published for the sole purpose of giving an approximate idea of the Services described in them and shall not form part of the Contract or have any contractual force.</p>
+
+			<p><b>CLIENT’S/CUSTOMER’S OBLIGATIONS</b></p>
+
+			<p>The Company’s performance of the Services is dependent on the Client, its employees, affiliates and / or agents providing the Company with the requested information and / or access to a vessel, shipyard and / or, site. The Customer is bound to and shall:</p>
+
+			<p>(a) ensure that all information provided are complete and accurate and all the terms of the Order are adhered to;</p>
+
+			<p>(b) coordinate and cooperate with the Supplier in all matters relating to the Services;</p>
+
+			<p>(c) provide access to the Customer’s Vessel, premises, office accommodation and other facilities to the Supplier, its employees, agents, consultants and subcontractors, as reasonably required by the Supplier, which shall include making all necessary arrangements, at the Customer’s expense, to provide carriage from the port of docking of the Vessel to the Vessel itself;</p>
+
+			<p>(d) provide records, information and materials to the Supplier promptly, reasonably required in order to supply the Services, and ensure that such information is accurate in all material respects;</p>
+
+			<p>(e) prepare safe working environment in the Vessel and/or premises for the supply of the Services;</p>
+
+			<p>(f) obtain, maintain and renew all necessary licenses, permissions and consents which may be required before the date on which the Services are to start;</p>
+			
+			<p>(g) be responsible for notifying the Supplier of all relevant operational, security policies, health and safety hazards & policies, environmental policies and procedures in force at the Customer’s Vessel, premises and/or the relevant port authority at the location at which the Vessel is situated including, without limitation, all requirements for accessing and boarding the Vessel and accessing confined spaces within the Vessel itself; and</p>
+
+			<p>(h) keep and maintain all materials, equipment, documents and other property of the Supplier (‘Supplier Materials’) at the Customer’s Vessel and/or premises in safe custody at its own risk, maintain the Supplier Materials in good condition until returned to the Supplier, and not dispose off or use the Supplier Materials other than in accordance with the Supplier’s written instructions or authorisation.</p>
+
+			<p>The Client undertakes to provide sufficient time to enable the Services to be performed effectively and efficiently to:</p>
+
+			<p>In the event that due to any act or omission of the Customer or failure by the Customer to perform any relevant obligation the Supplier’s performance of any of its obligations under the Contract is prevented or delayed, the supplier undertakes that:</p>
+
+			<p>(a) without limiting its other rights or remedies or incurring any liabilities whatsoever, shall have the right to suspend performance of the Services until the Customer remedies the Customer Default, and to rely on the Customer Default to relieve it from the performance of any of its obligations to the extent the Customer Default prevents or delays the Supplier’s performance of any of its obligations;</p>
+
+			<p>(b) not be liable for any costs or losses sustained or incurred by the Customer arising directly or indirectly from the Supplier’s failure or delay to perform any of its obligations;</p>
+
+			<p>(i) That the Customer shall reimburse the Supplier on written demand for any costs or losses sustained or incurred by the Supplier.</p>
+
+			<p>(j) The Client is solely responsible for determining whether the Services are sufficient as per its requirements.</p>
+
+			<p><b>COMPANY’S OBLIGATION:</b></p>
+
+			<p>a) The Company’s performance of the Services is dependent on the Client, its employees, affiliates and / or agents providing the Company with the requested information and / or access to a vessel, shipyard and / or, site. That the Company shall ensure that the person delivering the Services shall use reasonable care and skill in the performance of the Services in accordance with good marine reporting, inspection, surveying and consulting practice.</p>
+
+			<p>b) That the Company shall not be deemed to have notice of any other information relating to the performance of Services that is not provided by the Client directly the Company.</p>
+
+			<p>c) Reporting - The Company shall submit interim Reports to the Client during and following completion of the agreed Services describing the findings and assessments of all surveys and inspections relating to the purpose of the Client’s instruction, upon request of the Client. The Company shall have no responsibility to update its Report(s) for events that take place after the final Report(s) have been issued.</p>
+
+			<p>d) Confidentiality - Both parties undertake not to disclose any information (including but not limited to Reports, advices, recommendations and any contract) provided in confidence by the other party to any third party (including but not limited to any of their subsidiaries or affiliates) and the receiving party shall not permit access to such information by any third party unless the disclosing party expressly grants permission in writing save where required to do so by an order of a competent court of law.</p>
+
+			<p>e) Indemnity - In the event that any information or documentation is generated by the Company in accordance with the Agreement or performance of the Services is disclosed to any other individual or company (including but not limited to any of the Client’s subsidiaries or affiliates), other than where there is an obligation to disclose the same in legal proceedings, the Client will indemnify the Company against all claims losses or damages whatsoever caused directly or indirectly by any such disclosure.</p>
+
+			<p>The Client hereby undertakes to keep the Surveyor / Consultant and its employees, agents and sub-contractors indemnified and to hold them harmless against all actions, proceedings, claims, demands or liabilities whatsoever or howsoever arising which may be brought against them or incurred or suffered by them, and against and in respect of all costs, loss, damages and expenses, (including but not limited to, legal costs and expenses on a full indemnity basis) which the Surveyor / Consultant may suffer or incur (either directly or indirectly) in the course of the Services under these Conditions.</p>
+
+			<p>The Company shall not be liable for any delays incurred in performance of the Services due to items including but not limited to:</p>
+
+			<p>i. late provision or access to data, information, vessel(s), shipyard(s) and/or site(s);</p>
+
+			<p>ii. any errors or omissions in the data or information provided.</p>
+
+			<p>The Client acknowledges that where data and / or information is incomplete, the Company shall necessarily have to use its skill and judgement in making reasonable assumptions in order to perform the Services.</p>
+
+			<p>Any timetable or dates specified by the Company and agreed by the Parties for the performance of the Services is necessarily an estimate only and is not guaranteed, unless otherwise agreed by the Company in writing. Accordingly, whilst the Company will use reasonable efforts to comply with such dates, the Client will have no right to terminate the Agreement for any failure to meet these dates and acknowledge that the Company’s performance is entirely dependent on the Client complying with its responsibilities as set out in the Agreement.</p>
+
+			<p><b>Intellectual Property</b></p>
+
+			<p>That the Company shall have ownership rights to intellectual property resulting from the performance of the work and created by the Company. The Client acknowledges and agrees that the Company’s working papers and other internal documentation are confidential to the Company and accordingly, will not be disclosed to the Client unless otherwise agreed by the Company in writing.</p>
+
+			<p>The Client acknowledges that nothing agreed between the Parties will affect the Company’s or its licensors’ rights in respect of any intellectual property rights held prior to the commencement of the Services or otherwise developed outside the agreed scope of work or Services (including any modifications or amendments thereto).</p>
+
+			<p>Subsequent to payment of all amounts due under or in connection with the Agreement, the Client shall have a non-exclusive, non-transferable right to use the final version of any Report(s) solely for the purposes for which they are delivered.</p>
+
+			<p>The Client grants to the Company and its subcontractors a non-exclusive and royalty-free right to use any materials supplied by the Client in connection with the Services for the purposes of performing those Services.</p>
+
+			<p><b>Inspection:</b></p>
+
+			<p>Any inspection of a Vessel provided as part of the Services shall be, unless otherwise agreed in writing by the parties: (a) subject to the Specification set out in the Order; (b) limited to those areas of a Vessel which are visible, exposed, uncovered, readily accessible and made available to the Supplier; (c) superficial in nature, without any investigation into the water tightness or integrity, suitability for business or trade, operational efficiency or performance of the Vessel or her machinery or equipment; and (d) applicable only at the time and date the inspection is being conducted.</p>
+
+			<p><b>Surveys:</b></p>
+
+			<p>"Pre-purchase Survey" refers to a survey for a vessel inspection and/or a survey conducted by the Company pursuant to which a Report is produced by the Company, to be used, or relied upon, in order to make a decision on or provide money for, the purchase of any vessel. The survey does not include any valuation of the vessel.</p>
+
+			<p>For Pre-purchase Surveys, the Company shall be in no way liable with regard to the present or future condition or operation of the vessel, as well as for the information provided to the company during the course of the survey and anything written in the report or otherwise passed on to the Principal, etc.</p>
+
+			<p>In the case of undertaking a Pre purchase survey, the Company will not provide specific Vessel valuations to the Client and will be entitled to act upon the instructions of any of the Client’s authorised employees, affiliates or agents and rely upon any information supplied by the Client in connection with the Services.</p>
+
+			<p>The Services shall be performed by the Company for the benefit of the Client. The Company does not accept any responsibility or liability to any third party for the Services performed for the benefit of the Client. Any assessment in respect to a warranty or pre purchase survey will be made solely on the basis of the information provided to the Company, the documents examined, and the observations of the surveyor at the time of our attendance(s) at the Shipyard, site or onboard the vessel.</p>
+
+			<p>Any Report issued by the Company to the Client shall be for the Client’s benefit only and shall not be disclosed to any third party without the express written consent of the Company.</p>
+
+			<p>Any disclosure of a Report to a third party shall be strictly subject to the Client or any such third party complying with any additional requirements of the Company in respect of such disclosure.</p>
+
+			<p>Once the Company and the Client have agreed what Services are to be performed, any subsequent variations to the Services must be promptly agreed in writing between the Parties, specifying any variation to the agreed work scope, delivery date and/ or the deliverables as well as any additional costs involved.</p>
+
+			<p><b>Fee & Payment Terms</b></p>
+
+			<p>The Charges for the Services shall be on a time and materials basis and the Client shall pay the Fees in accordance with the Order. The Fees payable shall be communicated in writing to the Client and based on the Services to be performed. The Company’s fees are charged as agreed, plus any applicable disbursements, relevant GST, sales tax or any other taxes payable as applicable.</p>
+
+			<p>The Charges shall be calculated in accordance with the Supplier’s standard daily fee rates, as set out in the Order;</p>
+
+			<p>The Company reserves the right to increase its standard charge-out rates at any time. Any fee estimates provided shall not be binding and shall be issued in good faith on the basis of the information provided by the Client at the time of providing the estimates. The fee may be revised by the Company in the event that the time or work included in the Order is inconsistent. Where it is necessary to extend the Services beyond the time specified or originally anticipated for reasons beyond the Company’s control, then the cost of the Services charged to the Client may be increased at the appropriate fee rate.</p>
+
+			<p>That the Supplier’s standard daily fee rates for each individual are calculated on the basis of a seven-hour day from 09.00 am to 5.00 pm worked on Business Days and the Supplier shall be entitled to charge an overtime rate as set out in the Order for each part day or for any time worked by individuals whom it engages on the Services outside the hours referred above;</p>
+
+			<p>The Client shall pay the Company’s Fees and Disbursements (together with any associated bank charges and GST) without any delays and in any event not later than 30 days following the relevant invoice date.</p>
+
+			<p>The Company reserves the right to request part or full payment upfront before performing the Services or change/alter the terms of payment from one negotiation to another. In such circumstances the Company will only commence performance of the Services upon receipt of the required payment. The Company shall be entitled to terminate the Agreement if the required payment is not received within 7 working days of the date of the Company’s written confirmation to perform the Services in accordance with Client instructions.</p>
+
+			<p>If any part of an invoice is genuinely in dispute, the Client shall notify the Company immediately upon receipt of such invoice,giving reasons as to why a portion of the invoice is disputed and nevertheless pay the undisputed part within 30 days of the invoice date.</p>
+
+			<p>The parties shall endeavour to resolve the disputed portion without delay. The Company shall be entitled to charge interest on a daily basis at the rate of ….. Per month on any overdue invoice or on any undisputed part thereof as appropriate. In the event that there is a delay of more than 25 working days in payment of invoice duly issued, the Company reserves the right to suspend the performance of its Services, withhold any Reports, or stop work without incurring any arising liability whatsoever.</p>
+
+			<p>The Company shall treat the Client responsible for paying for the Services, without prejudice to any rights of recovery that the Company might have against a third party.</p>
+
+			<p>That the Client shall pay invoices issued by the Company in full, unless the Client can clearly show that the Company has performed its duties or the Services negligently, or inadvertently provided insufficient services as per the discussion.</p>
+
+			<p><b>Limitation and Exclusion of Liability</b></p>
+
+			<p>Nothing in the Agreement excludes or limits the Company’s liability for death or personal injury caused by the Company’s negligence or the negligence of its employees acting in the course of their employment and/or any fraudulent pre-contractual misrepresentations made by the Company.</p>
+
+			<p>The Company’s total maximum liability arising out of or relating to the performance of the Services whether in contract, tort (including, without limitation, negligence), breach of statutory duty or otherwise shall be the greater of ten (10) times the Fees paid (or payable) by the Client.</p>
+
+			<p>The Company gives no warranty, express or implied, as to the fitness for purpose or suitability of the Services or Results and the Client waives any terms, conditions or warranties otherwise incorporated or implied by law to the fullest extent permitted by law. There can be no guarantee that errors or irregularities. Similarly, the pre purchase survey does not warrant the seaworthiness of the vessel but attests the vessel’s condition at the time of the survey.</p>
+
+			<p>The Company will not be liable to the Client for, or in respect of, the following resulting from or arising out of in any way the Company’s performance of the Services:</p>
+
+			<p>i. any claims, losses, loss of profit, damage, off-hire, delay or expense of whatsoever nature, business, contracts, goodwill, revenue or anticipated savings or</p>
+
+			<p>ii. any indirect or consequential loss or damage; or</p>
+
+			<p>iii. any fines, penalties, punitive, exemplary or non compensatory damages, however expressed or described,</p>
+
+			<p>iv. any latent defect which was not apparent at the time of the inspection or survey and which could not reasonably have been expected to have been discovered by such inspection or survey (either by reason of lack of access to the shipyard, a vessel or to part of a vessel, or by limited availability of time or otherwise); or</p>
+
+			<p>v. any failure to advise or comment upon any matter which falls outside of the scope of the Services; or</p>
+
+			<p>vi any delay in or failure by any third party to fulfil its obligations in relation to the vessel, shipyard, project or venture to which the Agreement relates, including but not limited to any failure by the third party and / or its representatives to follow its own policies and work/operational procedures; or</p>
+
+			<p>vii any delay in performance, or failure to perform the Services or any of the Company’s obligations if the delay or failure to perform was due to any reason beyond the Company’s reasonable control, unless the above is proved to have resulted solely from the negligence, gross negligence, or wilful default, of the Surveyor/ Consultant or any of its employees, agents or subcontractors.</p>
+
+			<p>The Client acknowledges and agrees that the limits of liability as agreed between the Parties apply in the aggregate. To the extent permitted by law, all warranties, conditions, representations or terms other than those expressly agreed by the Parties are excluded, including but not restricted to, all implied and statutory warranties and conditions.</p>
+
+			<p>The Clients relationship is solely with the Company. No company representatives have any personal liability to the Client whether in contract or tort (including negligence) or otherwise. The fact that any representative of the Company signs in his or her name any document or email in the course of carrying out the consultancy service does not give rise to any personal legal liability separate to that of the Company.</p>
+
+			<p>The Client will inform the Company of any alleged act, statement, omission or negligence on the Company’s part  in connection with or in relation to the performance of the Services in respect of which the Company may be legally liable to the Client as soon as practicable after becoming aware of the same, and the Client will afford the Company, if the Company so desires, the reasonable opportunity to correct any deficiency in the Services provided.</p>
+
+			<p><b>FORCE MAJEURE</b></p>
+
+			<p>For the purposes of this Contract, the Company will not be liable or responsible for any delay or other consequences resulting from an event beyond the reasonable control of the Supplier including but not limited to:</p>
+
+			<p>(i) acts of God;</p>
+
+			<p>(ii) governmental actions;</p>
+
+			<p>(iii) war or national emergency;</p>
+
+			<p>(iv) acts of terrorism, piracy or armed conflict;</p>
+
+			<p>(v) protests, riot, civil commotion or malicious damage;</p>
+
+			<p>(vi) fire, explosion, loss at sea, flood or epidemic;</p>
+
+			<p>(vii) lock-outs, strikes or other labour disputes (whether or not relating to either party’s workforce);</p>
+
+			<p>(viii) restraints or delays affecting carriers or inability or delay in obtaining supplies of adequate or suitable materials;</p>
+
+			<p>(ix) interference by civil or military authorities;</p>
+
+			<p>(x) compliance with any law or governmental order, rule, regulation or direction;</p>
+
+			<p>(xi) accident, breakdown of plant or machinery; or</p>
+
+			<p>(xii) default of suppliers or subcontractors.</p>
+
+			<p>In the event that the Force Majeure Event prevents the Supplier from providing any of the Services for more than four (4) weeks, the Supplier shall, without limiting its other rights or remedies, have the right to terminate this Contract immediately by giving written notice to the Customer.</p>
+
+			<p><b>SUSPENSION</b></p>
+
+			<p>The Company shall be entitled to suspend its performance of the Services for reasons of breach of the Agreement by the Client, Force Majeure or following a request from the Client, in which case the Company shall be entitled to payment by the Client of the following costs:</p>
+
+			<p>i. the full costs of laying off (and re-hiring if necessary) any employees and consultants employed or subcontractors hired specifically for the purposes of the performance of Services to include any costs which the Company has necessarily paid to an employment agent.</p>
+
+			<p><b>DISCLAIMER</b></p>
+
+			<p>The Report is issued on the strict condition that nothing therein shall be deemed to relieve any designer, manufacturer, seller, supplier, repairer or operator of any warranty, express or implied and the Supplier’s liability shall be limited to the acts and omissions of its employees, agents or subcontractors and is subject to these Conditions for the provision of the Services.</p>
+
+			<p>The Report is personal to, and for the private and confidential use of, the Customer and is issued solely to the Customer and the Customer shall not reproduce or make available, in whole or part, the Report without the prior written consent of the Supplier other than where required by law. The Report may not be relied upon by any other party without the express written consent of the Supplier.</p>
+
+			<p><b>TERMINATION</b></p>
+
+			<p>The Company may, without prejudice to any other rights and remedies it has pursuant to the Agreement or otherwise and without incurring liability to the Client, terminate the Agreement (in whole or in part) by giving notice in writing to the Client:</p>
+
+			<p>i. if the Client commits any material or persistent breach of the Agreement which is either not capable of being remedied or which the Client has failed to remedy to the Company’s satisfaction within 10 working days of receiving written notice of the breach from the Company; or</p>
+
+			<p>ii. if the Client compounds with or negotiates for any composition with its creditors generally or permits any judgement against it to remain unsatisfied for 20 working days; or</p>
+
+			<p>iii. if being a company the Client calls a meeting of its creditors or has a receiver appointed over all or any of its assets or enters into any liquidation or is subject to an administrative order, administrative receivership, a winding up order or similar event; or</p>
+
+			<p>iv. if being an individual the Client shall die or have a receiving order made against them or become bankrupt;</p>
+
+			<p>or</p>
+
+			<p>v. if the Client becomes involved or is likely to become involved in giving evidence in any litigation or arbitration proceedings affecting the subject matter of the agreed terms and conditions in respect of the performance of Services or any matter connected or arising from the Agreement between the Parties which would result in a conflict of interest between the Company and the Client;</p>
+
+			<p>or</p>
+
+			<p>vi. if at any time the Company believes that its performance of the Services or any aspect of the provision thereof results in or might result in the Company breaching any legal, regulatory or independence requirement in any jurisdiction; or</p>
+
+			<p>vii. if being a company at any time the Client’s ownership changes so that a different party than the current owners acquire more than half of the nominal value of its equity share capital.</p>
+
+			<p><b>INSURANCE</b></p>
+
+			<p>The Company maintains normal insurance policies for the kind of risks and Services which it undertakes, appropriate to the size of the Company, including insurance required by law as well as Professional Indemnity Insurance for such loss and damage for which the Surveyor/Consultant may be held liable to the Client under these Terms and Conditions.</p>
+
+			<p><b>RECOVERY OF SUMS DUE</b></p>
+
+			<p>Wherever under the Contract the Supplier considers that any sum of money is recoverable from or payable by the Customer, that sum may be deducted from any sum then due, or which at any later time may become due, to the Customer under the Contract or under any other agreement or contract with the Supplier.</p>
+
+			<p><b>NOTICES</b></p>
+
+			<p>Any notice given pursuant to the Contract may be sent by hand or by post or by registered post or by the recorded delivery service or transmitted by telex, telemessage, facsimile transmission or other means of telecommunication resulting in the receipt of a written communication in permanent form and if so sent or transmitted to the address of the party shown on the Order, or to such other address as the party may by notice to the other have substituted therefor, shall be deemed effectively given on the day when in the ordinary course of the means of transmission it would first be received by the addressee in normal business hours.</p>
+
+			<p><b>NO PARTNERSHIP</b></p>
+
+			<p>Nothing in the Contract is intended to, or shall be deemed to, constitute partnership or joint venture of any kind between any of the parties, nor constitute any party the agent of another party for any purpose. No party shall have authority to act as agent for, or to bind, the other party in any way.</p>
+
+			<p><b>SUB-CONTRACTING & ASSIGNMENT</b></p>
+
+			<p>The Company shall be entitled to sub-contract any aspect of the Services under this Agreement without the prior written consent of the Client. Notwithstanding the engagement of any sub-contractor the Company shall remain fully liable for the due performance of the Services.</p>
+
+			<p>The Client is not entitled to assign, or otherwise transfer its rights and/or obligations (in whole or in part) under or in connection with the Agreement to any third party.</p>
+
+			<p><b>THIRD PARTY RIGHTS</b></p>
+
+			<p>A person who is not a party to the Agreement in respect of the performance of Services will have no rights to enforce any of the terms and conditions in respect thereto.</p>
+
+			<p><b>SEVERABILITY</b></p>
+
+			<p>If any part of the Agreement is found by any court or authority of competent jurisdiction to be illegal, invalid or unenforceable, then that provision shall, to the extent required, be severed and shall be ineffective, but shall not affect any other provision of the Agreement which shall remain in full force and effect.</p>
+
+			<p>The Agreement will be deemed to comprise the entire agreement between the Client and the Company and will supersede and replace all previous proposals, correspondence, understandings, contracts or other communications, including the Client’s standard terms.</p>
+
+			<p><b>WAIVER</b></p>
+
+			<p>No waiver by the Company of any breach of the Agreement by the Client will be considered as a waiver of any subsequent breach of the same or any other provision.</p>
+
+			<p><b>GOVERNING LAW</b></p>
+
+			<p>The Agreement will be governed by and construed in accordance with Hong Kong law and the Parties hereby irrevocably agree to submit to the Hong Kong jurisdiction.</p>
 
           </div>
       );
