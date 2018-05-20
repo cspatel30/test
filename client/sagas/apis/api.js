@@ -87,7 +87,7 @@ function initApplicationApi() {
   );
 }
 
-function createEnquiryApi(payload) {	
+function createEnquiryApi(payload) {
   return publicApiInstance.post('/api/enquiry/', payload,
             { headers: { "Content-Type": "application/json", "Accept": "application/json"} }
   );
