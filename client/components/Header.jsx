@@ -161,6 +161,7 @@ export default class Header extends Component {
             <div id="box"></div>
             <ul>
               <li><NavLink className="menu-link" key="link_home" to="/">Home</NavLink></li>
+              <li><NavLink className="menu-link" key="link_inspectors" to="/inspectors/">Inspectors</NavLink></li>
               {userProfile && userProfile.type === 'inspector' && <li><NavLink className="menu-link" key="inspector_link_profile" to="/my/profile/">My Profile</NavLink></li>}
               <li><NavLink className="menu-link" key="inspector_link_enquiries" to="/my/enquiries/">Enquiries</NavLink></li>
               <li><NavLink className="menu-link" key="" to="/my/orders/">Jobs</NavLink></li>

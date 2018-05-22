@@ -85,7 +85,7 @@ class InspectorProfilePage extends Component {
               <span>{`${inspe.city}, ${inspe.country.name}`}</span>
               <span>Approved inspection Type:</span>
               <div>{this.renderChips(inspe.approvedInspectionTypes)}</div>
-              <span>approved for vessel Type:</span>
+              <span>Approved for vessel Type:</span>
               <div>{this.renderChips(inspe.approvedVesselTypes)}</div>
               <span>Years of experience: {`${inspe.experienceYears} years`}</span>
               <span>Total jobs done: {inspe.totalInspections}</span>

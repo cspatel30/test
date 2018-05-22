@@ -110,6 +110,7 @@ export default class AdminAssignInspectorPage extends Component {
   }
 
   onRowSelect(row, isSelect, rowIndex) { 
+    console.log('...row', row, isSelect, rowIndex);
     if(isSelect) {
       this.setState((state) => { state.selectedRows[row.userId] = true;});
     } else {
