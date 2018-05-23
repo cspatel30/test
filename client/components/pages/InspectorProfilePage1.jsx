@@ -24,14 +24,16 @@ class InspectorProfilePage extends Component {
     }
 
     componentWillMount() {
-      if(this.props.userProfile) {
+
+      if (!this.props.bool) this.props.getInspectorPublicProfile(parseInt(this.props.match.params.id));
+      if(this.props.userProfile && this.props.bool) {
         this.props.getProfile();
       }
     }
 
     componentWillReceiveProps(props) {
       if(!this.props.userProfile && props.userProfile) {
-        this.props.getProfile();
+        if (this.props.bool) this.props.getProfile();
       }
     }
 
@@ -64,7 +66,7 @@ class InspectorProfilePage extends Component {
         dataArray = data ? data.split(",") : null;
       }
       if (dataArray && dataArray.length > 0) return dataArray.map((i, key) => (
-        <Chip className="mb-2 mr-2" key={key} style={{float: 'left'}} labelColor='#fff' backgroundColor={blue500}>{i}</Chip>
+        i && <Chip className="mb-2 mr-2" key={key} style={{float: 'left'}} labelColor='#fff' backgroundColor={blue500}>{i}</Chip>
       ))
     }
     renderMyProfile(inspe, user) {
@@ -225,7 +227,7 @@ class InspectorProfilePage extends Component {
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Passport Number : </b>{inspe.passportNumber}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Date of Birth : </b>{moment(inspe.dob).format('MMM Do YYYY')}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Country of Residence : </b>{inspe.country.name}</div>
-              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Sea Port : </b>{port.name}</div>
+              <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Sea Port : </b>{port && port.name}</div>
               <div className="mb-3"><b className="p-1" style={{color: '#000', fontSize: '15px'}}>Nearest Airport : </b>{inspe.nearestAirport}</div>
             </div>
             <div className="" style={{flex: 3}}>
@@ -250,7 +252,7 @@ class InspectorProfilePage extends Component {
       )
     }
     render() {
-      const { userProfile, inspectorProfile, error } = this.props;
+      const { userProfile, inspectorProfile, error, bool } = this.props;
       console.log('........data.......', inspectorProfile, userProfile);
       if(this.state.edit) {
         return(<EditInspectorProfile userProfile={this.props.userProfile} inspectorProfile={this.props.inspectorProfile}
@@ -268,7 +270,7 @@ class InspectorProfilePage extends Component {
           <div className="inspector-profile-page mt-3 mb-5">
             <div className="error">{error}</div>
             <div className="inspector-profile-data-wrap">
-              <div style={{position:'absolute', left: '-50px'}}><IconButton iconStyle={{width: 30, height: 30}} onClick={() => {this.editProfile()}}><EditIcon color={blue500} /></IconButton></div>
+        <div style={{position:'absolute', left: '-50px'}}>{bool && <IconButton iconStyle={{width: 30, height: 30}} onClick={() => {this.editProfile()}}><EditIcon color={blue500} /></IconButton>}</div>
               {this.renderMyProfile(inspectorProfile, userProfile)}
               {this.renderSkills(inspectorProfile, userProfile)}
               {this.renderWorkHistory(inspectorProfile, userProfile)}
