@@ -216,7 +216,7 @@ global.mysqlConfig = {
 };
 
 global.appConfig = {
-  emailTemplatesPath : 'D:/personnel/shipinspector/web/service/emailtemplates/',
+  emailTemplatesPath : 'C:/Users/Vivek/Desktop/web/service/emailtemplates/',
   accessKeyId: 'AKIAIFENAUAFOPXUTNQQ',
   secretAccessKey: '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',
   defaultFrom: 'Team ShipInspector <noreply@shipinspectors.com>',
