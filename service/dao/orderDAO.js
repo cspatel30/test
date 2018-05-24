@@ -2,6 +2,7 @@
 var db = require('../mysql/db');
 var portDAO = require('./portDAO');
 var userDAO = require('./userDAO');
+var feedbackDAO = require('./feedbackDAO');
 require('../constants');
 var moment = require('moment');
 
@@ -117,6 +118,11 @@ async function transform_order(orderDTOs) {
 
         order['startTimeFmt'] = moment(order['startTime']).format("YYYY-MM-DD");
         order['endTimeFmt'] = moment(order['endTime']).format("YYYY-MM-DD");
+
+        var ratingDTO = await feedbackDAO.getFeedbackByOrder(orderDTOs[i]['id']);
+        if(ratingDTO && ratingDTO.length > 0) {
+            order['isFeedbackGiven'] = true;
+        }
 
         orders.push(order);
       }
