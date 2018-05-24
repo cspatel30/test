@@ -219,7 +219,7 @@ export default class OrdersPage extends Component {
     return (
       <div className="col-4 d-flex flex-column justify-content-around">
         <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Cancel</button>
-        <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => this.setState({dailog: true, activeOrderForFeeback: orders[key]})}>Submit Feedback</button>
+        <button type="button" style={{width: 'fit-content', cursor: orders[key].isFeedbackGiven ? 'not-allowed' : 'pointer'}} className="btn btn-primary" disabled={orders[key].isFeedbackGiven ? true : false} onClick={() => this.setState({dailog: true, activeOrderForFeeback: orders[key]})}>Submit Feedback</button>
         <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => this.setState({downloadReportModal: true})}>Download Report</button>
       </div>
     )
