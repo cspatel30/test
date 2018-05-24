@@ -85,7 +85,7 @@ const columns = [{
 function profileViewButtonRenderer(cell, row) {
   return (<a href={"/inspector/profile/"+row.userId} target="_blank">
     <div className="btn">
-      <button>View Profile</button>
+      <button onClick={(e) => e.stopPropagation()}>View Profile</button>
     </div>
     </a>
   );
