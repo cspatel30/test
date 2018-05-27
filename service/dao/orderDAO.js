@@ -98,7 +98,7 @@ async function transform_order(orderDTOs) {
          startTime: new Date(orderDTOs[i]['start_time']).getTime(), endTime: new Date(orderDTOs[i]['end_time']).getTime(),
          status: orderDTOs[i]['status'],
          customerQuote: orderDTOs[i]['user_quote_amount'], inspectorQuote: orderDTOs[i]['inspector_quote_amount'],
-         createdOn: orderDTOs[i]['created_on']
+         createdOn: orderDTOs[i]['created_on'], enquiryId: orderDTOs[i]['enquiry_id']
       };
 
       if(!orderDTOs[i]['port_name']) {
@@ -122,6 +122,9 @@ async function transform_order(orderDTOs) {
         var ratingDTO = await feedbackDAO.getFeedbackByOrder(orderDTOs[i]['id']);
         if(ratingDTO && ratingDTO.length > 0) {
             order['isFeedbackGiven'] = true;
+            order['feedbackId'] = ratingDTO[0]['id'];
+        } else {
+          order['isFeedbackGiven'] = true;
         }
 
         orders.push(order);
