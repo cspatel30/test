@@ -34,6 +34,14 @@ function getFeedbackByOrder(order_id) {
   return new Promise(function(resolve, reject) { resolve(true) });
 }
 
+function updateFeedback(payload) {
+  var overall_rating = getOverallRating(payload);
+  values = [parseInt(payload.availability), parseInt(payload.reportQuality), parseInt(payload.skillAndExp),
+                parseInt(payload.deadline), payload.comment, overall_rating, payload.feedbackId];
+  db.mysql_update_query('UPDATE feedback SET availability = ?, SET report_quality = ?, skill_experience = ?, deadline = ?, comment = ?, overall_rating = ? where id = ?', values1);
+  return new Promise(function(resolve, reject) { resolve(true) });
+}
+
 function transformFeedback(feedbackDTOs) {
   var feedbacks = [];
   if(feedbackDTOs && feedbackDTOs.length > 0) {
@@ -54,5 +62,6 @@ module.exports = {
  getRatings : getRatings,
  updateInspectorRating : updateInspectorRating,
  getFeedbackByOrder : getFeedbackByOrder,
- transformFeedback : transformFeedback
+ transformFeedback : transformFeedback,
+ updateFeedback : updateFeedback
 }
