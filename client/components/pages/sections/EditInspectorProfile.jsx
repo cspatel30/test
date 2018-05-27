@@ -73,7 +73,7 @@ export default class EditInspectorProfile extends Component {
   }
 
   handleFileUploadInputChange(event) {
-  	console.log(event.target.name);
+  	console.log('name of docs...', event.target.name);
   	this.props.handleFileUpload(this.props.inspectorProfile.userId, 'sinotechmarineassets', event.target.name, event.target.files[0]);
   }
 

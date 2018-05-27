@@ -1246,7 +1246,7 @@ p {
   font-size: 14px;
   font-weight: bolder;
 }
-.areas-covered:nth-child(odd) {
+.areas-covered:nth-child(odd), .profile-docs:nth-child(odd) {
   background: lightgray;
 }
 /* ---------------------------------------------------- inspector profile page end------------------------------------------------------------- */
