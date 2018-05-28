@@ -240,7 +240,7 @@ class InspectorProfilePage extends Component {
       const { ports } = this.props;
       const port = ports.find((x) => x.id[0] == inspe.seaport && x);
       const arr = ['Document Name', 'Expiry', 'File Attachment'];
-      const docArr = [{ label: 'Passport', key: 'passportDoc' }, { label: 'Medical Insurance', key: 'medicalInsuranceDoc' }, { label: 'Travel Insurance', key: '' }, { label: 'Professional Indemnity', key: 'profIndemnityCert' },{ label: ' Public & General Liability', key: '' }, { label: 'Worker Medical Fitness Certificate', key: 'medicalFitnessDoc' }, { label: 'Seafarer\'s Identity Book', key: '' }]
+      const docArr = [{ label: 'Passport', key: 'passportDoc' }, { label: 'Medical Insurance', key: 'medicalInsuranceDoc' }, { label: 'Medical Fitness Certificate ILO', key: 'medicalFitnessDoc' }, { label: 'Seaman Book', key: 'seamanBookDoc' }, { label: 'Professional Indemnity', key: 'profIndemnityCert' }, { label: 'Qualification Document', key: 'qualificationDoc' }]
       const title = arr.map((i, key) => (
         <div className={`${key === 1 && 'mx-1'}`} style={{flex: key === 1 ? 1 : 2, fontWeight: 'bold'}} key={key}>{i}</div>
       ));

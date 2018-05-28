@@ -424,31 +424,15 @@ export default class EditInspectorProfile extends Component {
 													<div className="clear"></div>
 												</div>
 												<div className="edit-line">
-													<label>Qualification Cert:</label>
+													<label>Medical Insurance:</label>
 													<div className="value">
-														<input type="file" value="" name="inspectordocs/qualification" onChange={this.handleFileUploadInputChange} />
-														{this.renderDocumentStatus(this.state.inspectorProfile.qualificationDoc)}
+														<input type="file" value="" name="inspectordocs/medicalinsurance" onChange={this.handleFileUploadInputChange} />
+														{this.renderDocumentStatus(this.state.inspectorProfile.medicalInsuranceDoc)}
 													</div>
 													<div className="clear"></div>
 												</div>
 												<div className="edit-line">
-													<label>SeaMan Book:</label>
-													<div className="value">
-														<input type="file" value="" name="inspectordocs/seamanbook" onChange={this.handleFileUploadInputChange} />
-														{this.renderDocumentStatus(this.state.inspectorProfile.seamanBookDoc)}
-													</div>
-													<div className="clear"></div>
-												</div>
-												<div className="edit-line">
-													<label>Shore Service Certificate:</label>
-													<div className="value">
-														<input type="file" value="" name="inspectordocs/shoreservicecert" onChange={this.handleFileUploadInputChange} />
-														{this.renderDocumentStatus(this.state.inspectorProfile.shoreServiceCert)}
-													</div>
-													<div className="clear"></div>
-												</div>
-												<div className="edit-line">
-													<label>Medical Fitness Certificate:</label>
+													<label>Medical Fitness Certificate ILO:</label>
 													<div className="value">
 														<input type="file" value="" name="inspectordocs/medicalfitnesscert" onChange={this.handleFileUploadInputChange} />
 														{this.renderDocumentStatus(this.state.inspectorProfile.medicalFitnessDoc)}
@@ -456,10 +440,10 @@ export default class EditInspectorProfile extends Component {
 													<div className="clear"></div>
 												</div>
 												<div className="edit-line">
-													<label>Medical Insurance:</label>
+													<label>SeaMan Book Document:</label>
 													<div className="value">
-														<input type="file" value="" name="inspectordocs/medicalinsurance" onChange={this.handleFileUploadInputChange} />
-														{this.renderDocumentStatus(this.state.inspectorProfile.medicalInsuranceDoc)}
+														<input type="file" value="" name="inspectordocs/seamanbook" onChange={this.handleFileUploadInputChange} />
+														{this.renderDocumentStatus(this.state.inspectorProfile.seamanBookDoc)}
 													</div>
 													<div className="clear"></div>
 												</div>
@@ -471,6 +455,24 @@ export default class EditInspectorProfile extends Component {
 													</div>
 													<div className="clear"></div>
 												</div>
+												<div className="edit-line">
+													<label>Qualification Cert(competency license):</label>
+													<div className="value">
+														<input type="file" value="" name="inspectordocs/qualification" onChange={this.handleFileUploadInputChange} />
+														{this.renderDocumentStatus(this.state.inspectorProfile.qualificationDoc)}
+													</div>
+													<div className="clear"></div>
+												</div>
+												
+												{/* <div className="edit-line">
+													<label>Shore Service Certificate:</label>
+													<div className="value">
+														<input type="file" value="" name="inspectordocs/shoreservicecert" onChange={this.handleFileUploadInputChange} />
+														{this.renderDocumentStatus(this.state.inspectorProfile.shoreServiceCert)}
+													</div>
+													<div className="clear"></div>
+												</div>
+												
 												<div className="edit-line">
 													<label>CV:</label>
 													<div className="value">
@@ -493,7 +495,7 @@ export default class EditInspectorProfile extends Component {
 														<input type="text" value={this.state.inspectorProfile.idProofDocType} name="idProofDocType" onChange={this.handleInspectorInputChange} />
 													</div>
 													<div className="clear"></div>
-												</div>
+												</div> */}
 											</Paper>
 											</div>
 

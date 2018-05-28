@@ -194,7 +194,7 @@ export default class CustomerEnquiriesPage extends Component {
       const selectRow = 
       { mode: 'radio', clickToSelect: true, bgColor: '#f7f7f7', 
         onSelect: this.onRowSelect,
-        selected: Object.keys(selectedInspector).map(x => parseInt(x)),
+        selected: Object.values(selectedInspector).map(x => parseInt(x)),
       };
       return(
         <Card style={styles.card}>
