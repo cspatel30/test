@@ -198,7 +198,7 @@ global.inspectorPositions = {
 
 
 
-global.regionCodes = {
+global.regionCodes1 = {
   "AF": "Africa",
   "AN": "Antarctica",
   "AS": "Asia",
@@ -206,6 +206,39 @@ global.regionCodes = {
   "NA": "North America",
   "OC": "Oceania",
   "SA": "South America"
+};
+
+global.regionCodes = {
+  "AG" : "Arabian Gulf ",
+  "AU" : "Australia",
+  "BS" : "Black Sea Area",
+  "CA" : "Central America",
+  "CE" : "Central Europe",
+  "CO" : "China - Other",
+  "CS" : "China - South",
+  "CCJK" : "China -CJK",
+  "CN" : "China-- North",
+  "EA" : "East Africa",
+  "EA" : "East Asia ",
+  "ER" : "East Russia ",
+  "EE" : "Eastern Europe",
+  "FEA" : "Far East Asia",
+  "IW" : "India - West",
+  "IE" : "India East",
+  "IS" : "India South",
+  "M" : "Mediterranean ",
+  "NEA" : "North East Africa",
+  "NEA" : "North East America",
+  "NWA" : "North West Africa",
+  "NWA" : "North West America",
+  "NE" : "Northern Europe",
+  "PG" : "Persian Gulf ",
+  "SA" : "South Africa",
+  "SA" : "South America",
+  "SEA" : "South East Asia",
+  "WA" : "West Africa",
+  "WR" : "West Russia",
+  "WE" : "Western Europe"
 };
 
 global.mysqlConfig = {

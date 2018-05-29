@@ -42,10 +42,10 @@ exports.initApp = async (req, resp) => {
   	inspectorSkillsArr.push({id: key, name: inspectorSkills[key]});
   });
 
-  var regionArr = [];
+  /*var regionArr = [];
   Object.keys(region).forEach(function(key) {
   	regionArr.push({id: key, name: region[key]});
-  });
+  });*/
 
   var inspectorLevelArr = [];
   Object.keys(inspectorLevel).forEach(function(key) {
@@ -60,5 +60,5 @@ exports.initApp = async (req, resp) => {
   resp.json({ status: {success: true}, config : { ports: ports, countries: countries, inspectionTypes: inspectionTypesArr,
 				vesselTypes: vesselTypesArr, inspectorPositions : positionsArr, inspectorQualifications: inspectorQualificationsArr,
 				regionCodes: regionCodesArr, inspectorTitles : inspectorTitleArr, inspectorSkills : inspectorSkillsArr,
-        region : regionArr, inspectorLevel : inspectorLevelArr, inspectorCompany : inspectorCompanyArr}});
+        inspectorLevel : inspectorLevelArr, inspectorCompany : inspectorCompanyArr}});
 }
