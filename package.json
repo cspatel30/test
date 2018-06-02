@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --inspect --harmony app.js",
-    "watch": "webpack --progress --watch --config=webpack.dev.js"
+    "watch": "webpack --progress --watch --config=webpack.config.js",
+    "build:prod": "webpack --progress --config=webpack.config.js -p"
   },
   "author": "sanjayyadav",
   "license": "ISC",
@@ -23,11 +24,14 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "google-map-react": "^0.24.0",
     "mysql": "^2.13.0",
+    "node-sass": "^4.5.2",
     "nodemon": "^1.11.0",
     "regenerator-runtime": "^0.10.5",
+    "sass-loader": "^6.0.4",
     "style-loader": "^0.17.0",
     "uglifyjs-webpack-plugin": "^0.4.3",
-    "webpack": "^2.5.1"
+    "url-loader": "^1.0.1",
+    "webpack": "^2.6.1"
   },
   "dependencies": {
     "aws-sdk": "^2.186.0",
