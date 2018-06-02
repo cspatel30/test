@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import '../resources/static/main.scss';
+
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 
