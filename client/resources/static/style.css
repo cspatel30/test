@@ -39,7 +39,7 @@ a {
 }
 
 .left-section {
-  width: 50%;
+  width: 41%;
   float: left;
   height: 100%;
 }
@@ -53,7 +53,7 @@ a {
 }
 
 .right-section {
-  width: 50%;
+  width: 59%;
   float: left;
   height: 100%;
 }
@@ -150,8 +150,9 @@ a {
   height: 100%;
   font-weight: bold;
   list-style-type: none;
-  background: #1475af;
+  /*background: #1475af;*/
   margin: 0;
+  margin-top: 49px;
 }
 
 .menu-section ul li {
@@ -160,13 +161,31 @@ a {
     cursor: pointer;
     font-size: 12px;
     letter-spacing: 1.5px;
-    padding: 20px;
+    margin-right: 30px;
+    padding-top: 10px;
+    position: relative;
+}
+.menu-section ul > div li:nth-last-of-type(-n+2)
+{
+  padding-top:10px;
+}
+.menu-section ul li:nth-last-of-type(-n+2)
+{
+  padding-top:0px;
+}
+.menu-section ul li > a > div
+{
+  border-radius: 30px;
+} 
+.menu-section ul li > a > div > button
+{
+  border-radius: 30px;
 }
 
 .menu-section ul li .menu-link {
   letter-spacing: 0;
   height: 100%;
-  color: #ffffff;
+  color: #000000;
   display: inline-block;
   font-size: 13px;
   font-weight: 800;
@@ -182,6 +201,43 @@ a {
 .menu-section ul li .menu-link:hover {
   color: #1f9bed;
 }
+.download.icon {
+  color: #000;
+  position: absolute;
+  width: 13px;
+  height: 4px;
+  border-radius: 1px;
+  border: solid 1px currentColor;
+  border-top: none;
+  transform: rotate(270deg);
+  top: 15px;
+  left: -14px;
+}
+
+.download.icon:before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: -9px;
+  width: 1px;
+  height: 10px;
+  background-color: currentColor;
+}
+
+.download.icon:after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: -4px;
+  width: 4px;
+  height: 4px;
+  border-top: solid 1px currentColor;
+  border-right: solid 1px currentColor;
+  -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+}
+
+
 
 .main {
   background-color: #FFFFFF;
@@ -546,9 +602,9 @@ p {
   line-height: 2;
 }
 
-.section-details-news-image {
+/* .section-details-news-image {
 
-}
+} */
 
 .section-details-news-title {
   margin: 10px 0 0 20px;
@@ -1046,11 +1102,11 @@ p {
   padding: 0 10px;
 }
   
-.country-option-focused : {
+.country-option-focused {
   background-color: rgba(0, 126, 255, 0.1)
 }
 
-.country-option-selected : {
+.country-option-selected {
   font-weight: bold
 }
 
