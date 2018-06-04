@@ -22,6 +22,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Menu from './Menu.jsx';
 import Signup from './Signup.jsx';
 import Login from './Login.jsx';
+import logo from '../images/logo.png';
 
 export default class Header extends Component {
 
@@ -157,7 +158,7 @@ export default class Header extends Component {
           </div>
           */}
           <div className="logo-image">
-            <a href="/"><img alt="ShipInspector" src="https://s3-ap-southeast-1.amazonaws.com/sinotechmarineassets/public/shipinspectors-logo.png" width="100" height="100"/></a>
+            <a href="/"><img alt="ShipInspector" src={logo} width="100" height="100"/></a>
           </div>
           <div className="clear"></div>
         </div>
