@@ -238,3 +238,10 @@ CREATE TABLE `feedback` (
   `deadline` int(2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `user`
+  ADD `avatar` VARCHAR(255) NOT NULL AFTER `nearest_airport`,
+  ADD `work_phone` VARCHAR(30) NOT NULL AFTER `avatar`,
+  ADD `website` VARCHAR(255) NOT NULL AFTER `work_phone`,
+  ADD `postal_code` VARCHAR(10) NOT NULL AFTER `website`,
+  ADD `payment` TEXT NOT NULL AFTER `postal_code`;
