@@ -12,14 +12,14 @@ import HomeFooter from '../home/HomeFooter.jsx';
 export default class HomePage extends Component {
 
   render() {
-	return (
-          <div>
-          	<HomeCaraousel/>
-          	<div className="clear"></div>
-            <HomeExtraSection/>
-            <HomeContactUs/>
-            <HomeFooter/>
-          </div> 
-      );
+	  return (
+      <div>
+        <HomeCaraousel/>
+        <div className="clear"></div>
+        <HomeExtraSection/>
+        <HomeContactUs/>
+        <HomeFooter/>
+      </div> 
+    );
   }
 }

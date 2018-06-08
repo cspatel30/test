@@ -199,7 +199,7 @@ a {
   background-color: #FFFFFF;
   font-family: "Roboto", sans-serif;
   position: relative;
-  top: 130px;
+  /* top: 130px; */
 }
 
 .content {

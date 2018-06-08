@@ -20,6 +20,7 @@ const commonLoaders = [
     test: /\.(png|jpg|jpeg|svg|woff|woff2|ttf|eot|ico)$/,
     loader: 'url-loader',
     options: {
+      name: '[name].[ext]?[hash]',
       limit: 10000,
     },
   },

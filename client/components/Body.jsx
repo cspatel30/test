@@ -6,6 +6,7 @@ import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
 import Footer from './Footer.jsx';
 
 import HomePage from './pages/HomePage.jsx';
+import HomePageNew from './pages/HomePageNew.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import PolicyPage from './pages/PolicyPage.jsx';
 import TermsPage from './pages/TermsPage.jsx';
@@ -37,8 +38,9 @@ export default class Body extends Component {
 	return (
           <div className="main">
             <div className="content">
-              <Route component={ScrollToTop}/>
-              <Route exact path="/" component={HomePage}/>
+              {/* <Route component={ScrollToTop}/> */}
+              {/* <Route exact path="/" component={HomePage}/> */}
+              <Route exact path="/" component={HomePageNew}/>
               <Route exact path="/inspectors/" component={InspectorsContainer} />
               <Route exact path="/inspector/profile/:id" component={InspectorPublicProfileContainer} />
               <Route exact path="/enquiry/" component={QuoteEnquiryContainer} />
