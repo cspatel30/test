@@ -1,0 +1,1 @@
+CREATE TABLE `proposal` (  `id` int(10) NOT NULL,  `enquiryId` int(10) NOT NULL,  `inspectorId` int(10) DEFAULT NULL,  `inspectorAmount` int(25) DEFAULT NULL,  `adminMarkup` int(25) DEFAULT NULL,  `status` enum('1','2','3') DEFAULT NULL,  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1

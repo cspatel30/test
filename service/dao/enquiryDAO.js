@@ -17,7 +17,7 @@ function create_enquiry(payload) {
 }
 
 function fetch_customer_enquiries(userId) {
-  return db.mysql_query("select * from enquiry where user_id = "+userId + " and status not in ('CANCELLED', 'ORDER_CONFIRMED')");
+  return db.mysql_query("select e.*,COUNT(p.enquiryId) as quotations from enquiry as e LEFT JOIN proposal as p on e.id = p.enquiryId where e.user_id = "+userId + " and e.status not in ('CANCELLED', 'ORDER_CONFIRMED') GROUP BY e.id");
 }
 
 function fetch_inspector_enquiries(inspectorUserId) {
@@ -59,6 +59,38 @@ function assign_inspectors_for_enquiry(enquiryId, inspectorIds) {
   return db.mysql_insert_query("insert into enquiry_inspector_mapping (enquiry_id, inspector_user_id, status, created_on) values ? ", records);
 }
 
+function fetch_inspector_name(inspectorId) {
+  var query ="SELECT u.name as name FROM enquiry AS e INNER JOIN inspector_profile AS i ON (i.id = e.`inspector_id`) INNER JOIN user AS u ON u.id=i.`user_id` where i.id="+inspectorId;
+  //console.log("fetch query = ", query);
+  return db.mysql_query(query)
+    .then((rows) => {
+      if(rows.length > 0) {
+        return {name: rows[0]['name']};
+      } else {
+        return null;
+      }
+    }).catch((error) => {
+      console.log(error);
+      throw error;
+    });
+}
+
+function fetch_inspector_amount(enquiryId) {
+  var query ="SELECT p.inspectorAmount as inspectorAmount FROM enquiry AS e INNER JOIN proposal AS p ON (p.enquiryId = e.id and p.inspectorId = e.inspector_id)  where e.id="+enquiryId;
+  //console.log("fetch query = ", query);
+  return db.mysql_query(query)
+    .then((rows) => {
+      if(rows.length > 0) {
+        return {amountinspector : rows[0]['inspectorAmount'] };
+      } else {
+        return null;
+      }
+    }).catch((error) => {
+      console.log(error);
+      throw error;
+    });
+}
+
 async function transform_enquiry(enquiryDTOs) { 
   if(enquiryDTOs && enquiryDTOs.length > 0) {
       enquiries = [];
@@ -69,7 +101,9 @@ async function transform_enquiry(enquiryDTOs) {
          startTime: new Date(enquiryDTOs[i]['start_time']).getTime(), endTime: new Date(enquiryDTOs[i]['end_time']).getTime(), 
          status: enquiryDTOs[i]['status'],
          customerQuote: enquiryDTOs[i]['customer_quote_amount'], inspectorQuote: enquiryDTOs[i]['inspector_quote_amount'],
-         createdOn: enquiryDTOs[i]['created_on']
+         createdOn: enquiryDTOs[i]['created_on'],
+         quotations:enquiryDTOs[i]['quotations'],
+         message : enquiryDTOs[i]['message']
         };
 
         if(!enquiryDTOs[i]['port_name']) {
@@ -83,7 +117,20 @@ async function transform_enquiry(enquiryDTOs) {
 
         enquiry['startTimeFmt'] = moment(enquiry['startTime']).format("YYYY-MM-DD");
         enquiry['endTimeFmt'] = moment(enquiry['endTime']).format("YYYY-MM-DD");
+        if(!enquiryDTOs[i]['inspector_id']){
+          enquiry['inspectorname'] = "";
+        }else{
+          var name = await fetch_inspector_name(enquiryDTOs[i]['inspector_id']);          
+          enquiry['inspectorname'] = name;
+        }
 
+        
+        if(!enquiryDTOs[i]['id'] && !enquiryDTOs[i]['inspector_id']){
+          enquiry['inspectoramount'] = "";
+        }else{
+          var inspectoramount = await fetch_inspector_amount(enquiryDTOs[i]['id']);          
+          enquiry['inspectoramount'] = inspectoramount;
+        }
         enquiries.push(enquiry);
       }  
       return enquiries;

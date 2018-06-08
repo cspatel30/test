@@ -36,6 +36,7 @@ module.exports = function(app) {
   app.route('/api/my/profile/').put(asyncMiddleware(userApi.updateProfile));
 
   app.route('/api/my/enquiries/').get(asyncMiddleware(enquiryApi.getUserEnquiries));
+  app.route('/api/dashboard/').get(asyncMiddleware(enquiryApi.getUserEnquiries));
   app.route('/api/my/enquiry/:id').put(asyncMiddleware(enquiryApi.updateCustomerEnquiry));
   app.route('/api/my/enquirymapping/:enquiryId').put(asyncMiddleware(enquiryApi.updateEnquiryMapping));
   
@@ -64,7 +65,7 @@ module.exports = function(app) {
   });
 
   app.get(['/', '/admin', '/admin/*', '/inspectors/', '/inspector/profile/*', '/news', '/about', '/contact', 
-            '/login', '/register', '/terms', '/policy', '/my/*', '/enquiry/*', '/reports', '/verify/email/*', '/setup/account/*'], 
+            '/login', '/register', '/terms', '/policy', '/my/*', '/enquiry/*', '/reports', '/verify/email/*', '/setup/account/*','/dashboard/*'], 
     function (req, resp) {
       console.log("respond with index html");
       resp.sendFile(path.join(__dirname, "../../client/resources/static/", "index.html"));

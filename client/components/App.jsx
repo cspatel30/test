@@ -9,7 +9,13 @@ import HeaderContainer from '../containers/HeaderContainer.js';
 import Footer from './Footer.jsx';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from "material-ui/styles/getMuiTheme";
 
+
+const muiTheme = getMuiTheme({
+  fontFamily: "proxima_novaregular" 
+  
+});
 export default class Home extends Component {
 
   componentWillMount() {
@@ -21,7 +27,7 @@ export default class Home extends Component {
   render() {
     return (
 	    <BrowserRouter history={browserHistory}> 
-		    <MuiThemeProvider>	
+		    <MuiThemeProvider muiTheme={muiTheme}>	
 		      <div>
 		      	<ActionInProgressContainer/>
             <HeaderContainer/>

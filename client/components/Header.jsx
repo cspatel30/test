@@ -117,10 +117,10 @@ export default class Header extends Component {
           <NavLink className="quote-link" key="link_quote" to="/enquiry/">
           <RaisedButton
               label="INSPECTION ENQUIRY"
-              labelColor="#3398DB"              
-              backgroundColor="#FFF"   
+              labelColor="#1B8CEF"              
+              backgroundColor="#FFFFFF"   
               buttonStyle={{ borderRadius: 25 }}
-              style={{ borderRadius: 25,border: '2px solid #3398DB' }}           
+              style={{ borderRadius: 25, border: "2px solid #1B8CEF" }}           
             />
           </NavLink>
         </div>
@@ -176,10 +176,10 @@ export default class Header extends Component {
               <RaisedButton
               label="FIND INSPECTOR"
               labelColor="#FFF"              
-              backgroundColor="#FF1493" 
+              backgroundColor="#FE3D6C" 
               boxShadow="none"
               buttonStyle={{ borderRadius: 25}}
-              style={{ borderRadius: 25}}             
+              style={{ borderRadius: 25,	border: "2px solid #C90D3B"}}             
               />
               </NavLink>
               </li>

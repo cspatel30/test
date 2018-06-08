@@ -81,10 +81,10 @@ global.regionCodes = {
 };
 
 global.mysqlConfig = {
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "shipinspector"
+  host: "192.168.1.50",
+  user: "ShipInspector",
+  password: "w@ShipInspectorep56",
+  database: "ShipInspector"
 };
 
 global.appConfig = {

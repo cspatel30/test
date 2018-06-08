@@ -36,7 +36,8 @@ module.exports = {
 	        query: {
 	          presets: ['es2015', 'react', 'stage-1']
 	        }
-	      }
+				},
+				{ test: /\.(png|jpg|svg|otf|ttf)$/, loader: "url-loader" }
 	    ]
   	},
 
@@ -59,7 +60,8 @@ module.exports = {
           	keep_fnames: true
         	},
 	        compress: {
-	          screw_ie8: true
+			  screw_ie8: true,
+			  booleans: false
 	        },
 	        comments: false
       	})

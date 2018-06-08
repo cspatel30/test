@@ -120,8 +120,9 @@ exports.getUserEnquiries = async (req, resp) => {
         
         enquiryIdToInspectorsMap[mapping.enquiry_id] = mappings;
       }
-      
+      console.log(enquiryInspectorMappings.length);
       enquiries.map((enquiry) => { enquiry['inspectors'] = enquiryIdToInspectorsMap[enquiry.id] });
+      console.log(enquiries);
     }
   } else {
     var rows = await enquiryDAO.fetch_inspector_enquiries(resp.locals.userProfile.id);
