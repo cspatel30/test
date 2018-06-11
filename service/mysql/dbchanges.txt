@@ -1,0 +1,6 @@
+CREATE TABLE `enquiry` (  `id` bigint(20) NOT NULL AUTO_INCREMENT,  `user_id` bigint(20) NOT NULL,  `email` varchar(255) NOT NULL,  `inspection_type` varchar(255) NOT NULL,  `vessel_name` varchar(255) DEFAULT NULL,  `imo_number` varchar(255) NOT NULL,  `vessel_type` varchar(255) NOT NULL,  `port_id` int(11) NOT NULL,  `inspector_id` int(10) DEFAULT NULL,  `message` text,  `customer_quote_amount` double(12,2) DEFAULT NULL,  `inspector_quote_amount` double(12,2) DEFAULT NULL,  `start_time` datetime NOT NULL,  `end_time` datetime NOT NULL,  `status` varchar(45) NOT NULL,  `created_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,  PRIMARY KEY (`id`),  KEY `email_idx` (`email`),  KEY `user_idx` (`user_id`)) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1
+
+---------------------------------------
+
+
+CREATE TABLE `proposal` (  `id` int(10) NOT NULL,  `enquiryId` int(10) NOT NULL,  `inspectorId` int(10) DEFAULT NULL,  `inspectorAmount` int(25) DEFAULT NULL,  `adminMarkup` int(25) DEFAULT NULL,  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1
