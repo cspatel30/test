@@ -54,6 +54,7 @@ export default class Header extends Component {
       case 'customer':
         actions.push(<div key="customer_link_enquiries"><NavLink className="link" to="/my/enquiries/" onClick={this.handleClose}>Quote Enquiries</NavLink></div>);
         actions.push(<div key="customer_link_orders"><NavLink className="link" to="/my/orders/" onClick={this.handleClose}>Orders</NavLink></div>);
+        actions.push(<div key="customer_link_account"><NavLink className="link" to="/my/account/" onClick={this.handleClose}>My Account</NavLink></div>);
         break;
       case 'inspector':
         actions.push(<div key=""><NavLink className="link" to="" onClick={this.handleClose}>My Account</NavLink></div>);
@@ -132,7 +133,6 @@ export default class Header extends Component {
   }
 
   render() {
-
     const { logout, userProfile } = this.props;
     console.log('....see', userProfile);
     if(logout) {

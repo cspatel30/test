@@ -383,7 +383,8 @@ async function transformUserProfile(userDTOs) {
       profiles.push({id: userDTOs[i]['id'], name: userDTOs[i]['name'], email: userDTOs[i]['email'], 'type': userDTOs[i]['type'],
                       company: userDTOs[i]['company'], phone: userDTOs[i]['phone'], city: userDTOs[i]['city'],
                       'countryCode': userDTOs[i]['country'], 'country': countryData, 'approved': userDTOs[i]['approved_client'],
-                      'passportName':userDTOs[i]['passport_name'], 'residenceAddress':userDTOs[i]['address'], 'nearestAirport':userDTOs[i]['nearest_airport']});
+                      'passportName':userDTOs[i]['passport_name'], 'residenceAddress':userDTOs[i]['address'], 'nearestAirport':userDTOs[i]['nearest_airport'], 
+                      'building': userDTOs[i]['building'], 'street': userDTOs[i]['street'], 'work_phone': userDTOs[i]['work_phone'], 'postal_code': userDTOs[i]['postal_code']});
     }
   }
   return profiles;

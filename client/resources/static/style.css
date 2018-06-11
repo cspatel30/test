@@ -1547,3 +1547,63 @@ table > thead > tr > th, table > thead > tr > td, table > tbody > tr > th, table
 input {
   padding: 8px;
 }
+
+.hrStyle {
+  border-top: 1px solid rgba(0,0,0,.1);
+}
+
+.myAccountHeadline {
+  margin: 50px 0;
+}
+
+.accountHeader {
+ background: url(http://www.crystalcruises.com/images/default-source/experience/ships/cc-symphonybeauty.jpg) -813px 0;
+ padding-top: 100px;
+}
+
+.nav-link{ 
+  color: white;
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.headlineText{
+  font-size: 20px;
+  margin: 20px;
+}
+
+.addressLabel {
+  color: rgb(60, 195, 240);
+}
+
+.shadowDivider {
+  height: 50px;
+  box-shadow: 0 13px 0px 0 #766e6e17, 0 14px 0px 0 #e9ecef63;
+}
+
+.subHeadlineText {
+  float: 'left';
+  color: #0000ff87; 
+  font-size: 18px;
+}
+
+.companyImage {
+  width: 100%;
+  border: 1px solid gray;
+}
+
+.paypalImage {
+  width: 30%;
+  vertical-align: middle;
+}
+.paypalImageBox {
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.paymentCardStyles {
+  padding: 20px;
+  margin: 20px;
+  background-color: #d3d3d3a3 !important;
+}
