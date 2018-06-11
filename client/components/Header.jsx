@@ -120,7 +120,8 @@ export default class Header extends Component {
               labelColor="#1B8CEF"              
               backgroundColor="#FFFFFF"   
               buttonStyle={{ borderRadius: 25 }}
-              style={{ borderRadius: 25, border: "2px solid #1B8CEF" }}           
+              labelStyle={{fontWeight: "600"}}
+              style={{ borderRadius: 25, border: "2px solid #1B8CEF",fontSize: "16px"}}           
             />
           </NavLink>
         </div>
@@ -175,11 +176,12 @@ export default class Header extends Component {
               <NavLink to="/inspectors/">
               <RaisedButton
               label="FIND INSPECTOR"
-              labelColor="#FFF"              
+              labelColor="#FFF" 
+              labelStyle={{fontWeight: "600"}}             
               backgroundColor="#FE3D6C" 
               boxShadow="none"
               buttonStyle={{ borderRadius: 25}}
-              style={{ borderRadius: 25,	border: "2px solid #C90D3B"}}             
+              style={{ borderRadius: 25,	border: "2px solid #C90D3B",fontSize: "16px"}}             
               />
               </NavLink>
               </li>

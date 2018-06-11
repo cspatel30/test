@@ -4,7 +4,7 @@ import arrowDown from '../../images/down-arrow.svg';
 import tick from '../../images/tick.svg';
 import archive from '../../images/archive.svg';
 
-export default class StatusVisile extends Component {
+export default class StatusEnquiry extends Component {
 
     constructor(props) {
       super(props);
@@ -46,13 +46,13 @@ export default class StatusVisile extends Component {
           return(
             <div className="Filter">                         
             <div id="status" className={`Enquirystatus ${statusVisible ? "selected" : ""}`} onClick={() => this.handleClick("status")}>
-            <span className="FilterHead">STATUS <img src={arrowDown} width="11px" height="7px"/></span>            
+            <span className="FilterHead">STATUS <img src={arrowDown} width="12px" height="12px"/></span>            
           
           { statusVisible && (
             <ReactCSSTransitionGroup
               transitionName="example"
               transitionAppear={true}
-              transitionAppearTimeout={500}
+              transitionAppearTimeout={200}
               transitionEnter={false}
               transitionLeave={false}>
               <div className="dropEnquiry">
@@ -65,8 +65,8 @@ export default class StatusVisile extends Component {
             </ReactCSSTransitionGroup>
           )}  
           </div>
-            <div className="Enquiryactive"><span className="FilterHead"><img src={tick} width="15px" height="12px"/>ACTIVE</span></div>
-            <div className="Enquiryarchieved" ><span className="FilterHead"><img src={archive} width="11px" height="13px"/>ARCHIEVED</span></div>
+            <div className="Enquiryactive"><span className="FilterHead"><img src={tick} width="15px" height="13px"/> ACTIVE</span></div>
+            <div className="Enquiryarchieved" ><span className="FilterHead"><img src={archive} width="12px" height="13px"/> ARCHIEVED</span></div>
            
           </div>            
           )

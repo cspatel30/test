@@ -15,7 +15,8 @@ const banners = {
         display:" flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "60px"
+        fontSize: "60px",
+        fontFamily:"proxima_novalight"
     }
 }
 export default class Navigation extends Component {
@@ -39,7 +40,7 @@ export default class Navigation extends Component {
 
     render() {
         const { showname,showActive,selection } = this.state;
-        const {renderEnquiries,profileType,formatDate} = this.props;
+        const {renderEnquiries,profileType,formatDate,formatMonth,pageLength} = this.props;
         return (
             <div>
                 <div style={banners.imageShip}>                   
@@ -49,7 +50,7 @@ export default class Navigation extends Component {
                     <Breadcrumb showNavigationName={this.showNavigationName} showActive={showname} selected={selection}/>
                 </div>
                 <div>
-                   <CustomList selected={selection} renderEnquiries={renderEnquiries} profileType={profileType} formatDate={formatDate}/>
+                   <CustomList selected={selection} renderEnquiries={renderEnquiries} profileType={profileType} formatDate={formatDate} formatMonth={formatMonth} pageLength ={pageLength}/>
                 </div>    
             </div>
         );

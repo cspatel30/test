@@ -14,6 +14,14 @@
   font-style: normal;
 
 }
+@font-face {
+  font-family: 'proxima_novalight';
+  src: url('assets/fonts/proximanovalight-webfont.woff2') format('woff2'),
+       url('assets/fonts/proximanovalight-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
 html,
 body {
   height: 100%;
@@ -182,7 +190,7 @@ a {
   height: 100%;
   color: #27292E;
   display: inline-block;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 800;
   text-decoration: none;
   text-transform: uppercase;
@@ -1026,8 +1034,7 @@ p {
   z-index: 1;
   padding: 10px;
 }
-.enquiry-details-box {
-  width: 80%;
+.enquiry-details-box {  
   float: left;
   line-height: 25px;
 }
@@ -1036,7 +1043,7 @@ p {
   float: left;
 }
 .enquiry-details-box span {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 300;
 }
 .enquiry-details-box span a {
@@ -1046,7 +1053,7 @@ p {
 }
 .enquiry-details-box span.titleEnquiry {
   color: #0D99EF;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 300;
 }
 
@@ -1369,13 +1376,14 @@ input {
 .breadcrumb li div {
   color: #FE3D6C;
   text-decoration: none;
-  padding: 10px 0 10px 55px;
+  padding: 20px 33px 20px 78px;
   background: brown;
   /* fallback color */
   background: #fff;
   position: relative;
   display: block;
   float: left;
+  font-size: 20px;
 }
 .breadcrumb li.active div:after {
   border-left: 30px solid #0D99EF;
@@ -1415,7 +1423,7 @@ input {
   z-index: 1;
 }
 .breadcrumb li:first-child div {
-  padding-left: 30px;
+  padding-left: 50px;
 }
 .breadcrumb li div {
   background: #fff;
@@ -1424,7 +1432,7 @@ input {
   border-left-color: #fff;
 }
 .breadcrumb li:nth-child(5) div {
-  padding-right: 30px;
+  padding-right: 50px;
 }
 .breadcrumb li:last-child a:after {
   border-left-color: hsla(34, 85%, 65%, 1);
@@ -1461,7 +1469,7 @@ input {
   border: 1px solid #ddd;
 }
 .Navigation {
-  margin: -18px auto 0;
+  margin: -34px auto 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1474,13 +1482,15 @@ table.Listing tr:nth-child(even) {
   background: #fafafa;
 }
 .dropEnquiry {
-  height: 129px;
+  height: auto;
   width: 131px;
   background-color: #F8F8F8;
   box-shadow: 0 0 6px 1px rgba(0, 1, 1, 0.23);
   position:absolute;
   text-align: left;
   margin:12px 0 0;
+  border-radius: 4px;
+  left:0;
 }
 .dropEnquirytitle {
   color: #27292E;
@@ -1488,6 +1498,7 @@ table.Listing tr:nth-child(even) {
   line-height: 36px;
   list-style: none;
   padding: 0 12px 0 12px;
+  font-weight:600;
 }
 .dropEnquirytitle li {
   border-bottom: 1px solid #ccc;
@@ -1509,6 +1520,13 @@ table.Listing tr:nth-child(even) {
   border-radius: 100%;
   text-align: center;
   color: #FE3D6C;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+  font-weight: bold;
+  margin:0;
+
 }
 .pagination.active a {
   background: #0D99EF;
@@ -1522,14 +1540,18 @@ table.Listing tr:nth-child(even) {
   display: inline-block;
   padding: 20px;
   cursor: pointer;
+  font-size: 18px;
+  position: relative;
 }
 .Enquiryactive {
   display: inline-block;
   padding: 20px;
+  font-size: 18px;
 }
 .Enquiryarchieved {
   display: inline-block;
   padding: 20px;
+  font-size: 18px;
 }
 .dropEnquiry:before {
   content: "";
@@ -1542,11 +1564,17 @@ table.Listing tr:nth-child(even) {
   right: 247px;
 }
 .raised {
-  clear: both;
-  overflow: hidden;
+  float: left;
+  width: 100%;
   padding: 40px 0 20px;
 }
 .InnerContainer{
   max-width:80%;
   margin:0 auto;
+}
+.message {
+width: 113px;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
 }

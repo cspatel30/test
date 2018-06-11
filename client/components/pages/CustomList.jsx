@@ -4,6 +4,7 @@ import ReactPaginate from "react-paginate";
 import leftarrow from '../../images/left-arrow.svg';
 import rightarrow from '../../images/right-arrow.svg';
 import StatusEnquiry from './StatusEnquiry.jsx';
+import OrderContent from './OrderContent.jsx';
 
 export default class CustomList extends Component {
     constructor(props) {
@@ -14,22 +15,28 @@ export default class CustomList extends Component {
         };
     }
     setContent(selection) {
-        const { renderEnquiries, profileType, formatDate,selected } = this.props;
+        const { renderEnquiries, profileType, formatDate,selected,formatMonth } = this.props;
         switch (selection) {
           case "Manage Enquiries":
             return (
               <EnquiryContent 
                renderEnquiries={renderEnquiries} 
                profileType={profileType} 
-               formatDate={formatDate} 
+               formatDate={formatDate}
+               formatMonth={formatMonth} 
                page={this.state.page} 
                itemType ={selected}
                />           
             );
           case "Manage Orders":
             return (
-             <StatusEnquiry                
-              />
+              <OrderContent 
+              renderEnquiries={renderEnquiries} 
+              profileType={profileType} 
+              formatDate={formatDate} 
+              page={this.state.page} 
+              itemType ={selected}
+              /> 
             
             );
             default:
@@ -45,8 +52,8 @@ export default class CustomList extends Component {
         }
       }
     render() {
-        const {selected,renderEnquiries} = this.props;
-        const pageCount = Math.ceil(renderEnquiries.length / 2);
+        const {selected,renderEnquiries,pageLength} = this.props;
+        const pageCount = Math.ceil(pageLength / 2);
         return (
             <div>
              {this.setContent(selected)}   
