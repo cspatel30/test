@@ -57,11 +57,13 @@ export default class Header extends Component {
       case 'customer':
         actions.push(<div key="customer_link_enquiries"><NavLink className="link" to="/my/enquiries/" onClick={this.handleClose}>Quote Enquiries</NavLink></div>);
         actions.push(<div key="customer_link_orders"><NavLink className="link" to="/my/orders/" onClick={this.handleClose}>Orders</NavLink></div>);
+        actions.push(<div key="customer_link_profile"><NavLink className="link" to="/dashboard/" onClick={this.handleClose}>Dashboard</NavLink></div>);
         break;
       case 'inspector':
         actions.push(<div key="inspector_link_profile"><NavLink className="link" to="/my/profile/" onClick={this.handleClose}>My Profile</NavLink></div>);
         actions.push(<div key="inspector_link_enquiries"><NavLink className="link" to="/my/enquiries/" onClick={this.handleClose}>Quote Enquiries</NavLink></div>);
         actions.push(<div key="inspector_link_orders"><NavLink className="link" to="/my/orders/" onClick={this.handleClose}>Orders</NavLink></div>);
+       
         break;
     }
     
