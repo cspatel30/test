@@ -45,8 +45,8 @@ export default class CustomList extends Component {
         }
       }
     render() {
-        const {selected,renderEnquiries} = this.props;
-        const pageCount = Math.ceil(renderEnquiries.length / 2);
+        const {selected,renderEnquiries,pageLength} = this.props;
+        const pageCount = Math.ceil(pageLength / 2);
         return (
             <div>
              {this.setContent(selected)}   

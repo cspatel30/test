@@ -39,7 +39,7 @@ export default class Navigation extends Component {
 
     render() {
         const { showname,showActive,selection } = this.state;
-        const {renderEnquiries,profileType,formatDate} = this.props;
+        const {renderEnquiries,profileType,formatDate,pageLength} = this.props;
         return (
             <div>
                 <div style={banners.imageShip}>                   
@@ -49,7 +49,7 @@ export default class Navigation extends Component {
                     <Breadcrumb showNavigationName={this.showNavigationName} showActive={showname} selected={selection}/>
                 </div>
                 <div>
-                   <CustomList selected={selection} renderEnquiries={renderEnquiries} profileType={profileType} formatDate={formatDate}/>
+                   <CustomList selected={selection} renderEnquiries={renderEnquiries} pageLength = {pageLength} profileType={profileType} formatDate={formatDate}/>
                 </div>    
             </div>
         );

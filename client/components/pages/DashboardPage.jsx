@@ -39,7 +39,7 @@ export default class DashboardPage extends Component {
       
         return (
           <div>            
-              <Navigation renderEnquiries={this.props.enquiries} profileType={this.props.userProfile.type} formatDate={this.formatDate}/>
+              <Navigation renderEnquiries={this.props.enquiries} pageLength = {this.props.enquiries.length} profileType={this.props.userProfile.type} formatDate={this.formatDate}/>
                       
           </div>
         );
