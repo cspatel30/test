@@ -238,3 +238,56 @@ CREATE TABLE `feedback` (
   `deadline` int(2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `user`
+  ADD `avatar` VARCHAR(255) NOT NULL AFTER `nearest_airport`,
+  ADD `work_phone` VARCHAR(30) NOT NULL AFTER `avatar`,
+  ADD `website` VARCHAR(255) NOT NULL AFTER `work_phone`,
+  ADD `postal_code` VARCHAR(10) NOT NULL AFTER `website`,
+  ADD `payment` TEXT NOT NULL AFTER `postal_code`;
+
+CREATE TABLE `admin` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `fullName` varchar(255) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `lastLogin` bigint(13) DEFAULT NULL,
+  `permission` text DEFAULT NULL,
+  `createdAt` bigint(13) DEFAULT NULL,
+  `updatedAt` bigint(13) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username_idx` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `auth` (
+  `id` varchar(50) NOT NULL,
+  `createdAt` bigint(13) DEFAULT NULL,
+  `updatedAt` bigint(13) DEFAULT NULL,
+  `expiredAt` bigint(13) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `setting` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `value` text NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `type` varchar(10) DEFAULT NULL,
+  `show` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_idx` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `email_template` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `code` varchar(100) NOT NULL,
+  `subject` text NOT NULL,
+  `template` varchar(255) DEFAULT NULL,
+  `html` text DEFAULT NULL,
+  `params` text DEFAULT NULL,
+  `createdAt` varchar(13) DEFAULT NULL,
+  `updatedAt` varchar(13) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_idx` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
