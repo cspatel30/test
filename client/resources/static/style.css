@@ -1560,8 +1560,8 @@ table.Listing tr:nth-child(even) {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   position: absolute;
-  top: 384px;
-  right: 247px;
+  top: -10px;
+  right: 18px;
 }
 .raised {
   float: left;
@@ -1577,4 +1577,15 @@ width: 113px;
 text-overflow: ellipsis;
 overflow: hidden;
 white-space: nowrap;
+}
+.dropMessage{
+height: auto;
+width: 412px;
+background-color: #F8F8F8;
+box-shadow: 0 0 70px 1px rgba(0, 1, 1, 0.23);
+position: absolute;
+text-align: left;
+margin: -15px 0 0;
+border-radius: 4px;
+left: 234px;
 }

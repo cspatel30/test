@@ -27,7 +27,7 @@ const
   root = {
     width: '100%',
     marginTop: 3,
-    overflowX: 'auto',
+    overflowX: 'inherit',
     boxShadow: "none"
   };
 const table = {

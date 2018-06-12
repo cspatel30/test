@@ -44,16 +44,16 @@ export default class Message extends Component {
         const {message} = this.props;
           return(                                    
             <div id="status" className={` ${messageVisible ? "selected" : ""}`} onClick={() => this.handleClick("msgstatus")}>
-            <p className="message"><img src={messageimg} width="16px" height="16px"/> {message} more</p>             
-          
-          { messageVisible && (
+           <p className="message"><img src={messageimg} width="16px" height="16px"/> {message} more</p>          
+           { messageVisible && (
             <ReactCSSTransitionGroup
               transitionName="example"
               transitionAppear={true}
               transitionAppearTimeout={500}
               transitionEnter={false}
               transitionLeave={false}>
-              <div>
+              <div className="dropMessage">              
+                <img src={messageimg} width="16px" height="16px"/>          
                 {message}
               </div>
             </ReactCSSTransitionGroup>
