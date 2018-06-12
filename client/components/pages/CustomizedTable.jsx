@@ -40,15 +40,15 @@ const rowt = {
 };
 
 const orders=[{id: 5, inspectionTypeDisplayName: "Dry-Dock Management", email: "abhishek@classicinformatics.com", vesselName: "test", portId: 15372,imo:"45465",inspectionTypeDisplayName:
-"Dry-Dock Management",inspectorQuote:55,inspectoramount:null,
-inspectorname:"",message
+"Dry-Dock Management",inspectorQuote:55,inspectoramount:12000,
+inspectorname:"John",message
 :
 "gfdhfh fdgfdgfdgfdgfdgfdgfdgfdgfdgfd hghghghghghghghghghghghghghghghghghghghghghghghg hgfffffffffffffffffffffffffff",portData
 :
 {id: [15372], name: "test", regionCode: "er", regionName: "dffs", countryName: "add",name:"test",regionCode:"er",
 regionName:"dffs"},inspectorname
-:
-"",status
+: 
+"John",status
 :
 "CREATED",startTime
 :
@@ -119,7 +119,7 @@ class CustomizedTable extends Component {
       case "Manage Orders":
         return (
           <TableRow>
-          <CustomTableCell>PO No.</CustomTableCell>
+          <CustomTableCell>PONo.</CustomTableCell>
           <CustomTableCell>Details</CustomTableCell>
           <CustomTableCell>Inspector</CustomTableCell>
           <CustomTableCell>Status</CustomTableCell>
@@ -219,7 +219,7 @@ class CustomizedTable extends Component {
                   <CustomTableCell>
                   <div className="enquiry-details-box">
                       <div className="details">
-                         <div><span className="titleEnquiry">{'Inspector Name'} </span>- <span className="value">{n.inspectorname !== ''  ? n.inspectorname.name : ''}</span></div>
+                         <div><span className="titleEnquiry">{'Inspector Name'} </span>- <span className="value">{n.inspectorname !== ''  ? n.inspectorname : ''}</span></div>
                          <div><span className="value"><a href="#">{'VIEW FULL PROFILE'}</a></span></div>
                       </div>
                     </div> 
@@ -231,7 +231,7 @@ class CustomizedTable extends Component {
                         </div>
                     </div> 
                   </CustomTableCell>                 
-                  <CustomTableCell><div><span className="value">US${n.inspectoramount !== null ? n.inspectoramount.amountinspector : ''}</span></div>
+                  <CustomTableCell><div><span className="value">US${n.inspectoramount !== null ? n.inspectoramount : ''}</span></div>
                        </CustomTableCell>
                   <CustomTableCell> 
                     <div className="enquiry-details-box">
