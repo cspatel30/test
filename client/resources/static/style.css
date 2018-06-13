@@ -1577,6 +1577,7 @@ width: 113px;
 text-overflow: ellipsis;
 overflow: hidden;
 white-space: nowrap;
+cursor: pointer;
 }
 .dropMessage{
 height: auto;
