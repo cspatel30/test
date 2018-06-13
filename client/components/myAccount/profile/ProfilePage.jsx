@@ -1,15 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import React from "react";
 // import { setEdit, saveChanges, cancelChanges } from "../../reducers/user";
 import ProfileEdit from "./ProfileEdit";
 import Info from 'material-ui/svg-icons/action/info-outline';
 import Person from 'material-ui/svg-icons/social/person-outline';
 import Phone from 'material-ui/svg-icons/communication/phone';
-import Email from 'material-ui/svg-icons/communication/email';
 import Language from 'material-ui/svg-icons/action/language';
 import ContactPhone from 'material-ui/svg-icons/communication/contact-phone';
 import ArrowUpword from 'material-ui/svg-icons/navigation/arrow-upward';
+import Edit from 'material-ui/svg-icons/image/edit';
 
 class Profile extends React.Component {  
   constructor(props) {
@@ -64,8 +62,9 @@ class Profile extends React.Component {
         </div>
 
         <div className="row  align-items-center mt-3 mb-3" >
-          <div className="col-sm-3">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFaIoe9xs9hdhFwLCd9VL7YS52oh62yy_Gvb6r6JouZKSCAeDJNA" className="companyImage" />
+          <div className="col-sm-3 companyLogoView">
+            <img src="../../../resources/static/images/companyLogo.png" className="companyImage" />
+            {this.state.isEdit && <Edit className="imageEdit" onClick={() => {alert("Upload New company Image")}} />}
           </div>
           {this.state.isEdit ? (
             <div className="col-9">
@@ -77,29 +76,28 @@ class Profile extends React.Component {
             </div>
           ) : (
               <div className="offset-1 col-6">
-                <div className="row form-group ">
-                  Customer Id: {userProfile.id}
+                <div className="row form-group informationText">
+                  <span>Customer ID <span className="padding">{userProfile.id}</span></span>
                 </div>
-                <div className="row form-group">
-                  <Person style={{color: 'lightblue'}}/>: {userProfile.name}
+                <div className="row form-group informationText">
+                  <Person style={{color: '#0c6092'}}/><span className="padding">{userProfile.name}</span>
                 </div>
-                <div className="row form-group ">
-                  <Phone style={{color: 'lightblue'}}/>: {userProfile.phone}
+                <div className="row form-group informationText">
+                  <Phone style={{color: '#0c6092'}}/><span className="padding">{userProfile.phone}</span>
                 </div>
-                <div className="row form-group ">
-                   <span style={{color: 'lightblue', fontSize: 18}}>@</span> : {userProfile.email}
+                <div className="row form-group informationText">
+                   <span style={{color: '#0c6092', fontSize: 18, fontWeight: 500}}>@</span><span className="padding">{userProfile.email}</span>
                 </div>
-                <div className="row form-group ">
-                  <ContactPhone style={{color: 'lightblue'}}/>: {userProfile.work_phone}
+                <div className="row form-group informationText">
+                  <ContactPhone style={{color: '#0c6092'}}/><span className="padding">{userProfile.work_phone}</span>
                 </div>
-                <div className="row form-group ">
-                  <Language style={{color: 'lightblue'}}/>: {userProfile.company}
+                <div className="row form-group informationText">
+                  <Language style={{color: '#0c6092'}}/><span className="padding">{userProfile.company}</span>
                 </div>
               </div>
             )}
         </div>
-        <div className="float-right" ><a href="#"><ArrowUpword /></a></div>
-        <div className="shadowDivider" id="billing" />
+        <div className="float-right upwordIcon" ><a href="#"><ArrowUpword /></a></div>
       </div>
     );
   }

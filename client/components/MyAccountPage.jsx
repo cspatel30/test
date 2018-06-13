@@ -12,10 +12,12 @@ class MyAccount extends Component {
     console.log(this.props.match)
     return (
       <div>
-        <Header />
+        <Header {...this.props} />
         <div>
           <CustomerProfileContainer id="profile"/>
+          <div className="shadowDivider" id="billing" />
           <CustomerBillingContainer id="billing" />
+          <div className="shadowDivider" />
           <CustomerSettingContainer id="setting" />  
         </div>
       </div>

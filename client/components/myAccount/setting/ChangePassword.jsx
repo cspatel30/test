@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import Key from 'material-ui/svg-icons/communication/vpn-key';
 class ChangePassword extends React.Component {
 
   state = {
@@ -22,7 +22,7 @@ class ChangePassword extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log("Form submitted successfully ", this.state.userProfile);
-    if(this.state.newPassword !== this.state.confirmPassword) {
+    if (this.state.newPassword !== this.state.confirmPassword) {
       alert('your password does not match');
       this.resetForm();
       return;
@@ -32,7 +32,7 @@ class ChangePassword extends React.Component {
   }
 
   resetForm() {
-    this.setState({newPassword: '', currentPassword:'', confirmPassword: ''});
+    this.setState({ newPassword: '', currentPassword: '', confirmPassword: '' });
   }
 
   handleChange(event) {
@@ -43,7 +43,7 @@ class ChangePassword extends React.Component {
     console.log("inside handle change ", event.target, value, name);
 
     this.setState({
-       [name]: value 
+      [name]: value
     });
   }
 
@@ -53,7 +53,7 @@ class ChangePassword extends React.Component {
       <div className="col-12">
         <span className="subHeadlineText" >Change Password</span>
         <form
-          style={{ padding: '20px 0'}}
+          style={{ padding: '20px 0' }}
           onSubmit={e => {
             this.handleSubmit(e);
           }}
@@ -61,6 +61,10 @@ class ChangePassword extends React.Component {
           <div className="form-row align-items-center">
             <div className="form-group col">
               <label className="sr-only" htmlFor="id">Current Password</label>
+              <div className="input-group">
+              <div className="input-group-prepend">
+                <div className="input-group-text"><Key/></div>
+              </div>
               <input
                 id="current password"
                 className="form-control"
@@ -73,9 +77,14 @@ class ChangePassword extends React.Component {
                 }}
                 required
               />
+              </div>
             </div>
             <div className="form-group col">
               <label htmlFor="newPassword" className="sr-only">New Password</label>
+              <div className="input-group">
+              <div className="input-group-prepend">
+                <div className="input-group-text"><Key/></div>
+              </div>
               <input
                 id="newPassword"
                 name="newPassword"
@@ -88,9 +97,14 @@ class ChangePassword extends React.Component {
                 }}
                 required
               />
+              </div>
             </div>
             <div className="form-group col">
               <label htmlFor="confirmPassword" className="sr-only">Confirm Password</label>
+              <div className="input-group">
+              <div className="input-group-prepend">
+                <div className="input-group-text"><Key/></div>
+              </div>
               <input
                 id="confirmPassword"
                 className="form-control"
@@ -103,6 +117,7 @@ class ChangePassword extends React.Component {
                 }}
                 required
               />
+            </div>
             </div>
             <div className="col">
               <button type="submit" className="btn btn-outline-danger mb-3">CHANGE PASSWORD</button>

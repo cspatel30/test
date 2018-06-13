@@ -44,8 +44,8 @@ class ProfileEdit extends React.Component {
             this.handleSubmit(e);
           }}
         >
-          <div className="form-group">
-            <label htmlFor="id">Customer Id</label>
+          <div className="form-group informationText">
+            <label htmlFor="id" >Customer Id</label>
             <input
               id="id"
               className="form-control"
@@ -59,8 +59,8 @@ class ProfileEdit extends React.Component {
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
+          <div className="form-group informationText">
+            <label htmlFor="name" >Person in charge (PIC)</label>
             <input
               id="name"
               name="name"
@@ -73,7 +73,7 @@ class ProfileEdit extends React.Component {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group informationText">
             <label htmlFor="phone">Phone</label>
             <input
               id="phone"
@@ -87,7 +87,7 @@ class ProfileEdit extends React.Component {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group informationText">
             <label htmlFor="email">Email</label>
             <input
               id="email"
@@ -102,8 +102,8 @@ class ProfileEdit extends React.Component {
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="work_phone">Work Phone</label>
+          <div className="form-group informationText">
+            <label htmlFor="work_phone">Fax</label>
             <input
               id="work_phone"
               className="form-control"
@@ -115,8 +115,8 @@ class ProfileEdit extends React.Component {
               }}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="company">Company</label>
+          <div className="form-group informationText">
+            <label htmlFor="company">Website</label>
             <input
               id="company"
               className="form-control"

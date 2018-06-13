@@ -1,22 +1,21 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { bindActionCreators } from "redux";
-import AppBar from "material-ui/AppBar";
 
 class AppHeader extends Component {
-
   render() {
+    console.log("props in header" ,this.props);
+    const {hash } = this.props.location;
     return (
-      <div className="container">
+      <div style={{textAlign: 'center', background: 'url(../../resources/static/images/banner.png)'}}>
+        <span className="clientAccountText">Client Account</span>
         <ul className="nav nav-tabs justify-content-center accountHeader">
           <li className="nav-item">
-            <a className="nav-link active" href="#">PROFILE</a>
+            <a className={hash=== '' ? "nav-link active" : 'nav-link'} href="#">PROFILE</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#billing">BILLING DETAILS</a>
+            <a className={hash=== '#billing' ? "nav-link active" : 'nav-link'} href="#billing">BILLING DETAILS</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#setting">SETTINGS</a>
+            <a className={hash=== '#setting' ? "nav-link active" : 'nav-link'} href="#setting">SETTINGS</a>
           </li>
         </ul>
       </div>

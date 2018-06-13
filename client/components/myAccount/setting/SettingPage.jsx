@@ -15,12 +15,11 @@ class Setting extends React.Component {
             <span><Settings /><span className="headlineText">Account Settings</span></span>
             <hr className="hrStyle" />
             <div className="row">
-            <div className="col-12" style={{color: 'blue', fontSize: 18, margin: '30px 0'}}>
+            <div className="col-12" style={{color: '#0c6092', fontSize: 18, margin: '30px 0'}}>
             <span >@ <span className="ml-3">infor@maerskline.com</span></span>
             </div>
             <ChangePassword userProfile={this.props.userProfile} onSubmit={(values) => {this.onSubmit(values)}}/>
             </div>
-            <div className="float-right" ><a href="#"><ArrowUpword /></a></div>
         </div>
         );
     }

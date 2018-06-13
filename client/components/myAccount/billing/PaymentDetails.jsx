@@ -8,7 +8,7 @@ class PaymentDetails extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container informationText">
         <div className="row mt-5 mb-3">
           <div className="col-12">
             <span className="subHeadlineText">Payment Options</span>
@@ -16,7 +16,7 @@ class PaymentDetails extends React.Component {
         </div>
         <div className="row">
           <div className="col-6" style={{ borderRight: '1px solid gray' }}>
-            <input type="radio" name="card" value="card" checked={this.state.card} onChange={() => { this.setState({ card: !this.state.card }) }} /> Debit/Credit Card
+            <input type="radio" name="card" value="card" className="paymentOptions" checked={this.state.card} onChange={() => { this.setState({ card: !this.state.card }) }} /> Debit/Credit Card
               <div className="card paymentCardStyles">
               <div className="row">
                 <label className="col-12 col-md-4">Card Number</label>
@@ -34,7 +34,7 @@ class PaymentDetails extends React.Component {
             <span style={{ float: 'right', padding: 20, color: 'red' }}>+ Add New Card</span>
           </div>
           <div className="col-6">
-            <input style={{ marginLeft: 50 }} type="radio" name="paypal" value="paypal" checked={!this.state.card} onChange={() => { this.setState({ card: !this.state.card }) }} /> Paypal
+            <input style={{ marginLeft: 50 }} className="paymentOptions" type="radio" name="paypal" value="paypal" checked={!this.state.card} onChange={() => { this.setState({ card: !this.state.card }) }} /> Paypal
             <br />
             <div className="paypalImageBox align-items-center">
               <img src="https://cdn.wccftech.com/wp-content/uploads/2016/05/paypal-earnings.png" className="paypalImage mt-5" />

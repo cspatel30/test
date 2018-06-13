@@ -22,7 +22,7 @@ class AddressDetails extends React.Component {
   render() {
     console.log("this.props ", this.props);
     return (
-      <div className="container">
+      <div className="container informationText">
           <div className="row mt-5 mb-2">
             <div className="col-9">
               <span className="subHeadlineText">Address</span>
@@ -51,27 +51,27 @@ class AddressDetails extends React.Component {
               <div className="col-9">
                 <div className="row">
                   <label className="col-sm-2 addressLabel">Building</label>
-                  <div className="col-sm-10">{this.props.userProfile.building}</div>
+                  <div className="col-sm-10 informationText">{this.props.userProfile.building}</div>
                 </div>
                 <div className="row">
                   <label className="col-sm-2 addressLabel">Street</label>
-                  <div className="col-sm-10">{this.props.userProfile.street}</div>
+                  <div className="col-sm-10 informationText">{this.props.userProfile.street}</div>
                 </div>
                 <div className="row">
                   <label className="col-sm-2 addressLabel">City</label>
-                  <div className="col-sm-10">{this.props.userProfile.city}</div>
+                  <div className="col-sm-10 informationText">{this.props.userProfile.city}</div>
                 </div>
                 <div className="row">
                   <label className="col-sm-2 addressLabel">Country</label>
-                  <div className="col-sm-10">{this.props.userProfile.countryCode}</div>
+                  <div className="col-sm-10 informationText">{this.props.userProfile.countryCode}</div>
                 </div>
                 <div className="row">
                   <label className="col-sm-2 addressLabel">Postal Code</label>
-                  <div className="col-sm-10">{this.props.userProfile.postal_code}</div>
+                  <div className="col-sm-10 informationText">{this.props.userProfile.postal_code}</div>
                 </div>
                 <div className="row">
                   <label className="col-sm-2 addressLabel">Email Id</label>
-                  <div className="col-sm-10">{this.props.userProfile.email}</div>
+                  <div className="col-sm-10 informationText">{this.props.userProfile.email}</div>
                 </div>
               </div>
             )}
