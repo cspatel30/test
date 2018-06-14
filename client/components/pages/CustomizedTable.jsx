@@ -12,14 +12,17 @@ import MessageComponent from './Message.jsx';
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.background.default,
-    color: theme.palette.common.black,
+    color: "#27292E",
     borderTop : "2px solid #0d99ef52",
     borderBottom :"2px solid #0d99ef52",
     fontSize:"18px",
+    textAlign:"left",
+    padding:"5px 14px",
   },
   body: {
-    fontSize: 14,
-    padding:"20px 15px"
+    fontSize: 16,
+    padding:"20px 14px",
+    color:"#14436D"
   },
 }))(TableCell);
 
@@ -34,10 +37,17 @@ const table = {
   minWidth: 700
 };
 const rowt = {
+  textAlign:"left",
+  fontWeight:300,
+  verticalAlign:"top",
   '&:nth-of-type(even)': {
     background: 'red'
   }
 };
+
+const rows ={
+  textAlign:"left"
+}
 
 const orders=[{id: 5, inspectionTypeDisplayName: "Dry-Dock Management", email: "abhishek@classicinformatics.com", vesselName: "test", portId: 15372,imo:"45465",inspectionTypeDisplayName:
 "Dry-Dock Management",inspectorQuote:55,inspectoramount:12000,
@@ -107,7 +117,7 @@ class CustomizedTable extends Component {
     switch (itemType) {
       case "Manage Enquiries":      
         return (
-          <TableRow>
+          <TableRow style={rows}>
             <CustomTableCell>Ref.No</CustomTableCell>
             <CustomTableCell>Enquiries</CustomTableCell>
             <CustomTableCell>Quotations</CustomTableCell>
@@ -118,7 +128,7 @@ class CustomizedTable extends Component {
         );
       case "Manage Orders":
         return (
-          <TableRow>
+          <TableRow style={rows}>
           <CustomTableCell>PONo.</CustomTableCell>
           <CustomTableCell>Details</CustomTableCell>
           <CustomTableCell>Inspector</CustomTableCell>
@@ -172,10 +182,10 @@ class CustomizedTable extends Component {
                       <div className="details">
                         <div><span className="value">{n.quotations}</span></div>
                         <div><span className="value" align="center">{n.proposalstatus}</span></div>
-                        <div><span className="value"><a href="#">{'VIEW PROPOSALS'}</a></span></div>
+                        <div><span className="proposal value"><a href="#">{'VIEW PROPOSALS'}</a></span></div>
                         <div><span className="titleEnquiry">{'Recommended Inspector'} </span>- <span className="value">{n.inspectorname !== ''  ? n.inspectorname.name : ''}</span></div>
                         <div><span className="titleEnquiry">Amount-US$ </span><span className="value">{n.inspectoramount !== null ? n.inspectoramount.amountinspector : ''}</span></div>
-                        <div><span className="value"><a href="#">{'VIEW FULL PROFILE'}</a></span></div>
+                        <div><span className="inspector value"><a href="#">{'VIEW FULL PROFILE'}</a></span></div>
                       </div>
                     </div> 
                   </CustomTableCell>
@@ -191,7 +201,7 @@ class CustomizedTable extends Component {
                     <div className="enquiry-details-box">
                       <div className="details">
                         <div><span className="value"><a href="#">{'CREATE ORDER'}</a></span></div>
-                        <div><span className="value"><a href="#">{'VIEW REPORT'}</a></span></div>
+                        <div><span className="actions value"><a href="#">{'VIEW REPORT'}</a></span></div>
                       </div>
                     </div> 
                   </CustomTableCell>
@@ -220,7 +230,7 @@ class CustomizedTable extends Component {
                   <div className="enquiry-details-box">
                       <div className="details">
                          <div><span className="titleEnquiry">{'Inspector Name'} </span>- <span className="value">{n.inspectorname !== ''  ? n.inspectorname : ''}</span></div>
-                         <div><span className="value"><a href="#">{'VIEW FULL PROFILE'}</a></span></div>
+                         <div><span className="inspector value"><a href="#">{'VIEW FULL PROFILE'}</a></span></div>
                       </div>
                     </div> 
                   </CustomTableCell>
@@ -237,8 +247,8 @@ class CustomizedTable extends Component {
                     <div className="enquiry-details-box">
                       <div className="details">
                         <div><span className="value"><a href="#">{'CANCEL ORDER'}</a></span></div>
-                        <div><span className="value"><a href="#">{'VIEW REPORT'}</a></span></div>
-                        <div><span className="value"><a href="#">{'MOVE TO ARCHIEVE'}</a></span></div>
+                        <div><span className="actions value"><a href="#">{'VIEW REPORT'}</a></span></div>
+                        <div><span className="actions value"><a href="#">{'MOVE TO ARCHIEVE'}</a></span></div>
                       
                       </div>
                     </div> 

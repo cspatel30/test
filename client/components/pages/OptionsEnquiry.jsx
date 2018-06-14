@@ -42,7 +42,7 @@ export default class OptionsEnquiry extends Component {
       render(){
         const {optionsVisible} = this.state;
           return(                                    
-            <div id="status" className={`Enquirystatus ${optionsVisible ? "selected" : ""}`} onClick={() => this.handleClick("status")}>
+            <div id="status" className={`dropstatus ${optionsVisible ? "selected" : ""}`} onClick={() => this.handleClick("status")}>
             <p className="circleEnquiry"> ... </p>             
           
           { optionsVisible && (
@@ -52,7 +52,7 @@ export default class OptionsEnquiry extends Component {
               transitionAppearTimeout={500}
               transitionEnter={false}
               transitionLeave={false}>
-              <div className="dropEnquiry">
+              <div className="dropdownEnquiry">
                 <ul className="dropEnquirytitle">
                 <li classname="dropEnquirylist">Edit</li>
                 <li classname="dropEnquirylist">Cancel</li>

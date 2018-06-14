@@ -46,7 +46,7 @@ export default class StatusEnquiry extends Component {
           return(
             <div className="Filter">                         
             <div id="status" className={`Enquirystatus ${statusVisible ? "selected" : ""}`} onClick={() => this.handleClick("status")}>
-            <span className="FilterHead">STATUS <img src={arrowDown} width="12px" height="12px"/></span>            
+            <span className="FilterHead">STATUS  <img src={arrowDown} width="12px" height="12px"/></span>            
           
           { statusVisible && (
             <ReactCSSTransitionGroup

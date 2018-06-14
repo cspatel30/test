@@ -72,7 +72,7 @@ export default class StatusOrder extends Component {
             <div className="Filter">                        
             
           <div id="status" className={`Enquirystatus ${statusVisible ? "selected" : ""}`} onClick={() => this.handleClick("status")}>
-            <span className="FilterHead">STATUS <img src={arrowDown} width="11px" height="7px"/></span>            
+            <span className="FilterHead">STATUS  <img src={arrowDown} width="12px" height="12px"/></span>            
           
           { statusVisible && (
             <ReactCSSTransitionGroup
@@ -94,7 +94,7 @@ export default class StatusOrder extends Component {
           )}  
           </div>
           <div id="status" className={`Enquirystatus ${dateVisible ? "selected" : ""}`} onClick={() => this.handleClick("statusdate")}>
-            <span className="FilterHead">DATE <img src={arrowDown} width="11px" height="7px"/></span>            
+            <span className="FilterHead">DATE  <img src={arrowDown} width="12px" height="12px"/></span>            
           
           { dateVisible && (
             <ReactCSSTransitionGroup
@@ -118,8 +118,8 @@ export default class StatusOrder extends Component {
             </ReactCSSTransitionGroup>
           )}  
           </div>
-            <div className="Enquiryactive"><span className="FilterHead"><img src={tick} width="15px" height="12px"/>ACTIVE</span></div>
-            <div className="Enquiryarchieved" ><span className="FilterHead"><img src={archive} width="11px" height="13px"/>ARCHIEVED</span></div>
+            <div className="Enquiryactive"><span className="FilterHead"><img src={tick} width="15px" height="13px"/>ACTIVE</span></div>
+            <div className="Enquiryarchieved" ><span className="FilterHead"><img src={archive} width="12px" height="13px"/>ARCHIEVED</span></div>
            
           </div>            
           )
