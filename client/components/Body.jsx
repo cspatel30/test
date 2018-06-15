@@ -26,7 +26,7 @@ import SetupAccountContainer from '../containers/SetupAccountContainer.js';
 import VerifyEmailContainer from '../containers/VerifyEmailContainer.js';
 import UserOrdersContainer from '../containers/UserOrdersContainer.js';
 import DashboardContainer from '../containers/DashboardContainer.js';
-
+import ProposalContainer from '../containers/ProposalContainer.js';
 
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
@@ -58,7 +58,8 @@ export default class Body extends Component {
               <Route exact path="/my/doc/:docType/:fileName" component={DocumentDownloadContainer} />
               <Route exact path="/verify/email/:requestToken" component={VerifyEmailContainer} />
               <Route exact path="/setup/account/:requestToken" component={SetupAccountContainer} />
-              <Route exact path="/dashboard/" component={DashboardContainer} />              
+              <Route exact path="/dashboard/" component={DashboardContainer} />   
+              <Route exact path="/proposal/" component={ProposalContainer} />            
               <Route path="/admin" component={AdminHomePageContainer} />
               
             </div>
