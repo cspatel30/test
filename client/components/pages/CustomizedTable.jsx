@@ -182,7 +182,7 @@ class CustomizedTable extends Component {
                       <div className="details">
                         <div><span className="value">{n.quotations}</span></div>
                         <div><span className="value" align="center">{n.proposalstatus}</span></div>
-                        <div><span className="proposal value"><a href="#">{'VIEW PROPOSALS'}</a></span></div>
+                        <div><span className="proposal value"><a href="/proposal/">{'VIEW PROPOSALS'}</a></span></div>
                         <div><span className="titleEnquiry">{'Recommended Inspector'} </span>- <span className="value">{n.inspectorname !== ''  ? n.inspectorname.name : ''}</span></div>
                         <div><span className="titleEnquiry">Amount-US$ </span><span className="value">{n.inspectoramount !== null ? n.inspectoramount.amountinspector : ''}</span></div>
                         <div><span className="inspector value"><a href="#">{'VIEW FULL PROFILE'}</a></span></div>
