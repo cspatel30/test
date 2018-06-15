@@ -2,12 +2,14 @@
 <html>
   <head>
     <title>Ship Inspector</title>
-    <link href="/public/style.css" rel="stylesheet" />
-    <link href="/public/carousel.css" rel="stylesheet"/>
-    <link href="/public/react-tabs.css" rel="stylesheet"/>
-    <link href="/public/react-datetime.css" rel="stylesheet"/>
-    <link href="/public/react-select.css" rel="stylesheet"/>
-    <link href="/public/react-bootstrap-table.css" rel="stylesheet"/>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+       <!-- Bootstrap core CSS -->
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="/public/css/mdb.min.css" rel="stylesheet">
+    <!-- <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/public/css/style.css" rel="stylesheet" />
     <link rel="favicon icon" type="image/png" href="/public/favicon.png"/>
   </head>
 
@@ -15,6 +17,23 @@
     <div id="root">
     </div>   
 </body>
-<script src="/public/main.bundle.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="/public/js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="/public/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="/public/js/mdb.min.js"></script>
+    <script src="/public/main.bundle.js"></script>
+    <script>
+      $("input[required]").parent("label").addClass("required");
+      $(".dropdown-menu li a").click(function(){
+  var selText = $(this).text();
+  $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+});
+  </script>
 
 </html>

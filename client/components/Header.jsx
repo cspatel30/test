@@ -19,7 +19,9 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Avatar from 'material-ui/Avatar';
 import RaisedButton from 'material-ui/RaisedButton';
-
+//import Menu from './Menu.jsx';
+import Signup from './Signup.jsx';
+import Login from './Login.jsx';
 
 export default class Header extends Component {
 
@@ -100,18 +102,31 @@ export default class Header extends Component {
 
   renderLoginRegisterButton(userProfile, login) {
     if(!userProfile) {
-      if(login)  
-        return (<div className="login"><NavLink className="menu-button" key="link_login" to="/login/"><button>Login</button></NavLink></div>);
-      else 
-        return (<div className="register"><NavLink className="menu-button" key="link_register" to="/register/"><button>Sign Up</button></NavLink></div>);
+      if(login) {
+         return (<li className="loginicon"><NavLink className="menu-link" key="link_login" to="/login/">
+        <Login width="100" height="100"/> Login</NavLink></li>);
+      }
+       
+      else {
+         return (<li><NavLink className="menu-link" key="link_register" to="/register/"><Signup width="100" height="100"/> Sign Up</NavLink></li>);
+      }
+       
     }
   }
 
   renderQuoteButton(userProfile) {
     if(!userProfile || userProfile.type == 'customer') {
       return (
-        <div className="quote">
-          <NavLink className="quote-link" key="link_quote" to="/enquiry/"><button>Enquire Quotation</button></NavLink>
+        <div>
+          <NavLink className="quote-link" key="link_quote" to="/enquiry/">
+          <RaisedButton
+              label="INSPECTION ENQUIRY"
+              labelColor="#3398DB"              
+              backgroundColor="#FFF"   
+              buttonStyle={{ borderRadius: 25 }}
+              style={{ borderRadius: 25,border: '2px solid #3398DB' }}           
+            />
+          </NavLink>
         </div>
       );
     }
@@ -141,15 +156,45 @@ export default class Header extends Component {
 	  return (
       <div className="header">
         <div className="left-section">
+        
           <div className="logo-image">
-            <a href="/"><img alt="SinoTechMarine" src="https://s3-ap-southeast-1.amazonaws.com/sinotechmarineassets/public/sinotech-logo.png" width="150" height="100"/></a>
-          </div>
-          <div className="logo-image">
-            <a href="/"><img alt="ShipInspector" src="https://s3-ap-southeast-1.amazonaws.com/sinotechmarineassets/public/shipinspectors-logo.png" width="180" height="100"/></a>
+            <a href="/"><img alt="ShipInspector" src="https://s3-ap-southeast-1.amazonaws.com/sinotechmarineassets/public/shipinspectors-logo.png" width="100" height="100"/></a>
           </div>
           <div className="clear"></div>
         </div>
+        
         <div className="right-section">
+          <div className="login-section">
+            <div className="menu-section">                
+              <ul>
+              {/* <Menu/>  */}
+              {this.renderLoginRegisterButton(userProfile, true)}
+              {this.renderLoginRegisterButton(userProfile, false)}
+              {this.renderUserActionSection(userProfile)}                  
+              <li> 
+              <NavLink to="/newprofile/">
+              <RaisedButton
+              label="PROFILE"
+              labelColor="#FFF"              
+              backgroundColor="#FF1493" 
+              boxShadow="none"
+              buttonStyle={{ borderRadius: 25}}
+              style={{ borderRadius: 25}}             
+              />
+              </NavLink>
+              </li>
+              <li>
+              {/* {this.renderQuoteButton(userProfile)} */}
+              </li>  
+              </ul> 
+                    <div className="clear"></div>  
+            </div>
+                
+            <div className="clear"></div>
+          </div>
+        
+         
+          {/*
           <div className="login-section">
               {this.renderQuoteButton(userProfile)}
               {this.renderLoginRegisterButton(userProfile, true)}
@@ -170,7 +215,7 @@ export default class Header extends Component {
             </ul>
             <div className="clear"></div>
           </div>
-  
+          */}
         </div>
         <div className="clear"></div>
   	  </div>

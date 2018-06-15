@@ -1,506 +1,269 @@
-// import 'regenerator-runtime/runtime';
-
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import {FormattedMessage} from 'react-intl';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import Dialog from 'material-ui/Dialog';
-import VirtualizedSelect from 'react-virtualized-select';
-
-import TermsPage from './TermsPage.jsx';
-
-const styles = {
-  tabs: {
-    width: 350,
-    background: '#fff'
-  },
-  tabButton: {
-    padding: 10,
-    background: '#fff',
-    color: '#000',
-    width: 150,
-    borderBottom: '2px solid #cecece'
-  },
-  tabButtonSelected: {
-    padding: 10,
-    background: '#fff',
-    color: '#000',
-    width: 150,
-    borderBottom: '2px solid rgb(255, 64, 129)'
-  }
-};
 
 export default class RegisterPage extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
-      termsOpen: false,
-      signUpSuccess: false,
-      signUpErrorMsg: "",
-      userType: "customer",
-      termsAgreed: false,
-      registerForm: {
-      	name: "",
-        email: "",
-        password: "",
-        confirmpassword: "",
-        company: "",
-        phone: "",
-        position: "",
-        qualification: "",
-        building: "",
-        street: "",
-        seaport: "",
-        city: "",
-        countryCode: ""
-      },
-      registerFormError: {
-      	name: "",
-        email: "",
-        password: "",
-        confirmpassword: "",
-        company: "",
-        position: "",
-        qualification: "",
-        seaport: "",
-        city: "",
-        countryCode: ""
+      registraiontype: "",
+      option:""
+    }
+    this.selectTypeOfRegistration = this.selectTypeOfRegistration.bind(this);
+    this.selectOption = this.selectOption.bind(this);
+  }
+
+  selectTypeOfRegistration(event) {
+    this.setState({
+      registraiontype: event.target.value
+    }, () => {
+      if (this.state.registraiontype === "client") {
+        $('#client-register').show();
+        $('#inspector-register').hide();
       }
-    };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleActive = this.handleActive.bind(this);
-    this.getTabButtonClassName = this.getTabButtonClassName.bind(this);
-    this.toggleAgreementCheckBox = this.toggleAgreementCheckBox.bind(this);
-    this.handleAgreementPopupOpen = this.handleAgreementPopupOpen.bind(this);
-    this.handleAgreementPopupClose = this.handleAgreementPopupClose.bind(this);
-    this.portOptionRenderer = this.portOptionRenderer.bind(this);
-  } 
-
-  componentWillReceiveProps(props) {
-    if(props.signUpSuccess) {
-      this.setState((state) => { state.signUpSuccess = props.signUpSuccess; });
-    }
-    if(props.error) {
-      this.setState((state) => { state.signUpErrorMsg = props.error; });
-    }
-  }
-
-  handleAgreementPopupOpen () {
-    this.setState((state) => { state.termsOpen = true});
-  }
-
-  handleAgreementPopupClose () {
-    this.setState((state) => { state.termsOpen = false, state.termsAgreed = true});
-  }
-
-  getTabButtonClassName (sectionname) {
-    if(this.state.userType == sectionname) {
-      return styles.tabButtonSelected;
-    } else 
-      return styles.tabButton;
-  }
-
-  handleActive (tab) {
-    this.setState((state) => { 
-      state.userType = tab.props['data-person']; 
-      state.registerForm = {
-        name: "", email: "", password: "", confirmpassword: "", company: "", phone: "", position: "", qualification: "",
-        building: "", street: "", seaport: "", city: "", country: "" };
-      state.registerFormError = {  name: "", email: "", password: "", confirmpassword: "", company: "", position: "", 
-                                qualification: "", seaport: "", city: "", countryCode: "" };
-      state.signUpSuccess = false;
-      state.signUpErrorMsg = null;
-    }); 
-  }
-
-  handleInputChange (event) {
-    event.persist();
-    this.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-  }
-
-  handleLocationInputChange (event) {
-    event.persist();
-    this.setState((state) => { state.registerForm.location[event.target.name] = event.target.value });
-  }
-
-  toggleAgreementCheckBox (event) {
-    event.persist();
-    this.setState((state) => { state.termsAgreed = event.target.checked});
-  }
-
-  handleSubmit(event) {
-
-    event.preventDefault();
-
-    var error = false;
-    console.log(this.state);
-
-    var registerFormError = {  name: "", email: "", password: "", confirmpassword: "", company: "",
-        position: "", qualification: "", location: {seaport: "", city: "", country: ""} };
-
-    if(this.state.registerForm.name == "") {
-      error = true;
-      registerFormError.name = "This field is mandatory";
-    }
-
-    if(this.state.registerForm.email == "") {
-      error = true;
-      registerFormError.email = "This field is mandatory";
-    }
-
-    if(this.state.registerForm.company == "") {
-      error = true;
-      registerFormError.company = "This field is mandatory";
-    }
-
-    if(this.state.registerForm.password == "") {
-      registerFormError.password = "This field is mandatory";
-      error = true;
-    }
-
-    if(this.state.registerForm.confirmpassword == "") {
-      registerFormError.confirmpassword = "This field is mandatory";
-      error = true;
-    }
-    //check if 2 passwords match
-    if(this.state.registerForm.password != "" && this.state.registerForm.confirmpassword != "" && 
-      this.state.registerForm.password !== this.state.registerForm.confirmpassword) {
-      error = true;
-      registerFormError.confirmpassword = "Both passwords do not match";
-    }
-
-    if(this.state.userType == 'inspector') {
-      if(this.state.registerForm.phone == "") {
-        registerFormError.phone = "This field is mandatory";
-        error = true;
+      else {
+        $('#inspector-register').show();
+        $('#client-register').hide();
       }
-
-      if(this.state.registerForm.position == "") {
-        registerFormError.position = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.qualification == "") {
-        registerFormError.qualification = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.seaport == "") {
-        registerFormError.seaport = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.city == "") {
-        registerFormError.city = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.countryCode == "") {
-        registerFormError.countryCode = "This field is mandatory";
-        error = true;
-      }
-    }
-    
-    if(error) { 
-      this.setState( (state) => { state.registerFormError = registerFormError; state.signUpSuccess = false;});
-      return;
-    }
-
-    this.setState((state) => { state.signUpSuccess = false; state.signUpErrorMsg = "", state.registerFormError = registerFormError; });
-
-    if(!this.state.termsAgreed) {
-      alert("Please agree to terms and conditions");
-      return;
-    }
-
-    var registerForm = this.state.registerForm;
-    registerForm.seaport = parseInt(registerForm.seaport);
-    registerForm.country = parseInt(registerForm.country);
-
-    this.setState((state) => { state.signUpErrorMsg = "";});
-
-    this.props.register(this.state.userType, registerForm);
-
+    })
   }
-
-  renderSelectBox = (datasource, placeholder, keyField='id', textField='name') => {
-      var options = [];
-      var prefix = "";
-
-      options.push(<option key="" value="">{"Select " + placeholder }</option>);
-      datasource.map( (ds) => {
-        options.push(<option key={ds[keyField]} value={ds[keyField]}>{prefix + ds[textField]}</option>);
-      });
-      return  options;             
+  selectOption(event) {
+    this.setState({
+      option: event.target.value
+    }, () => {
+      alert(JSON.stringify(this.state.option))
+    })
   }
-
-  phoneOptionRenderer = ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) => {
-    const flagImageUrl = `https://cdn.rawgit.com/hjnilsson/country-flags/9e827754/svg/${option.code.toLowerCase()}.svg`;
-
-    const classNames = ["country-option"];
-    if (option === focusedOption) {
-      classNames.push("country-option-focussed");
-    }
-    if (valueArray.indexOf(option) >= 0) {
-      classNames.push("country-option-selected");
-    }
-
-    return (
-      <div key={key} onClick={() => selectValue(option)}  className={classNames.join(' ')} style={style}>
-        <img src={flagImageUrl} className="country-flag" />
-        <label className="country-label">
-          + {option.phoneCode}
-        </label>
-      </div>
-    )           
-  }
-
-  countryOptionRenderer = ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) => {
-    
-    const flagImageUrl = `https://cdn.rawgit.com/hjnilsson/country-flags/9e827754/svg/${option.code.toLowerCase()}.svg`;
-
-    const classNames = ["country-option"];
-    if (option === focusedOption) {
-      classNames.push("country-option-focussed");
-    }
-    if (valueArray.indexOf(option) >= 0) {
-      classNames.push("country-option-selected");
-    }
-
-    return (
-      <div key={key} onClick={() => selectValue(option)}  className={classNames.join(' ')} style={style}>
-        <img src={flagImageUrl} className="country-flag" />
-        <label className="country-label">
-          {option.name}
-        </label>
-      </div>
-    );
-  }
-
-  portOptionRenderer = ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) => {
-    
-    const flagImageUrl = `https://cdn.rawgit.com/hjnilsson/country-flags/9e827754/svg/${option.countryCode.toLowerCase()}.svg`;
-
-    const classNames = ["country-option"];
-    if (option === focusedOption) {
-      classNames.push("country-option-focussed");
-    }
-    if (valueArray.indexOf(option) >= 0) {
-      classNames.push("country-option-selected");
-    }
-
-    return (
-      <div key={key} onClick={() => selectValue(option)}  className={classNames.join(' ')} style={style}>
-        <img src={flagImageUrl} className="country-flag" />
-        <label className="country-label">
-          {option.name} , {option.countryName} , {option.regionName}
-        </label>
-      </div>
-    )
-  }
-
-  renderActionMessage = () =>  {
-    if(this.state.signUpSuccess) {
-      return (<div className="success">You account has been created successfully!! Please login to your email account to verify your email. You will be able to login post email verification.</div>)
-    } else if(this.state.signUpErrorMsg && this.state.signUpErrorMsg.trim() !== "") {
-      return (<div className="error">{this.state.signUpErrorMsg}</div>)
-    } else {
-      return null;
-    }
-  }
-
-  renderForm() {
-    const actions = [
-      <FlatButton label="I Agree" primary={true} onClick={this.handleAgreementPopupClose}/>];
-      
-    if(!this.state.signUpSuccess) {
-      return (
-        <div className="login-page">
-          <form className="contact-form"  onSubmit={this.handleSubmit} action="/" method="post">
-            <Tabs className="tabs" tabItemContainerStyle={styles.tabs}>
-              
-              <Tab label="Customer" buttonStyle={this.getTabButtonClassName('customer')} className="tab" data-person="customer" onActive={this.handleActive}>
-                <div className="label">Full Name</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="name" name="name" value={this.state.registerForm.name} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.name}</div>
-                </div>  
-                <div className="label">Email</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="email" name="email" value={this.state.registerForm.email} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.email}</div>
-                </div> 
-                <div className="label">Password</div>
-                <div className="field">  
-                  <input className="inputField" type="password" placeholder="password" name="password" value={this.state.registerForm.password} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.password}</div>
-                </div>
-                <div className="label">Re-Enter Password</div>
-                <div className="field">  
-                  <input className="inputField" type="password" placeholder="confirmpassword" name="confirmpassword" value={this.state.registerForm.confirmpassword} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.confirmpassword}</div>
-                </div> 
-                <div className="label">Company</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="company name" name="company" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.company}</div>
-                </div> 
-                <div className="label">Phone Number</div>
-                <div className="field">
-                  <div className="phone-country">
-                    <VirtualizedSelect labelKey='phoneCode' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
-                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
-                    optionRenderer={this.phoneOptionRenderer}  clearable={false}/>
-                  </div>
-                  <div className="phone-value">
-                    <input type="text" placeholder="phone" name="phone" value={this.state.registerForm.phone} onChange={this.handleInputChange}/>
-                  </div>
-                  <div className="clear"></div>
-                </div>  
-
-                <div className="label">Office Address</div>
-                <div className="field">  
-                  <input className="inputField" type="building" placeholder="building" name="building" value={this.state.registerForm.building} onChange={this.handleInputChange}/>
-                  
-                </div>
-                <div className="field">  
-                  <input className="inputField" type="street" placeholder="street" name="street" value={this.state.registerForm.street} onChange={this.handleInputChange}/>
-                  
-                </div>
-                <div className="field">  
-                  <input className="inputField" type="city" placeholder="city" name="city" value={this.state.registerForm.city} onChange={this.handleInputChange}/>
-                  
-                </div>
-                <div className="field">  
-                  <VirtualizedSelect labelKey='name' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
-                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
-                    optionRenderer={this.countryOptionRenderer}  clearable={false}/>
-                </div>
-              </Tab>
-
-              <Tab label="Inspector" buttonStyle={this.getTabButtonClassName('inspector')} className="tab" data-person="inspector" onActive={this.handleActive}>
-                <div className="label">Full Name</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="name" name="name" value={this.state.registerForm.name} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.name}</div>
-                </div>  
-                <div className="label">Email</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="email" name="email" value={this.state.registerForm.email} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.email}</div>
-                </div>  
-                <div className="label">Password</div>
-                <div className="field">  
-                  <input className="inputField" type="password" placeholder="password" name="password" value={this.state.registerForm.password} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.password}</div>
-                </div>
-                <div className="label">Re-Enter Password</div>
-                <div className="field">  
-                  <input className="inputField" type="password" placeholder="re-enter password" name="confirmpassword" value={this.state.registerForm.confirmpassword} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.confirmpassword}</div>
-                </div>
-                <div className="label">Company</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="company name" name="company" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.company}</div>
-                </div>
-                
-
-                <div className="label">Phone Number</div>
-                <div className="field"> 
-                  <div className="phone-country">
-                    <VirtualizedSelect labelKey='phoneCode' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
-                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
-                    optionRenderer={this.phoneOptionRenderer}  clearable={false}/>
-                  </div>
-                  <div className="phone-value">
-                    <input type="text" placeholder="phone" name="phone" value={this.state.registerForm.phone} onChange={this.handleInputChange}/>
-                  </div>
-                  <div className="errorField">{this.state.registerFormError.phone}</div>
-                  <div className="clear"></div>
-                </div>  
-                <div className="label">Position</div>
-                <div className="field">  
-                  <div className="selectField"> 
-                    <select name="position" value={this.state.registerForm.position} onChange={this.handleInputChange}>
-                      {this.renderSelectBox(this.props.inspectorPositions, 'Position')}
-                    </select>
-                  </div>
-                  <div className="errorField">{this.state.registerFormError.position}</div>
-                </div>  
-                <div className="label">Qualification</div>
-                <div className="field">  
-                  <div className="selectField">                        
-                    <select name="qualification" value={this.state.registerForm.qualification} onChange={this.handleInputChange}>
-                      {this.renderSelectBox(this.props.inspectorQualifications, 'Qualification')}
-                    </select>
-                  </div>
-                  <div className="errorField">{this.state.registerFormError.qualification}</div>
-                </div>  
-                
-                <div className="label">Your Location Details</div>
-                <div className="sublabel">Nearest Seaport:</div>
-                <div className="field">   
-                  <VirtualizedSelect labelKey='name' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.seaport = selectedValue[0]; })}
-                    options={this.props.ports} searchable={true} simpleValue value={this.state.registerForm.seaport} valueKey='id'
-                    optionRenderer={this.portOptionRenderer}  clearable={false}/>
-                    <div className="errorField">{this.state.registerFormError.seaport}</div>
-                </div>
-                
-                <div className="sublabel">City:</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="city" name="city" value={this.state.registerForm.city} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.city}</div>
-                </div>  
-                
-                <div className="sublabel">Country:</div>
-                <div className="field"> 
-                    <VirtualizedSelect labelKey='name' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
-                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
-                    optionRenderer={this.countryOptionRenderer}  clearable={false}/>
-                  <div className="errorField">{this.state.registerFormError.countryCode}</div>
-                </div>  
-              </Tab>
-            </Tabs>
-            <div className="label">
-              <input className="checkbox" type="checkbox" checked={this.state.termsAgreed} onChange={this.toggleAgreementCheckBox}/>
-                &nbsp; &nbsp; I agree with all <a className="link" onClick={this.handleAgreementPopupOpen}>Terms & Conditions</a>
-            </div>
-            <div className="btn"><button>Sign Up</button></div>
-            <div className="clear"></div>
-          </form>
-          <Dialog title="" modal={true} open={this.state.termsOpen} actions={actions} autoScrollBodyContent={true}>
-            <div className="register-terms">
-                <TermsPage/>
-            </div>
-          </Dialog>
-        </div>
-      );
-    } else {
-      return null;
-    }
-  }
-
   render() {
 
-    const { userToken , userProfile } = this.props;
-
-  	if(userToken && userProfile) {
-  		this.props.history.push('/');
-  	}
-
     return (
-          <div className="page">
-          	<h1>Sign Up</h1>
-          	{this.renderActionMessage()}
-            {this.renderForm()}
+      <div className="section bg-gray">
+        <div className="container">
+          <div className="row mt-5">
+            <div className="col-md-12 SignUpFormSec p-5 position-relative">
+              {/* Material form login */}
+              <form className="mb-5 pb-5">
+                <p className="h4 text-blue mb-4 SignUpTitleMain pl-3">Register on ShipInspectors.com</p>
+                <p className="h4 text-blue mb-4 loginTitle pl-3">Select Client or Inspector</p>
+                <div className="position-relative mDivider">
+                  <div className="divider" />
+                  <div className="triangle-down" />
+                </div>
+                <div className="d-flex loginType pt-3 pl-3" onChange={this.selectTypeOfRegistration.bind(this)} >
+                  <div>
+                    <input type="radio" id="client" name="radio-group" value="client" defaultChecked />
+                    <label className="lablePlaceholder" htmlFor="client">Client</label>
+                  </div>
+                  <div className="pl-4">
+                    <input type="radio" id="inspector" name="radio-group" value="inspector" />
+                    <label className="lablePlaceholder" htmlFor="inspector">Inspector</label>
+                  </div>
+                </div>
+                <div className="d-flex">
+                  <div className="col-md-6">
+                    <div className="md-form required">
+                      <img className="prefix grey-text" src="/public/img/user.png" alt />
+                      <input type="email" id="materialFormSignUpFirstName" className="form-control" />
+                      <label htmlFor="materialFormLoginFirstName required">First Name <span className="required">*</span></label>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="md-form">
+                      <img className="prefix grey-text" src="/public/img/user.png" alt />
+                      <input type="password" id="materialFormSignUpLastName" className="form-control" />
+                      <label htmlFor="materialFormSignUpLastName">Last Name <span className="required">*</span></label>
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex">
+                  <div className="col-md-6">
+                    <div className="md-form">
+                      <img className="prefix grey-text" src="/public/img/at.png" alt />
+                      <input type="email" id="materialFormSignUpEmail" className="form-control" />
+                      <label htmlFor="materialFormSignUpEmail">Email Address <span className="required">*</span></label>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="md-form">
+                      <img className="prefix grey-text" src="/public/img/key.png" alt />
+                      <input type="password" id="materialFormSignUpPassword" className="form-control" />
+                      <label htmlFor="materialFormSignUpPassword">Password <span className="required">*</span></label>
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex col-md-6">
+                  <div className="col-md-6 pl-0">
+                    <div className="md-form">
+                      <img className="prefix grey-text" src="/public/img/phone.png" alt />
+                      <select className="custom-dropdown">
+                        <option>Code</option>
+                        <option>+1</option>
+                        <option>+91</option>
+                        <option>0891</option>
+                        <option>08937</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-md-6 pr-0">
+                    <div className="md-form">
+                      <input type="password" id="materialFormSignUpPhone" className="form-control" />
+                      <label htmlFor="materialFormSignUpPhone">Phone <span className="required">*</span></label>
+                    </div>
+                  </div>
+                </div>
+                <div id="client-register">
+                  <p className="officeAddress text-left my-3 col-md-12 text-gray">
+                    Office Address
+                </p>
+                  <div className="d-flex">
+                    <div className="col-md-6">
+                      <div className="md-form">
+                        <input type="email" id="materialFormSignUpCompany" className="form-control" />
+                        <label htmlFor="materialFormSignUpCompany">Company <span className="required">*</span></label>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="md-form">
+                        <input type="password" id="materialFormSignUpBuilding" className="form-control" />
+                        <label htmlFor="materialFormSignUpBuilding">Building</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="col-md-6">
+                      <div className="md-form">
+                        <input type="email" id="materialFormSignUpStreet" className="form-control" />
+                        <label htmlFor="materialFormSignUpStreet">Street</label>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="md-form">
+                        <input type="password" id="materialFormSignUpCity" className="form-control" />
+                        <label htmlFor="materialFormSignUpCity">City</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="col-md-6">
+                      <div className="md-form">
+                        <input type="email" id="materialFormSignUpCountry" className="form-control" />
+                        <label htmlFor="materialFormSignUpCountry">Country</label>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="md-form">
+                        <input type="password" id="materialFormSignUpPostalCode" className="form-control" />
+                        <label htmlFor="materialFormSignUpPostalCode">Postal Code</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="signUpsmText text-left col-md-12 text-gray py-4">
+                    By clicking sign up button, I confirm I have read and accept Sinotech Marine
+                  <a href>Privacy Policy</a> and
+                  <a href>Terms and Conditions</a>.
+                </div>
+                  <div className="row align-items-center mx-0">
+                  </div>
+                </div>
+                <div id="inspector-register" style={{ display: "none" }}>
+                  <p className="officeAddress text-left my-3 col-md-12 text-gray">
+                    Your Other Details
+                </p>
+                  <div className="d-flex">
+                    <div className="col-md-6">
+                      <div className="md-form">
+                        <input type="email" id="materialFormSignUpCompany" className="form-control" />
+                        <label htmlFor="materialFormSignUpCompany">Company <span className="required">*</span></label>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                    <div className="md-form">
+                      <select className="custom-dropdown-norm">
+                        <option>Employment Type</option>
+                        <option>Option1</option>
+                        <option>Option2</option>
+                        <option>Option3</option>
+                        <option>Option4</option>
+                      </select>
+                    </div>
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="col-md-6">
+                      <div className="md-form">
+                        <select className="custom-dropdown-norm">
+                        <option>Qualification</option>
+                        <option>Option1</option>
+                        <option>Option2</option>
+                        <option>Option3</option>
+                        <option>Option4</option>
+                      </select>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                    <div className="md-form">
+                        <select className="custom-dropdown-norm">
+                          <option>Title</option>
+                          <option>Option1</option>
+                          <option>Option2</option>
+                          <option>Option3</option>
+                          <option>Option4</option>
+                      </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="col-md-6">
+                    <div className="md-form">
+                        <select className="custom-dropdown-norm">
+                          <option>City</option>
+                          <option>Option1</option>
+                          <option>Option2</option>
+                          <option>Option3</option>
+                          <option>Option4</option>
+                      </select>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                    <div className="md-form">
+                        <select className="custom-dropdown-norm">
+                          <option>Country</option>
+                          <option>Option1</option>
+                          <option>Option2</option>
+                          <option>Option3</option>
+                          <option>Option4</option>
+                      </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="col-md-6">
+                      <div className="md-form">
+                        <input type="password" id="materialFormSignUpPostalCode" className="form-control" />
+                        <label htmlFor="materialFormSignUpPostalCode">Postal Code</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="signUpsmText text-left col-md-12 text-gray py-4">
+                    By clicking sign up button, I confirm I have read and accept Sinotech Marine
+                  <a href>Privacy Policy</a> and
+                  <a href>Terms and Conditions</a>.
+                </div>
+                  <div className="row align-items-center mx-0">
+                  </div>
+                </div>
+              </form>
+              <div className="position-absolute signUpBtm w-100 col-md-12 py-3">
+                <div className="daj signUpBtmBg py-3">
+                  <div className="text-center">
+                    <button type="button" className="btn btn-outline-pink loginBtn">SIGN UP</button>
+                    <button type="button" className="btn btn-outline-gray loginBtn">RESET</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-      );
+        </div>
+      </div>
+    );
   }
 }
