@@ -1880,7 +1880,7 @@ input {
 }
 
 .fw-500 {
-  font-weight: 500
+  font-weight: 500 !important;
 }
 
 .fs-19 {
@@ -2049,7 +2049,7 @@ form.example::after {
   padding-bottom: 2px;
 }
 
-.enquiryButton {
+/* .enquiryButton {
   border-radius: 18px;
   border-color: 2px solid red;
   background-color: rgb(234, 58, 106);
@@ -2061,12 +2061,32 @@ form.example::after {
 }
 
 .enquiryButtonNot {
-  border-radius: 18px;
-  border-color: 2px solid red;
-  color: red;
+  border-radius: 50px;
+  color: #ea3a6a;
   font-weight: bold;
   font-size: 13px;
-  border: 2px solid red;
+  border: 2px solid #ea3a6a;
+  background-color: #ffffff !important;
+} */
+.enquiryButton{
+  border-radius: 18px !important ;
+  border-color: 2px solid red !important;
+  background-color: rgb(234, 58, 106) !important;
+  color: rgb(255, 255, 255) !important;
+  font-weight: bold !important;
+  font-size: 13px !important;
+  padding: 7px 20px !important;
+  border: 2px solid #8b001c57 !important;
+  min-width: 180px !important
+}
+.enquiryButtonNot{
+  border-radius: 50px !important ;
+  background-color:#fff !important;
+  color: #ea3a6a !important;
+  font-weight: bold !important;
+  font-size: 13px !important;
+  padding: 7px 20px !important;
+  border: 2px solid #ea3a6a !important;
 }
 
 .checked {
@@ -2683,10 +2703,10 @@ select.custom-dropdown-norm {
   margin-top: 10px;
 }
 
-.md-form .btn-default.dropdown-toggle:focus,
+/* .md-form .btn-default.dropdown-toggle:focus,
 .btn-default.dropdown-toggle:hover {
   background-color: transparent !important;
-}
+} */
 
 .md-form .btn:active,
 .btn:focus,
@@ -2700,7 +2720,7 @@ select.custom-dropdown-norm {
 .md-form .show>.btn-default.dropdown-toggle {
   -webkit-box-shadow: 0 !important;
   box-shadow: 0 !important;
-  background-color: transparent !important;
+  /* background-color: transparent !important; */
 }
 
 .md-form .btn-default:not([disabled]):not(.disabled).active:focus,
@@ -2715,7 +2735,7 @@ select.custom-dropdown-norm {
 .md-form .show>.btn-default.dropdown-toggle {
   -webkit-box-shadow: 0 !important;
   box-shadow: 0 !important;
-  background-color: transparent !important;
+  /* background-color: transparent !important; */
 }
 
 .btn-default:not([disabled]):not(.disabled).active,
@@ -2723,5 +2743,151 @@ select.custom-dropdown-norm {
 .show>.btn-default.dropdown-toggle {
   -webkit-box-shadow: 0 !important;
   box-shadow: 0 !important;
-  background-color: transparent !important;
+  /* background-color: transparent !important; */
+}
+
+/* Inspector Styles */
+
+/* inspector page css */
+
+div.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 93%;
+  background: #fff;
+}
+
+div.example button {
+  float: left;
+  width: 7%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+div.example button:hover {
+  background: #0b7dda;
+}
+
+div.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.skills-filter
+{
+    border:1px solid lightgray;
+}
+
+ul {
+  list-style-type: none;
+}
+.pb-10 {
+  padding-bottom: 10px !important
+}
+.dropdown-height{
+  min-height: 250px
+}
+.mb-100 {
+  margin-bottom: 100px !important
+}
+.pl-0
+{
+padding-left: 0px !important;
+}
+.pr-0
+{
+padding-right: 0px !important;
+}
+.enquiry{
+  float: right;
+  text-align: right;
+  padding-right: 0;
+ 
+}
+input[type="checkbox"]{
+  zoom:2.0;
+}
+
+.cardbody-border{
+  border-top: 1px solid #e5e5e5;
+  padding-top: 0px;
+  padding-left: 4px;
+}
+.card-header-styles{
+  padding: 0rem 0.25rem !important;
+  background: white !important;
+}
+.bgcolor{
+
+  background:none !important;
+}
+.redColor{
+    color:red
+}
+.ml-4
+{
+    margin-left:4px
+}
+.mr-10
+{
+  margin-right:10px!important;
+}
+.w-13
+{
+    width:13%;
+}
+.w-75
+{
+    width:75%;
+}
+.ml-6
+{
+    margin-left: 6px !important
+}
+.IProfile-page {
+  color: #5ab8f8;
+  font-size:13px;
+  font-weight: "lighter";
+  border-radius:1;
+}
+.jumbo-height {
+  height:350px;
+  background-color:#193996;
+}
+.jumbo-txt {
+  font-size:50px;
+  text-align:center;
+  color:white;
+  margin-top:90px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+.profile-color
+{
+  color:#3d80b4 !important
+}
+.i-grey{
+color:#c0c0c0
+}
+.toprated{
+  font-size: 15px;
+  font-weight: bold;
+  color: #4291f1;
+}
+.star-color{
+  color:#ffd700
+}
+.ratingcount{
+  color:#000
+}
+.cursor {
+  cursor: pointer;
 }

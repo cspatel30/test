@@ -10,7 +10,7 @@ module.exports = function(app) {
     resp.json({status: {success: false, message: err.message}});
   });
 
-  app.get(['/','/login','/newprofile', '/register'], 
+  app.get(['/','/login','/newprofile','/inspectordashboard','/register'], 
     function (req, resp) {
       console.log("respond with index html");
       resp.sendFile(path.join(__dirname, "../../client/resources/static/", "index.html"));
