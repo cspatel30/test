@@ -1599,18 +1599,13 @@ input {
 
 .paypalImage {
   width: 30%;
-  vertical-align: middle;
-}
-.paypalImageBox {
-  height: 100%;
-  text-align: center;
-  vertical-align: middle;
+  margin: 20px;
 }
 
 .paymentCardStyles {
   padding: 20px;
   margin: 20px;
-  background-color: #d3d3d3a3 !important;
+  background-color: #e9ecef30 !important;
 }
 
 .imageEdit {
@@ -1661,4 +1656,12 @@ input {
 .input-group-text {
   background-color: white !important;
   border-right-style: none !important;
+  border-left: none !important;
+  border-top: none !important;
+}
+
+.changePasswordForm {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
 }

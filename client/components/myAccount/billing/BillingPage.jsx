@@ -16,9 +16,9 @@ class Billing extends React.Component {
           <hr className="hrStyle" />
           <AddressDetails {...this.props} />
           <PaymentDetails {...this.props} />
-          <div className="float-right upwordIcon">
-            <a href="#" >
-              <ArrowUpword />
+          <div className="float-right upwordIcon" id="setting">
+            <a href="#">
+              <ArrowUpword style={{color: '#1b99c4'}} />
             </a>
           </div>
         </div>

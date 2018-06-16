@@ -39,9 +39,6 @@ class ChangePassword extends React.Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-
-    console.log("inside handle change ", event.target, value, name);
-
     this.setState({
       [name]: value
     });
@@ -67,7 +64,7 @@ class ChangePassword extends React.Component {
               </div>
               <input
                 id="current password"
-                className="form-control"
+                className="form-control changePasswordForm"
                 type="text"
                 name="currentPassword"
                 placeholder="Current Password"
@@ -88,7 +85,7 @@ class ChangePassword extends React.Component {
               <input
                 id="newPassword"
                 name="newPassword"
-                className="form-control"
+                className="form-control changePasswordForm"
                 type="text"
                 placeholder="New Password"
                 value={this.state.newPassword}
@@ -102,12 +99,12 @@ class ChangePassword extends React.Component {
             <div className="form-group col">
               <label htmlFor="confirmPassword" className="sr-only">Confirm Password</label>
               <div className="input-group">
-              <div className="input-group-prepend">
+              <div className="input-group-prepend ">
                 <div className="input-group-text"><Key/></div>
               </div>
               <input
                 id="confirmPassword"
-                className="form-control"
+                className="form-control changePasswordForm"
                 type="text"
                 placeholder="Confirm Password"
                 name="confirmPassword"
