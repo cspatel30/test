@@ -6,7 +6,7 @@ import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
 import Footer from './Footer.jsx';
 
 import HomePage from './pages/HomePage.jsx';
-import HomePageNew from './pages/HomePageNew.jsx';
+import HomePageNew from './homePage/HomePageNew';
 import AboutPage from './pages/AboutPage.jsx';
 import PolicyPage from './pages/PolicyPage.jsx';
 import TermsPage from './pages/TermsPage.jsx';
