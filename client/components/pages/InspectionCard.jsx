@@ -34,13 +34,15 @@ const styles = {
       fontSize: "16px",
       fontFamily:"proxima_novaregular",
       color: "#1B8CEF",
-      lineHeight: "19px"
+      lineHeight: "19px",
+      padding: "0 0 13px"
     },
     imgtitle:{
       fontSize: "14px",
       fontFamily:"proxima_novaregular",
       color: "#9B9B9B",
-      lineHeight: "17px"
+      lineHeight: "17px",
+      padding: "0 0 5px"
     },
     pos: {      
       fontFamily:"proxima_novaregular",
@@ -68,16 +70,16 @@ const styles = {
               MV Berge Rosa ( IMO No. 123456)
             </Typography>
             <Typography className={classes.imgtitle}>
-            <span className="FilterHead"><img src={edit} width="14px" height="14px" /> 
+            <span className="FilterHead"><img src={edit} width="14px" height="14px" style={{padding: "0px 5px 0px 0px"}} /> 
              Quingdao China (5th June 2018 - 6th June 2018)</span>
             </Typography>
             <Typography className={classes.imgtitle}>
-            <span className="FilterHead"><img src={notification} width="14px" height="14px" />
+            <span className="FilterHead"><img src={notification} width="14px" height="14px" style={{padding: "0px 5px 0px 0px"}} />
              Vessel is post Panamax and urgently required an inspector</span>
             </Typography>
             <Typography className={classes.pos} >
-            <ReadMoreReact text={'Description of job Ipusm'}
-                              min={5}
+            <ReadMoreReact text={'Description of job Ipusm Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged'}
+                              min={6}
                               ideal={20}
                               max={100} />
             </Typography>

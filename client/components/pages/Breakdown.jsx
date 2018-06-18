@@ -43,7 +43,7 @@ export default class Breakdown extends Component {
         const {breakVisible} = this.state;
           return(                                    
             <div id="status" className={`dropstatus ${breakVisible ? "selected" : ""}`} onClick={() => this.handleClick("status")}>
-            <p style={{color:"#E72C7D",marginBottom:"16px"}}> {'View Breakdown'} </p>             
+            <p style={{color:"#E72C7D",marginBottom:"16px",marginTop:"0px"}}> {'View Breakdown'} </p>             
           
           { breakVisible && (
             <ReactCSSTransitionGroup
@@ -52,15 +52,21 @@ export default class Breakdown extends Component {
               transitionAppearTimeout={500}
               transitionEnter={false}
               transitionLeave={false}>
-              <div className="dropdownBreak">
-               <div><span>ITEMS</span><span>LUMP SUM</span></div>
-               <div><span>Inspection Charges #</span><span>$550</span></div>
-               <div><span>Reporting</span><span>$250</span></div>
-               <div><span>{"Travel & Hotel"}</span><span>$220</span></div>
-               <div><span>Agency Charges</span><span>$50</span></div>
-               <div><span>Other Charges</span><span>$50</span></div>
-               <div><span>Total (Lump Sum)</span><span>$1100</span></div>
-               <div><span>Remark</span></div>
+              <div className="dropdownBreak rTable">
+               <div className="rTableRow">
+               <div className="rTableHead">ITEMS</div>
+               <div className="rTableHead">LUMP SUM</div>
+               </div>
+               <div className="rTableRow">
+                 <div className="rTableCell">Inspection Charges#</div>
+                 <div className="rTableCell">$550</div>
+                 </div>
+               <div className="rTableRow"><div className="rTableCell">Reporting</div><div className="rTableCell">$250</div></div>
+               <div className="rTableRow"><div className="rTableCell">{"Travel & Hotel"}</div><div className="rTableCell">$220</div></div>
+               <div className="rTableRow"><div className="rTableCell">Agency Charges</div><div className="rTableCell">$50</div></div>
+               <div className="rTableRow" style={{borderBottom: "1px solid #ddd"}} ><div className="rTableCell">Other Charges</div><div className="rTableCell">$50</div></div>
+               <div className="rTableRow"><div className="rTableCell">Total (Lump Sum)</div><div className="rTableCell" style={{ color: "#1B8CEF",fontWeight: "bold"}}>$1100</div></div>
+               <div className="rTableRow"><div className="rTableCell">Remark</div></div>
               </div>
             </ReactCSSTransitionGroup>
           )}  

@@ -5,7 +5,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import ReactPaginate from "react-paginate";
 import leftarrow from '../../images/left-arrow.svg';
 import rightarrow from '../../images/right-arrow.svg';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -40,8 +39,9 @@ const table = {
   minWidth: 700,
   width: '100%',
   marginTop: 3,
+  marginBottom :0,
   overflowX: 'inherit',
-  boxShadow: "0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
+  boxShadow: "rgba(0, 0, 0, 0.2) 0px -2px 8px 0px"
 };
 const rowt = {
   textAlign:"left",
@@ -57,7 +57,7 @@ const root= {
     color: "#FE3D6C",
 }
 
-const proposals=[{id:5,name:'M.chan',consultant:'Marine Engineer Consultant',engineer:'Chief Engineer',rating:'3',city:'Shanghai',country:'China',type:'Car carrie Ship',areas:['Singapore','Indonesia','Malaysia'],experience:'5',amount:'1050',message:'Excluding boat charges',status:'Availability',from:'08-08-2018',to:'08-18-2018'},{id:6,name:'Howard Ford',consultant:'Marine Engineer Consultant',enginner:'Chief Engineer',rating:'4',city:'Janisview',country:'',type:'Car carrie Ship',areas:['Singapore','Indonesia','Malaysia'],experience:'5',amount:'1150',message:'Excluding boat charges',status:'Availability',from:'08-08-2018',to:'08-18-2018'}];
+const proposals=[{id:5,name:'M.chan',consultant:'Marine Engineer Consultant',engineer:'Chief Engineer',rating:'3',city:'Shanghai',country:'China',type:'Car carrie Ship',areas:['Singapore','Indonesia','Malaysia'],experience:'5',amount:'1050',message:'Excluding boat charges Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',status:'Availability',from:'08-08-2018',to:'08-18-2018'},{id:6,name:'Howard Ford',consultant:'Marine Engineer Consultant',engineer:'Chief Engineer',rating:'4',city:'Janisview',country:'',type:'Car carrie Ship',areas:['Singapore','Indonesia','Malaysia'],experience:'5',amount:'1150',message:'Excluding boat charges Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',status:'Availability',from:'08-08-2018',to:'08-18-2018'},{id:7,name:'M.chan',consultant:'Marine Engineer Consultant',engineer:'Chief Engineer',rating:'3',city:'Shanghai',country:'China',type:'Car carrie Ship',areas:['Singapore','Indonesia','Malaysia'],experience:'5',amount:'1050',message:'Excluding boat charges Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',status:'Availability',from:'08-08-2018',to:'08-18-2018'}];
 
 
 class ProposalList extends Component {
@@ -72,8 +72,8 @@ class ProposalList extends Component {
     this.selectedCheckboxes = new Set();
   }
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
+  handleChange(){
+    this.setState({checkedA :true,selectAll:true});
   };
 
   toggleCheckbox = label => {
@@ -95,7 +95,8 @@ class ProposalList extends Component {
 
     this.setState({
         selected: newSelected,
-        selectAll: true
+        selectAll: true,
+        checkedA :true
     });
 }
 
@@ -136,13 +137,13 @@ class ProposalList extends Component {
               {this.getItems(page,proposals).map(n => {
               return (
                 <TableRow style={rowt}>
-                  <CustomTableCell component="th" scope="row">
+                  <CustomTableCell component="th" scope="row" style={{width:"5%"}}>
                   <FormGroup row>
         <FormControlLabel
           control={
             <Checkbox
               checked={this.state.checkedA ? this.state.checkedA : this.state.selectAll}
-              onChange={this.handleChange(n.id)}
+              onChange={this.handleChange}
               value={n.id}
               style={{ color: "#FE3D6C" }}
             />
@@ -151,9 +152,9 @@ class ProposalList extends Component {
         />
         </FormGroup>                  
                   </CustomTableCell>
-                  <CustomTableCell>
-                     <div className="enquiry-details-box">
-                      <div className="details">
+                  <CustomTableCell style={{width:"18%"}}>
+                     <div className="proposalEngineer">
+                      <div className="details proposalImg">
                         <div><span className="value"><ImageText profilename={n.name}/></span></div>
                         <div><span className="value">
                         <RaisedButton
@@ -164,25 +165,29 @@ class ProposalList extends Component {
                           labelStyle={{fontWeight: "600"}}
                           style={{ borderRadius: 25, border: '2px solid #FE3D6C'}}
                         /></span></div>
-                        <div><span className="value" style={{color:"#6AC259"}}><img src={circle} width="14px" height="14px" /> {'Recommend'}</span></div>
+                        <div style={{padding: "15px 0px 0"}}><span className="value" style={{color:"#6AC259",fontSize:"16px"}}><img src={circle} width="14px" height="14px" /> {'Recommend'}</span></div>
                           
                        </div>
                     </div> 
                 </CustomTableCell>
                   <CustomTableCell colSpan="3">
-                  <div className="enquiry-details-box">
+                  <div className="proposalEngineer">
                       <div className="details">
-                         <div><span className="consultant">{n.consultant}</span></div>
+                         <div><span className="consultant" style={{fontSize:"16px"}}>{n.consultant}</span></div>
                          <div><span className="value">{n.engineer}</span></div>
                          <div><span className="value">
+                         <div className="ratingIns">
                          <Rating
                           value={n.rating}
                           max={5}
+                          itemStyle={{ width: 12,height: 12,padding: "0 20px 0 0"}}
+                          itemIconStyle={{height:15,width:15}}
                           onChange={(value) => console.log(`Rated with value ${value}`)}
-                        /> ({n.rating})
+                        /> <span style={{fontSize:"10px"}}>({n.rating})</span>
+                        </div>
                          </span></div>
-                         <div><span className="FilterHead"><img src={map} width="14px" height="14px" />{n.city} {n.country}</span></div>
-                         <div><span className="ship">{'Ship Type: '}</span><span className="consultant" style={{border: "1px solid #0D99EF"}}>{n.type}</span>   <span className="consultant" style={{border: "1px solid #0D99EF"}}>{n.type}</span></div> 
+                         <div><span className="FilterHead"><img src={map} width="14px" height="14px" style={{ verticalAlign: "textTop",padding: "0 5px 0 0"}}/>{n.city} {n.country}</span></div>
+                         <div><span className="ship">{'Ship Type: '}</span><span className="consultant arrowInspector">{n.type}</span>   <span className="consultant arrowInspector">{n.type}</span></div> 
                          <div><span className="ship">{'Areas Covered : '}</span><span className="value">{n.areas.join(',')}</span></div>  
                          <div><span className="ship">{'Experience : '}</span><span className="value">{n.experience} Years</span></div>  
                       
@@ -190,43 +195,26 @@ class ProposalList extends Component {
                     </div> 
                   </CustomTableCell>
                  
-                  <CustomTableCell> 
-                    <div className="enquiry-details-box">
+                  <CustomTableCell style={{width:"24%"}}> 
+                    <div className="proposalEngineer">
                       <div className="details">
-                        <div><span className="amount">$ {n.amount}</span></div>
+                        <div style={{lineHeight: "21px"}}><span className="amount">$ {n.amount}</span></div>
                         <div><Breakdown/></div>
                         <div><span className="value">{'Message :'}<br/>
                         <ReadMoreReact text={n.message}
-                              min={5}
-                              ideal={20}
-                              max={100} />
+                              min={6}
+                              ideal={7}
+                              max={100} 
+                              />
                         </span></div>
                         <div><span className="consultant">{n.status}</span> </div>
-                        <div><span className="FilterHead"><img src={clock} width="14px" height="14px" /> { formatDate(n.from)} -to {formatDate(n.to)}</span></div>
+                        <div><span className="FilterHead"><img src={clock} width="14px" height="14px" style={{verticalAlign: "sub",margin:"0 6px 0 0"}}/> { formatDate(n.from)} -to {formatDate(n.to)}</span></div>
                       </div>
                     </div> 
                   </CustomTableCell>
                 </TableRow>
               );
-            })}
-            {pageCount > 1 &&
-              <div className="pagination-outer-div">
-                <ReactPaginate
-                  initialPage={page - 1}
-                  previousLabel={'<<'}
-                  nextLabel={'>>'}
-                  breakLabel={<span>...</span>}
-                  breakClassName="break-me"
-                  pageCount={pageCount}
-                  marginPagesDisplayed={1}
-                  pageRangeDisplayed={2}
-                  onPageChange={(page) => this.setState({ page: page.selected + 1 })}
-                  containerClassName="paginationproposal"
-                  subContainerClassName="pages paginationproposal"
-                  activeClassName="paginationproposal active"
-                />
-              </div>
-            }
+            })}          
           </TableBody>
         </Table>
     

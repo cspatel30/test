@@ -3,6 +3,7 @@ import ProposalList from './ProposalList.jsx';
 import RaisedButton from 'material-ui/RaisedButton';
 import round from '../../images/round-error-symbol.svg';
 import InspectionCard from './InspectionCard.jsx';
+import ReactPaginate from "react-paginate";
 
 export default class ProposalContent extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class ProposalContent extends Component {
         const {formatDate} = this.props;      
         const pageCount = Math.ceil(4 / 2);
         return (
-            <div className="InnerContainer">
+            <div className="ProposalContainer">
             <div className="raisedEnq">
              <RaisedButton
               label="GO TO ENQUIRIES"
@@ -34,7 +35,25 @@ export default class ProposalContent extends Component {
             </div> 
              <div>
              <ProposalList page={this.state.page} formatDate={formatDate} pageCount={pageCount}/>  
-             </div>             
+             </div>  
+             {pageCount > 1 &&
+              <div className="pagination-div">
+                <ReactPaginate
+                  initialPage={this.state.page - 1}
+                  previousLabel={'<<'}
+                  nextLabel={'>>'}
+                  breakLabel={<span>...</span>}
+                  breakClassName="break-me"
+                  pageCount={pageCount}
+                  marginPagesDisplayed={1}
+                  pageRangeDisplayed={2}
+                  onPageChange={(page) => this.setState({ page: page.selected + 1 })}
+                  containerClassName="paginationproposal"
+                  subContainerClassName="pages paginationproposal"
+                  activeClassName="paginationproposal active"
+                />
+              </div>
+            }          
           </div>      
           );
       }

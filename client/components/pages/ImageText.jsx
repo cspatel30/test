@@ -7,8 +7,8 @@ export default class ImageText extends Component {
         const {profilename}=this.props;
         return (            
                 <div>
-                    <img src={profile} width="80px" height="80px" />                    
-                    <span className="ship">{profilename}</span>
+                    <img src={profile} width="80px" height="80px" style={{borderRadius: "50%"}} />                    
+                    <div className="Imagetext">{profilename}</div>
                 </div>                  
         );
     }
