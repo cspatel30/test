@@ -1,7 +1,7 @@
 // import 'regenerator-runtime/runtime';
 
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import DateTime from 'react-datetime';
@@ -26,7 +26,9 @@ export default class QuoteEnquiryPage extends Component {
         startTime: null,
         endTime: null,
         email: "",
-        company: ""
+        company: "",
+        phone: "",
+        fullname: '',
       },
       quoteFormError: {
         inspectionType: "",
@@ -37,7 +39,9 @@ export default class QuoteEnquiryPage extends Component {
         startTime: "",
         endTime: "",
         email: "",
-        company: ""
+        company: "",
+        phone: "",
+        fullname: '',
       },
       createdEnquiry: false,
       enquiryErrorMsg: ""
@@ -60,6 +64,8 @@ export default class QuoteEnquiryPage extends Component {
       this.setState((state) => { 
         state.quoteForm.email = props.userProfile.email;
         state.quoteForm.company = props.userProfile.company;
+        state.quoteForm.fullname = props.userProfile.name;
+        state.quoteForm.phone = props.userProfile.phone;
         state.userId = props.userProfile.id;
       });
     }
@@ -88,7 +94,7 @@ export default class QuoteEnquiryPage extends Component {
 
     var error = false;
 
-    var quoteFormError = {  inspectionType: "", vesselName: "", imo: "", portName: "", startTime: "", endTime: "", email: "", company: "" };
+    var quoteFormError = {  inspectionType: "", vesselName: "", imo: "", portName: "", startTime: "", endTime: "", email: "", company: "", fullname: "", phone: "" };
 
     var enquiry = {};
 
@@ -133,7 +139,19 @@ export default class QuoteEnquiryPage extends Component {
         error = true;
         quoteFormError.company = "This field is mandatory";
       } else 
-        enquiry['company'] = this.state.quoteForm.company;  
+        enquiry['company'] = this.state.quoteForm.company;
+        
+      if(this.state.quoteForm.fullname == "") {
+        error = true;
+        quoteFormError.fullname = "This field is mandatory";
+      } else 
+        enquiry['fullname'] = this.state.quoteForm.fullname;
+      
+      if(this.state.quoteForm.phone == "") {
+        error = true;
+        quoteFormError.phone = "This field is mandatory";
+      } else 
+        enquiry['phone'] = this.state.quoteForm.phone;
     } else {
 
       enquiry['userId'] = this.state.userId;
@@ -198,7 +216,15 @@ export default class QuoteEnquiryPage extends Component {
       return (
               <div style={{border : '1px solid #F39841', width: '90%', padding: 10, backgroundColor: '#e8ebef'}}>
               <h2>Your Account Details</h2>
-              <p>We will create an account to manage your quotations</p>
+              <p>We will create your account to manage your quotation. Already have Shipinspectors Account?, <Link to="/login/">LOGIN here.</Link></p>
+              <div className="leftHalf">
+                <div className="label">Full Name</div>
+                <div className="field">  
+                  <input className="inputField" type="text" placeholder="fullname" name="fullname" value={this.state.quoteForm.fullname} onChange={this.handleInputChange}
+                  disabled={this.state.userId} />
+                  <div className="errorField">{this.state.quoteFormError.fullname}</div>
+                </div>
+              </div>
               <div className="leftHalf">
                 <div className="label">Email</div>
                 <div className="field">  
@@ -210,8 +236,17 @@ export default class QuoteEnquiryPage extends Component {
               <div className="leftHalf">
                 <div className="label">Company</div>
                 <div className="field">  
-                  <input className="inputField" type="text" placeholder="company" name="company" value={this.state.quoteForm.company} onChange={this.handleInputChange}/>
+                  <input className="inputField" type="text" placeholder="company" name="company" value={this.state.quoteForm.company} onChange={this.handleInputChange}
+                  disabled={this.state.userId} />
                   <div className="errorField">{this.state.quoteFormError.company}</div>
+                </div>
+              </div>
+              <div className="leftHalf">
+                <div className="label">Phone Number</div>
+                <div className="field">  
+                  <input className="inputField" type="text" placeholder="phone number" name="phone" value={this.state.quoteForm.phone} onChange={this.handleInputChange}
+                  disabled={this.state.userId} />
+                  <div className="errorField">{this.state.quoteFormError.phone}</div>
                 </div>
               </div>
               <div className="clear"></div>
@@ -235,9 +270,9 @@ export default class QuoteEnquiryPage extends Component {
       return (
           <div className="page">
           	<h1>Create Your Enquiry</h1>
-              <form className="contact-form" onSubmit={this.handleSubmit} action="/" method="post">
+              <form className="contact-form " onSubmit={this.handleSubmit} action="/" method="post">
                 <div className="error">{this.state.enquiryErrorMsg}</div>
-                <div className="leftHalf">  
+                <div className="leftHalf pr-3">  
                   <div className="label">Inspection Type</div>
                   <div className="field"> 
                     <VirtualizedSelect
@@ -270,7 +305,7 @@ export default class QuoteEnquiryPage extends Component {
                   </div>
                 </div>
 
-                <div className="leftHalf"> 
+                <div className="leftHalf pr-3"> 
                   <div className="label">Port Name</div>
                   <div className="field">
                     <VirtualizedSelect
@@ -299,8 +334,8 @@ export default class QuoteEnquiryPage extends Component {
                 
                 {this.renderUserAccountInformation()}
 
-                <div className="btn">
-                  <button>Create Instant Quote</button>
+                <div className="mt-2">
+                  <button style={{ backgroundColor: '#1475af', border: 'none', borderRadius: '3px', color: '#fff' }}>Create Enquiry</button>
                 </div>
                 <div className="clear"></div>
               </form>
@@ -309,3 +344,4 @@ export default class QuoteEnquiryPage extends Component {
     }
   }
 }
+

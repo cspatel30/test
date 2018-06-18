@@ -16,7 +16,7 @@ import {green500, red500, blue500, yellow600, orange600, fullWhite} from 'materi
 
 import AdminEnquiryContainer from '../containers/AdminEnquiryContainer.js';
 import AdminAssignInspectorContainer from '../containers/AdminAssignInspectorContainer.js';
-
+import AdminOrderContainer from '../containers/AdminOrderContainer.js';
 const styles = {
   listItem: {
     selected: {
@@ -127,6 +127,7 @@ export default class AdminPage extends Component {
         return (<div>
             {this.renderSideMenu()}
             <div className="admin-rightside-content">
+              <Route exact path={`${this.props.match.url}/orders`} component={AdminOrderContainer}/>
               <Route exact path={`${this.props.match.url}/enquiries`} component={AdminEnquiryContainer}/>
               <Route exact path={`${this.props.match.url}/enquiries/enquiry/:enquiryId/inspectors`} component={AdminAssignInspectorContainer}/>
             </div>

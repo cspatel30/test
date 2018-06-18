@@ -1,5 +1,5 @@
 import { LOCATION_CHANGE } from 'react-router-redux';
-
+import _ from 'lodash';
 import { ACTION_IN_PROGRESS, SESSION_EXPIRED } from '../actions/common';
 
 import { LOGIN_SUCCESS, LOGIN_FAILURE, VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAILURE, 
@@ -51,19 +51,29 @@ export default function(state = INITIAL_STATE, action) {
     case INIT_APP_SUCCESS:
       return { ...state, ports: action.payload.ports, countries: action.payload.countries, 
               inspectionTypes: action.payload.inspectionTypes, vesselTypes: action.payload.vesselTypes, 
-              inspectorPositions : action.payload.inspectorPositions, inspectorQualifications: action.payload.inspectorQualifications,
-              regionCodes: action.payload.regionCodes};    
+              inspectorPositions: action.payload.inspectorPositions, inspectorQualifications: action.payload.inspectorQualifications,
+              inspectorTitles: action.payload.inspectorTitles, inspectorSkills: action.payload.inspectorSkills,
+              region: action.payload.region, inspectorCompany: action.payload.inspectorCompany,
+              inspectorLevel:action.payload.inspectorLevel, regionCodes: action.payload.regionCodes, bool: false};    
 
     case INIT_APP_FAILURE:
       return { ...state, ports: [], error: action.payload};    
 
     case LOGIN_SUCCESS:
       return { ...state, userToken: action.payload.userToken, userProfile: action.payload.userProfile, logout: false, loading: false}; 
-
+       
     case LOGIN_FAILURE:
       error = action.payload.message;
       return { ...state, userToken: null, error: action.payload, loading: false}; 
-
+      
+    case 'FORGOT_PASSWORD_SUCCESS':
+      return { ...state, fgpwdMsg: action.payload.status.message, loading: false};
+    
+    case 'FORGOT_PASSWORD_FAILURE':
+      error = action.payload;
+      console.log('forgot pass error....', error);
+      return { ...state, fgpwdMsg: error, loading: false};
+    
     case REGISTER_SUCCESS:
       return { ...state, loading: false, signUpSuccess: true}; 
 
@@ -164,8 +174,24 @@ export default function(state = INITIAL_STATE, action) {
     case UPDATE_INSPECTOR_PROFILE_FAILURE:
       return {...state, loading: false, error: action.payload};
     
+    case 'DELETE_EDUCATION_ITEM_SUCCESS':
+      const newArr = state.inspectorProfile.education.filter(x => x.id != action.payload.id);
+      const obj = {...state.inspectorProfile, education: newArr };
+      return {...state, loading: false, deletedItemFromEdu: action.payload, inspectorProfile: obj };
+
+    case 'DELETE_EDUCATION_ITEM_FAILURE':
+      return {...state, loading: false, error: action.payload};
+    
+    case 'DELETE_EMPLOYMENT_ITEM_SUCCESS':
+      const newArr1 = state.inspectorProfile.employment.filter(x => x.id != action.payload.id);
+      const obj1 = {...state.inspectorProfile, employment: newArr1 };
+      return {...state, loading: false, deletedItemFromEdu: action.payload, inspectorProfile: obj1 };
+
+    case 'DELETE_EMPLOYMENT_ITEM_FAILURE':
+      return {...state, loading: false, error: action.payload};
+    
     case UPDATE_INSPECTOR_PROFILE:
-      return {...state, profileUpdateSuccess: false, inspectorProfile: null}
+      return {...state, profileUpdateSuccess: false, inspectorProfile: null};
 
     case CONTACT_US_EMAIL_SUCCESS:
       return {...state, contactUsEmailSuccess: true, loading: false, error: null};
@@ -201,7 +227,19 @@ export default function(state = INITIAL_STATE, action) {
       return {...state, loading: false, orders: action.payload};
 
     case GET_ADMIN_ORDERS_FAILURE:
-      return {...state, loading: false, error: action.payload};      
+      return {...state, loading: false, error: action.payload};
+    
+    case 'SUBMIT_FEEDBACK_SUCCESS':
+      return {...state, loading: false, feedback: action.payload};
+
+    case 'SUBMIT_FEEDBACK_FAILURE':
+      return {...state, loading: false, error: action.payload};
+    
+    case 'GET_FEEDBACK_BY_ORDERID_SUCCESS':
+      return {...state, loading: false, feedbackbyOrderId: action.payload.feedback};
+
+    case 'GET_FEEDBACK_BY_ORDERID_FAILURE':
+      return {...state, loading: false, error: action.payload};
 
   	default:
     	return state;

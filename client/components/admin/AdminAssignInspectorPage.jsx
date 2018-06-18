@@ -85,7 +85,7 @@ const columns = [{
 function profileViewButtonRenderer(cell, row) {
   return (<a href={"/inspector/profile/"+row.userId} target="_blank">
     <div className="btn">
-      <button>View Profile</button>
+      <button onClick={(e) => e.stopPropagation()}>View Profile</button>
     </div>
     </a>
   );
@@ -110,6 +110,7 @@ export default class AdminAssignInspectorPage extends Component {
   }
 
   onRowSelect(row, isSelect, rowIndex) { 
+    console.log('...row', row, isSelect, rowIndex);
     if(isSelect) {
       this.setState((state) => { state.selectedRows[row.userId] = true;});
     } else {
@@ -133,7 +134,7 @@ export default class AdminAssignInspectorPage extends Component {
   }
 
   render() {
-
+    const { selectedRows } = this.state;
     var selectedUserIds = [];
     if(this.props.currentEnquiry && this.props.currentEnquiry.inspectors && this.props.currentEnquiry.inspectors.length > 0) {
       this.props.currentEnquiry.inspectors.map((mapping) => {selectedUserIds.push(mapping.inspector_user_id)});
@@ -142,7 +143,8 @@ export default class AdminAssignInspectorPage extends Component {
 
     const selectRow = 
       { mode: 'checkbox', clickToSelect: true, bgColor: '#f7f7f7', 
-        onSelect: this.onRowSelect
+        onSelect: this.onRowSelect,
+        selected: Object.keys(selectedRows).map(x => parseInt(x)),
       };
 
     if(this.props.inspectorAssignedSuccess) {
@@ -155,7 +157,7 @@ export default class AdminAssignInspectorPage extends Component {
             {this.renderErrorMessage()}
             <div style={{marginTop: 10, marginBottom: 10, textAlign: 'right'}}><button onClick={this.assignInspectors}>Assign Inspectors</button></div>
             <BootstrapTable keyField='userId' data={ this.props.enquiryInspectorMatches } columns={ columns } striped condensed bordered={false}
-            noDataIndication="No matches found" selectRow={selectRow} store={ {selected : selectedUserIds} }/>
+            noDataIndication="No matches found" selectRow={selectRow} store={ {selected : selectedUserIds } }/>
           </div>);
       } else {
         return(<div>

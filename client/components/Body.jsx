@@ -4,8 +4,10 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
 
 import Footer from './Footer.jsx';
-
+import HomeHeader from './homePage/Header.js';
+import HomeFooter from './homePage/Footer.js';
 import HomePage from './pages/HomePage.jsx';
+import HomePageNew from './homePage/HomePageNew';
 import AboutPage from './pages/AboutPage.jsx';
 import PolicyPage from './pages/PolicyPage.jsx';
 import TermsPage from './pages/TermsPage.jsx';
@@ -31,14 +33,30 @@ const ScrollToTop = () => {
   return null;
 };
 
+const LoginPage = () => (
+  <div>
+  <HomeHeader />
+  <LoginContainer />
+  <HomeFooter />
+  </div> 
+);
+const RegisterPage = () => (
+  <div>
+  <HomeHeader />
+  <RegisterContainer />
+  <HomeFooter />
+  </div> 
+);
+
 export default class Body extends Component {
 
   render() {
 	return (
           <div className="main">
             <div className="content">
-              <Route component={ScrollToTop}/>
-              <Route exact path="/" component={HomePage}/>
+              {/* <Route component={ScrollToTop}/> */}
+              {/* <Route exact path="/" component={HomePage}/> */}
+              <Route exact path="/" component={HomePageNew}/>
               <Route exact path="/inspectors/" component={InspectorsContainer} />
               <Route exact path="/inspector/profile/:id" component={InspectorPublicProfileContainer} />
               <Route exact path="/enquiry/" component={QuoteEnquiryContainer} />
@@ -46,8 +64,8 @@ export default class Body extends Component {
               <Route exact path="/contact/" component={ContactUsContainer} />
               <Route exact path="/news/" component={NotFoundPage} />
               <Route exact path="/reports/" component={SampleReportsPage} />
-              <Route exact path="/login/" component={LoginContainer} />
-              <Route exact path="/register/" component={RegisterContainer} />
+              <Route exact path="/login/" component={LoginPage} />
+              <Route exact path="/register/" component={RegisterPage} />
               <Route exact path="/terms/" component={TermsPage} />
               <Route exact path="/policy/" component={PolicyPage} />
               <Route exact path="/my/profile/" component={InspectorProfileContainer} />

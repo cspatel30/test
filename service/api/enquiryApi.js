@@ -41,19 +41,19 @@ exports.submitEnquiry = async (req, resp) => {
       if(rows[0]['type'] == 'customer') {
         userProfile = rows[0];
         newUserAccount = false;
-      } else 
+      } else
         throw new Error("User already exists with type - "+ rows[0]['type']);
     } else {
-      var signupResult = await userDAO.signup({name: "", email: req.body.email, password: '', type: 'customer', company: req.body.company});
-      userProfile = {id: signupResult.insertId, name: req.body.email, email: req.body.email, company: req.body.company};
+      var signupResult = await userDAO.signup({name: req.body.fullname, email: req.body.email, password: 'User@123', type: 'customer', company: req.body.company});
+      userProfile = {id: signupResult.insertId, name: req.body.fullname, email: req.body.email, company: req.body.company};
 
       var verifyEmailRequestId = encryptionUtil.getJWT({ userId: userProfile.id, email: userProfile.email}, '7d');
-      awsApi.sendEmail('dummySignup.jade', 
-        {to: userProfile.email, subject: 'Welcome to ShipInspector', 
+      awsApi.sendEmail('dummySignup.jade',
+        {to: userProfile.email, subject: 'Welcome to ShipInspector',
         name: userProfile.email, requestToken: verifyEmailRequestId, server: appConfig.serverHost});
 
     }
-  }  
+  }
 
   if(userProfile && userProfile.id > 0) {
     var payload = req.body;
@@ -62,12 +62,12 @@ exports.submitEnquiry = async (req, resp) => {
     payload['userId'] = userProfile.id;
 
     var insertResult = await enquiryDAO.create_enquiry(payload);
-    
+
     var emailSubject = 'Your ShipInspector Enquiry Confirmation ('+ insertResult.insertId +')';
     var enquiryRows = await enquiryDAO.find_by_id(insertResult.insertId);
     var enquiries = await enquiryDAO.transform_enquiry(enquiryRows);
-        
-    awsApi.sendEmail('customer-enquiry-confirmation.jade', {subject: emailSubject, to: userProfile.email, enquiry: enquiries[0], 
+
+    awsApi.sendEmail('customer-enquiry-confirmation.jade', {subject: emailSubject, to: userProfile.email, enquiry: enquiries[0],
                 user: userProfile, server: appConfig.serverHost});
 
     resp.json({ status: {success: true}, enquiries: [{id: insertResult.insertId}], newUserAccount: newUserAccount });
@@ -113,14 +113,14 @@ exports.getUserEnquiries = async (req, resp) => {
       for(var i=0; i< enquiryInspectorMappings.length; i++) {
         var mapping = enquiryInspectorMappings[i];
         var mappings = enquiryIdToInspectorsMap[mapping.enquiry_id] ? enquiryIdToInspectorsMap[mapping.enquiry_id] : [];
-        
+
         var transformedInspectorData = await userDAO.transformInspectorProfile([mapping]);
         transformedInspectorData[0]['enquiry_id'] = mapping.enquiry_id;
         mappings.push(transformedInspectorData[0]);
-        
+
         enquiryIdToInspectorsMap[mapping.enquiry_id] = mappings;
       }
-      
+
       enquiries.map((enquiry) => { enquiry['inspectors'] = enquiryIdToInspectorsMap[enquiry.id] });
     }
   } else {
@@ -134,7 +134,7 @@ exports.getUserEnquiries = async (req, resp) => {
 exports.updateCustomerEnquiry =  async(req, resp) => {
   var enquiryId = parseInt(req.params.id);
   console.log("Update Enqiry for id = " + enquiryId + " with payload " + req.body);
-  
+
   var result = await enquiryDAO.update_enquiry_status(enquiryId, 'CANCELLED');
   var enquiries = await enquiryDAO.fetch_customer_enquiries(resp.locals.userProfile.id);
   resp.json({ status: {success: true}, enquiries: enquiries });
@@ -146,7 +146,7 @@ exports.updateEnquiry =  async(req, resp) => {
   console.log("Update Quote for enquiry = ", enquiryId);
   var success = await enquiryDAO.update_enquiry_quote(enquiryId, req.body);
   resp.json({ status: {success: true}, enquiry: {id: enquiryId, customerQuote: req.body.customerQuote, inspectorQuote: req.body.inspectorQuote} });
-  
+
 }
 
 exports.searchInspectorsForEnquiry = async (req, resp) => {
@@ -158,7 +158,7 @@ exports.searchInspectorsForEnquiry = async (req, resp) => {
     var ports = await portDAO.find_by_id(enquiries[0].port_id);
     var inspectorRows = await userDAO.search_inspectors(enquiries[0].inspection_type, ports[0].region_code);
     var inspectors =  await userDAO.transformInspectorProfile(inspectorRows);
-    
+
     resp.json({ status: {success: true}, enquiry: enquiries[0], inspectors: inspectors});
   } else {
     throw new Error("Invalid enquiry id");
@@ -181,9 +181,9 @@ exports.updateEnquiryMapping = async (req, resp) => {
   console.log("Update Status for enquiry mapping ", enquiryId, inspectorUserId);
 
   var result = await enquiryDAO.update_enquiry_mapping_status(enquiryId, inspectorUserId, req.body);
-  
+
   var rows = await enquiryDAO.fetch_inspector_enquiries(inspectorUserId);
   var enquiries = await enquiryDAO.transform_enquiry(rows);
-  
+
   resp.json({ status: {success: true}, enquiries: enquiries });
 }

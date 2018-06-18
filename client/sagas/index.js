@@ -7,6 +7,7 @@ function* nevtopSaga() {
 	yield takeLatest('INIT_APP', performAction);
 	yield takeLatest('REGISTER', performAction);
 	yield takeLatest('LOGIN', performAction);
+	yield takeLatest('FORGOT_PASSWORD', performAction);
 	yield takeLatest('VERIFY_TOKEN', performAction);
 	yield takeLatest('LOGOUT', performAction);
 	yield takeLatest('CREATE_ENQUIRY', performAction);
@@ -22,12 +23,17 @@ function* nevtopSaga() {
 	yield takeLatest('ASSIGN_INSPECTORS_FOR_ENQUIRY', performAction);
 	yield takeLatest('ACCEPT_REJECT_ENQUIRY_QUOTE', performAction);
 	yield takeLatest('UPDATE_INSPECTOR_PROFILE', performAction);
+	yield takeLatest('DELETE_EDUCATION_ITEM', performAction);
+	yield takeLatest('DELETE_EMPLOYMENT_ITEM', performAction);
 	yield takeLatest('CONTACT_US_EMAIL', performAction);
 	yield takeLatest('SETUP_ACCOUNT', performAction);
 	yield takeLatest('VERIFY_EMAIL', performAction);
 	yield takeLatest('CREATE_ORDER', performAction);
 	yield takeLatest('GET_USER_ORDERS', performAction);
 	yield takeLatest('GET_ADMIN_ORDERS', performAction);
+	yield takeLatest('SUBMIT_FEEDBACK', performAction);
+	yield takeLatest('GET_FEEDBACK_BY_ORDERID', performAction);
+	
 	
 }
 

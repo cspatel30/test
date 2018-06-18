@@ -1,6 +1,7 @@
 // import 'regenerator-runtime/runtime';
 
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -64,6 +65,7 @@ export default class RegisterPage extends Component {
         password: "",
         confirmpassword: "",
         company: "",
+        phone: "",
         position: "",
         qualification: "",
         seaport: "",
@@ -119,6 +121,14 @@ export default class RegisterPage extends Component {
     }); 
   }
 
+  validate() {
+    if (!this.state.registerForm.email.includes("@")) {
+      this.setState((state) => state.registerFormError.email = 'Invalid Email');
+    } else {
+      this.setState((state) => state.registerFormError.email = '');
+    }
+  }
+
   handleInputChange (event) {
     event.persist();
     this.setState((state) => { state.registerForm[event.target.name] = event.target.value });
@@ -142,7 +152,7 @@ export default class RegisterPage extends Component {
     console.log(this.state);
 
     var registerFormError = {  name: "", email: "", password: "", confirmpassword: "", company: "",
-        position: "", qualification: "", location: {seaport: "", city: "", country: ""} };
+        position: "", phone: "", qualification: "", location: {seaport: "", city: "", country: ""} };
 
     if(this.state.registerForm.name == "") {
       error = true;
@@ -173,6 +183,11 @@ export default class RegisterPage extends Component {
       this.state.registerForm.password !== this.state.registerForm.confirmpassword) {
       error = true;
       registerFormError.confirmpassword = "Both passwords do not match";
+    }
+
+    if(this.state.registerForm.phone == "") {
+      registerFormError.phone = "This field is mandatory";
+      error = true;
     }
 
     if(this.state.userType == 'inspector') {
@@ -232,7 +247,7 @@ export default class RegisterPage extends Component {
   renderSelectBox = (datasource, placeholder, keyField='id', textField='name') => {
       var options = [];
       var prefix = "";
-
+      datasource = _.sortBy(datasource, ['name']);    
       options.push(<option key="" value="">{"Select " + placeholder }</option>);
       datasource.map( (ds) => {
         options.push(<option key={ds[keyField]} value={ds[keyField]}>{prefix + ds[textField]}</option>);
@@ -307,7 +322,12 @@ export default class RegisterPage extends Component {
 
   renderActionMessage = () =>  {
     if(this.state.signUpSuccess) {
-      return (<div className="success">You account has been created successfully!! Please login to your email account to verify your email. You will be able to login post email verification.</div>)
+      return (
+        <div className="success d-flex flex-column">
+          <span className="my-1">You account has been created successfully!!</span>
+          <span className="my-1">Please login to your email account to verify your email. You will be able to login post email verification.</span>
+        </div>
+      )
     } else if(this.state.signUpErrorMsg && this.state.signUpErrorMsg.trim() !== "") {
       return (<div className="error">{this.state.signUpErrorMsg}</div>)
     } else {
@@ -321,165 +341,157 @@ export default class RegisterPage extends Component {
       
     if(!this.state.signUpSuccess) {
       return (
-        <div className="login-page">
-          <form className="contact-form"  onSubmit={this.handleSubmit} action="/" method="post">
-            <Tabs className="tabs" tabItemContainerStyle={styles.tabs}>
-              
-              <Tab label="Customer" buttonStyle={this.getTabButtonClassName('customer')} className="tab" data-person="customer" onActive={this.handleActive}>
-                <div className="label">Full Name</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="name" name="name" value={this.state.registerForm.name} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.name}</div>
-                </div>  
-                <div className="label">Email</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="email" name="email" value={this.state.registerForm.email} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.email}</div>
-                </div> 
-                <div className="label">Password</div>
-                <div className="field">  
-                  <input className="inputField" type="password" placeholder="password" name="password" value={this.state.registerForm.password} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.password}</div>
-                </div>
-                <div className="label">Re-Enter Password</div>
-                <div className="field">  
-                  <input className="inputField" type="password" placeholder="confirmpassword" name="confirmpassword" value={this.state.registerForm.confirmpassword} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.confirmpassword}</div>
-                </div> 
-                <div className="label">Company</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="company name" name="company" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.company}</div>
-                </div> 
-                <div className="label">Phone Number</div>
-                <div className="field">
-                  <div className="phone-country">
-                    <VirtualizedSelect labelKey='phoneCode' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
-                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
-                    optionRenderer={this.phoneOptionRenderer}  clearable={false}/>
+        <div className="section bg-gray">
+          <div className="container">
+            <div className="row mt-5">
+              <div className="col-md-12 SignUpFormSec p-5 position-relative">
+                {/* Material form login */}
+                <form className="mb-5 pb-5">
+                  <p className="h4 text-blue mb-4 SignUpTitleMain pl-3">Register on ShipInspectors.com</p>
+                  <p className="h4 text-blue mb-4 loginTitle pl-3">Select Client or Inspector</p>
+                  <div className="position-relative mDivider">
+                    <div className="divider" />
+                    <div className="triangle-down" />
                   </div>
-                  <div className="phone-value">
-                    <input type="text" placeholder="phone" name="phone" value={this.state.registerForm.phone} onChange={this.handleInputChange}/>
+                  <div className="d-flex loginType pt-3">
+                    <div>
+                      <input className="with-gap" type="radio" name="gender" id="client" defaultChecked />
+                      <label htmlFor="client">Client</label>
+                    </div>
+                    <div className="pl-4">
+                      <input className="with-gap" type="radio" name="gender" id="inspector" />
+                      <label htmlFor="inspector">Inspector</label>
+                    </div>
                   </div>
-                  <div className="clear"></div>
-                </div>  
-
-                <div className="label">Office Address</div>
-                <div className="field">  
-                  <input className="inputField" type="building" placeholder="building" name="building" value={this.state.registerForm.building} onChange={this.handleInputChange}/>
-                  
-                </div>
-                <div className="field">  
-                  <input className="inputField" type="street" placeholder="street" name="street" value={this.state.registerForm.street} onChange={this.handleInputChange}/>
-                  
-                </div>
-                <div className="field">  
-                  <input className="inputField" type="city" placeholder="city" name="city" value={this.state.registerForm.city} onChange={this.handleInputChange}/>
-                  
-                </div>
-                <div className="field">  
-                  <VirtualizedSelect labelKey='name' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
-                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
-                    optionRenderer={this.countryOptionRenderer}  clearable={false}/>
-                </div>
-              </Tab>
-
-              <Tab label="Inspector" buttonStyle={this.getTabButtonClassName('inspector')} className="tab" data-person="inspector" onActive={this.handleActive}>
-                <div className="label">Full Name</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="name" name="name" value={this.state.registerForm.name} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.name}</div>
-                </div>  
-                <div className="label">Email</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="email" name="email" value={this.state.registerForm.email} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.email}</div>
-                </div>  
-                <div className="label">Password</div>
-                <div className="field">  
-                  <input className="inputField" type="password" placeholder="password" name="password" value={this.state.registerForm.password} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.password}</div>
-                </div>
-                <div className="label">Re-Enter Password</div>
-                <div className="field">  
-                  <input className="inputField" type="password" placeholder="re-enter password" name="confirmpassword" value={this.state.registerForm.confirmpassword} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.confirmpassword}</div>
-                </div>
-                <div className="label">Company</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="company name" name="company" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.company}</div>
-                </div>
-                
-
-                <div className="label">Phone Number</div>
-                <div className="field"> 
-                  <div className="phone-country">
-                    <VirtualizedSelect labelKey='phoneCode' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
-                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
-                    optionRenderer={this.phoneOptionRenderer}  clearable={false}/>
+                  <div className="d-flex mb-5">
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <img className="prefix grey-text" src="/public/img/user.png" alt />
+                        <input id="firstName" type="tel" />
+                        <label htmlFor="firstName">First Name
+                          <span className="required">*</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <img className="prefix grey-text" src="/public/img/user.png" alt />
+                        <input id="lastName" type="tel" />
+                        <label htmlFor="lastName">Last Name
+                          <span className="required">*</span>
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  <div className="phone-value">
-                    <input type="text" placeholder="phone" name="phone" value={this.state.registerForm.phone} onChange={this.handleInputChange}/>
+                  <div className="d-flex mb-5">
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <img className="prefix grey-text" src="/public/img/at.png" alt />
+                        <input id="email" type="tel" />
+                        <label htmlFor="email">Email Address
+                          <span className="required">*</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <img className="prefix grey-text" src="/public/img/key.png" alt />
+                        <input id="password" type="tel" />
+                        <label htmlFor="password">Password
+                          <span className="required">*</span>
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  <div className="errorField">{this.state.registerFormError.phone}</div>
-                  <div className="clear"></div>
-                </div>  
-                <div className="label">Position</div>
-                <div className="field">  
-                  <div className="selectField"> 
-                    <select name="position" value={this.state.registerForm.position} onChange={this.handleInputChange}>
-                      {this.renderSelectBox(this.props.inspectorPositions, 'Position')}
-                    </select>
+                  <div className="d-flex col-md-6">
+                    <div className="col-md-6 pl-0">
+                      <select>
+                        <option value disabled selected required>Code</option>
+                        <option value={1}>Option 1</option>
+                        <option value={2}>Option 2</option>
+                        <option value={3}>Option 3</option>
+                      </select>
+                    </div>
+                    <div className="col-md-6 pr-0">
+                      <div className="input-field">
+                        <img className="prefix grey-text" src="/public/img/phone.png" alt />
+                        <input id="phone" type="tel" />
+                        <label htmlFor="phone">Phone
+                          <span className="required">*</span>
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  <div className="errorField">{this.state.registerFormError.position}</div>
-                </div>  
-                <div className="label">Qualification</div>
-                <div className="field">  
-                  <div className="selectField">                        
-                    <select name="qualification" value={this.state.registerForm.qualification} onChange={this.handleInputChange}>
-                      {this.renderSelectBox(this.props.inspectorQualifications, 'Qualification')}
-                    </select>
+                  <p className="officeAddress my-3 col-md-12 text-gray">
+                    Office Address
+                  </p>
+                  <div className="d-flex mb-5">
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <input id="companyName" type="tel" />
+                        <label htmlFor="companyName">Company Name</label>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <select>
+                        <option value disabled selected required>Building</option>
+                        <option value={1}>Option 1</option>
+                        <option value={2}>Option 2</option>
+                        <option value={3}>Option 3</option>
+                      </select>
+                    </div>
                   </div>
-                  <div className="errorField">{this.state.registerFormError.qualification}</div>
-                </div>  
-                
-                <div className="label">Your Location Details</div>
-                <div className="sublabel">Nearest Seaport:</div>
-                <div className="field">   
-                  <VirtualizedSelect labelKey='name' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.seaport = selectedValue[0]; })}
-                    options={this.props.ports} searchable={true} simpleValue value={this.state.registerForm.seaport} valueKey='id'
-                    optionRenderer={this.portOptionRenderer}  clearable={false}/>
-                    <div className="errorField">{this.state.registerFormError.seaport}</div>
+                  <div className="d-flex mb-5">
+                    <div className="col-md-6">
+                      <select>
+                        <option value disabled selected required>Street</option>
+                        <option value={1}>Option 1</option>
+                        <option value={2}>Option 2</option>
+                        <option value={3}>Option 3</option>
+                      </select>
+                    </div>
+                    <div className="col-md-6">
+                      <select>
+                        <option value disabled selected required>Code</option>
+                        <option value={1}>Option 1</option>
+                        <option value={2}>Option 2</option>
+                        <option value={3}>Option 3</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="d-flex mb-5">
+                    <div className="col-md-6">
+                      <select>
+                        <option value disabled selected required>City</option>
+                        <option value={1}>Option 1</option>
+                        <option value={2}>Option 2</option>
+                        <option value={3}>Option 3</option>
+                      </select>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <input id="postalCode" type="tel" />
+                        <label htmlFor="postalCode">Postal Code</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="signUpsmText col-md-12 text-gray py-4">
+                    By clicking sign up button, I confirm I have read and accept Sinotech Marine
+                    <a href>Privacy Policy</a> and
+                    <a href>Terms and Conditions</a>.
+                  </div>
+                </form>
+                <div className="position-absolute signUpBtm w-100 col-md-12 py-3">
+                  <div className="daj signUpBtmBg py-3">
+                    <div className="text-center">
+                      <button type="button" className="btn btn-outline-pink loginBtn">SIGN UP</button>
+                      <button type="button" className="btn btn-outline-gray loginBtn">RESET</button>
+                    </div>
+                  </div>
                 </div>
-                
-                <div className="sublabel">City:</div>
-                <div className="field">  
-                  <input className="inputField" type="text" placeholder="city" name="city" value={this.state.registerForm.city} onChange={this.handleInputChange}/>
-                  <div className="errorField">{this.state.registerFormError.city}</div>
-                </div>  
-                
-                <div className="sublabel">Country:</div>
-                <div className="field"> 
-                    <VirtualizedSelect labelKey='name' multi={false} onChange={(selectedValue) => this.setState((state) => { console.log(selectedValue); state.registerForm.countryCode = selectedValue; })}
-                    options={this.props.countries} searchable={true} simpleValue value={this.state.registerForm.countryCode} valueKey='code'
-                    optionRenderer={this.countryOptionRenderer}  clearable={false}/>
-                  <div className="errorField">{this.state.registerFormError.countryCode}</div>
-                </div>  
-              </Tab>
-            </Tabs>
-            <div className="label">
-              <input className="checkbox" type="checkbox" checked={this.state.termsAgreed} onChange={this.toggleAgreementCheckBox}/>
-                &nbsp; &nbsp; I agree with all <a className="link" onClick={this.handleAgreementPopupOpen}>Terms & Conditions</a>
+              </div>
             </div>
-            <div className="btn"><button>Sign Up</button></div>
-            <div className="clear"></div>
-          </form>
-          <Dialog title="" modal={true} open={this.state.termsOpen} actions={actions} autoScrollBodyContent={true}>
-            <div className="register-terms">
-                <TermsPage/>
-            </div>
-          </Dialog>
+          </div>
         </div>
       );
     } else {
@@ -488,7 +500,6 @@ export default class RegisterPage extends Component {
   }
 
   render() {
-
     const { userToken , userProfile } = this.props;
 
   	if(userToken && userProfile) {
@@ -497,7 +508,7 @@ export default class RegisterPage extends Component {
 
     return (
           <div className="page">
-          	<h1>Sign Up</h1>
+          	<h1 style={{ marginLeft: '15%' }}>Register on ShipInspectors.com</h1>
           	{this.renderActionMessage()}
             {this.renderForm()}
           </div>

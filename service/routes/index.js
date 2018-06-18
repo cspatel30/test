@@ -12,9 +12,10 @@ var appApi = require('../api/appApi');
 var awsApi = require('../api/awsApi');
 var enquiryApi = require('../api/enquiryApi');
 var orderApi = require('../api/orderApi');
+var feedbackApi = require('../api/feedbackApi');
 
 module.exports = function(app) {
-  
+
   app.use(['/api/my/*'], asyncMiddleware(validateUserSession));
   app.use('/api/admin/*', asyncMiddleware(validateAdminSession));
 
@@ -28,21 +29,27 @@ module.exports = function(app) {
   app.route('/api/auth/logout/').get(authApi.logout);
   app.route('/api/inspectors/:pageNo').get(userApi.getInspectors);
   app.route('/api/inspector/profile/:userId').get(asyncMiddleware(userApi.getInspectorPublicProfile));
+  app.route('/api/user/forgotPassword/:emailId').get(asyncMiddleware(userApi.forgotPassword));
 
   app.route('/api/enquiry/').post(asyncMiddleware(enquiryApi.submitEnquiry));
-  
+
   //logged in user apis
   app.route('/api/my/profile/').get(asyncMiddleware(userApi.getInspectorProfile));
   app.route('/api/my/profile/').put(asyncMiddleware(userApi.updateProfile));
+  app.route('/api/my/deleteEducation/:id').delete(asyncMiddleware(userApi.deleteEducation));
+  app.route('/api/my/deleteEmployment/:id').delete(asyncMiddleware(userApi.deleteEmployment));
 
   app.route('/api/my/enquiries/').get(asyncMiddleware(enquiryApi.getUserEnquiries));
   app.route('/api/my/enquiry/:id').put(asyncMiddleware(enquiryApi.updateCustomerEnquiry));
   app.route('/api/my/enquirymapping/:enquiryId').put(asyncMiddleware(enquiryApi.updateEnquiryMapping));
-  
+
   app.route('/api/my/order').post(asyncMiddleware(orderApi.create));
   app.route('/api/my/orders').get(asyncMiddleware(orderApi.getUserOrders));
+  app.route('/api/cancelOrder/:id').post(asyncMiddleware(orderApi.cancelOrder));
 
-
+  app.route('/api/my/feedback').post(asyncMiddleware(feedbackApi.addFeedback));
+  app.route('/api/my/updateFeedback').post(asyncMiddleware(feedbackApi.updateFeedback));
+  app.route('/api/my/feedback/:orderId').get(asyncMiddleware(feedbackApi.getFeedback));
   //admin related actions apis
 
   app.route('/api/admin/enquiry/:enquiryId').put(asyncMiddleware(enquiryApi.updateEnquiry));
@@ -63,8 +70,8 @@ module.exports = function(app) {
     resp.redirect('/admin/');
   });
 
-  app.get(['/', '/admin', '/admin/*', '/inspectors/', '/inspector/profile/*', '/news', '/about', '/contact', 
-            '/login', '/register', '/terms', '/policy', '/my/*', '/enquiry/*', '/reports', '/verify/email/*', '/setup/account/*'], 
+  app.get(['/', '/admin', '/admin/*', '/inspectors/', '/inspector/profile/*', '/news', '/about', '/contact',
+            '/login', '/register', '/terms', '/policy', '/my/*', '/enquiry/*', '/reports', '/verify/email/*', '/setup/account/*'],
     function (req, resp) {
       console.log("respond with index html");
       resp.sendFile(path.join(__dirname, "../../client/resources/static/", "index.html"));

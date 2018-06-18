@@ -24,7 +24,7 @@ export default class Home extends Component {
 		    <MuiThemeProvider>	
 		      <div>
 		      	<ActionInProgressContainer/>
-            <HeaderContainer/>
+            {/* <HeaderContainer/> */}
 		        <Body/>
 		      </div>
 		    </MuiThemeProvider>  

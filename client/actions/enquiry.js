@@ -27,6 +27,7 @@ export const ACCEPT_REJECT_ENQUIRY_QUOTE_SUCCESS = 'ACCEPT_REJECT_ENQUIRY_QUOTE_
 export const ACCEPT_REJECT_ENQUIRY_QUOTE_FAILURE = 'ACCEPT_REJECT_ENQUIRY_QUOTE_FAILURE';
 
 export function createEnquiry(payload) {
+  console.log('first action is calling...');
   return {
     type: CREATE_ENQUIRY,
     payload: payload

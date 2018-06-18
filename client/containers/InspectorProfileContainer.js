@@ -1,14 +1,16 @@
 import { connect } from 'react-redux'
-import InspectorProfilePage from '../components/pages/InspectorProfilePage.jsx';
+// import InspectorProfilePage from '../components/pages/InspectorProfilePage.jsx';
+import InspectorProfilePage from '../components/pages/InspectorProfilePage1.jsx';
 
-import { getProfile, uploadDocument, updateInspectorProfile } from '../actions/inspector';
-
+import { getProfile, uploadDocument, updateInspectorProfile, deleteEducationItem, deleteEmploymentItem } from '../actions/inspector';
+import { getFeebackByOrderId } from '../actions/order';
 
 const mapStateToProps = (state) => {
 	const { userProfile, inspectorProfile, error, ports, countries, vesselTypes, inspectorPositions, inspectorQualifications, 
-    regionCodes, inspectionTypes, profileUpdateSuccess } = state;
-  	return { userProfile, inspectorProfile, error, ports, countries, vesselTypes, inspectorPositions, inspectorQualifications, 
-      regionCodes, inspectionTypes, profileUpdateSuccess};
+    inspectorSkills, inspectorTitles, region, inspectorLevel, regionCodes, inspectionTypes, profileUpdateSuccess, feedbackbyOrderId, bool } = state;
+    return { userProfile, inspectorProfile, error, ports, countries, vesselTypes, inspectorPositions, inspectorQualifications,
+      inspectorSkills, inspectorTitles, region, inspectorLevel, 
+      regionCodes, inspectionTypes, profileUpdateSuccess, feedbackbyOrderId, bool: !bool };
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -26,10 +28,21 @@ const mapDispatchToProps = (dispatch) => {
 
     		dispatch(uploadDocument(bucket, folder, userId+"."+ext, file));
         
-    	},
+      },
+      getFeebackByOrderId: (orderId) => {
+        dispatch(getFeebackByOrderId(orderId));
+      },
 
       saveProfile: (inspectorProfile) => {
         dispatch(updateInspectorProfile(inspectorProfile));
+      },
+
+      deleteRecord: (arrName, id) => {
+        if (arrName === 'education') {
+          dispatch(deleteEducationItem(id));
+        } else {
+          dispatch(deleteEmploymentItem(id));
+        }
       }
 	};
 }

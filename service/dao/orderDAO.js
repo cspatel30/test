@@ -2,6 +2,7 @@
 var db = require('../mysql/db');
 var portDAO = require('./portDAO');
 var userDAO = require('./userDAO');
+var feedbackDAO = require('./feedbackDAO');
 require('../constants');
 var moment = require('moment');
 
@@ -54,7 +55,7 @@ function update(order_id, payload) {
       }
     }
   });
-  
+
   if(setOps.length > 0) {
     var updateQuery = "UPDATE customer_order SET "+ setOps.join(",") +" WHERE id = "+ order_id;
     console.log("Run order update query = ", updateQuery);
@@ -81,44 +82,60 @@ function fetch_inspector_orders(inspector_id) {
 }
 
 function fetch_admin_orders(pageNo, pageSize) {
-  return db.mysql_query("select o.*, p.name as port_name, p.region_code as port_region_code, p.region_name as port_region_name, p.country_code as port_country_code, p.country_name as port_country_name "
-                        + " from customer_order o, port p where o.port_id = p.id order by created_on desc limit "+((pageNo-1)*pageSize)+", "+ pageSize);
+  /*return db.mysql_query("select o.*, p.name as port_name, p.region_code as port_region_code, p.region_name as port_region_name, p.country_code as port_country_code, p.country_name as port_country_name "
+                        + " from customer_order o, port p where o.port_id = p.id order by created_on desc limit "+((pageNo-1)*pageSize)+", "+ pageSize);*/
+                        return db.mysql_query("select o.*, p.name as port_name, p.region_code as port_region_code, p.region_name as port_region_name, p.country_code as port_country_code, p.country_name as port_country_name "
+                                              + " from customer_order o, port p where o.port_id = p.id order by created_on desc");
 }
 
 async function transform_order(orderDTOs) {
   var orders = [];
   if(orderDTOs && orderDTOs.length > 0) {
     for(var i= 0 ; i < orderDTOs.length ; i++) {
-      var order = {id: orderDTOs[i]['id'], inspectionTypeDisplayName: inspectionTypes[orderDTOs[i]['inspection_type']], 
-         email: orderDTOs[i]['email'], vesselName: orderDTOs[i]['vessel_name'], portId: orderDTOs[i]['port_id'], 
-         vesselTypeDisplayName: vesselTypes[orderDTOs[i]['vessel_type']], imo: orderDTOs[i]['imo_number'], 
-         startTime: new Date(orderDTOs[i]['start_time']).getTime(), endTime: new Date(orderDTOs[i]['end_time']).getTime(), 
+      var order = {id: orderDTOs[i]['id'], inspectionTypeDisplayName: inspectionTypes[orderDTOs[i]['inspection_type']],
+         email: orderDTOs[i]['email'], vesselName: orderDTOs[i]['vessel_name'], portId: orderDTOs[i]['port_id'],
+         vesselTypeDisplayName: vesselTypes[orderDTOs[i]['vessel_type']], imo: orderDTOs[i]['imo_number'],
+         startTime: new Date(orderDTOs[i]['start_time']).getTime(), endTime: new Date(orderDTOs[i]['end_time']).getTime(),
          status: orderDTOs[i]['status'],
          customerQuote: orderDTOs[i]['user_quote_amount'], inspectorQuote: orderDTOs[i]['inspector_quote_amount'],
-         createdOn: orderDTOs[i]['created_on']
+         createdOn: orderDTOs[i]['created_on'], enquiryId: orderDTOs[i]['enquiry_id']
       };
 
       if(!orderDTOs[i]['port_name']) {
         var port = await portDAO.get_port_by_id(orderDTOs[i]['port_id']);
         order['portData'] = port;
       } else {
-        order['portData'] = {id: orderDTOs[i]['port_id'],  name: orderDTOs[i]['port_name'], regionCode: orderDTOs[i]['port_region_code'], 
-                                regionName: orderDTOs[i]['port_region_name'], countryName: orderDTOs[i]['port_country_name'], 
+        order['portData'] = {id: orderDTOs[i]['port_id'],  name: orderDTOs[i]['port_name'], regionCode: orderDTOs[i]['port_region_code'],
+                                regionName: orderDTOs[i]['port_region_name'], countryName: orderDTOs[i]['port_country_name'],
                                 countryCode: orderDTOs[i]['port_country_code']};
       }
 
       var inspectors = await userDAO.fetchInspectorProfile(orderDTOs[i]['inspector_id']);
-      order['inspector'] = inspectors[0];
-      order['inspector']['positionDisplayName'] = inspectorPositions[order['inspector']['position']];
-      order['inspector']['qualificationDisplayName'] = inspectorQualifications[order['inspector']['qualification']];
+      if(inspectors && inspectors.length > 0) {
+        order['inspector'] = inspectors[0];
+        order['inspector']['positionDisplayName'] = inspectorPositions[order['inspector']['position']];
+        order['inspector']['qualificationDisplayName'] = inspectorQualifications[order['inspector']['qualification']];
 
-      order['startTimeFmt'] = moment(order['startTime']).format("YYYY-MM-DD");
-      order['endTimeFmt'] = moment(order['endTime']).format("YYYY-MM-DD");
+        order['startTimeFmt'] = moment(order['startTime']).format("YYYY-MM-DD");
+        order['endTimeFmt'] = moment(order['endTime']).format("YYYY-MM-DD");
 
-      orders.push(order);
+        var ratingDTO = await feedbackDAO.getFeedbackByOrder(orderDTOs[i]['id']);
+        if(ratingDTO && ratingDTO.length > 0) {
+            order['isFeedbackGiven'] = true;
+            order['feedbackId'] = ratingDTO[0]['id'];
+        } else {
+          order['isFeedbackGiven'] = true;
+        }
+
+        orders.push(order);
+      }
     }
   }
   return orders;
+}
+
+function cancelOrder(order_id) {
+  return db.mysql_update_query('UPDATE customer_order SET status = ? WHERE id = ?', ['CANCELED', order_id]) ;
 }
 
 module.exports = {
@@ -128,5 +145,6 @@ module.exports = {
   fetch_customer_orders: fetch_customer_orders,
   fetch_admin_orders: fetch_admin_orders,
   fetch_inspector_orders: fetch_inspector_orders,
-  transform_order: transform_order
+  transform_order: transform_order,
+  cancelOrder : cancelOrder
  }

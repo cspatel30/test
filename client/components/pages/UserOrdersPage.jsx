@@ -3,7 +3,9 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
-var moment = require('moment');
+import Dialog from 'material-ui/Dialog';
+import moment from 'moment';
+import { Rating } from 'material-ui-rating';
 import { NavLink } from 'react-router-dom';
 
 export default class OrdersPage extends Component {
@@ -13,8 +15,48 @@ export default class OrdersPage extends Component {
 
   	this.state = {
   		orders: [],
-  		errorMsg: null
+      errorMsg: null,
+      dailog: false,
+      review: '',
+      feedback: {
+        availability: 0,
+        quality: 0,
+        skill: 0,
+        deadline: 0,
+      },
+      activeOrderForFeeback: null,
+      uploadReportModal: false,
+      downloadReportModal: false,
+      report1: '',
+      report2: '',
+      report3: '',
   	}
+  }
+
+  onChange(value, field) {
+    // console.log('v...', field, value);
+    this.setState((state) => { state.feedback[field] = value });
+  }
+  
+  handleFileUploadInputChange(event) {
+  	console.log('upload...', event.target.name, event.target.files[0]);
+  	// this.props.handleFileUpload(this.props.inspectorProfile.userId, 'sinotechmarineassets', event.target.name, event.target.files[0]);
+  }
+
+  onSubmitFeedback() {
+    const { activeOrderForFeeback, feedback, review } = this.state;
+    const obj = {
+      orderId: activeOrderForFeeback.id,
+      availability: feedback.availability,
+      reportQuality: feedback.quality,
+      skillAndExp: feedback.skill,
+      deadline: feedback.deadline,
+      comment: review,
+      inspectorId: activeOrderForFeeback.inspector.id,
+      userId: this.props.userProfile.id,
+    };
+    this.props.submitFeedback(obj);
+    this.setState({ dailog: false });
   }
 
   componentWillMount() {
@@ -46,56 +88,232 @@ export default class OrdersPage extends Component {
   formatDate(dateTime) {
     return moment(dateTime).format("YYYY-MM-DD");
   }
-  
-  renderOrders(userType, orders) {
 
-  	var items = [];
-  	for(var i=0; i < orders.length; i++) {
-  		items.push(
-        <div className="enquiry-row" key={"order_" + i}>
-          <div className="enquiry-details-box">
-            <div className="picBox">
-              
+  renderModal() {
+    const { dailog, feedback, orders, activeOrderForFeeback } = this.state;
+    const criteria = [
+      { key: 'availability', label: 'Inspector\'s Availability' },
+      { key: 'quality', label: 'Inspector\'s Reporting Quality' },
+      { key: 'skill', label: 'Inspector\'s Skills and Experience' },
+      { key: 'deadline', label: 'Stick to Deadline' },
+    ];
+    return (
+      <Dialog
+        title="Client's Feedback for Inspector"
+        modal={false}
+        open={dailog}
+        autoScrollBodyContent={true}
+      >
+        <div className="py-2" style={{color: '#000000'}}>
+          <div className="d-flex mb-3">
+            <div className="col-6">
+              <div className="mb-2" style={{fontSize:'15px'}}><b>Order No. : </b><span>{activeOrderForFeeback.id}</span></div>
+              <div className="mb-2" style={{fontSize:'15px'}}><b>Inspection Type : </b><span>{activeOrderForFeeback.inspectionTypeDisplayName}</span></div>
+              <div className="mb-2" style={{fontSize:'15px'}}><b>Port : </b><span>{activeOrderForFeeback.portData.name}</span></div>
+              <div className="mb-2" style={{fontSize:'15px'}}><b>From : </b><span>{`value`}</span></div>
+            </div>
+            <div className="col-6">
+              <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel : </b><span>{activeOrderForFeeback.vesselName}</span></div>
+              <div className="mb-2" style={{fontSize:'15px'}}><b>IMO : </b><span>{activeOrderForFeeback.imo}</span></div>
+              <div className="mb-2" style={{fontSize:'15px'}}><b>To : </b><span>{`value`}</span></div>
             </div>
           </div>
-          <div className="enquiry-details-box">
-            <div className="details">
-              <h2>Order Number : <span className="value">{orders[i].id}</span></h2>
-              <h4>Inspection Type: <span className="value">{orders[i].inspectionTypeDisplayName}</span></h4>
-              <h4>Vessel Name: <span className="value">{orders[i].vesselName}</span></h4>
-              <h4>IMO Number: <span className="value">{orders[i].imo}</span></h4>
-              <h4>Vessel Type: <span className="value">{orders[i].vesselTypeDisplayName}</span></h4>
-              <h4>Port: <span className="value">{orders[i].portData.name}, {orders[i].portData.countryName}</span></h4>
+          <div className="mb-4">
+            <h3 className="mb-2">Rating Scale</h3>
+            <div className="d-flex">
+              <div className="col-6">
+                <div style={{fontSize:'14px'}}><span className="mr-3">1</span><span>Poor</span></div>
+                <div style={{fontSize:'14px'}}><span className="mr-3">3</span><span>Good</span></div>
+                <div style={{fontSize:'14px'}}><span className="mr-3">5</span><span>Excellent</span></div>
+              </div>
+              <div className="col-6">
+                <div style={{fontSize:'14px'}}><span className="mr-3">2</span><span>Average</span></div>
+                <div style={{fontSize:'14px'}}><span className="mr-3">4</span><span>Very Good</span></div> 
+              </div>
             </div>
           </div>
-          <div className="enquiry-details-box">
-            <div className="details">
-              <h4>Email : <span className="value">{orders[i].email}</span></h4>
-              <h4>Start Date : <span className="value">{this.formatDate(orders[i].startTimeFmt)}</span></h4>
-              <h4>End Date : <span className="value">{this.formatDate(orders[i].endTimeFmt)}</span></h4>
-              <h4>Quote Amount : <span className="value">{this.displayQuoteAmount(userType, orders[i])}</span></h4>
-              <h4>Current Status : <span className="value" style={{color: '#d50608'}}>{orders[i].status}</span></h4>
-              <h4>Assigned To : <span className="value" style={{color: 'green'}}><NavLink key={"link_inspector_"+i} to={"/inspector/profile/"+orders[i].inspector.user_id}>{orders[i].inspector.name} ({orders[i].inspector.positionDisplayName})</NavLink></span></h4>
+          <div>
+            <div className="text-center mb-2" style={{fontWeight: 'bold', fontSize: '20px'}}>Your feedback is important to us</div>
+            <div className="mb-2" style={{paddingLeft: '15px', fontWeight: 'bold'}}>Rate Inspector on 1-5 scale</div>
+            <div className="mb-2">
+              {
+                criteria.map((c, index) => (
+                  <div className="d-flex mb-2" key={index}>
+                    <div className="col-3">{index}</div>
+                    <div className="col-6 d-flex flex-column">
+                      <span className="mb-3">{c.label}</span>
+                      <div className="profile-rating"><Rating value={feedback[c.key]} max={5} onChange={v => this.onChange(v, c.key)} /></div>
+                    </div>
+                    <div className="col-3" style={{fontSize: 'larger', fontWeight: 'bold'}}>{feedback[c.key]}</div>
+                  </div>
+                ))
+              }
             </div>
+            <textarea className="px-3 py-2 mb-2" onChange={(e) => this.setState({review: e.target.value})} rows="4" cols="50" placeholder="Write Feedback" maxLength={200}></textarea>
           </div>
-          <div className="clear"></div>
-        </div>
-      );
-  	}
-  	return items;
+          <div className="text-right">
+            <button type="button" style={{width: 'fit-content'}} className="btn btn-primary mr-3" onClick={() => this.setState({dailog: false})}>Cancel</button>
+            <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => this.onSubmitFeedback()}>Submit</button>
+          </div>
+        </div>  
+      </Dialog>       
+    )
   }
+
+  renderUploadReport() {
+    const { uploadReportModal } = this.state;
+    const arr = ['Part A', 'Part B', 'Part C'];
+    return (
+      <Dialog
+        title="Upload Reports"
+        modal={false}
+        open={uploadReportModal}
+        autoScrollBodyContent={true}
+      >
+        <div className="py-2 pr-2" style={{color: '#000000'}}>
+          <div className="mb-3">Please upload Reports of Inspection</div>
+          {
+            arr.map((x, key) => (
+              <div className="d-flex mb-3" key={key}>
+                <div className="col-2"><b>{x}</b></div>
+                <div className="col-6">files ( .doc, .pdf,.jpg), max size 500 MB</div>
+                <div className="col-4"><input type="file" value="" name={`inspector/report${key+1}`} onChange={(e) => this.handleFileUploadInputChange(e, `report${key+1}`)} /></div>
+              </div>
+            ))
+          }
+          <button type="button" style={{width: 'fit-content', float: 'right'}} className="btn btn-primary" onClick={() => this.setState({uploadReportModal: false})}>Close</button>
+        </div>  
+      </Dialog>
+    )
+  }
+
+  renderDownloadReport() {
+    const { downloadReportModal } = this.state;
+    const arr = ['Part A', 'Part B', 'Part C'];
+    return (
+      <Dialog
+        title="Download Reports"
+        modal={false}
+        open={downloadReportModal}
+        autoScrollBodyContent={true}
+      >
+        <div className="py-2 pr-2" style={{color: '#000000'}}>
+          <div className="mb-3">Please download Reports of Inspection</div>
+          {
+            arr.map((x, key) => (
+              <div className="d-flex mb-3" key={key}>
+                <div className="col-2"><b>{x}</b></div>
+                <div className="col-6">files ( .doc, .pdf,.jpg), max size 500 MB</div>
+                <div className="col-4"><a href="#" target="_blank">Download</a></div>
+              </div>
+            ))
+          }
+          <button type="button" style={{width: 'fit-content', float: 'right'}} className="btn btn-primary" onClick={() => this.setState({downloadReportModal: false})}>Close</button>
+        </div>  
+      </Dialog>
+    )
+  }
+
+  renderClientButtons(key) {
+    const { orders } = this.state;
+    return (
+      <div className="col-4 d-flex flex-column justify-content-around">
+        <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Cancel</button>
+        <button type="button" style={{width: 'fit-content', cursor: orders[key].isFeedbackGiven ? 'not-allowed' : 'pointer'}} className="btn btn-primary" disabled={orders[key].isFeedbackGiven ? true : false} onClick={() => this.setState({dailog: true, activeOrderForFeeback: orders[key]})}>Submit Feedback</button>
+        <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => this.setState({downloadReportModal: true})}>Download Report</button>
+      </div>
+    )
+  }
+  renderInspectorButtons() {
+    return (
+      <div className="col-4 d-flex flex-column justify-content-around">
+        <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Order Acceptance</button>
+        <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => {}}>Decline Job Order</button>
+        <button type="button" style={{width: 'fit-content'}} className="btn btn-primary" onClick={() => this.setState({ uploadReportModal: true })}>Upload Report</button>
+      </div>
+    )
+  }
+
+  renderUserOrders(user, orders) {
+    return (
+      (orders || []).map((x, key) => (
+        <div className="d-flex mb-4 p-3 order-row" key={key}>
+          <div className="col-4">
+            <div className="mb-2" style={{fontSize:'15px'}}><b style={{fontSize:'20px'}}>Enquiry No. : </b><span>{`value`}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Inspection Type : </b><span>{x.inspectionTypeDisplayName}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel Name : </b><span>{x.vesselName}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>IMO Number : </b><span>{x.imo}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Vessel Type : </b><span>{x.vesselTypeDisplayName}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Port : </b><span>{x.portData.name}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Payment Status : </b><span>{`value`}</span></div>
+          </div>
+          <div className="col-4">
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Start Date : </b><span>{this.formatDate(x.startTimeFmt)}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>End Date : </b><span>{this.formatDate(x.endTimeFmt)}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Assigned Inspector : </b><span>{x.inspector.name}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Current Status : </b><span>{x.status}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Order Amount : </b><span>{x.customerQuote}</span></div>
+            <div className="mb-2" style={{fontSize:'15px'}}><b>Amount Paid: </b><span>{`value`}</span></div>  
+          </div>
+          {user.type === 'inspector' ? this.renderInspectorButtons() : this.renderClientButtons(key)}
+        </div>
+      ))
+    )
+  }
+  
+  // renderOrders(userType, orders) {
+  // 	var items = [];
+  // 	for(var i=0; i < orders.length; i++) {
+  // 		items.push(
+  //       <div className="enquiry-row" key={"order_" + i}>
+  //         <div className="enquiry-details-box">
+  //           <div className="picBox">
+              
+  //           </div>
+  //         </div>
+  //         <div className="enquiry-details-box">
+  //           <div className="details">
+  //             <h2>Order Number : <span className="value">{orders[i].id}</span></h2>
+  //             <h4>Inspection Type: <span className="value">{orders[i].inspectionTypeDisplayName}</span></h4>
+  //             <h4>Vessel Name: <span className="value">{orders[i].vesselName}</span></h4>
+  //             <h4>IMO Number: <span className="value">{orders[i].imo}</span></h4>
+  //             <h4>Vessel Type: <span className="value">{orders[i].vesselTypeDisplayName}</span></h4>
+  //             <h4>Port: <span className="value">{orders[i].portData.name}, {orders[i].portData.countryName}</span></h4>
+  //           </div>
+  //         </div>
+  //         <div className="enquiry-details-box">
+  //           <div className="details">
+  //             <h4>Email : <span className="value">{orders[i].email}</span></h4>
+  //             <h4>Start Date : <span className="value">{this.formatDate(orders[i].startTimeFmt)}</span></h4>
+  //             <h4>End Date : <span className="value">{this.formatDate(orders[i].endTimeFmt)}</span></h4>
+  //             <h4>Quote Amount : <span className="value">{this.displayQuoteAmount(userType, orders[i])}</span></h4>
+  //             <h4>Current Status : <span className="value" style={{color: '#d50608'}}>{orders[i].status}</span></h4>
+  //             <h4>Assigned To : <span className="value" style={{color: 'green'}}><NavLink key={"link_inspector_"+i} to={"/inspector/profile/"+orders[i].inspector.user_id}>{orders[i].inspector.name} ({orders[i].inspector.positionDisplayName})</NavLink></span></h4>
+  //           </div>
+  //         </div>
+  //         <div className="clear"></div>
+  //       </div>
+  //     );
+  // 	}
+  // 	return items;
+  // }
 
 
   render() {
-
+  const { userProfile } = this.props;
+  const { orders, dailog, activeOrderForFeeback } = this.state;
+  console.log('..orders', this.state.orders, this.props.userProfile);  
 	if(this.props.userProfile) {
       if(this.state.orders && this.state.orders.length > 0) {
 		return (
-          <div className="page">
-          	<h1>Your Orders</h1>
+          <div className="page d-flex flex-column">
+          	<h1>{ userProfile.type === 'inspector' ? 'Job Order' : 'Your Orders'}</h1>
           	<div className="orders"> 
           		<div className="error">{this.state.errorMsg}</div>
-          		{this.renderOrders(this.props.userProfile.type, this.state.orders)}
+              {this.renderUserOrders(userProfile, orders)}
+              {activeOrderForFeeback && this.renderModal()}
+              {this.renderUploadReport()}
+              {this.renderDownloadReport()}
           	</div>
           </div>
       	);

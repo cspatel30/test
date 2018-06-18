@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Ship Inspector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./dist/style.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./dist/bundle.js"></script>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/public/js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-button').dropdown({
+                constrainWidth: false,
+                hover: true,
+                belowOrigin: true,
+                alignment: 'left'
+            });
+
+            // JAVASCRIPT START HERE //
+
+            // INIT SELECT LIST
+            $('select').material_select();
+
+            $('.dropdown-button').dropdown({
+                constrainWidth: false,
+                hover: true,
+                belowOrigin: true,
+                alignment: 'left'
+            });
+
+            // JAVASCRIPT START HERE //
+
+            $('.button-collapse').sideNav();
+
+        });
+    </script>
+  </body>
+</html>
+
+
+<!-- The Bootstrap 4 grid system has five classes:
+
+.col- (extra small devices - screen width less than 576px)
+.col-sm- (small devices - screen width equal to or greater than 576px)
+.col-md- (medium devices - screen width equal to or greater than 768px)
+.col-lg- (large devices - screen width equal to or greater than 992px)
+.col-xl- (xlarge devices - screen width equal to or greater than 1200px) -->

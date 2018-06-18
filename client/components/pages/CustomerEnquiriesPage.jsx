@@ -80,7 +80,7 @@ const columns = [{
 function profileViewButtonRenderer(cell, row) {
   return (<a href={"/inspector/profile/"+row.userId} target="_blank">
     <div className="btn">
-      <button>View Profile</button>
+      <button onClick={(e) => e.stopPropagation()}>View Profile</button>
     </div>
     </a>
   );
@@ -189,10 +189,12 @@ export default class CustomerEnquiriesPage extends Component {
   }
 
   renderInspectorsSection(userType, enquiry) {
+    const { selectedInspector } = this.state;
     if(userType == 'customer' && enquiry.status == 'SENT_TO_INSPECTORS' && enquiry.inspectors && enquiry.inspectors.length > 0) {
       const selectRow = 
       { mode: 'radio', clickToSelect: true, bgColor: '#f7f7f7', 
-        onSelect: this.onRowSelect
+        onSelect: this.onRowSelect,
+        selected: Object.values(selectedInspector).map(x => parseInt(x)),
       };
       return(
         <Card style={styles.card}>
