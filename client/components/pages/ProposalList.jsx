@@ -64,16 +64,23 @@ class ProposalList extends Component {
 
   constructor(props) {
     super(props); 
-    this.state ={checkedA: false,selectAll: false}
-    this.getItems = this.getItems.bind(this);        
+    this.state ={select: false,selectAll: false,setId:{}}
+    this.getItems = this.getItems.bind(this);  
+    this.handleChange = this.handleChange.bind(this);    
+    this.toggleAllCheckbox = this.toggleAllCheckbox.bind(this);  
   }
 
   componentWillMount = () => {
     this.selectedCheckboxes = new Set();
   }
 
-  handleChange(){
-    this.setState({checkedA :true,selectAll:true});
+  handleChange(event){
+    console.log(event.target.value);
+    console.log(event.target.checked);
+    this.state.setId[event.target.value] = !this.state.selectAll
+    this.setState({select: !this.state.select,setId : this.state.setId});
+   
+    console.log(this.state);
   };
 
   toggleCheckbox = label => {
@@ -85,19 +92,19 @@ class ProposalList extends Component {
   }
 
   toggleAllCheckbox() {
-    let newSelected = {};
+     
 
-    if (this.state.selectAll === false) {
-        proposals.forEach(x => {
-            newSelected[x.id] = true;
+    //if (this.state.selectAll === false) {
+      this.getItems(this.props.page,proposals).forEach(x => {
+            this.state.setId[x.id] = !this.state.selectAll;
         });
-    }
+   // }
 
-    this.setState({
-        selected: newSelected,
-        selectAll: true,
-        checkedA :true
+    this.setState({        
+        selectAll: !this.state.selectAll,
+        setId : this.state.setId
     });
+    console.log(this.state);
 }
 
   getItems(page, items) {
@@ -111,7 +118,7 @@ class ProposalList extends Component {
  
   render() { 
     const { formatDate,page,pageCount } = this.props;
-    
+    console.log(this.state);
     return (  
         
       
@@ -119,7 +126,7 @@ class ProposalList extends Component {
           <TableHead>
           <TableRow style={rows}>
             <CustomTableCell colSpan="2"><Checkbox                    
-                    handleCheckbox={this.toggleAllCheckbox}  style={{ color: "#FE3D6C" }}                 
+                    onChange={this.toggleAllCheckbox}  style={{ color: "#FE3D6C" }}                 
                 /></CustomTableCell>
             <CustomTableCell colSpan="3">INSPECTORS({proposals.length})</CustomTableCell>            
             <CustomTableCell><RaisedButton
@@ -135,6 +142,7 @@ class ProposalList extends Component {
           </TableHead>
           <TableBody>            
               {this.getItems(page,proposals).map(n => {
+                console.log(this.state.setId[n.id]);
               return (
                 <TableRow style={rowt}>
                   <CustomTableCell component="th" scope="row" style={{width:"5%"}}>
@@ -142,10 +150,10 @@ class ProposalList extends Component {
         <FormControlLabel
           control={
             <Checkbox
-              checked={this.state.checkedA ? this.state.checkedA : this.state.selectAll}
-              onChange={this.handleChange}
-              value={n.id}
+              checked={this.state.setId[n.id] ? this.state.setId[n.id] :this.state.selectAll}
+              onChange={this.handleChange}              
               style={{ color: "#FE3D6C" }}
+              value={n.id}
             />
           }
           
@@ -165,7 +173,7 @@ class ProposalList extends Component {
                           labelStyle={{fontWeight: "600"}}
                           style={{ borderRadius: 25, border: '2px solid #FE3D6C'}}
                         /></span></div>
-                        <div style={{padding: "15px 0px 0"}}><span className="value" style={{color:"#6AC259",fontSize:"16px"}}><img src={circle} width="14px" height="14px" /> {'Recommend'}</span></div>
+                       {this.state.setId[n.id] == true && <div style={{padding: "15px 0px 0"}}><span className="value" style={{color:"#6AC259",fontSize:"16px"}}><img src={circle} width="14px" height="14px" /> {'Recommend'}</span></div>}
                           
                        </div>
                     </div> 
