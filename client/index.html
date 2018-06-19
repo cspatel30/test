@@ -4,6 +4,7 @@
     <title>Ship Inspector</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./dist/style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <div id="root"></div>
@@ -11,34 +12,6 @@
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/public/js/materialize.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-button').dropdown({
-                constrainWidth: false,
-                hover: true,
-                belowOrigin: true,
-                alignment: 'left'
-            });
-
-            // JAVASCRIPT START HERE //
-
-            // INIT SELECT LIST
-            $('select').material_select();
-
-            $('.dropdown-button').dropdown({
-                constrainWidth: false,
-                hover: true,
-                belowOrigin: true,
-                alignment: 'left'
-            });
-
-            // JAVASCRIPT START HERE //
-
-            $('.button-collapse').sideNav();
-
-        });
-    </script>
   </body>
 </html>
 

@@ -19,7 +19,7 @@ a {
 
 #root {
   width: 100%;
-	font-family: "Roboto", sans-serif;
+	font-family: 'proxima_novaregular' !important;
   font-size: 13px;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -197,7 +197,7 @@ a {
 
 .main {
   background-color: #FFFFFF;
-  font-family: "Roboto", sans-serif;
+  font-family: 'proxima_novaregular' !important;
   position: relative;
   /* top: 130px; */
 }
@@ -559,9 +559,9 @@ p {
   line-height: 2;
 }
 
-.section-details-news-image {
+/* .section-details-news-image {
 
-}
+} */
 
 .section-details-news-title {
   margin: 10px 0 0 20px;
@@ -938,14 +938,14 @@ p {
   color: #1f9bed;
 }
 
-.leftHalf {
-  /* width: 48%;
-  float: left; */
+/* .leftHalf {
+  width: 48%;
+  float: left;
 }
 .rightHalf {
-  /* width: 48%;
-  float: right; */
-}
+  width: 48%;
+  float: right;
+} */
 
 .login-page {
   flex: 6;
@@ -1099,10 +1099,10 @@ p {
   cursor: pointer;
 }
 
-.contact-form .btn {
-  /* width: 25%;
-  float: right; */
-}
+/* .contact-form .btn {
+  width: 25%;
+  float: right;
+} */
 
 .contact-form .forgot-pass {
   color: #1475af;

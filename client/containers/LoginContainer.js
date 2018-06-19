@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Login from '../components/pages/LoginPage.jsx';
+import Login from '../components/loginPage/LoginPage.jsx';
 
 import { login, forgotPassword } from '../actions/auth';
 

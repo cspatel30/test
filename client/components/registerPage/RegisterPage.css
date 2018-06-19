@@ -1,0 +1,66 @@
+  .mDivider {
+    height: 30px;
+  }
+  
+  .rcolor {
+    color: #fe3d6c !important;
+  }
+  
+  .pointer
+  {
+    cursor:pointer !important
+  }
+  
+  .btn-outline-gray {
+    min-width: 80px !important;
+    color: #959595  !important;
+    background-color: #fff  !important;
+    background-image: none  !important;
+    border: 2px solid #959595  !important;
+    border-radius: 45px !important;
+  }
+  
+  .signUpsmText {
+    font-size: 13px;
+  }
+  
+  .required {
+    content: "*";
+    font-weight: bold;
+    color: red
+  }
+  
+  label.active .required {
+    display: none;
+  }
+  
+  .select-wrapper input.select-dropdown {
+    margin: 16px 0 0px 0;
+    padding: 0;
+  }
+  
+  .select-wrapper {
+    margin-top: 1rem;
+  }
+  
+  .signUpBtm {
+    bottom: 3px;
+    left: 0px;
+  }
+  
+  .signUpBtmBg {
+    background: #f8f8f8;
+  }
+  .ml-2
+  {
+    margin-left: 5px !important;
+  }
+  
+  .dnone
+  {
+    display:none;
+  }
+  
+  mt-18{
+    margin-top:18px !important;
+  }

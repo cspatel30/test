@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Register from '../components/pages/RegisterPage.jsx';
+import Register from '../components/registerPage/RegisterPage.jsx';
 
 import { register } from '../actions/auth';
 

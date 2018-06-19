@@ -12,7 +12,7 @@ class InspectionQuote extends Component {
   renderForm() {
     return (
       <div className="my-5">
-        Hi
+       
       </div>
     )
   }

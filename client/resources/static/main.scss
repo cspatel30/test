@@ -6,6 +6,10 @@
 @import './react-select.css';
 @import './react-tabs.css';
 @import './style.css';
-
-@import './custom.css';
 @import './materialize.min.css';
+
+.row-column-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
