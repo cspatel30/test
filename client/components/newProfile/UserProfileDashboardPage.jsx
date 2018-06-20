@@ -7,7 +7,7 @@ import WorkHistory from './WorkHistoryPage.jsx';
 import EducationQualification from './EducationQualificationPage.jsx';
 import AreasCovered from './AreasCovered.jsx';
 import Documents from './DocumentsPage.jsx';
-import './newProfile.css';
+import './newProfile.scss';
 
 export default class UserProfileDashboard extends Component {
 

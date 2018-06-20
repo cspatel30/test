@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactStars from 'react-stars';
-import './newProfile.css';
+import './newProfile.scss';
 
 const WorkHistory =[
     {

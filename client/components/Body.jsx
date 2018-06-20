@@ -28,6 +28,7 @@ import SetupAccountContainer from '../containers/SetupAccountContainer.js';
 import VerifyEmailContainer from '../containers/VerifyEmailContainer.js';
 import UserOrdersContainer from '../containers/UserOrdersContainer.js';
 import NewProfileContainer from '../containers/NewProfileContainer.js';
+import NewInspectorDashboardContainer from '../containers/NewInspectorDashboardContainer.js';
 
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
@@ -56,6 +57,15 @@ const NewProfilePage = () => (
   <HomeFooter />
   </div> 
 );
+
+const NewInspectorDashboard = () => (
+  <div>
+  <HomeHeader />
+  <NewInspectorDashboardContainer />
+  <HomeFooter />
+  </div> 
+);
+
 export default class Body extends Component {
 
   render() {
@@ -82,9 +92,9 @@ export default class Body extends Component {
               <Route exact path="/my/doc/:docType/:fileName" component={DocumentDownloadContainer} />
               <Route exact path="/verify/email/:requestToken" component={VerifyEmailContainer} />
               <Route exact path="/setup/account/:requestToken" component={SetupAccountContainer} />
-              <Route exact path="/newprofile" component={NewProfilePage} />
-              
               <Route path="/admin" component={AdminHomePageContainer} />
+              <Route exact path="/newprofile" component={NewProfilePage} />
+              <Route exact path="/inspectordashboard" component={NewInspectorDashboard} />
               
             </div>
             <Footer/>

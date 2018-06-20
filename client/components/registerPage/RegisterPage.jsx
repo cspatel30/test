@@ -9,7 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import VirtualizedSelect from 'react-virtualized-select';
-import './RegisterPage.css';
+import './RegisterPage.scss';
 
 const styles = {
   tabs: {
@@ -165,9 +165,9 @@ export default class RegisterPage extends Component {
     this.setState((state) => { 
       state.userType = tab.props['data-person']; 
       state.registerForm = {
-        fname: "",lname: "", email: "", password: "", confirmpassword: "", company: "", phone: "", position: "", qualification: "",
+        fname: "",lname: "", email: "", password: "", confirmpassword: "",countryCode: "" , company: "", phone: "", position: "", qualification: "",
         building: "", street: "", seaport: "", city: "", country: "", };
-      state.registerFormError = {  fname: "",lname: "", email: "", password: "", confirmpassword: "", company: "", position: "", 
+      state.registerFormError = {  fname: "",lname: "", email: "", password: "", confirmpassword: "", company: "", position: "", countryCode: "",
                                 qualification: "", seaport: "", city: "", countryCode: "" };
       state.signUpSuccess = false;
       state.signUpErrorMsg = null;
@@ -183,7 +183,8 @@ export default class RegisterPage extends Component {
   }
 
   handleInputChange (event) {
-    event.persist();
+    alert("testing")
+    // event.persist();
     this.setState((state) => { state.registerForm[event.target.name] = event.target.value });
   }
 
@@ -200,12 +201,12 @@ export default class RegisterPage extends Component {
   handleSubmit(event) {
   
     event.preventDefault();
-
+    alert(JSON.stringify(this.state.registerForm.countryCode));
     var error = false;
     console.log(this.state);
 
-    var registerFormError = {  fname: "",lname: "", email: "", password: "", confirmpassword: "", company: "",city: "",title:"",country: "",employmentType:"",postalcode:"",countryCode:"",
-        position: "", phone: "", qualification: "", location: {seaport: "", city: "",title:"",country: "",employmentType:"",postalcode:"",countryCode:""} };
+    var registerFormError = {  fname: "",lname: "", email: "", password: "",countryCode:"",confirmpassword: "", company: "",city: "",title:"",country: "",employmentType:"",postalcode:"",
+        position: "", phone: "", qualification: "", location: {seaport: "", city: "",country: "",postalcode:"",countryCode:""} };
 
     if(this.state.registerForm.fname == "") {
       error = true;
@@ -259,6 +260,7 @@ export default class RegisterPage extends Component {
       }
 
       if(this.state.registerForm.countryCode == "") {
+        alert("testing...")
         registerFormError.countryCode = "This field is mandatory";
         error = true;
       }
@@ -407,7 +409,7 @@ export default class RegisterPage extends Component {
 
   renderForm() {
     const actions = [
-      <FlatButton label="I Agree" primary={true} onClick={this.handleAgreementPopupClose}/>];
+    <FlatButton label="I Agree" primary={true} onClick={this.handleAgreementPopupClose}/>];
       
     if(!this.state.signUpSuccess) {
       return (
@@ -469,7 +471,7 @@ export default class RegisterPage extends Component {
                     <div className="col-md-6">
                       <div className="input-field">
                       <img className="prefix grey-text" src="/public/img/key.png" alt=""/>
-                        <input id="password" type="password" value={this.state.registerForm.password} onChange={this.handleInputChange}/>
+                        <input id="password" name="password" type="password" value={this.state.registerForm.password} onChange={this.handleInputChange}/>
                         <label htmlFor="password">Password
                           <span className="required">*</span>
                         </label>
@@ -479,8 +481,8 @@ export default class RegisterPage extends Component {
                   </div>
                   <div className="d-flex col-md-6">
                     <div className="col-md-6 pl-0">
-                      <select defaultValue={this.state.countryCode} onChange={this.handleChange} >
-                        <option value disabled selected required>Code</option>
+                      <select id="countryCode" name="countryCode"  onChange={this.handleInputChange} >
+                        <option value="Code" disabled selected required>Code</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
                         <option value="Option 3">Option 3</option>
@@ -489,7 +491,7 @@ export default class RegisterPage extends Component {
                     </div>
                     <div className="col-md-6 pr-0">
                       <div className="input-field">
-                        <input id="phone" type="text" value={this.state.registerForm.phone} onChange={this.handleInputChange}/>
+                        <input id="phone" name="phone" type="text" value={this.state.registerForm.phone} onChange={this.handleInputChange}/>
                         <label htmlFor="phone">Phone
                           <span className="required">*</span>
                         </label>
@@ -504,14 +506,14 @@ export default class RegisterPage extends Component {
                   <div className="d-flex mb-5">
                     <div className="col-md-6">
                       <div className="input-field">
-                        <input id="companyName" type="text" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
+                        <input id="companyName" name="companyName" type="text" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
                         <label htmlFor="companyName">Company Name</label>
                         <div className="errorField">{this.state.registerFormError.company}</div> 
                       </div>
                     </div>
                     <div className="col-md-6">
                       <div className="input-field">
-                        <input id="building" type="text" value={this.state.registerForm.building} onChange={this.handleInputChange}/>
+                        <input id="building" name="building" type="text" value={this.state.registerForm.building} onChange={this.handleInputChange}/>
                         <label htmlFor="building">Building</label>
                       </div>
                       </div>
@@ -519,13 +521,13 @@ export default class RegisterPage extends Component {
                   <div className="d-flex mb-5">
                   <div className="col-md-6">
                       <div className="input-field">
-                        <input id="street" type="text" value={this.state.registerForm.street} onChange={this.handleInputChange}/>
+                        <input id="street" name="street" type="text" value={this.state.registerForm.street} onChange={this.handleInputChange}/>
                         <label htmlFor="street">Street</label>
                       </div>
                    </div>
                    <div className="col-md-6">
                       <div className="input-field">
-                        <input id="city" type="text" value={this.state.registerForm.city} onChange={this.handleInputChange}/>
+                        <input id="city" name="city" type="text" value={this.state.registerForm.city} onChange={this.handleInputChange}/>
                         <label htmlFor="city">City</label>
                       </div>
                     </div>
@@ -552,12 +554,12 @@ export default class RegisterPage extends Component {
                   <div className="d-flex mb-5">
                     <div className="col-md-6">
                       <div className="input-field">
-                        <input id="companyName" type="text" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
+                        <input id="companyName"  name="companyName" type="text" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
                         <label htmlFor="companyName">Company Name</label>
                       </div>
                     </div>
                     <div className="col-md-6">
-                      <select defaultValue={this.state.employmentType} onChange={this.handleChange}>
+                      <select   name="empoymentType" defaultValue={this.state.registerForm.employmentType} onChange={this.handleInputChange}>
                         <option value disabled selected required>Employment Type</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
@@ -568,7 +570,7 @@ export default class RegisterPage extends Component {
                   </div>
                   <div className="d-flex mb-5">
                     <div className="col-md-6">
-                      <select defaultValue={this.state.qualification} onChange={this.handleChange}>
+                      <select  name="qualification" defaultValue={this.state.registerForm.qualification} onChange={this.handleInputChange}>
                         <option value disabled selected required>Qualification</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
@@ -577,7 +579,7 @@ export default class RegisterPage extends Component {
                       <div className="errorField mt-18">{this.state.registerFormError.qualification}</div>
                     </div>
                     <div className="col-md-6">
-                      <select defaultValue={this.state.title} onChange={this.handleChange}>
+                      <select name="title" defaultValue={this.state.registerForm.title} onChange={this.handleInputChange}>
                         <option value disabled selected required>Title</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
@@ -588,7 +590,7 @@ export default class RegisterPage extends Component {
                   </div>
                   <div className="d-flex mb-5">
                     <div className="col-md-6">
-                      <select defaultValue={this.state.title} onChange={this.handleChange}>
+                      <select name="city" defaultValue={this.state.registerForm.city} onChange={this.handleInputChange}>
                         <option value disabled selected required>City</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
@@ -596,7 +598,7 @@ export default class RegisterPage extends Component {
                       </select>
                     </div>
                     <div className="col-md-6">
-                      <select defaultValue={this.state.title} onChange={this.handleChange}>
+                      <select defaultValue={this.state.registerForm.country} onChange={this.handleInputChange}>
                         <option value disabled selected required>Country</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
@@ -607,7 +609,7 @@ export default class RegisterPage extends Component {
                   <div className="d-flex mb-5">
                     <div className="col-md-6">
                       <div className="input-field">
-                        <input id="postalCode" type="text" value={this.state.registerForm.postalcode} onChange={this.handleInputChange}/>
+                        <input id="postalCode" name="postalCode" type="text" value={this.state.registerForm.postalcode} onChange={this.handleInputChange}/>
                         <label htmlFor="postalCode">Postal Code</label>
                       </div>
                     </div>

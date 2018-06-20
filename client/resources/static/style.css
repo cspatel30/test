@@ -1547,3 +1547,18 @@ table > thead > tr > th, table > thead > tr > td, table > tbody > tr > th, table
 input {
   padding: 8px;
 }
+
+
+[type=radio]:checked+label:after, [type=radio]:not(:checked)+label:after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: #14436d;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  border-radius: 100%;
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+}
+

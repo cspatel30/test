@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './newProfile.css';
+import './newProfile.scss';
 const _ = require("lodash");
 const { compose, withProps, lifecycle } = require("recompose");
 const {

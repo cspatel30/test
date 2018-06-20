@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactStars from 'react-stars';
 import MapWithASearchBox from './MapPage.jsx';
-import './newProfile.css';
+import './newProfile.scss';
 
 export default class UserProfileDetailsPage extends Component {
 

@@ -71,7 +71,7 @@ module.exports = function(app) {
   });
 
   app.get(['/', '/admin', '/admin/*', '/inspectors/', '/inspector/profile/*', '/news', '/about', '/contact',
-            '/login', '/register','/newprofile', '/terms', '/policy', '/my/*', '/enquiry/*', '/reports', '/verify/email/*', '/setup/account/*'],
+            '/login', '/register','/newprofile','/inspectordashboard', '/terms', '/policy', '/my/*', '/enquiry/*', '/reports', '/verify/email/*', '/setup/account/*'],
     function (req, resp) {
       console.log("respond with index html");
       resp.sendFile(path.join(__dirname, "../../client/resources/static/", "index.html"));

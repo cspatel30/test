@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import './LoginPage.css';
+import './LoginPage.scss';
 
 export default class LoginPage extends Component {
 
