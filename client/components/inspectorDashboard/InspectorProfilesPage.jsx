@@ -64,15 +64,20 @@ export default class InspectorProfilesPage extends Component {
     constructor(props){
         super(props);
         this.state={
-            checked:"/public/img/check-square.png",
+            checked:"/public/img/checked.png",
             unchecked:"/public/img/unchecked.png",
             selectInspector:"/public/img/unchecked.png",
             insId:''
         }
     }
 
+    clearAllSelected(){
+        this.setState({
+            selectInspector:this.state.unchecked,
+        })
+    }
+    
     inspectorSelected(id){
-        alert("testing..."+JSON.stringify(id))
         if(id){
             this.setState({
                 selectInspector:this.state.checked,
@@ -86,16 +91,16 @@ export default class InspectorProfilesPage extends Component {
   render() {
         return (
             <div className="card">
-            <div className="card-header card-header-styles d-flex alignItems ch-minheight pl-8 pr-0">
+            <div className="card-header card-header-styles d-flex alignItems ch-minheight pl-8 pr-0 ml-12">
             <div className="d-flex alignItems mr-auto pt-10">
-            <img id="picon" onClick={this.inspectorSelected.bind(this)} src={this.state.selectInspector} className="checkbox w-21 "/>
+            <img id="picon" onClick={this.clearAllSelected.bind(this)} src={this.state.selectInspector} className="checkbox w-15 "/>
             <label className="designation"  htmlFor="checkbox">Clear all selected</label>
             </div>
               <div className="col-md-3 mr-auto"  data-toggle="buttons">
                  <span className="fs-14"> RESULTS(24) </span>
               </div>
               <div className="mr-auto  mr-10"  data-toggle="buttons">
-              <button type="button" className="btn enquiryButton mr-10" > ADD TO ENQUIRY </button>
+              <button type="button" className="btn enquiryButton"> ADD TO ENQUIRY </button>
               </div>
             </div>
             {
@@ -104,9 +109,9 @@ export default class InspectorProfilesPage extends Component {
                         <div className="card-body cardbody-border">
                     <div className="col-md-12 pl-0 pr-0">
                     <div className="d-flex mt-10 alignItems ">
-                    <div className="col-md-1 pl-0">
+                    <div className="col-md-1 pl-0 ml-12">
                         <div className="d-flex alignItems mr-auto">
-                        <img id="dicon" src={(data.id===this.state.insId) ? this.state.selectInspector: this.state.unchecked} onClick={this.inspectorSelected.bind(this,data.id)} className="checkbox w-100"/>
+                        <img id="dicon" src={(data.id===this.state.insId) ? this.state.selectInspector: this.state.unchecked} onClick={this.inspectorSelected.bind(this,data.id)} className="checkbox w-75"/>
                         </div>
                     </div>
                     <div className="col-md-2 pl-0">

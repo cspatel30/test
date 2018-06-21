@@ -1,3 +1,6 @@
+  .registerSec{
+    font-size: 23px !important;
+  }
   .mDivider {
     height: 30px;
   }
@@ -68,3 +71,44 @@
    .errorField{
      color:red
    }
+
+   [type=radio]:checked+label:after, [type=radio]:not(:checked)+label:after {
+    content: "";
+    width: 18px !important;
+    height: 18px !important;
+    background: #14436d;
+    position: absolute;
+    top: 1px !important;
+    left: 1px !important;
+    border-radius: 100%;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+  }
+
+  .loginType{
+    padding-left:12px;
+
+    label{
+      padding-top: 5px
+    }
+  }
+  [type=radio]:checked+label, [type=radio]:not(:checked)+label {
+    font-size: 20px !important;
+}
+
+.input-field label {
+  font-size: 19px;
+  color: #525458
+}
+
+input:not([type]), input[type=date]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=email]:not(.browser-default), input[type=number]:not(.browser-default), input[type=password]:not(.browser-default), input[type=search]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=text]:not(.browser-default), input[type=time]:not(.browser-default), input[type=url]:not(.browser-default), textarea.materialize-textarea {
+  border-bottom: 1px solid #bbbcbd;
+  font-size: 19px;
+  color: #525458
+}
+.fs-14{
+  font-size: 14px !important;
+}
+.fs-16{
+  font-size: 16px !important;
+}

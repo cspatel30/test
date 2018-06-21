@@ -1783,12 +1783,15 @@ input {
   margin-top: 10px !important;
 }
 
-.mt-15 {
+.mt-60 {
   margin-top: 60px !important;
 }
 
 .ml-5 {
   margin-left: 5px !important;
+}
+.ml-12 {
+  margin-left: 12px !important;
 }
 
 .ml-17 {
@@ -2367,9 +2370,6 @@ form.example::after {
   text-align: left;
 }
 
-.loginType {
-  font-size: 18px;
-}
 
 .md-form .prefix~label {
   margin-left: 2.5rem;
@@ -2912,6 +2912,6 @@ background: #fff !important
   width: 100% !important;
 }
 
-.w-14{
-  width: 14.5% !important;
+.w-15{
+  width: 15% !important;
 }

@@ -14,7 +14,7 @@ export default class NewProfilePage extends Component {
 
   render() {
     return (
-        <div>
+        <div className="bg-white">
           <UserProfileDetailsPage/>
           <UserProfileDashboardPage/>
         </div>

@@ -6,8 +6,9 @@ html,body {
   width: 100%;
   margin: 0;
   padding: 0;
-  font-size: 14px;  
-  font-weight: 400;
+  background: #f8f8f8
+  /* font-size: 14px;  
+  font-weight: 400; */
 }
 
 table {border-spacing: 0; margin: 0 auto; border: none;}
@@ -196,7 +197,7 @@ a {
 }
 
 .main {
-  background-color: #FFFFFF;
+  background-color: #f8f8f8 !important;
   font-family: 'proxima_novaregular' !important;
   position: relative;
   /* top: 130px; */
@@ -1549,16 +1550,5 @@ input {
 }
 
 
-[type=radio]:checked+label:after, [type=radio]:not(:checked)+label:after {
-  content: "";
-  width: 18px;
-  height: 18px;
-  background: #14436d;
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  border-radius: 100%;
-  -webkit-transition: all .2s ease;
-  transition: all .2s ease;
-}
+
 

@@ -17,7 +17,7 @@ export default class UserProfileDashboard extends Component {
 
   render() {
         return (
-          <div className="row mt-15">
+          <div className="row mt-60 bg-white">
             <div className="col-md-4 pr-0">
                 <Skills/>
                 <EmployeeHistory/>

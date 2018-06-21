@@ -121,7 +121,7 @@ export default class LoginPage extends Component {
                         <div className="divider" />
                         <div className="triangle-down" />
                     </div>
-                    <div className="d-flex loginType pt-3">
+                    <div className="d-flex loginType pt-3 pl-0">
                         <div>
                             <input className="with-gap" type="radio" name="gender" id="client" defaultChecked />
                             <label htmlFor="client">Client</label>
@@ -162,9 +162,9 @@ export default class LoginPage extends Component {
                 </form>
                
                 <div className="position-absolute fixedBtm w-100 col-md-12 pl-1 pr-2 pb-1">
-                    <div className="toSignUp fixedBtmBg daj py-5">
-                        <img className="pr-2" src="/public/img/signUpArrow.png" alt /> Don’t have an account?
-                        <Link className="logincolor" to="/register/"> Sign Up
+                    <div className="toSignUp fixedBtmBg daj py-4">
+                        <img className="pr-2" src="/public/img/signUpArrow.png" alt /> Don’t have an account? 
+                        <Link className="logincolor" to="/register/"> Sign Up 
                    </Link>
                     </div>
                 </div>

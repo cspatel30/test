@@ -1779,8 +1779,11 @@ input {
   margin-top: 10px !important;
 }
 
-.mt-15 {
+.mt-60 {
   margin-top: 60px !important;
+}
+.mt-15 {
+  margin-top: 15px !important;
 }
 
 .ml-5 {
@@ -1815,6 +1818,10 @@ input {
 
 .mb-15 {
   margin-bottom: 15px !important;
+}
+
+.mb-18 {
+  margin-bottom: 18px !important;
 }
 
 .mt-4 {
@@ -2376,9 +2383,6 @@ form.example::after {
   text-align: left;
 }
 
-.loginType {
-  font-size: 18px;
-}
 
 .md-form .prefix~label {
   margin-left: 2.5rem;
@@ -2462,8 +2466,8 @@ form.example::after {
   cursor: pointer;
 }
 
-a {
-  color: #fe3d6c;
+.pink_background {
+  background: #fe3d6c;
 }
 
 .daj {
