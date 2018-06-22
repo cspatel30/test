@@ -69,7 +69,9 @@
   }
  
    .errorField{
-     color:red
+     color:red;
+     font-size: 14px;
+     text-align: left;
    }
 
    [type=radio]:checked+label:after, [type=radio]:not(:checked)+label:after {
@@ -111,4 +113,12 @@ input:not([type]), input[type=date]:not(.browser-default), input[type=datetime-l
 }
 .fs-16{
   font-size: 16px !important;
+}
+.mr-20{
+  margin-right:20px !important;
+}
+
+.dropdown-content .select-dropdown{
+  overflow-x: hidden;
+  overflow-y: hidden;
 }

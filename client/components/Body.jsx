@@ -35,42 +35,12 @@ const ScrollToTop = () => {
   return null;
 };
 
-const LoginPage = () => (
-  <div>
-  <HomeHeader />
-  <LoginContainer />
-  <HomeFooter />
-  </div> 
-);
-const RegisterPage = () => (
-  <div>
-  <HomeHeader />
-  <RegisterContainer />
-  <HomeFooter />
-  </div> 
-);
-
-const NewProfilePage = () => (
-  <div>
-  <HomeHeader />
-  <NewProfileContainer />
-  <HomeFooter />
-  </div> 
-);
-
-const NewInspectorDashboard = () => (
-  <div>
-  <HomeHeader />
-  <NewInspectorDashboardContainer />
-  <HomeFooter />
-  </div> 
-);
-
 export default class Body extends Component {
 
   render() {
 	return (
           <div className="main">
+            <HomeHeader/>
             <div className="content">
               {/* <Route component={ScrollToTop}/> */}
               {/* <Route exact path="/" component={HomePage}/> */}
@@ -82,8 +52,8 @@ export default class Body extends Component {
               <Route exact path="/contact/" component={ContactUsContainer} />
               <Route exact path="/news/" component={NotFoundPage} />
               <Route exact path="/reports/" component={SampleReportsPage} />
-              <Route exact path="/login/" component={LoginPage} />
-              <Route exact path="/register/" component={RegisterPage} />
+              <Route exact path="/login/" component={LoginContainer} />
+              <Route exact path="/register/" component={RegisterContainer} />
               <Route exact path="/terms/" component={TermsPage} />
               <Route exact path="/policy/" component={PolicyPage} />
               <Route exact path="/my/profile/" component={InspectorProfileContainer} />
@@ -93,11 +63,10 @@ export default class Body extends Component {
               <Route exact path="/verify/email/:requestToken" component={VerifyEmailContainer} />
               <Route exact path="/setup/account/:requestToken" component={SetupAccountContainer} />
               <Route path="/admin" component={AdminHomePageContainer} />
-              <Route exact path="/newprofile" component={NewProfilePage} />
-              <Route exact path="/inspectordashboard" component={NewInspectorDashboard} />
-              
+              <Route exact path="/newprofile" component={NewProfileContainer} />
+              <Route exact path="/inspectordashboard" component={NewInspectorDashboardContainer} />
             </div>
-            <Footer/>
+            <HomeFooter/>
           </div>
       );
   }

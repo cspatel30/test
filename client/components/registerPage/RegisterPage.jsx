@@ -44,54 +44,59 @@ export default class RegisterPage extends Component {
       userType: "customer",
       termsAgreed: false,
       registerForm: {
-        fname: "",
-        lname: "",
+
+       //common for cient and inspector registration
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
         confirmpassword: "",
-        clientCompanyName: "",
-        inspectorCompanyName:"",
+        countryCode:"",
         phone: "",
-        position: "",
-        qualification: "",
+
+        // client registration
+        clientCompanyName: "",
         building: "",
         street: "",
-        seaport: "",
         clientCity: "",
-        inspectorCity:"",
-        inspectorPostalCode:"",
+        clientCountry:"",
         clientPostalCode:"",
-        countryCode: "",
-        registraiontype:"",
-        empoymentType:"",
-        title:""
+
+        // inspector registration
+        inspectorCompanyName:"",
+        employmentType:"",
+        qualification: "",
+        title:"",
+        clientCity: "",
+        clientCountry:"",
+        clientPostalCode:"",
+        position: "",
+        registraiontype:""
       },
       registerFormError: {
-        fname: "",
-      	lname: "",
+
+       //common for cient and inspector
+        firstName: "",
+      	lastName: "",
         email: "",
         password: "",
         confirmpassword: "",
-        company: "",
-        phone: "",
-        position: "",
-        qualification: "",
-        seaport: "",
-        clientCity: "",
-        inspectorCity:"",
         countryCode: "",
-        registraiontype:"",
-        inspectorPostalCode:"",
-        clientPostalCode:"",
-        empoymenttype:"",
-        qualification:"",
+        phone: "",
+
+        // client registration
+        clientCompanyName: "",
+        
+        // inspector registration
+        employmentType:"",
+        qualification: "",
         title:""
+
       }
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleActive = this.handleActive.bind(this);
     this.getTabButtonClassName = this.getTabButtonClassName.bind(this);
     this.toggleAgreementCheckBox = this.toggleAgreementCheckBox.bind(this);
     this.handleAgreementPopupOpen = this.handleAgreementPopupOpen.bind(this);
@@ -104,19 +109,77 @@ export default class RegisterPage extends Component {
     this.setState({
       registraiontype: event.target.value
     }, () => {
+     
       if (this.state.registraiontype === "client") {
+        this.setState({
+          registerForm: {firstName:"",lastName:"",email:"",password:"",confirmpassword:"",countryCode:"",phone:"",inspectorCompanyName:"",employmentType: "",qualification: "",title:""},
+          registerFormError: {firstName:"",lastName:"",email:"",password: "",confirmpassword:"",countryCode:"",phone:"",employmentType:"",qualification:"",title:""}
+        })
+  
         $('#client-register').show();
         $('#inspector-register').hide();
       }
       else {
+        this.setState({
+          registerForm: {firstName:"",lastName:"",email:"",password:"",confirmpassword:"",countryCode:"",phone:"",inspectorCompanyName:"",employmentType: "",qualification: "",title:"",
+                        clientCity:"",clientCountry:"",clientPostalCode:"",registraiontype:""},
+          registerFormError: {firstName:"",lastName:"",email:"",password: "",confirmpassword:"",countryCode:"",phone:"", clientCompanyName: ""}
+        })  
         $('#inspector-register').show();
         $('#client-register').hide();
       }
     })
   }
 
+  handleInputChange (event) {
+    console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
+    event.persist();
+    this.setState((state) => { state.registerForm[event.target.name] = event.target.value });
+  }
+
+
+  componentDidMount() {
+    var that=this;
+   
+    // Country code value
+    $('#containerCountryCode').on('change', 'select', function(event){ 
+      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
+    that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
+     });
+    
+    // Employment Type value
+    $('#employmentTypeContainer').on('change', 'select', function(event){ 
+      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
+      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
+      });
+
+    // Qualification value   
+    $('#qualificationContainer').on('change', 'select', function(event){ 
+      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
+    that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
+    });
+    
+    // Title value   
+    $('#titleContainer').on('change', 'select', function(event){ 
+      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
+      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
+    });  
+
+    // City value   
+    $('#cityContainer').on('change', 'select', function(event){
+      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value)) 
+      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
+    }); 
+
+    // Country value   
+    $('#countryContainer').on('change', 'select', function(event){ 
+      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
+      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
+    }); 
+
+  }
+
   componentWillMount(){
-    console.log("executed")
     $(document).ready(function () {
       $('.dropdown-button').dropdown({
           constrainWidth: false,
@@ -124,19 +187,10 @@ export default class RegisterPage extends Component {
           belowOrigin: true,
           alignment: 'left'
       });
-
-      // INIT SELECT LIST
       $('select').material_select();
-
-      $('.dropdown-button').dropdown({
-          constrainWidth: false,
-          hover: true,
-          belowOrigin: true,
-          alignment: 'left'
-      });
+      
       $('.button-collapse').sideNav();
-
-  });
+    });
   }
 
   componentWillReceiveProps(props) {
@@ -164,22 +218,6 @@ export default class RegisterPage extends Component {
       return styles.tabButton;
   }
 
-  handleActive (tab) {
-    this.setState((state) => { 
-      state.userType = tab.props['data-person']; 
-      state.registerForm = {
-        fname: "",lname: "", email: "", password: "", confirmpassword: "",countryCode: "" , company: "", phone: "", position: "", qualification: "",
-        building: "", street: "",inspectorPostalCode:"",
-        clientPostalCode:"", seaport: "",clientCity: "",
-        inspectorCity:"", country: ""};
-      state.registerFormError = {  fname: "",lname: "", email: "", password: "", confirmpassword: "", company: "", position: "", countryCode: "",inspectorPostalCode:"",
-      clientPostalCode:"",qualification: "", seaport: "", clientCity: "",
-      inspectorCity:"", countryCode: "" };
-      state.signUpSuccess = false;
-      state.signUpErrorMsg = null;
-    }); 
-  }
-
   validate() {
     if (!this.state.registerForm.email.includes("@")) {
       this.setState((state) => state.registerFormError.email = 'Invalid Email');
@@ -188,12 +226,7 @@ export default class RegisterPage extends Component {
     }
   }
 
-  handleInputChange (event) {
-    console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-    event.persist();
-    this.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-  }
-
+  
   handleLocationInputChange (event) {
     event.persist();
     this.setState((state) => { state.registerForm.location[event.target.name] = event.target.value });
@@ -205,32 +238,25 @@ export default class RegisterPage extends Component {
   }
 
   handleSubmit(event) {
-  
+    alert(JSON.stringify(this.state.registerForm.employmentType))
     event.preventDefault();
-    alert(JSON.stringify(this.state.registerForm.countryCode));
     var error = false;
     console.log(this.state);
 
-    var registerFormError = {  fname: "",lname: "", email: "", password: "",countryCode:"",confirmpassword: "", company: "",city: "",title:"",country: "",employmentType:"",postalcode:"",
-        position: "", phone: "", qualification: "", location: {seaport: "", city: "",country: "",postalcode:"",countryCode:""} };
+    var registerFormError = {  firstName: "",lastName: "", email: "", password: "",confirmpassword: "",countryCode:"",phone: "",  clientCompanyName: "",employmentType:"",qualification: "" };
 
-    if(this.state.registerForm.fname == "") {
+    if(this.state.registerForm.firstName == "") {
       error = true;
-      registerFormError.fname = "This field is mandatory";
+      registerFormError.firstName = "This field is mandatory";
     }
-    if(this.state.registerForm.lname == "") {
+    if(this.state.registerForm.lastName == "") {
       error = true;
-      registerFormError.lname = "This field is mandatory";
+      registerFormError.lastName = "This field is mandatory";
     }
-
+    
     if(this.state.registerForm.email == "") {
       error = true;
       registerFormError.email = "This field is mandatory";
-    }
-
-    if(this.state.registerForm.company == "") {
-      error = true;
-      registerFormError.company = "This field is mandatory";
     }
 
     if(this.state.registerForm.password == "") {
@@ -248,57 +274,35 @@ export default class RegisterPage extends Component {
       error = true;
       registerFormError.confirmpassword = "Both passwords do not match";
     }
+    if(this.state.registerForm.countryCode == "") {
+      registerFormError.countryCode = "This field is mandatory";
+      error = true;
+    }
 
     if(this.state.registerForm.phone == "") {
       registerFormError.phone = "This field is mandatory";
       error = true;
     }
 
-    if(this.state.userType == 'inspector') {
-      if(this.state.registerForm.phone == "") {
-        registerFormError.phone = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.position == "") {
-        registerFormError.position = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.countryCode == "") {
-        alert("testing...")
-        registerFormError.countryCode = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.employmentType == "") {
-        registerFormError.employmentType = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.qualification == "") {
-        registerFormError.qualification = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.title == "") {
-        registerFormError.title = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.seaport == "") {
-        registerFormError.seaport = "This field is mandatory";
-        error = true;
-      }
-
-      if(this.state.registerForm.city == "") {
-        registerFormError.city = "This field is mandatory";
-        error = true;
-      }
-
-      
-      
+    if(this.state.registerForm.clientCompanyName == "") {
+      error = true;
+      registerFormError.clientCompanyName = "This field is mandatory";
     }
+
+    if(this.state.registerForm.employmentType == "") {
+      registerFormError.employmentType = "This field is mandatory";
+      error = true;
+    }
+
+    if(this.state.registerForm.qualification == "") {
+      registerFormError.qualification = "This field is mandatory";
+      error = true;
+    }
+
+    if(this.state.registerForm.title == "") {
+      registerFormError.title = "This field is mandatory";
+      error = true;
+    } 
     
     if(error) { 
       this.setState( (state) => { state.registerFormError = registerFormError; state.signUpSuccess = false;});
@@ -445,21 +449,21 @@ export default class RegisterPage extends Component {
                     <div className="col-md-6 pl-0">
                       <div className="input-field">
                         <img className="prefix grey-text" src="/public/img/user.png" alt />
-                        <input id="firstName" type="text" name="fname" value={this.state.registerForm.fname} onChange={this.handleInputChange}/>
+                        <input id="firstName" type="text" name="firstName" value={this.state.registerForm.firstName} onChange={this.handleInputChange}/>
                         <label htmlFor="firstName">First Name
                           <span className="required">*</span>
                         </label>
-                        <div className="errorField">{this.state.registerFormError.fname}</div>
+                        <div className="errorField">{this.state.registerFormError.firstName}</div>
                       </div>
                     </div>
                     <div className="col-md-6 pr-0">
                       <div className="input-field">
                         <img className="prefix grey-text" src="/public/img/user.png" alt />
-                        <input id="lastName" type="text" name="lname" value={this.state.registerForm.lname} onChange={this.handleInputChange} />
+                        <input id="lastName" type="text" name="lastName" value={this.state.registerForm.lastName} onChange={this.handleInputChange} />
                         <label htmlFor="lastName">Last Name
                           <span className="required">*</span>
                         </label>
-                        <div className="errorField">{this.state.registerFormError.lname}</div>
+                        <div className="errorField">{this.state.registerFormError.lastName}</div>
                       </div>
                     </div>
                   </div>
@@ -467,7 +471,7 @@ export default class RegisterPage extends Component {
                     <div className="col-md-6 pl-0">
                       <div className="input-field">
                         <img className="prefix grey-text" src="/public/img/at.png" alt />
-                        <input id="email" type="text"  name="email" value={this.state.registerForm.email} onChange={this.handleInputChange} />
+                        <input id="email" type="text" name="email" value={this.state.registerForm.email} onChange={this.handleInputChange} />
                         <label htmlFor="email">Email Address
                           <span className="required">*</span>
                         </label>
@@ -486,9 +490,9 @@ export default class RegisterPage extends Component {
                     </div>
                   </div>
                   <div className="d-flex col-md-6 pl-0">
-                    <div className="col-md-6 pl-0">
-                      <select id="countryCode" name="countryCode"  onChange={this.handleInputChange} >
-                        <option value="Code" disabled selected required>Code</option>
+                    <div className="col-md-6 pl-0" id="containerCountryCode">
+                      <select id="countryCode"  name="countryCode" value={this.state.registerForm.countryCode}  onChange={this.handleInputChange} >
+                        <option value="">Code</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
                         <option value="Option 3">Option 3</option>
@@ -512,9 +516,9 @@ export default class RegisterPage extends Component {
                   <div className="d-flex mb-5">
                     <div className="col-md-6 pl-0">
                       <div className="input-field">
-                        <input id="clientCompanyName" name="clientCompanyName" type="text" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
+                        <input id="clientCompanyName" name="clientCompanyName" type="text" value={this.state.registerForm.clientCompanyName} onChange={this.handleInputChange}/>
                         <label htmlFor="clientCompanyName">Company Name</label>
-                        <div className="errorField">{this.state.registerFormError.company}</div> 
+                        <div className="errorField">{this.state.registerFormError.clientCompanyName}</div> 
                       </div>
                     </div>
                     <div className="col-md-6 pr-0">
@@ -541,13 +545,13 @@ export default class RegisterPage extends Component {
                   <div className="d-flex mb-5">
                   <div className="col-md-6 pl-0">
                       <div className="input-field">
-                        <input id="country" name="country" type="text" value={this.state.registerForm.country} onChange={this.handleInputChange}/>
+                        <input id="clientCountry" name="clientCountry" type="text" value={this.state.registerForm.clientCountry} onChange={this.handleInputChange}/>
                         <label htmlFor="country">Country</label>
                       </div>
                     </div>
                     <div className="col-md-6 pr-0">
                       <div className="input-field">
-                        <input id="clientPostalCode" name="clientPostalCode" type="text" value={this.state.registerForm.postalcode} onChange={this.handleInputChange}/>
+                        <input id="clientPostalCode" name="clientPostalCode" type="text" value={this.state.registerForm.clientCountry} onChange={this.handleInputChange}/>
                         <label htmlFor="clientPostalCode">Postal Code</label>
                       </div>
                     </div>
@@ -560,13 +564,13 @@ export default class RegisterPage extends Component {
                   <div className="d-flex mb-5">
                     <div className="col-md-6 pl-0">
                       <div className="input-field">
-                        <input id="inspectorCompanyName"  name="inspectorCompanyName" type="text" value={this.state.registerForm.company} onChange={this.handleInputChange}/>
+                        <input id="inspectorCompanyName"  name="inspectorCompanyName" type="text" value={this.state.registerForm.inspectorCompanyName} onChange={this.handleInputChange}/>
                         <label htmlFor="inspectorCompanyName">Company Name</label>
                       </div>
                     </div>
-                    <div className="col-md-6 pr-0">
-                      <select   name="empoymentType" defaultValue={this.state.registerForm.employmentType} onChange={this.handleInputChange}>
-                        <option value disabled selected required>Employment Type</option>
+                    <div className="col-md-6 pr-0" id="employmentTypeContainer">
+                      <select name="employmentType" defaultValue={this.state.registerForm.employmentType} onChange={this.handleInputChange}>
+                        <option value=""  required>Employment Type</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
                         <option value="Option 3">Option 3</option>
@@ -575,18 +579,18 @@ export default class RegisterPage extends Component {
                     </div>
                   </div>
                   <div className="d-flex mb-5">
-                    <div className="col-md-6 pl-0">
+                    <div className="col-md-6 pl-0" id="qualificationContainer">
                       <select  name="qualification" defaultValue={this.state.registerForm.qualification} onChange={this.handleInputChange}>
-                        <option value disabled selected required>Qualification</option>
+                        <option value="" required>Qualification</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
                         <option value="Option 3">Option 3</option>
                       </select>
                       <div className="errorField mt-18">{this.state.registerFormError.qualification}</div>
                     </div>
-                    <div className="col-md-6 pr-0">
+                    <div className="col-md-6 pr-0" id="titleContainer">
                       <select name="title" defaultValue={this.state.registerForm.title} onChange={this.handleInputChange}>
-                        <option value disabled selected required>Title</option>
+                        <option value="" required>Title</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
                         <option value="Option 3">Option 3</option>
@@ -595,17 +599,17 @@ export default class RegisterPage extends Component {
                     </div>
                   </div>
                   <div className="d-flex mb-5">
-                    <div className="col-md-6 pl-0">
-                      <select name="inspectorCity" defaultValue={this.state.registerForm.city} onChange={this.handleInputChange}>
-                        <option value disabled selected required>City</option>
+                    <div className="col-md-6 pl-0" id="inspectorCityContainer">
+                      <select name="inspectorCity" defaultValue={this.state.registerForm.inspectorCity} onChange={this.handleInputChange}>
+                        <option value="" selected required>City</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
                         <option value="Option 3">Option 3</option>
                       </select>
                     </div>
-                    <div className="col-md-6 pr-0">
+                    <div className="col-md-6 pr-0" id="inspectorCountryContainer">
                       <select name="inspectorCountry" defaultValue={this.state.registerForm.country} onChange={this.handleInputChange}>
-                        <option value disabled selected required>Country</option>
+                        <option value="" required>Country</option>
                         <option value="Option 1">Option 1</option>
                         <option value="Option 2">Option 2</option>
                         <option value="Option 3">Option 3</option>
@@ -629,12 +633,11 @@ export default class RegisterPage extends Component {
                   <div className="position-absolute signUpBtm w-100 col-md-12 py-3">
                   <div className="daj signUpBtmBg py-3">
                     <div className="text-center">
-                      <input type="submit" className="btn btn-outline-pink loginBtn" defaultValue="SIGN UP"/>
-                      <input type="button" defaultValue="RESET" className="btn btn-outline-gray loginBtn ml-5"/>
+                      <input type="submit" className="btn btn-outline-pink loginBtn mr-20" defaultValue="SIGN UP"/>
+                      <input type="button" defaultValue="RESET" className="btn btn-outline-gray loginBtn"/>
                     </div>
                   </div>
                 </div>
-
                 </form>
               </div>
             </div>
