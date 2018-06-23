@@ -30,13 +30,27 @@ export default class FilterInspectorPage extends Component {
     constructor(props){
         super(props);
     }
+
+    componentWillMount(){
+        $(document).ready(function () {
+          $('.dropdown-button').dropdown({
+              constrainWidth: false,
+              hover: true,
+              belowOrigin: true,
+              alignment: 'left'
+          });
+          $('select').material_select();
+          
+          $('.button-collapse').sideNav();
+        });
+      }
    
   render() {
         return (
             <div className="shiptype">
                     <div className="col-md-12 pl-0 pr-0">
-                        <span>Skills</span>
-                        <div className="skills-filter" style={{color: "#5ab8f8",fontSize:13,fontWeight: "lighter",borderRadius:1}}>
+                        <span className="fw-bold">Skills</span>
+                        <div className="skills-filter mt-5" style={{color: "#5ab8f8",fontSize:13,fontWeight: "lighter",borderRadius:1}}>
                         <div className="d-flex p-3 tags ">
                         <div className="tag d-flex mt-25">
                             <div className="tagBg">
@@ -58,8 +72,8 @@ export default class FilterInspectorPage extends Component {
                         </div>  
                     </div>
                     <div className="col-md-12 pl-0 pr-0 mt-10">
-                    <span>Ship Type</span>
-                    <div className="skills-filter pb-10 filterpadding " style={{color: "#5ab8f8",fontSize:13,fontWeight: "lighter",borderRadius:1}}>
+                    <span className="fw-bold mt-5">Ship Type</span>
+                    <div className="skills-filter pb-10 filterpadding mt-5 " style={{color: "#5ab8f8",fontSize:13,fontWeight: "lighter",borderRadius:1}}>
                         <ul className="ship-list mt-10">
                             <li>Car Carriers Ship</li>
                             <br/>
@@ -69,23 +83,19 @@ export default class FilterInspectorPage extends Component {
                     </div>
                 </div>
                 <div className="col-md-12 pl-0 pr-0 mt-10">
-                <span>Areas Covered"</span>
+                <span className="fw-bold">Areas Covered"</span>
                 <div className="dropdown">
-                <button type="button" className="btn btn-default dropdown-toggle ml-0 w-100" data-toggle="dropdown">
-                Country
-                </button>
-                <div className="dropdown-menu w-100">
-                    <a className="dropdown-item" href="#">Option 1</a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">Option 2</a>
-                    <div className="dropdown-divider" />
-                        <a className="dropdown-item" href="#">Option 3</a>
-                    </div>
-                    </div>
+                <select name="inspectorCountry mt-5">
+                        <option value="" required>Country</option>
+                        <option value="Option 1">Option 1</option>
+                        <option value="Option 2">Option 2</option>
+                        <option value="Option 3">Option 3</option>
+                </select>
                 </div>
-                <div className="col-md-12 pl-0 pr-0 mt-10">
-                    <span>Years of experience</span>
-                    <div style={wrapperStyle}>
+                </div>
+                <div className="col-md-12 pl-0 pr-0 mt-20">
+                    <span className="fw-bold">Years of experience</span>
+                    <div className="mt-5" style={wrapperStyle}>
                     <Range min={0} max={20} defaultValue={[0, 20]} tipFormatter={value=> `${value}`} />
                     </div>
                 </div>

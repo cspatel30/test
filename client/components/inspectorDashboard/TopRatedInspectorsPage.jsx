@@ -20,8 +20,8 @@ export default class TopRatedInspectorsPage extends Component {
   
     render() {
         return (
-            <div className="col-md-12 pl-0 pr-0">
-                <span>TOP RATED INSPECTORS</span>
+            <div className="col-md-12 pl-0 pr-0 mt-4">
+                <span className="fw-bold">TOP RATED INSPECTORS</span>
                 {
                     TopRated.map((data, key)=>{
                         return <div className="d-flex mt-10 IProfile-page" >

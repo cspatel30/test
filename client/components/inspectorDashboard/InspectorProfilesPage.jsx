@@ -117,13 +117,13 @@ export default class InspectorProfilesPage extends Component {
                     <div className="col-md-2 pl-0">
                         <div class="slider-circle">
                             <img src="/public/img/user_img.png" className="slider-img"/> 
-                            <span className="mt-5 IProfile-page">{data.profile_name}</span>     
+                            <span className="mt-5 IProfile-page ml-5">{data.profile_name}</span>     
                         </div>
                     </div>
-                    <div className="col-md-9 d-flex pr-0">
+                    <div className="col-md-9 d-flex pr-0 pl-0">
                         <div className="profile-info mr-auto">
-                            <div className="post  profile-color fw-500">{data.company}</div>
-                                <span className="designation">{data.designation}</span>
+                            <div className="post  profile-color fw-bold">{data.company}</div>
+                                <span>{data.designation}</span>
                                 <div className="stars d-flex">
                         <ReactStars count={5} size={12} color2={ '#ffd700'} />
                         <span >(3)</span>
@@ -138,7 +138,7 @@ export default class InspectorProfilesPage extends Component {
                         </div>
                     </div>
                     <div className="col-md-12 pl-0 pr-0">
-                        <div className="col-md-9 fr">
+                        <div className="col-md-9 fr pr-0 text-justify">
                                 <span className="fs-12">{data.description}</span>
                          </div>
                         </div>

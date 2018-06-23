@@ -41,8 +41,8 @@ export default class EmployeeHistoryPage extends Component {
                                     </th>
                                     <td className="b-0">
                                         <ReactStars count={5} size={15} color2={ '#ffd700'} />
-                                        <span></span><br/>
-                                        <span className="ml-8"> Good Job! </span>
+                                        <span></span>
+                                        <div className="ml-8 mt-18"> Good Job! </div>
                                     </td>
                                 </tr>
                             })

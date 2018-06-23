@@ -21,7 +21,7 @@ export default class TopFavourateInspectorsPage extends Component {
   render() {
     return (
         <div className="col-md-12 pl-0 pr-0">
-            <span>TOP FAVOURITE</span>
+            <span className="fw-bold">TOP FAVOURITE</span>
             {
                 Favourite.map((data, key)=>{
                     return <div className="d-flex mt-10 IProfile-page" >
