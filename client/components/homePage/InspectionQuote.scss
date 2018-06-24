@@ -7,4 +7,58 @@
       color: #aaa;
     }
   }
+
+  .form-row {
+    .input-group {
+      border-bottom: 1px solid darkgray;
+      .input-group-text {
+        background-color: #f2f2f2;
+        border: none;
+      }
+      .form-control {
+        border: none;
+        background-color: #f2f2f2;
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      .field-select {
+        width: 100%;
+        outline: none;
+        // box-shadow: 0 0 1px 0 rgba(0,0,0,.35);
+        .Select-control {
+          border: none;
+          background-color: #f2f2f2;
+          font-size: 1rem;
+          // padding: 16px;
+          .Select-value, .Select-placeholder {
+            display: flex;
+            align-items: center;
+            color: #495057;
+            // font-size: 85%;
+
+          }
+          .Select-clear-zone {
+            display: none;
+          } 
+        }
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+  .form-wrap {
+    .btn-post-enquiry {
+      color: deeppink;
+      border: 1px solid deeppink;
+      background: white;
+      border-radius: 30px;
+      font-size: 1.3vw;
+      padding: 10px 30px;
+      margin-top: 5rem;
+      width: fit-content;
+    }
+  }
 }
