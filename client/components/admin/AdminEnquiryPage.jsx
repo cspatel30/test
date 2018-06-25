@@ -5,8 +5,13 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
+import ReactTable from "react-table";
 var moment = require('moment');
 import { NavLink } from 'react-router-dom';
+import { _getDeafultColumnsWidth, _selectNewRecordsIfAllSelected, toggleSelectAll,
+ toggleRow, _removeColumnsIfNotNeeded, _createFiltersQueryString, _createSortedDataString } 
+ from '../reactTableCustomFunctions';
 
 export default class AdminEnquiryPage extends Component {
 
@@ -23,7 +28,26 @@ export default class AdminEnquiryPage extends Component {
       updateQuoteFormError: {
         customerQuote: "",
         inspectorQuote: ""
-      }
+      },
+
+      tableStates:  {
+            rows: [],
+            columns: [],
+            page: 1,
+            pageSize: 20,
+            totalRecords: 1,
+            totalPagesWithRecords: 1,
+            sorted: "",
+            filtered: "",
+            dataTableLoading: false,
+            filtered: [],  selected: {}, selectAll: 0, setDefaultSelectedRecords:false,
+            imagePath : "",
+            familyPageTitle: "",
+            apiCallRecords : {callOccurance:0, noRecordExist: false},
+            previewImage: {imagePreviewOpen: false, selectedImage: "", title: "" },
+            selected: {}, selectAll: 0,
+        }      
+
     };
 
     this.cancelEnquiry = this.cancelEnquiry.bind(this);
@@ -33,6 +57,8 @@ export default class AdminEnquiryPage extends Component {
     this.renderUpdateQuoteDialog = this.renderUpdateQuoteDialog.bind(this);
     this.updateQuote = this.updateQuote.bind(this);
     this.handleQuoteFormFieldChange = this.handleQuoteFormFieldChange.bind(this);
+    this._setColumnsList = this._setColumnsList.bind(this);
+    this.setSelectedRecordsInState = this.setSelectedRecordsInState.bind(this);
 
   }
 
@@ -71,6 +97,446 @@ export default class AdminEnquiryPage extends Component {
     this.setState((state) => {
       state.quoteUpdateForEnquiryId = null;
     });
+  }
+
+
+  setSelectedRecordsInState = (rowResponse) => {
+        const { setSelectedUsersList } =  this.props;
+        let { tableStates } = this.state;
+        if(setSelectedUsersList){
+            if(this.props.selectOneRecordOnly) {
+                const data = Object.assign({}, rowResponse.selectedUserData);
+                if(rowResponse.selectedUserData && rowResponse.selectedUserData.picture){
+                    data.picture = this.state.imagePath + data.picture;
+                }
+                setSelectedUsersList({
+                    selected: rowResponse.selected,
+                    selectAll: rowResponse.selectAll,
+                    selectedUserData: data
+                });
+            }
+            else{
+                setSelectedUsersList({
+                    selected: rowResponse.selected,
+                    selectAll: rowResponse.selectAll
+                });
+
+            }
+        }
+        tableStates.selected = rowResponse.selected;
+        tableStates.selectAll = rowResponse.selectAll;
+        this.setState({tableStates: tableStates});
+    }
+
+  _setColumnsList = () => {
+        let columnsList = [];
+        const { removeColumnsFromGrid, _updateUserActiveStatus,
+            isListOpenInModal, showInlineDetailInfo } = this.props;
+
+
+
+        columnsList =  [
+
+             {
+                id: "id",
+                Header: 'Enquiry Number',
+                accessor: "id",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.id}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+                id: "inspectionTypeDisplayName",
+                Header: 'Inspection Type',
+                accessor: "inspectionTypeDisplayName",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.inspectionTypeDisplayName}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+                id: "vesselName",
+                Header: 'Vessel Name',
+                accessor: "vesselName",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.vesselName}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+                id: "imo",
+                Header: 'IMO',
+                accessor: "imo",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.imo}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+                id: "vesselTypeDisplayName",
+                Header: 'Vessel Type',
+                accessor: "vesselTypeDisplayName",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.vesselTypeDisplayName}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+            {
+                id: "portData>name",
+                Header: 'Port',
+                accessor: "portData>name",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.portData.name} <b> {original.portData.countryName}</b>
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+              id: "message",
+              Header: 'Message',
+              accessor: "message",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.message}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+            {
+              id: "email",
+              Header: 'Email',
+              accessor: "email",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.email}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "startTime",
+              Header: 'Start Date',
+              accessor: "startTime",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {this.formatDate(original.startTime)}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "endTime",
+              Header: 'End Date',
+              accessor: "endTime",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {this.formatDate(original.endTime)}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "customerQuote",
+              Header: 'Customer Quote Amount',
+              accessor: "customerQuote",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {parseFloat(original.customerQuote).toFixed(2)}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "inspectorQuote",
+              Header: 'Inspector Quote Amount',
+              accessor: "inspectorQuote",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {parseFloat(original.inspectorQuote).toFixed(2)}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "clientName",
+              Header: 'Client Name',
+              accessor: "clientName",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.clientName?original.clientName:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          {
+              id: "maxBiddingPrice",
+              Header: 'Max. Bidding Price',
+              accessor: "maxBiddingPrice",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.maxBiddingPrice?original.maxBiddingPrice:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          {
+              id: "quotationMethos",
+              Header: 'Quotation Methos',
+              accessor: "quotationMethos",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                       Lump Sum
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "totalInspectionFees",
+              Header: 'Total Inspection fee ',
+              accessor: "totalInspectionFees",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.totalInspectionFees?original.totalInspectionFees:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "totalexpense",
+              Header: 'Total Expense',
+              accessor: "totalexpense",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.totalexpense?original.totalexpense:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+            {
+              id: "totalexpense",
+              Header: 'Total Expense',
+              accessor: "totalexpense",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.totalexpense?original.totalexpense:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+            {
+              id: "totalLumpSum",
+              Header: 'Total lump sum ( Client)',
+              accessor: "totalLumpSum",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.totalLumpSum?original.totalLumpSum:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+            {
+              id: "availability",
+              Header: 'Availability',
+              accessor: "availability",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.availability?original.availability:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "status",
+              Header: 'Current Status',
+              accessor: "status",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.status}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          {     id: "actions",
+                accessor: "",
+                Cell: ({ original }) => {
+                    return (
+                        <div className="action-tab-datables">
+                            <div  className="dropdown-right" id={"custom-dropdown"+original.id}>
+                                <DropdownButton
+                                    title={
+                                        <span><i className="fa fa-ellipsis-v"></i></span>
+                                    }
+                                    className={'custom-dropdown '+ original.id}
+                                    id={original.id}
+                                >
+                                  {this.renderActions(original)}
+                                      
+                                </DropdownButton>
+                            </div>
+                        </div>
+                    );
+                },
+                Header: x => {
+                    return (
+                        <span></span>
+                    );
+                },
+                sortable: false,
+                filterable: false,
+                resizable: false,
+                width: 60,
+                style: _getDeafultColumnsWidth({minWidth:60}),
+                headerStyle:  _getDeafultColumnsWidth({minWidth:60})
+            }
+
+        ];
+
+        columnsList = _removeColumnsIfNotNeeded(columnsList, removeColumnsFromGrid);
+
+        columnsList = [
+            {
+                columns:columnsList
+            }
+        ];
+        return columnsList;
   }
 
   renderUpdateQuoteDialog() {
@@ -158,7 +624,7 @@ export default class AdminEnquiryPage extends Component {
     
     if(enquiry.status == 'CREATED') {
       actions.push(<div className="btn" key={"enquiry_action_updatequote_"+enquiry.id}>
-        <button onClick={ () => this.openUpdateQuoteDialog(enquiry.id)}>Update Quote</button>
+        <button onClick={ () => this.openUpdateQuoteDialog(enquiry.id)}>Edit  Quote</button>
       </div>);
       actions.push(<div className="btn" key={"enquiry_action_assign_si_"+enquiry.id}>
         <NavLink to={`${this.props.match.url}/enquiry/${enquiry.id}/inspectors/`}><button>Assign Inspectors</button></NavLink>
@@ -171,45 +637,39 @@ export default class AdminEnquiryPage extends Component {
   renderEnquiries(enquiries) {
   	var items = [];
   	
-    for(var i=0; i < enquiries.length; i++) {
-  		var enquiryId = enquiries[i].id;
-      items.push(
-        <div className="enquiry-row" key={"enquiry_" + i}>
-          <div className="enquiry-details-box">
-            <div className="details">
-              <h2>Enquiry Number : <span className="value">{enquiries[i].id}</span></h2>
-              <h4>Inspection Type: <span className="value">{enquiries[i].inspectionTypeDisplayName}</span></h4>
-              <h4>Vessel Name: <span className="value">{enquiries[i].vesselName}</span></h4>
-              <h4>IMO Number: <span className="value">{enquiries[i].imo}</span></h4>
-              <h4>Vessel Type: <span className="value">{enquiries[i].vesselTypeDisplayName}</span></h4>
-              <h4>Port: <span className="value">{enquiries[i].portData.name}, {enquiries[i].portData.countryName}</span></h4>
-            </div>
-          </div>
-          <div className="enquiry-details-box">
-            <div className="details">
-              <h4>Email : <span className="value">{enquiries[i].email}</span></h4>
-              <h4>Start Date : <span className="value">{this.formatDate(enquiries[i].startTime)}</span></h4>
-              <h4>End Date : <span className="value">{this.formatDate(enquiries[i].endTime)}</span></h4>
-              <h4>Customer Quote Amount : <span className="value">{parseFloat(enquiries[i].customerQuote).toFixed(2)}</span></h4>
-              <h4>Inspector Quote Amount : <span className="value">{parseFloat(enquiries[i].inspectorQuote).toFixed(2)}</span></h4>
-              <h4>Current Status : <span className="value" style={{color: '#d50608'}}>{enquiries[i].status}</span></h4>
-            </div>
-          </div>
-          <div className="enquiry-actions-box">
-            {this.renderActions(enquiries[i])}
-          </div>
-          <div className="clear"></div>
-        </div>
-      );
-  	}
-  	return items;
+   return (
+         <ReactTable
+            data={enquiries}
+            filterable
+            columns={this._setColumnsList()}
+            minRows={0}
+            showPagination={false}
+            manual
+            freezeWhenExpanded={true}
+            onFetchData={(state, instance) => {
+                if(state.filtered && state.filtered.length > 0) {
+                    this.props.getCustomerEnquiries();
+                } else {
+                     this.props.getCustomerEnquiries();
+                }
+            }}
+            className={ "-striped -highlight apply-action-column-datatabl"}
+
+            >
+            </ReactTable>
+                                  
+      )
+
+
+    
   }
 
   render() {
     if(this.props.enquiries && this.props.enquiries.length > 0) {
       return(<div className="enquiries"> 
-        {this.renderEnquiries(this.props.enquiries)}
-        {this.renderUpdateQuoteDialog()}
+            <h1>Enquiries</h1>
+            {this.renderEnquiries(this.props.enquiries)}
+            {this.renderUpdateQuoteDialog()}
       </div>);
     } else {
       return(<div className="enquiries"> 

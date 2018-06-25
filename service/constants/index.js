@@ -244,7 +244,7 @@ global.regionCodes = {
 global.mysqlConfig = {
   host: "localhost",
   user: "root",
-  password: "root",
+  password: "",
   database: "shipinspector"
 };
 
