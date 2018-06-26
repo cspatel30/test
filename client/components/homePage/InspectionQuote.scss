@@ -14,6 +14,7 @@
       .input-group-text {
         background-color: #f2f2f2;
         border: none;
+        font-size: 1.5rem;
       }
       .form-control {
         border: none;
@@ -37,11 +38,15 @@
             align-items: center;
             color: #495057;
             // font-size: 85%;
-
           }
           .Select-clear-zone {
             display: none;
           } 
+        }
+        .Select-menu-outer {
+          .Select-option {
+            background-color: #fff !important;
+          }
         }
         &:focus {
           box-shadow: none;

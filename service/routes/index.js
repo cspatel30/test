@@ -74,7 +74,6 @@ module.exports = function(app) {
             '/login', '/register', '/terms', '/policy', '/my/*', '/enquiry/*', '/reports', '/verify/email/*', '/setup/account/*'],
     function (req, resp) {
       console.log("respond with index html");
-      resp.sendFile(path.join(__dirname, "../../client/resources/static/", "index.html"));
+      resp.sendFile(path.join(__dirname, "../../client/", "index.html"));
   });
-
 };

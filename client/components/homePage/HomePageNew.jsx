@@ -14,7 +14,6 @@ export default class HomePageNew extends Component {
         <HomeHeader />
         <InspectionQuote />
         <HomeFooter />
-        <div style={{ background: 'blue', height: '100vh' }}>temp</div>
       </div> 
     );
   }

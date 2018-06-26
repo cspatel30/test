@@ -62,7 +62,7 @@ export default class Body extends Component {
               <Route path="/admin" component={AdminHomePageContainer} />
               
             </div>
-            <Footer/>
+            {/* <Footer/> */}
           </div>
       );
   }
