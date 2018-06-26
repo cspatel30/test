@@ -19,9 +19,6 @@ app.use(cookieParser())
 var routes = require('./service/routes/');
 routes(app);
 
-// app.use('/*', (req, res) => {
-//   res.sendFile(path.join(__dirname,"./client/index.html"));
-// });
 
 app.listen(port);
 
