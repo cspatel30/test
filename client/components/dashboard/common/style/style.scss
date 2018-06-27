@@ -1,0 +1,86 @@
+
+  .enquiry-details-box {  
+    float: left;
+    line-height: 22px;
+    .enquiry-actions-box {
+      width: 19%;
+      float: left;
+    }
+     span {
+      font-size: 16px;
+      font-weight: 300;
+      font-family: 'proxima_novaregular';
+    }
+    
+     span.actions:last-child {
+      line-height: 31px;
+    }
+    
+     span.inspector {
+      line-height: 46px;
+    }
+    
+     span.proposal {
+      line-height: 41px;
+    }
+    
+     span a {
+      color: #FE3D6C;
+      font-size: 14px;
+      font-weight: 300;
+    }
+     span.titleEnquiry {
+      color: #0D99EF;
+      font-size: 16px;
+      font-weight: 300;
+    }
+    
+     span.content {
+      overflow: hidden;
+      line-height: 1.2em;
+      height: 3.6em;
+    }
+     span.content.collapsed{
+      overflow: hidden;
+    }
+     span.content.expanded{
+      overflow: visible;
+      height: auto;
+    }
+    
+    .enquiry-actions-box button {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin: 0px;
+      padding: 10px;
+      background-color: #1f9bed;
+      text-align: center;
+      text-transform: uppercase;
+      color: #ffffff;
+      cursor: pointer;
+    } 
+    .message {
+      width: 113px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: pointer;
+      font-weight:300;
+      color:#27292E;
+      } 
+      .dropMessage{
+        height: auto;
+        width: 412px;
+        background-color: #F8F8F8;
+        box-shadow: 0 0 70px 1px rgba(0, 1, 1, 0.23);
+        position: absolute;
+        text-align: left;
+        margin: -15px 0 0;
+        border-radius: 4px;
+        left: 234px;
+        }
+  }
+  table.Listing tr:nth-child(even) {
+    background: #fafafa;
+  }

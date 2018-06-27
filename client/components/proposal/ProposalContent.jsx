@@ -6,6 +6,7 @@ import InspectionCard from './InspectionCard.jsx';
 import ReactPaginate from "react-paginate";
 import './style/style.scss';
 
+
 export default class ProposalContent extends Component {
     constructor(props) {
         super(props);

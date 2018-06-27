@@ -37,7 +37,15 @@ module.exports = {
 	          presets: ['es2015', 'react', 'stage-1']
 	        }
 				},
-				{ test: /\.(png|jpg|svg|otf|ttf)$/, loader: "url-loader" }
+				{ test: /\.(png|jpg|svg|otf|ttf)$/, loader: "url-loader" },
+				{
+					test:/\.scss$/,
+					loaders:[
+					  require.resolve('style-loader'),
+					  require.resolve('css-loader'),
+					  require.resolve('sass-loader')
+					]
+				  }
 	    ]
   	},
 
@@ -46,7 +54,7 @@ module.exports = {
 		new ExtractTextPlugin('style.css.[contentHash].css'),
 		new webpack.LoaderOptionsPlugin({
         	minimize: true,
-        	debug: false
+			debug: false
       	}),
       	new webpack.DefinePlugin({
         	'process.env': {
