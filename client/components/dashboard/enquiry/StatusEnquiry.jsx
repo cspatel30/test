@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import arrowDown from '../../images/down-arrow.svg';
-import tick from '../../images/tick.svg';
-import archive from '../../images/archive.svg';
+import arrowDown from '../../../images/down-arrow.svg';
+import tick from '../../../images/tick.svg';
+import archive from '../../../images/archive.svg';
 
 export default class StatusEnquiry extends Component {
 

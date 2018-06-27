@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import DashboardPage from '../components/pages/DashboardPage.jsx';
+import DashboardPage from '../components/dashboard/DashboardPage.jsx';
 
 import { getCustomerEnquiries, cancelEnquiry, acceptRejectEnquiryQuote } from '../actions/enquiry';
 import {getUserOrders} from '../actions/order';

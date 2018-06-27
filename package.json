@@ -23,8 +23,10 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "google-map-react": "^0.24.0",
     "mysql": "^2.13.0",
+    "node-sass": "^4.9.0",
     "nodemon": "^1.11.0",
     "regenerator-runtime": "^0.10.5",
+    "sass-loader": "^6.0.7",
     "style-loader": "^0.17.0",
     "uglifyjs-webpack-plugin": "^0.4.3",
     "webpack": "^2.5.1"

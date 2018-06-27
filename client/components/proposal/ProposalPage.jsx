@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Banner from './Banner.jsx';
 import ProposalContent from './ProposalContent.jsx';
+//import './style/style.scss';
 
 var moment = require('moment');
 

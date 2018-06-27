@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import messageimg from '../../images/message.svg';
+import messageimg from '../../../images/message.svg';
 
 export default class Message extends Component {
 

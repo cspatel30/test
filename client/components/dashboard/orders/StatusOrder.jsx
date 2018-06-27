@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import arrowDown from '../../images/down-arrow.svg';
-import tick from '../../images/tick.svg';
-import archive from '../../images/archive.svg';
-import calendar from '../../images/calendar.svg';
+import arrowDown from '../../../images/down-arrow.svg';
+import tick from '../../../images/tick.svg';
+import archive from '../../../images/archive.svg';
+import calendar from '../../../images/calendar.svg';
 import DateTime from 'react-datetime';
 
 let yesterday = DateTime.moment().subtract(1, 'day');

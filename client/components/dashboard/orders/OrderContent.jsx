@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import StatusOrder from './StatusOrder.jsx';
-import CustomizedTable from './CustomizedTable.jsx';
+import CustomizedTable from '../common/CustomizedTable.jsx';
 
 export default class OrderContent extends Component {
     render() {

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import EnquiryContent from './EnquiryContent.jsx';
+import EnquiryContent from './enquiry/EnquiryContent.jsx';
 import ReactPaginate from "react-paginate";
 import leftarrow from '../../images/left-arrow.svg';
 import rightarrow from '../../images/right-arrow.svg';
-import StatusEnquiry from './StatusEnquiry.jsx';
-import OrderContent from './OrderContent.jsx';
+import OrderContent from './orders/OrderContent.jsx';
 
 export default class CustomList extends Component {
     constructor(props) {

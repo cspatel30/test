@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import round from '../../images/round-error-symbol.svg';
 import InspectionCard from './InspectionCard.jsx';
 import ReactPaginate from "react-paginate";
+import './style/style.scss';
 
 export default class ProposalContent extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ export default class ProposalContent extends Component {
         const {formatDate} = this.props;      
         const pageCount = Math.ceil(4 / 2);
         return (
-            <div className="ProposalContainer">
+            <div className="proposalContainer">
             <div className="raisedEnq">
              <RaisedButton
               label="GO TO ENQUIRIES"

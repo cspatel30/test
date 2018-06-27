@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import StatusEnquiry from './StatusEnquiry.jsx';
-import CustomizedTable from './CustomizedTable.jsx';
+import CustomizedTable from '../common/CustomizedTable.jsx';
 
 export default class EnquiryContent extends Component {
     render() {
