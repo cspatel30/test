@@ -43,5 +43,10 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('style.css'),
+    //use this for adding jquery
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jQuery'
+    })
   ],
 };

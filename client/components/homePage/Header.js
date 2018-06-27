@@ -7,7 +7,7 @@ class Header extends Component {
   render() {
     return (
   <div className="header-wrapper d-flex align-items-center justify-content-between px-5">
-    <div className="logo mx-2"><img src="../../resources/headerLogo.jpg" alt="#logo"/></div>
+    <div className="logo mx-2"><img src="/public/img/headerLogo.jpg" alt="#logo"/></div>
     <div className="nav-wrap d-flex align-items-center">
         <div className="mx-3 pointer">HOW IT WORKS</div>
         <div className="mx-3 pointer">CONTACT US</div>

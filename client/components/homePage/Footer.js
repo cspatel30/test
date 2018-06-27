@@ -22,7 +22,7 @@ const Footer = () => {
       <div className="col-4 left-section">
         <div className="d-flex flex-column justify-content-between left-sec-data">
           <div>
-            <img src="../../resources/footerLogo.jpg" alt="#logo"/>
+            <img src="/public/img/footerLogo.jpg" alt="#logo"/>
             <div className="powered-by d-flex flex-column">
               <span>Powered by</span>
               <span><b>SINOTECH</b> MARINE</span>
