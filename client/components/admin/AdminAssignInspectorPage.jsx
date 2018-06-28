@@ -17,6 +17,7 @@ import {
     TableHeaderColumn,
     TableRow,
     TableRowColumn,
+    TableCell
 } from 'material-ui/Table';
 import Pagination from 'materialui-pagination';
 var moment = require('moment');
@@ -100,6 +101,16 @@ function profileViewButtonRenderer(cell, row) {
     </a>
   );
 }
+
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 
 export default class AdminAssignInspectorPage extends Component {
 
@@ -316,7 +327,7 @@ export default class AdminAssignInspectorPage extends Component {
             noDataIndication="No matches found" selectRow={selectRow} store={ {selected : selectedUserIds } }/>
             */}
             hello
-            <Table selectable={true}
+            <Table style={{tableLayout: 'auto'}} selectable={true}
                 multiSelectable={true}
                 onRowSelection={this.handleClick}>
                             <TableHeader displaySelectAll={true} adjustForCheckbox={true}>
@@ -334,63 +345,63 @@ export default class AdminAssignInspectorPage extends Component {
                                     <TableHeaderColumn className="table-title align-center">Status</TableHeaderColumn>
                                 </TableRow>
                             </TableHeader>
-                            <TableBody displayRowCheckbox={false}>
+                            <TableBody style={{tableLayout: 'auto'}}  displayRowCheckbox={false}>
                                 {
                                     (inspectorsList.length > 0 ? inspectorsList.map((item, index) => {
                                            const isSelected = this.isSelected(item.id);
                                             return (
                                                 <TableRow >
-                                                    <TableRowColumn padding="checkbox">
+                                                    <CustomTableCell padding="checkbox">
                                                         <Checkbox checked={isSelected} />
-                                                    </TableRowColumn>
-                                                    <TableRowColumn>
+                                                    </CustomTableCell>
+                                                    <CustomTableCell>
                                                         <div className="clear">{item.id}</div>
                                                         <div className="clear">{item.name}</div>
                                                         <div className="clear">{item.city+' , '+item.country.name}</div>
-                                                    </TableRowColumn>
-                                                    <TableRowColumn>{item.country?item.country.name:""}</TableRowColumn>
-                                                    <TableRowColumn>
+                                                    </CustomTableCell>
+                                                    <CustomTableCell>{item.country?item.country.name:""}</TableRowColumn>
+                                                    <CustomTableCell>
                                                         <div>Inspection Fee </div>
                                                         <div>Travel Expense</div>
                                                         <div>Others</div>
-                                                    </TableRowColumn>
-                                                    <TableRowColumn>
+                                                    </CustomTableCell>
+                                                    <CustomTableCell>
                                                         <div>1200</div>
                                                         <div>300</div>
-                                                    </TableRowColumn>
-                                                     <TableRowColumn>
+                                                    </CustomTableCell>
+                                                     <CustomTableCell>
                                                         <div>30</div>
                                                         <div>10</div>
-                                                    </TableRowColumn>
-                                                    <TableRowColumn>
+                                                    </CustomTableCell>
+                                                    <CustomTableCell>
                                                         <div>1560</div>
                                                         <div>330</div>
-                                                    </TableRowColumn>
-                                                    <TableRowColumn>
+                                                    </CustomTableCell>
+                                                    <CustomTableCell>
                                                         <div>InspectionService</div> 
                                                         <div>Traveling/Waiting Charges</div>
                                                         <div>Estimated Inspection Days</div>
                                                         <div>Estimated Trave/Waiting Days</div>
-                                                    </TableRowColumn>
-                                                    <TableRowColumn>
+                                                    </CustomTableCell>
+                                                    <CustomTableCell>
                                                         <div>30</div> 
                                                         <div>$250</div>
                                                         <div>5</div>
-                                                    </TableRowColumn>
-                                                     <TableRowColumn>
+                                                    </CustomTableCell>
+                                                     <CustomTableCell>
                                                         <div>30</div> 
                                                         <div>$10</div>
                                                         <div>0</div>
-                                                    </TableRowColumn>
-                                                     <TableRowColumn>
+                                                    </CustomTableCell>
+                                                     <CustomTableCell>
                                                         <div>$455</div> 
                                                         <div>$275</div>
                                                         <div>5</div>
-                                                    </TableRowColumn>
-                                                     <TableRowColumn>
+                                                    </CustomTableCell>
+                                                     <CustomTableCell>
                                                         <div>Attachments Edit</div> 
                                                         <div>Cancel</div>
-                                                    </TableRowColumn>
+                                                    </CustomTableCell>
                                                 </TableRow>
                                             );
                                         }) :  <TableRow><TableRowColumn className='no-record'>No record found</TableRowColumn></TableRow>)
