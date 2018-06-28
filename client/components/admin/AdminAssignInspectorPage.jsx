@@ -316,7 +316,7 @@ export default class AdminAssignInspectorPage extends Component {
             noDataIndication="No matches found" selectRow={selectRow} store={ {selected : selectedUserIds } }/>
             */}
             hello
-            <Table selectable={true}
+            <Table style={{tableLayout: 'auto'}} selectable={true}
                 multiSelectable={true}
                 onRowSelection={this.handleClick}>
                             <TableHeader displaySelectAll={true} adjustForCheckbox={true}>
