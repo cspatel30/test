@@ -6,3 +6,213 @@
     margin: 0;
     margin-bottom: 10px;
 }
+.ReactTable .rt-td {
+    overflow: inherit !important;
+}
+.dropdown-right ul.dropdown-menu{
+    float: right;
+    right:0px;
+    left: inherit;
+}
+.ReactTable .rt-th, .ReactTable .rt-td {
+    white-space: inherit;
+}
+.ReactTable .rt-td a:hover {
+    text-decoration: underline;
+}
+.react-table-subcomponent-main {
+	 padding: "20px"
+}
+.react-table-subcomponent-main h2 {
+    font-size: 26px;
+    padding: 10px 0;
+    text-transform: uppercase;
+    color: #1f9bed !important;
+    margin: 0;
+    margin-bottom: 10px;
+}
+.ReactTable .dropdown-menu{
+    height: 0px !important;
+    display: block !important;
+    overflow:hidden !important;
+    border: 0px solid #f00;
+    box-shadow: none;
+    background-color: transparent;
+    padding:0px
+}
+.ReactTable .open>.dropdown-menu{
+    height: auto !important;
+    overflow:visible !important;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    border: 1px solid rgba(0,0,0,.15);
+    background-color: #fff;
+    padding:5px 0;
+}
+.react-table-subcomponent-main .ReactTable.-striped .rt-tr.-odd{
+    background: #fff !important;
+}
+.rt-tbody, .ReactTable .rt-table {
+    overflow: visible !important;
+}
+.ReactTable{
+    overflow-x: auto !important;
+}
+.react-table-subcomponent-main .rt-tr.-odd {
+    background: #fff;
+}
+.ReactTable .rt-tbody .rt-td{
+    white-space: normal !important;
+    word-wrap: break-word;
+}
+
+
+.enquiry-actions-main button {
+  color: rgba(0, 0, 0, 0.87);
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  min-width: 88px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  min-height: 36px;
+  box-sizing: border-box;
+  line-height: 1.4em;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.enquiry-actions-main button:hover {
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+.enquiry-actions-main button.j187 {
+  color: rgba(0, 0, 0, 0.26);
+}
+@media (hover: none) {
+  .enquiry-actions-main button:hover {
+    background-color: transparent;
+  }
+}
+.enquiry-actions-main button:hover.j187 {
+  background-color: transparent;
+}
+.j170 {
+  display: inherit;
+  align-items: inherit;
+  justify-content: inherit;
+}
+.j172 {
+  color: #2196f3;
+}
+.j172:hover {
+  background-color: rgba(33, 150, 243, 0.08);
+}
+@media (hover: none) {
+  .j172:hover {
+    background-color: transparent;
+  }
+}
+.j173 {
+  color: rgb(225, 0, 80);
+}
+.j173:hover {
+  background-color: rgba(225, 0, 80, 0.08);
+}
+@media (hover: none) {
+  .j173:hover {
+    background-color: transparent;
+  }
+}
+.j177 {
+  border: 1px solid rgba(0, 0, 0, 0.23);
+}
+.j178 {
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+  background-color: #e0e0e0;
+}
+.j178.j186 {
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14),0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}
+.j178:active {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),0px 8px 10px 1px rgba(0, 0, 0, 0.14),0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+.j178.j187 {
+  color: rgba(0, 0, 0, 0.26);
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+.j178:hover {
+  background-color: #d5d5d5;
+}
+@media (hover: none) {
+  .j178:hover {
+    background-color: #e0e0e0;
+  }
+}
+.j178:hover.j187 {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+.j179 {
+  color: #fff;
+  background-color: #2196f3;
+}
+.j179:hover {
+  background-color: #1976d2;
+}
+@media (hover: none) {
+  .j179:hover {
+    background-color: #2196f3;
+  }
+}
+.j180 {
+  color: #fff;
+  background-color: rgb(225, 0, 80);
+}
+.j180:hover {
+  background-color: rgb(157, 0, 56);
+}
+@media (hover: none) {
+  .j180:hover {
+    background-color: rgb(225, 0, 80);
+  }
+}
+.j184 {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  min-width: 0;
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14),0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 50%;
+}
+.j184:active {
+  box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2),0px 12px 17px 2px rgba(0, 0, 0, 0.14),0px 5px 22px 4px rgba(0, 0, 0, 0.12);
+}
+.j185 {
+  width: initial;
+  height: 48px;
+  padding: 0 16px;
+  min-width: 48px;
+  border-radius: 24px;
+}
+.j188 {
+  color: inherit;
+}
+.j189 {
+  width: 40px;
+  height: 40px;
+}
+.j190 {
+  padding: 7px 8px;
+  min-width: 64px;
+  font-size: 0.8125rem;
+  min-height: 32px;
+}
+.j191 {
+  padding: 8px 24px;
+  min-width: 112px;
+  font-size: 0.9375rem;
+  min-height: 40px;
+}
+.j192 {
+  width: 100%;
+}

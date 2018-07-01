@@ -18,7 +18,25 @@ export default class AdminOrderComponent extends Component {
       report1: '',
       report2: '',
       report3: '',
+       tableStates:  {
+            rows: [],
+            columns: [],
+            page: 1,
+            pageSize: 20,
+            totalRecords: 1,
+            totalPagesWithRecords: 1,
+            sorted: "",
+            filtered: "",
+            dataTableLoading: false,
+            filtered: [],  selected: {}, selectAll: 0, setDefaultSelectedRecords:false,
+            imagePath : "",
+            apiCallRecords : {callOccurance:0, noRecordExist: false},
+            previewImage: {imagePreviewOpen: false, selectedImage: "", title: "" },
+            selected: {}, selectAll: 0,
+        } 
   	}
+    this._setColumnsList = this._setColumnsList.bind(this);
+    this.setSelectedRecordsInState = this.setSelectedRecordsInState.bind(this);
   }
 
   componentWillMount() {
@@ -33,7 +51,10 @@ export default class AdminOrderComponent extends Component {
   	}
 
   	if(!this.props.orders && props.orders) {
-  		this.setState((state) => { state.orders = props.orders});
+      const { tableStates } = this.state;
+      let tableStatesCustom = tableStates;
+      tableStatesCustom.rows = props.orders;
+  		this.setState((state) => { state.orders = props.orders; state.tableStates = tableStatesCustom;});
   	}
 
   	this.setState((state) => { state.errorMsg = props.error; })
@@ -84,6 +105,21 @@ export default class AdminOrderComponent extends Component {
   }
 
   renderAdminOrders(admin, orders) {
+    if(1){
+      return (
+           <ReactTable
+            data={orders}
+            filterable
+            columns={this._setColumnsList()}
+            minRows={0}
+            showPagination={false}
+            manual
+            freezeWhenExpanded={true}
+            className={ "-striped -highlight apply-action-column-datatabl"}
+            />
+        )
+    }
+    else{
     return (
       (orders || []).map((x, key) => (
         <div className="d-flex mb-4 p-3 order-row" key={key}>
@@ -120,6 +156,447 @@ export default class AdminOrderComponent extends Component {
         </div>
       ))
     )
+    }
+  }
+
+
+
+
+  setSelectedRecordsInState = (rowResponse) => {
+        const { setSelectedUsersList } =  this.props;
+        let { tableStates } = this.state;
+        if(setSelectedUsersList){
+            if(this.props.selectOneRecordOnly) {
+                const data = Object.assign({}, rowResponse.selectedUserData);
+                if(rowResponse.selectedUserData && rowResponse.selectedUserData.picture){
+                    data.picture = this.state.imagePath + data.picture;
+                }
+                setSelectedUsersList({
+                    selected: rowResponse.selected,
+                    selectAll: rowResponse.selectAll,
+                    selectedUserData: data
+                });
+            }
+            else{
+                setSelectedUsersList({
+                    selected: rowResponse.selected,
+                    selectAll: rowResponse.selectAll
+                });
+
+            }
+        }
+        tableStates.selected = rowResponse.selected;
+        tableStates.selectAll = rowResponse.selectAll;
+        this.setState({tableStates: tableStates});
+    }
+
+    setSelectedRecordsInState = (rowResponse) => {
+        const { setSelectedRecordList } =  this.props;
+        if(setSelectedRecordList){
+            if(this.props.selectOneRecordOnly) {
+                const data = Object.assign({}, rowResponse.selectedUserData);
+                setSelectedRecordList({
+                    selected: rowResponse.selected,
+                    selectAll: rowResponse.selectAll,
+                    selectedSingleData: data
+                });
+            }
+            else{
+                setSelectedRecordList({
+                    selected: rowResponse.selected,
+                    selectAll: rowResponse.selectAll
+                });
+
+            }
+        }
+        this.setState({
+            selected: rowResponse.selected,
+            selectAll: rowResponse.selectAll
+        });
+    }
+
+
+  _setColumnsList = () => {
+        let columnsList = [];
+        const { removeColumnsFromGrid, _updateUserActiveStatus,
+            isListOpenInModal, showInlineDetailInfo } = this.props;
+        columnsList =  [
+              {
+                id: "checkbox",
+                accessor: "",
+                Cell: ({ original }) => {
+                    return (
+                        <label className="label-checkbox">
+                            {
+                                removeColumnsFromGrid && removeColumnsFromGrid.indexOf("select")>-1
+                                    ?"":
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox"
+                                            checked={this.state.tableStates.selected[original.id] === true}
+                                            onChange={() => {
+                                                // let rowResponse = toggleRow(original.id, this.state.tableStates.selected, this.props.selectOneRecordOnly? this.props.getCustomerEnquiries():false);
+                                                // this.setSelectedRecordsInState(rowResponse);
+                                            }}
+                                        />
+                                        <span className="custom-checkbox"></span>
+                                    </div>
+
+                            }
+
+                        </label>
+
+                    );
+                },
+                Header: x => {
+                    return (
+                        <label className="label-checkbox">
+                            {
+                                removeColumnsFromGrid && removeColumnsFromGrid.indexOf("selectAll")>-1
+                                    ?"":
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox"
+                                            checked={this.state.selectAll === 1}
+                                            ref={input => {
+                                                if (input) {
+                                                    input.indeterminate = this.state.selectAll === 2;
+                                                }
+                                            }}
+                                            onChange={() => {
+                                                let rowResponse = toggleSelectAll(this.state.selectAll, this.state.rows);
+                                                this.setSelectedRecordsInState(rowResponse);
+                                            }}
+                                        />
+                                        <span className="custom-checkbox"></span>
+                                    </div>
+
+                            }
+
+                        </label>
+                    );
+                },
+                sortable: false,
+                filterable: false,
+                width: 45,
+                style: _getDeafultColumnsWidth({minWidth:45}),
+                headerStyle:  _getDeafultColumnsWidth({minWidth:45})
+              },
+             {
+                id: "id",
+                Header: 'Ref No.',
+                accessor: "id",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.id}
+                          <div>
+                            {moment(original.createdOn).format("DD/MM/YYYY")}
+                          </div>
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+            {
+                id: "vesselName",
+                Header: 'Vessel Name',
+                accessor: "vesselName",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.vesselName}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+                id: "imo",
+                Header: 'IMO No.#',
+                accessor: "imo",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.imo}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+                id: "vesselTypeDisplayName",
+                Header: 'Vessel Type',
+                accessor: "vesselTypeDisplayName",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.vesselTypeDisplayName}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+              id: "message",
+              Header: 'Client Message',
+              accessor: "message",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.message}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "inspectionType",
+              Header: 'Inspection Type',
+              accessor: "inspectionType",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.inspectionType?original.inspectionType:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+            {
+                id: "portData>name",
+                Header: 'Port',
+                accessor: "portData>name",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.portData?original.portData.name:""} <b> {original.portData.countryName}</b>
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+            
+            {
+              id: "email",
+              Header: 'Email',
+              accessor: "email",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.email}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "startTime",
+              Header: 'Period',
+              accessor: "startTime",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        From {this.formatDate(original.startTime)} to {this.formatDate(original.endTime)}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "clientName",
+              Header: 'Client Name',
+              accessor: "clientName",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.clientName?
+                            <span>
+                              {original.clientName}
+                              <br />
+                              <NavLink to={""}> View Profile</NavLink>
+                            </span>
+                          :""}
+
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          {
+              id: "maxBiddingPrice",
+              Header: 'Max. Bidding Price',
+              accessor: "maxBiddingPrice",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.maxBiddingPrice?original.maxBiddingPrice:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          
+           {
+              id: "inspectorQuote",
+              Header: 'Inspector Deduction',
+              accessor: "inspectorQuote",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                          15%
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          
+          {
+              id: "customerQuote",
+              Header: 'Client Mark Up',
+              accessor: "customerQuote",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                         15%
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          {
+              id: "quotationMethos",
+              Header: 'Additional Charges',
+              accessor: "quotationMethos",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                      
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "totalInspectionFees",
+              Header: 'Admin Message',
+              accessor: "totalInspectionFees",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                       
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "totalexpense",
+              Header: 'Recommended Quotation',
+              accessor: "totalexpense",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.totalexpense?original.totalexpense:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "status",
+              Header: 'Current Status',
+              accessor: "status",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.status}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          }
+
+        ];
+
+        columnsList = _removeColumnsIfNotNeeded(columnsList, removeColumnsFromGrid);
+
+        columnsList = [
+            {
+                columns:columnsList
+            }
+        ];
+        return columnsList;
   }
 
   render() {

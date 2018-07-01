@@ -139,12 +139,15 @@ export default class AdminEnquiryPage extends Component {
 
              {
                 id: "id",
-                Header: 'Enquiry Number',
+                Header: 'Ref No.',
                 accessor: "id",
                 Cell: ({ original }) => {
                     return (
                         <div  className="columns-lower-Case-text">
                           {original.id}
+                          <div>
+                            {momnent(original.createdOn).format("DD/MM/YYYY")} Date Created
+                          </div>
                         </div>
 
                     );
@@ -154,24 +157,7 @@ export default class AdminEnquiryPage extends Component {
                 style: _getDeafultColumnsWidth(),
                 headerStyle:  _getDeafultColumnsWidth()
             },
-             {
-                id: "inspectionTypeDisplayName",
-                Header: 'Inspection Type',
-                accessor: "inspectionTypeDisplayName",
-                Cell: ({ original }) => {
-                    return (
-                        <div  className="columns-lower-Case-text">
-                          {original.inspectionTypeDisplayName}
-                        </div>
-
-                    );
-                },
-                sortable:false,
-                filterable: false,
-                style: _getDeafultColumnsWidth(),
-                headerStyle:  _getDeafultColumnsWidth()
-            },
-             {
+            {
                 id: "vesselName",
                 Header: 'Vessel Name',
                 accessor: "vesselName",
@@ -190,7 +176,7 @@ export default class AdminEnquiryPage extends Component {
             },
              {
                 id: "imo",
-                Header: 'IMO',
+                Header: 'IMO No.#',
                 accessor: "imo",
                 Cell: ({ original }) => {
                     return (
@@ -222,26 +208,9 @@ export default class AdminEnquiryPage extends Component {
                 style: _getDeafultColumnsWidth(),
                 headerStyle:  _getDeafultColumnsWidth()
             },
-            {
-                id: "portData>name",
-                Header: 'Port',
-                accessor: "portData>name",
-                Cell: ({ original }) => {
-                    return (
-                        <div  className="columns-lower-Case-text">
-                          {original.portData.name} <b> {original.portData.countryName}</b>
-                        </div>
-
-                    );
-                },
-                sortable:false,
-                filterable: false,
-                style: _getDeafultColumnsWidth(),
-                headerStyle:  _getDeafultColumnsWidth()
-            },
              {
               id: "message",
-              Header: 'Message',
+              Header: 'Client Message',
               accessor: "message",
               Cell: ({ original }) => {
                   return (
@@ -256,6 +225,41 @@ export default class AdminEnquiryPage extends Component {
               style: _getDeafultColumnsWidth(),
               headerStyle:  _getDeafultColumnsWidth()
           },
+           {
+              id: "inspectionType",
+              Header: 'Inspection Type',
+              accessor: "inspectionType",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.inspectionType?original.inspectionType:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+            {
+                id: "portData>name",
+                Header: 'Port',
+                accessor: "portData>name",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.portData?original.portData.name:""} <b> {original.portData.countryName}</b>
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+            
             {
               id: "email",
               Header: 'Email',
@@ -275,63 +279,12 @@ export default class AdminEnquiryPage extends Component {
           },
            {
               id: "startTime",
-              Header: 'Start Date',
+              Header: 'Period',
               accessor: "startTime",
               Cell: ({ original }) => {
                   return (
                       <div  className="columns-lower-Case-text">
-                        {this.formatDate(original.startTime)}
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
-           {
-              id: "endTime",
-              Header: 'End Date',
-              accessor: "endTime",
-              Cell: ({ original }) => {
-                  return (
-                      <div  className="columns-lower-Case-text">
-                        {this.formatDate(original.endTime)}
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
-           {
-              id: "customerQuote",
-              Header: 'Customer Quote Amount',
-              accessor: "customerQuote",
-              Cell: ({ original }) => {
-                  return (
-                      <div  className="columns-lower-Case-text">
-                        {parseFloat(original.customerQuote).toFixed(2)}
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
-           {
-              id: "inspectorQuote",
-              Header: 'Inspector Quote Amount',
-              accessor: "inspectorQuote",
-              Cell: ({ original }) => {
-                  return (
-                      <div  className="columns-lower-Case-text">
-                        {parseFloat(original.inspectorQuote).toFixed(2)}
+                        From {this.formatDate(original.startTime)} to {this.formatDate(original.endTime)}
                       </div>
 
                   );
@@ -348,7 +301,14 @@ export default class AdminEnquiryPage extends Component {
               Cell: ({ original }) => {
                   return (
                       <div  className="columns-lower-Case-text">
-                        {original.clientName?original.clientName:""}
+                        {original.clientName?
+                            <span>
+                              {original.clientName}
+                              <br />
+                              <NavLink to={""}> View Profile</NavLink>
+                            </span>
+                          :""}
+
                       </div>
 
                   );
@@ -375,9 +335,45 @@ export default class AdminEnquiryPage extends Component {
               style: _getDeafultColumnsWidth(),
               headerStyle:  _getDeafultColumnsWidth()
           },
+          
+           {
+              id: "inspectorQuote",
+              Header: 'Inspector Deduction',
+              accessor: "inspectorQuote",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                          15%
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          
+          {
+              id: "customerQuote",
+              Header: 'Client Mark Up',
+              accessor: "customerQuote",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                         15%
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
           {
               id: "quotationMethos",
-              Header: 'Quotation Methos',
+              Header: 'Additional Charges',
               accessor: "quotationMethos",
               Cell: ({ original }) => {
                   return (
@@ -394,7 +390,7 @@ export default class AdminEnquiryPage extends Component {
           },
            {
               id: "totalInspectionFees",
-              Header: 'Total Inspection fee ',
+              Header: 'Admin Message',
               accessor: "totalInspectionFees",
               Cell: ({ original }) => {
                   return (
@@ -411,7 +407,7 @@ export default class AdminEnquiryPage extends Component {
           },
            {
               id: "totalexpense",
-              Header: 'Total Expense',
+              Header: 'Recommended Quotation',
               accessor: "totalexpense",
               Cell: ({ original }) => {
                   return (
@@ -427,56 +423,6 @@ export default class AdminEnquiryPage extends Component {
               headerStyle:  _getDeafultColumnsWidth()
           },
             {
-              id: "totalexpense",
-              Header: 'Total Expense',
-              accessor: "totalexpense",
-              Cell: ({ original }) => {
-                  return (
-                      <div  className="columns-lower-Case-text">
-                        {original.totalexpense?original.totalexpense:""}
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
-            {
-              id: "totalLumpSum",
-              Header: 'Total lump sum ( Client)',
-              accessor: "totalLumpSum",
-              Cell: ({ original }) => {
-                  return (
-                      <div  className="columns-lower-Case-text">
-                        {original.totalLumpSum?original.totalLumpSum:""}
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
-            {
-              id: "availability",
-              Header: 'Availability',
-              accessor: "availability",
-              Cell: ({ original }) => {
-                  return (
-                      <div  className="columns-lower-Case-text">
-                        {original.availability?original.availability:""}
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
            {
               id: "status",
               Header: 'Current Status',

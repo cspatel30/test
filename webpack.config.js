@@ -38,6 +38,9 @@ module.exports = {
     loaders: commonLoaders,
   },
   resolve: {
+    alias: {
+            momentDate: 'moment/moment.js',
+     } ,
     extensions: ['.js', '.jsx', '.css', '.scss'],
   },
   plugins: [

@@ -6,8 +6,13 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-var moment = require('moment');
+import ReactTable from "react-table";
 import { NavLink } from 'react-router-dom';
+import { _getDeafultColumnsWidth, _selectNewRecordsIfAllSelected, toggleSelectAll,
+ toggleRow, _removeColumnsIfNotNeeded, _createFiltersQueryString, _createSortedDataString } 
+ from '../reactTableCustomFunctions';
+
+import moment from 'momentDate';
 import './admin.scss';
 
 export default class AdminEnquiryPage extends Component {
@@ -25,7 +30,40 @@ export default class AdminEnquiryPage extends Component {
       updateQuoteFormError: {
         customerQuote: "",
         inspectorQuote: ""
-      }
+      },
+
+      tableStates:  {
+            rows: [],
+            columns: [],
+            page: 1,
+            pageSize: 20,
+            totalRecords: 1,
+            totalPagesWithRecords: 1,
+            sorted: "",
+            filtered: "",
+            dataTableLoading: false,
+            filtered: [],  selected: {}, selectAll: 0, setDefaultSelectedRecords:false,
+            imagePath : "",
+            apiCallRecords : {callOccurance:0, noRecordExist: false},
+            previewImage: {imagePreviewOpen: false, selectedImage: "", title: "" },
+            selected: {}, selectAll: 0,
+        } ,
+      subComponentTableData: {
+           rows: [],
+            columns: [],
+            page: 1,
+            pageSize: 20,
+            totalRecords: 1,
+            totalPagesWithRecords: 1,
+            sorted: "",
+            filtered: "",
+            dataTableLoading: false,
+            filtered: [],  selected: {}, selectAll: 0, setDefaultSelectedRecords:false,
+            imagePath : "",
+            apiCallRecords : {callOccurance:0, noRecordExist: false},
+            selected: {}, selectAll: 0,
+          }      
+
     };
 
     this.cancelEnquiry = this.cancelEnquiry.bind(this);
@@ -35,6 +73,11 @@ export default class AdminEnquiryPage extends Component {
     this.renderUpdateQuoteDialog = this.renderUpdateQuoteDialog.bind(this);
     this.updateQuote = this.updateQuote.bind(this);
     this.handleQuoteFormFieldChange = this.handleQuoteFormFieldChange.bind(this);
+    this._setColumnsList = this._setColumnsList.bind(this);
+    this.setSelectedRecordsInState = this.setSelectedRecordsInState.bind(this);
+    this._setColumnsListSubComponent = this._setColumnsListSubComponent.bind(this);
+    this._loadSubcomponentData = this._loadSubcomponentData.bind(this);
+    
 
   }
 
@@ -45,9 +88,9 @@ export default class AdminEnquiryPage extends Component {
   }
 
   componentWillReceiveProps(props) {
-  	if(!this.props.userProfile && props.userProfile) {
-  		this.props.getCustomerEnquiries();
-  	}
+    if(!this.props.userProfile && props.userProfile) {
+      this.props.getCustomerEnquiries();
+    }
     if(!this.props.enquiryQuoteUpdated && props.enquiryQuoteUpdated)
       this.state.enquiryQuoteUpdated = true;
   }
@@ -74,6 +117,962 @@ export default class AdminEnquiryPage extends Component {
       state.quoteUpdateForEnquiryId = null;
     });
   }
+
+
+  setSelectedRecordsInState = (rowResponse) => {
+        const { setSelectedUsersList } =  this.props;
+        let { tableStates } = this.state;
+        if(setSelectedUsersList){
+            if(this.props.selectOneRecordOnly) {
+                const data = Object.assign({}, rowResponse.selectedUserData);
+                if(rowResponse.selectedUserData && rowResponse.selectedUserData.picture){
+                    data.picture = this.state.imagePath + data.picture;
+                }
+                setSelectedUsersList({
+                    selected: rowResponse.selected,
+                    selectAll: rowResponse.selectAll,
+                    selectedUserData: data
+                });
+            }
+            else{
+                setSelectedUsersList({
+                    selected: rowResponse.selected,
+                    selectAll: rowResponse.selectAll
+                });
+
+            }
+        }
+        tableStates.selected = rowResponse.selected;
+        tableStates.selectAll = rowResponse.selectAll;
+        this.setState({tableStates: tableStates});
+    }
+
+    setSelectedRecordsInState = (rowResponse) => {
+        const { setSelectedRecordList } =  this.props;
+        if(setSelectedRecordList){
+            if(this.props.selectOneRecordOnly) {
+                const data = Object.assign({}, rowResponse.selectedUserData);
+                setSelectedRecordList({
+                    selected: rowResponse.selected,
+                    selectAll: rowResponse.selectAll,
+                    selectedSingleData: data
+                });
+            }
+            else{
+                setSelectedRecordList({
+                    selected: rowResponse.selected,
+                    selectAll: rowResponse.selectAll
+                });
+
+            }
+        }
+        this.setState({
+            selected: rowResponse.selected,
+            selectAll: rowResponse.selectAll
+        });
+    }
+
+
+  _setColumnsList = () => {
+        let columnsList = [];
+        const { removeColumnsFromGrid, _updateUserActiveStatus,
+            isListOpenInModal, showInlineDetailInfo } = this.props;
+        columnsList =  [
+              {
+                id: "checkbox",
+                accessor: "",
+                Cell: ({ original }) => {
+                    return (
+                        <label className="label-checkbox">
+                            {
+                                removeColumnsFromGrid && removeColumnsFromGrid.indexOf("select")>-1
+                                    ?"":
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox"
+                                            checked={this.state.tableStates.selected[original.id] === true}
+                                            onChange={() => {
+                                                // let rowResponse = toggleRow(original.id, this.state.tableStates.selected, this.props.selectOneRecordOnly? this.props.getCustomerEnquiries():false);
+                                                // this.setSelectedRecordsInState(rowResponse);
+                                            }}
+                                        />
+                                        <span className="custom-checkbox"></span>
+                                    </div>
+
+                            }
+
+                        </label>
+
+                    );
+                },
+                Header: x => {
+                    return (
+                        <label className="label-checkbox">
+                            {
+                                removeColumnsFromGrid && removeColumnsFromGrid.indexOf("selectAll")>-1
+                                    ?"":
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox"
+                                            checked={this.state.selectAll === 1}
+                                            ref={input => {
+                                                if (input) {
+                                                    input.indeterminate = this.state.selectAll === 2;
+                                                }
+                                            }}
+                                            onChange={() => {
+                                                let rowResponse = toggleSelectAll(this.state.selectAll, this.state.rows);
+                                                this.setSelectedRecordsInState(rowResponse);
+                                            }}
+                                        />
+                                        <span className="custom-checkbox"></span>
+                                    </div>
+
+                            }
+
+                        </label>
+                    );
+                },
+                sortable: false,
+                filterable: false,
+                width: 45,
+                style: _getDeafultColumnsWidth({minWidth:45}),
+                headerStyle:  _getDeafultColumnsWidth({minWidth:45})
+              },
+             {
+                id: "id",
+                Header: 'Ref No.',
+                accessor: "id",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.id}
+                          <div>
+                            {moment(original.createdOn).format("DD/MM/YYYY")}
+                          </div>
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+            {
+                id: "vesselName",
+                Header: 'Vessel Name',
+                accessor: "vesselName",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.vesselName}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+                id: "imo",
+                Header: 'IMO No.#',
+                accessor: "imo",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.imo}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+                id: "vesselTypeDisplayName",
+                Header: 'Vessel Type',
+                accessor: "vesselTypeDisplayName",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.vesselTypeDisplayName}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+              id: "message",
+              Header: 'Client Message',
+              accessor: "message",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.message}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "inspectionType",
+              Header: 'Inspection Type',
+              accessor: "inspectionType",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.inspectionType?original.inspectionType:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+            {
+                id: "portData>name",
+                Header: 'Port',
+                accessor: "portData>name",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.portData?original.portData.name:""} <b> {original.portData.countryName}</b>
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+            
+            {
+              id: "email",
+              Header: 'Email',
+              accessor: "email",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.email}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "startTime",
+              Header: 'Period',
+              accessor: "startTime",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        From {this.formatDate(original.startTime)} to {this.formatDate(original.endTime)}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "clientName",
+              Header: 'Client Name',
+              accessor: "clientName",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.clientName?
+                            <span>
+                              {original.clientName}
+                              <br />
+                              <NavLink to={""}> View Profile</NavLink>
+                            </span>
+                          :""}
+
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          {
+              id: "maxBiddingPrice",
+              Header: 'Max. Bidding Price',
+              accessor: "maxBiddingPrice",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.maxBiddingPrice?original.maxBiddingPrice:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          
+           {
+              id: "inspectorQuote",
+              Header: 'Inspector Deduction',
+              accessor: "inspectorQuote",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                          15%
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          
+          {
+              id: "customerQuote",
+              Header: 'Client Mark Up',
+              accessor: "customerQuote",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                         15%
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          {
+              id: "quotationMethos",
+              Header: 'Additional Charges',
+              accessor: "quotationMethos",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                      
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "totalInspectionFees",
+              Header: 'Admin Message',
+              accessor: "totalInspectionFees",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                       
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "totalexpense",
+              Header: 'Recommended Quotation',
+              accessor: "totalexpense",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.totalexpense?original.totalexpense:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "status",
+              Header: 'Current Status',
+              accessor: "status",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.status}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          }
+
+        ];
+
+        columnsList = _removeColumnsIfNotNeeded(columnsList, removeColumnsFromGrid);
+
+        columnsList = [
+            {
+                columns:columnsList
+            }
+        ];
+        return columnsList;
+  }
+
+   /* Show List as SubComponent */
+    _setColumnsListSubComponent = () => {
+        let columnsList = [];
+        const { removeColumnsFromGrid } = this.props;
+        const { subComponentTableData } = this.state;
+        columnsList =  [
+           {
+                id: "checkbox",
+                accessor: "",
+                Cell: ({ original }) => {
+                    return (
+                       <label className="label-checkbox">
+                            {
+                                removeColumnsFromGrid && removeColumnsFromGrid.indexOf("selectAll")>-1
+                                    ?"":
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox"
+                                            checked={this.state.selectAll === 1}
+                                            ref={input => {
+                                                if (input) {
+                                                    input.indeterminate = this.state.selectAll === 2;
+                                                }
+                                            }}
+                                            onChange={() => {
+                                                let rowResponse = toggleSelectAll(this.state.selectAll, this.state.rows);
+                                                this.setSelectedRecordsInState(rowResponse);
+                                            }}
+                                        />
+                                        <span className="custom-checkbox"></span>
+                                    </div>
+
+                            }
+
+                        </label>
+                        
+                    );
+                },
+                Header: x => {
+                    return (
+                        
+                        <div>Select </div>
+                    );
+                },
+                sortable: false,
+                filterable: false,
+                width: 100,
+                style: _getDeafultColumnsWidth({minWidth:100}),
+                headerStyle:  _getDeafultColumnsWidth({minWidth:100})
+              },
+               {
+                id: "checkbox2",
+                accessor: "",
+                Cell: ({ original }) => {
+                    return (
+                        <label className="label-checkbox">
+                            {
+                                removeColumnsFromGrid && removeColumnsFromGrid.indexOf("selectAll")>-1
+                                    ?"":
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox"
+                                            checked={this.state.selectAll === 1}
+                                            ref={input => {
+                                                if (input) {
+                                                    input.indeterminate = this.state.selectAll === 2;
+                                                }
+                                            }}
+                                            onChange={() => {
+                                                let rowResponse = toggleSelectAll(this.state.selectAll, this.state.rows);
+                                                this.setSelectedRecordsInState(rowResponse);
+                                            }}
+                                        />
+                                        <span className="custom-checkbox"></span>
+                                    </div>
+
+                            }
+
+                        </label>
+
+                    );
+                },
+                Header: x => {
+                    return (
+                        <div>
+                            Recommended
+                        </div>
+                        
+                    );
+                },
+                sortable: false,
+                filterable: false,
+                width: 100,
+                style: _getDeafultColumnsWidth({minWidth:100}),
+                headerStyle:  _getDeafultColumnsWidth({minWidth:100})
+              },
+               {
+                  id: "id",
+                  Header: 'Inspector.',
+                  accessor: "id",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.name}</span> &nbsp;
+                            <span>{original.id}</span> &nbsp;
+                            <span>{original.no}</span> &nbsp;
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "location",
+                  Header: 'Location',
+                  accessor: "location",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.location}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "inspectorQuotationFp",
+                  Header: 'Inspector  Quotation Fixed Price (US$)  .',
+                  accessor: "inspectorQuotationFp",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.inspectorQuotationFp}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "inspectorOrderAmountAfterDeduction",
+                  Header: 'Inspector Order Amount (US$) After Deduction',
+                  accessor: "inspectorOrderAmountAfterDeduction",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.inspectorOrderAmountAfterDeduction}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+               {
+                  id: "clientMarkup",
+                  Header: 'Client Mark up',
+                  accessor: "clientMarkup",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.clientMarkup}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+               {
+                  id: "clientQuotation",
+                  Header: 'Client Quotation (US$) ( E+G)',
+                  accessor: "clientQuotation",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.clientQuotation}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+               {
+                  id: "fee",
+                  Header: 'Rate (Per Hour or Per Day)',
+                  accessor: "fee",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.fee}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+               {
+                  id: "inspectionFee",
+                  Header: 'Inspection Fee US$',
+                  accessor: "inspectionFee",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.inspectionFee}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "travelingFee",
+                  Header: 'Traveling/Waiting Fee US$',
+                  accessor: "travelingFee",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.travelingFee}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "inspectionDuration",
+                  Header: 'Duration (Inspection)',
+                  accessor: "inspectionDuration",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.inspectionDuration}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "travelingDuration",
+                  Header: 'Duration (Traveling/Waiting)',
+                  accessor: "travelingDuration",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.travelingDuration}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "totalInspectionFees",
+                  Header: 'Inspector - Total Estimated  Quotation US$',
+                  accessor: "totalInspectionFees",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.totalInspectionFees}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "inspectorOrderAmount",
+                  Header: 'Inspector Order Amount',
+                  accessor: "inspectorOrderAmount",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.inspectorOrderAmount}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "inspectorClientMarkup",
+                  Header: 'Client Mark up',
+                  accessor: "inspectorClientMarkup",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.inspectorClientMarkup}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "clientQuotation",
+                  Header: 'Client Quotation (US$) (N+P)',
+                  accessor: "clientQuotation",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.clientQuotation}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "status",
+                  Header: 'Status',
+                  accessor: "status",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.status}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
+              }
+           
+        ];
+
+        columnsList = _removeColumnsIfNotNeeded(columnsList, removeColumnsFromGrid);
+
+        columnsList = [
+            {
+                columns:columnsList
+            }
+        ];
+        return columnsList;
+    }
+
+    _loadSubcomponentData(requestData) {
+        const {subComponentTableData} = this.state;
+        let subComponentTableDataCustom = subComponentTableData;
+        subComponentTableDataCustom.rows =  [
+                        {
+                          "id": 11,
+                          "no": 3,
+                          "name": "Capt. Sachin D Khaire",
+                          "location": "Gujarat India",
+                          "inspectorQuotationFp": 1000,
+                          "inspectorOrderAmountAfterDeduction": 850,
+                          "clientMarkup": "15%",
+                          "clientQuotation":"1150",
+                          "rate": "Per Hour",
+                          "inspectionFee": 750,
+                          "travelingFee": 250,
+                          "inspectionDuration": "1",
+                          "travelingDuration" : "2",
+                          "inspectorTotalEstimatedQuotation": "$1,250",
+                          "inspectorOrderAmount": "$1,062",
+                          "inspectorClientMarkup": "15%",
+                          "inspectorClientQuotation": "$1,437",
+                          "status": "Sent"                          
+                        },
+                        {
+                          "id": 12,
+                          "no": 5,
+                          "name": "Capt. Sachin D Khaire",
+                          "location": "Gujarat India",
+                          "inspectorQuotationFp": 1000,
+                          "inspectorOrderAmountAfterDeduction": 850,
+                          "clientMarkup": "15%",
+                          "clientQuotation":"1150",
+                          "rate": "Per Hour",
+                          "inspectionFee": 750,
+                          "travelingFee": 250,
+                          "inspectionDuration": "1",
+                          "travelingDuration" : "2",
+                          "inspectorTotalEstimatedQuotation": "$1,250",
+                          "inspectorOrderAmount": "$1,062",
+                          "inspectorClientMarkup": "15%",
+                          "inspectorClientQuotation": "$1,437",
+                          "status": "Sent"                          
+                        },
+                        {
+                          "id": 11,
+                          "no": 3,
+                          "name": "Capt. Sachin D Khaire",
+                          "location": "Gujarat India",
+                          "inspectorQuotationFp": 1000,
+                          "inspectorOrderAmountAfterDeduction": 850,
+                          "clientMarkup": "15%",
+                          "clientQuotation":"1150",
+                          "rate": "Per Hour",
+                          "inspectionFee": 750,
+                          "travelingFee": 250,
+                          "inspectionDuration": "1",
+                          "travelingDuration" : "2",
+                          "inspectorTotalEstimatedQuotation": "$1,250",
+                          "inspectorOrderAmount": "$1,062",
+                          "inspectorClientMarkup": "15%",
+                          "inspectorClientQuotation": "$1,437",
+                          "status": "Sent"                          
+                        },
+                        {
+                          "id": 13,
+                          "no": 3,
+                          "name": "Capt. Sachin D Khaire",
+                          "location": "Gujarat India",
+                          "inspectorQuotationFp": 1000,
+                          "inspectorOrderAmountAfterDeduction": 850,
+                          "clientMarkup": "15%",
+                          "clientQuotation":"1150",
+                          "rate": "Per Hour",
+                          "inspectionFee": 750,
+                          "travelingFee": 250,
+                          "inspectionDuration": "1",
+                          "travelingDuration" : "2",
+                          "inspectorTotalEstimatedQuotation": "$1,250",
+                          "inspectorOrderAmount": "$1,062",
+                          "inspectorClientMarkup": "15%",
+                          "inspectorClientQuotation": "$1,437",
+                          "status": "Sent"                          
+                        },
+                        {
+                          "id": 14,
+                          "no": 3,
+                          "name": "Capt. Sachin D Khaire",
+                          "location": "Gujarat India",
+                          "inspectorQuotationFp": 1000,
+                          "inspectorOrderAmountAfterDeduction": 850,
+                          "clientMarkup": "15%",
+                          "clientQuotation":"1150",
+                          "rate": "Per Hour",
+                          "inspectionFee": 750,
+                          "travelingFee": 250,
+                          "inspectionDuration": "1",
+                          "travelingDuration" : "2",
+                          "inspectorTotalEstimatedQuotation": "$1,250",
+                          "inspectorOrderAmount": "$1,062",
+                          "inspectorClientMarkup": "15%",
+                          "inspectorClientQuotation": "$1,437",
+                          "status": "Sent"                          
+                        },
+                        {
+                          "id": 15,
+                          "no": 3,
+                          "name": "Capt. Sachin D Khaire",
+                          "location": "Gujarat India",
+                          "inspectorQuotationFp": 1000,
+                          "inspectorOrderAmountAfterDeduction": 850,
+                          "clientMarkup": "15%",
+                          "clientQuotation":"1150",
+                          "rate": "Per Hour",
+                          "inspectionFee": 750,
+                          "travelingFee": 250,
+                          "inspectionDuration": "1",
+                          "travelingDuration" : "2",
+                          "inspectorTotalEstimatedQuotation": "$1,250",
+                          "inspectorOrderAmount": "$1,062",
+                          "inspectorClientMarkup": "15%",
+                          "inspectorClientQuotation": "$1,437",
+                          "status": "Sent"                          
+                        }
+
+                      ];
+
+                      console.log("subComponentTableDataCustom>>>", subComponentTableDataCustom);
+        this.setState({
+          subComponentTableData: subComponentTableDataCustom
+        })
+    }
 
   renderUpdateQuoteDialog() {
     if(this.state.quoteUpdateForEnquiryId && this.state.quoteUpdateForEnquiryId > 0) {
@@ -151,97 +1150,105 @@ export default class AdminEnquiryPage extends Component {
   }
 
   renderActions(enquiry) {
+    return (
+        <div className="clear enquiry-actions-main">
+          <FlatButton>Edit Enquiry</FlatButton>
+          <FlatButton>Add to Inspectors</FlatButton>
+          <FlatButton>Send to Inspectors</FlatButton>
+          <FlatButton>Send to Clients</FlatButton>
+          <FlatButton>Create Order</FlatButton>
+          <FlatButton>Delete</FlatButton>
+           <FlatButton>Attach File</FlatButton>
+          <FlatButton>View Attachment</FlatButton>
+          <FlatButton>Edit Quotations</FlatButton>
+          <FlatButton>Save</FlatButton>
+          <FlatButton>Cancel</FlatButton>
+          <FlatButton>View Message</FlatButton>
+          <FlatButton>Edit Message</FlatButton>
+        </div>
+      );
+
     var actions = [];
     if(enquiry.status !== 'CANCELLED' && enquiry.status !== 'COMPLETED') {
-      actions.push(<li role="presentation" key={"enquiry_action_cancel_"+enquiry.id}>
-        <span onClick={ () => this.cancelEnquiry(enquiry.id)}>Delete</span>
-        </li>);
+      actions.push(<div className="btn" key={"enquiry_action_cancel_"+enquiry.id}>
+        <button onClick={ () => this.cancelEnquiry(enquiry.id)}>Cancel</button>
+        </div>);
     }
     
     if(enquiry.status == 'CREATED') {
-      actions.push(<li role="presentation" key={"enquiry_action_updatequote_"+enquiry.id}>
-        <span onClick={ () => this.openUpdateQuoteDialog(enquiry.id)}>Update Quote</span>
-      </li>);
-      actions.push(<li role="presentation" key={"enquiry_action_assign_si_"+enquiry.id}>
-        <NavLink to={`${this.props.match.url}/enquiry/${enquiry.id}/inspectors/`}>Assign Inspectors</NavLink>    
-          </li>);
+      actions.push(<div className="btn" key={"enquiry_action_updatequote_"+enquiry.id}>
+        <button onClick={ () => this.openUpdateQuoteDialog(enquiry.id)}>Edit  Quote</button>
+      </div>);
+      actions.push(<div className="btn" key={"enquiry_action_assign_si_"+enquiry.id}>
+        <NavLink to={`${this.props.match.url}/enquiry/${enquiry.id}/inspectors/`}><button>Assign Inspectors</button></NavLink>
+      </div>);
     }
 
-    if(enquiry.status !== 'SENT_TO_INSPECTORS') {
-      actions.push(<li role="presentation" key={"enquiry_action_sendtoinspectors_"+enquiry.id}>
-        <span onClick={ () => this.sendToInspectors(enquiry.id)}>Send To Inspectors</span>
-      </li>);
-    }
-
-    if(enquiry.status !== 'SENT_TO_CLIENT') {
-      actions.push(<li role="presentation" key={"enquiry_action_sendtoclient_"+enquiry.id}>
-        <span onClick={ () => this.sendToClient(enquiry.id)}>Send To Client</span>
-      </li>);
-    }
-
-            
-    return  <div className="dropdown-right"><DropdownButton
-              title={
-                  <span><i className="fa fa-ellipsis-v"></i></span>
-              }
-              className={'custom-dropdown '+ enquiry.id}
-              id={enquiry.id}>
-              {actions}
-            </DropdownButton></div>;
+    return actions;
   }
 
   renderEnquiries(enquiries) {
-  	var items = [];
-  	
-    for(var i=0; i < enquiries.length; i++) {
-  		var enquiryId = enquiries[i].id;
-      items.push(
-        <div className="enquiry-row" key={"enquiry_" + i}>
-          <div className="enquiry-details-box">
-            <div className="details">
-              <h2>Enquiry Number : <span className="value">{enquiries[i].id}</span></h2>
-              <h4>Inspection Type: <span className="value">{enquiries[i].inspectionTypeDisplayName}</span></h4>
-              <h4>Vessel Name: <span className="value">{enquiries[i].vesselName}</span></h4>
-              <h4>IMO Number: <span className="value">{enquiries[i].imo}</span></h4>
-              <h4>Vessel Type: <span className="value">{enquiries[i].vesselTypeDisplayName}</span></h4>
-              <h4>Port: <span className="value">{enquiries[i].portData.name}, {enquiries[i].portData.countryName}</span></h4>
-              <h4>From: <span className="value">{this.formatDate(enquiries[i].startTime)} - {this.formatDate(enquiries[i].endTime)}</span></h4>
-            </div>
-          </div>
-          <div className="enquiry-details-box">
-            <div className="details">
-              <h4>Client Name : <span className="value">
-                <NavLink to="">{enquiries[i].clientName?enquiries[i].clientName: "Client Name"} </NavLink>
-              </span>
-              </h4>
-              <h4>Max. Bidding Price : <span className="value">{enquiries[i].maxBiddingPrice?enquiries[i].maxBiddingPrice:""}</span></h4>
-              <h4>Quotation Methos : <span className="value">{enquiries[i].quoteMethods?enquiries[i].quoteMethods:"Quotation Methos"}</span></h4>
-              <h4>Total Inspection fee : <span className="value">{enquiries[i].quoteMethods?enquiries[i].quoteMethods:"Total Inspection fee "}</span></h4>
-              <h4>Total Expense : <span className="value">{enquiries[i].maxBiddingPrice?enquiries[i].maxBiddingPrice:"Total Expense"}</span></h4>
-              <h4>Total lump sum ( Client) : <span className="value">{enquiries[i].quoteMethods?enquiries[i].quoteMethods:"Total lump sum"}</span></h4>
-              <h4>Availability : <span className="value">{enquiries[i].Availability?enquiries[i].Availability:"Availability"}</span></h4>
-              <h4>Status : <span className="value" style={{color: '#d50608'}}>{enquiries[i].status}</span></h4>
-            </div>
-          </div>
-          <div className="enquiry-actions-box">
-          
-            {this.renderActions(enquiries[i])}
-          </div>
-          <div className="clear"></div>
-        </div>
-      );
-  	}
-  	return items;
+    var items = [];
+     const { subComponentTableData } = this.state;
+     console.log("subComponentTableData?>>", subComponentTableData);
+    
+   return (
+         <ReactTable
+            data={enquiries}
+            filterable
+            columns={this._setColumnsList()}
+            minRows={0}
+            showPagination={false}
+            manual
+            freezeWhenExpanded={true}
+            onFetchData={(state, instance) => {
+                if(state.filtered && state.filtered.length > 0) {
+                    this.props.getCustomerEnquiries();
+                } else {
+                     this.props.getCustomerEnquiries();
+                }
+            }}
+            className={ "-striped -highlight apply-action-column-datatabl"}
+
+            SubComponent={(row) => {
+                let rows1 = Object.assign({}, row.original);
+                return (
+                    <div className="react-table-remove-headers react-table-subcomponent-main">
+                           <em>
+                             Fixed Price Quotations 
+                            </em>
+                            <br />
+                            <br />
+                             
+                            <ReactTable
+                              data={subComponentTableData.rows}
+                              columns={this._setColumnsListSubComponent()}
+                              defaultPageSize={3}
+                              showPagination={false}
+                              onFetchData={(state, instance) => {
+                                  this._loadSubcomponentData();
+                              }}
+                             />
+                    </div>
+                )
+            }}
+
+            >
+            </ReactTable>
+                                  
+      )
+
+
+    
   }
 
   render() {
     if(this.props.enquiries && this.props.enquiries.length > 0) {
-      return(<div>
-        <h1 className="page-container-h1-heading">Enquiries</h1>
-        <div className="enquiries"> 
-          {this.renderEnquiries(this.props.enquiries)}
-          {this.renderUpdateQuoteDialog()}
-        </div>
+      return(<div className="enquiries"> 
+            <h1>Enquiries</h1>
+            {this.renderActions()}
+            {this.renderEnquiries(this.props.enquiries)}
+            {this.renderUpdateQuoteDialog()}
       </div>);
     } else {
       return(<div className="enquiries"> 

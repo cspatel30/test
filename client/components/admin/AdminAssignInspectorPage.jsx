@@ -8,18 +8,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import Checkbox from 'material-ui/Checkbox';
 
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
-    TableRowColumn,
-    TableCell
-} from 'material-ui/Table';
-import Pagination from 'materialui-pagination';
 var moment = require('moment');
 
 const styles = {
@@ -102,16 +91,6 @@ function profileViewButtonRenderer(cell, row) {
   );
 }
 
-const CustomTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
-
 export default class AdminAssignInspectorPage extends Component {
 
   constructor(props) {
@@ -119,101 +98,7 @@ export default class AdminAssignInspectorPage extends Component {
 
     this.state = {
       selectedEnquiryId: this.props.match.params.enquiryId,
-      selectedRows: {},
-      order: 'asc',
-      orderBy: 'id',
-      selected: [],
-      page: 0,
-      rowsPerPage: 5,
-      data:  [
-		{
-			"id": 11,
-			"userId": 3,
-			"seaport": 11131,
-			"profilePic": "3.png",
-			"qualification": "MASTER_MARINER",
-			"position": "OTHERS",
-			"passport": "Z2756012",
-			"dob": "1973-07-18T00:00:00.000Z",
-			"nationality": "Indian",
-			"validMedicalInsurance": 1,
-			"validIndemnityInsurance": 1,
-			"validEmploymentMedicalCert": 1,
-			"skills": "Marine Surveys, Safety & Quality Management, Auditing & Training",
-			"approvedVesselTypesKeys": "BULK_CAR,OIL_TANK,CHEM_TANK,CONTAINERSHIP",
-			"approvedInspectionTypesKeys": "PVI,ISMIA,ISMTI",
-			"coveredAreasKeys": "AS",
-			"background": "In-depth understanding of  vessel safe operation, vessel technical Management, Quality audits and inspection. He has sailed on variety of ships including Bulk, Oil and Chemical Tankers. He has worked ashore as QHSE Inspector, auditor with a global ship management and consulting companies.",
-			"highestRankOnboard": "Captain",
-			"highestRankAshore": "Marine Manager",
-			"experienceYears": 25,
-			"totalInspections": 80,
-			"rating": 5,
-			"passportDoc": "3.jpeg",
-			"name": "Capt. Sachin D Khaire",
-			"email": "info3@sinotechmarine.com",
-			"company": "Freelancer",
-			"phone": "30184902",
-			"city": "HK",
-			"countryCode": "HK",
-			"positionDisplayName": "Others",
-			"qualificationDisplayName": "Master Mariner",
-			"approvedVesselTypes": [
-				"Bulk Carrier",
-				"Oil Tanker",
-				"Chemical Tanker",
-				"Containership"
-			],
-			"approvedInspectionTypes": [
-				"Pre-Vetting Inspection",
-				"ISM Internal Audit",
-				"ISM Technical Inspection"
-			],
-			"coveredAreas": [
-				"Asia"
-			],
-			"country": {
-				"code": "HK",
-				"name": "Hong Kong",
-				"fullName": "Hong Kong Special Administrative Region of China",
-				"iso3": "HKG",
-				"number": 344,
-				"continentCode": "AS",
-				"continentName": "Asia",
-				"phoneCode": 852
-			}
-		},
-        {
-			"id": 29,
-			"userId": 63,
-			"seaport": 12853,
-			"qualification": "CHIEF_MARINE_ENGG",
-			"position": "OTHERS",
-			"cvDoc": "63.pdf",
-			"passportDoc": "63.pdf",
-			"seamanBookDoc": "63.pdf",
-			"qualificationDoc": "63.pdf",
-			"identityProofDoc": "63.pdf",
-			"name": "Ranjan Dutta",
-			"email": "aardee@aardeemarine.com",
-			"company": "Aardee Marine Consulting LLC",
-			"phone": "7862001528",
-			"city": "Coral Springs",
-			"countryCode": "US",
-			"positionDisplayName": "Others",
-			"qualificationDisplayName": "Chief Marine Engineer",
-			"country": {
-				"code": "US",
-				"name": "United States of America",
-				"fullName": "United States of America",
-				"iso3": "USA",
-				"number": 840,
-				"continentCode": "NA",
-				"continentName": "North America",
-				"phoneCode": 1
-			}
-		}
-	]
+      selectedRows: {}
     }
 
     this.onRowSelect = this.onRowSelect.bind(this);
@@ -223,55 +108,6 @@ export default class AdminAssignInspectorPage extends Component {
   componentWillMount() {
     this.props.searchInspectorsForEnquiry(this.props.match.params.enquiryId);
   }
-
-  handleSelectAllClick = (event, checked) => {
-    if (checked) {
-      this.setState(state => ({ selected: state.data.map(n => n.id) }));
-      return;
-    }
-    this.setState({ selected: [] });
-  };
-
-  handleClick = (event, id) => {
-    if(event === "all" || event==="none"){
-        this.handleSelectAllClick(event, event==="none"?false:true);
-    }
-    else{
-    const { selected } = this.state;
-    let id = this.state.data[event[0]].id;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-  
-
-    this.setState({ selected: newSelected });
-    }
-
-    console.log(" handleClick",event, id);
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
-
 
   onRowSelect(row, isSelect, rowIndex) { 
     console.log('...row', row, isSelect, rowIndex);
@@ -311,14 +147,11 @@ export default class AdminAssignInspectorPage extends Component {
         selected: Object.keys(selectedRows).map(x => parseInt(x)),
       };
 
-     let inspectorsList = this.state.data;//this.props.currentEnquiry.inspectors; 
-
-    console.log(":inspectorsListinspectorsList",inspectorsList);
     if(this.props.inspectorAssignedSuccess) {
       return (<div className="success">Inspectors Assigned Successfully</div>);
     }
     else {
-      if(inspectorsList || this.props.enquiryInspectorMatches && this.props.enquiryInspectorMatches.length > 0) {
+      if(this.props.enquiryInspectorMatches && this.props.enquiryInspectorMatches.length > 0) {
         return(
           <div>
             {this.renderErrorMessage()}
@@ -326,88 +159,23 @@ export default class AdminAssignInspectorPage extends Component {
            {/* <BootstrapTable keyField='userId' data={ this.props.enquiryInspectorMatches } columns={ columns } striped condensed bordered={false}
             noDataIndication="No matches found" selectRow={selectRow} store={ {selected : selectedUserIds } }/>
             */}
-            hello
-            <Table style={{tableLayout: 'auto'}} selectable={true}
-                multiSelectable={true}
-                onRowSelection={this.handleClick}>
-                            <TableHeader displaySelectAll={true} adjustForCheckbox={true}>
-                                <TableRow >
-                                    <TableHeaderColumn className="table-title">Identity</TableHeaderColumn>
-                                    <TableHeaderColumn className="table-title">Details </TableHeaderColumn>
-                                    <TableHeaderColumn className="table-title">Lump sum pricing </TableHeaderColumn>
-                                    <TableHeaderColumn className="table-title">US$ </TableHeaderColumn>
-                                    <TableHeaderColumn className="table-title">Mark up %</TableHeaderColumn>
-                                    <TableHeaderColumn className="table-title align-center">Client Quotation</TableHeaderColumn>
-                                    <TableHeaderColumn className="table-title">Daily Rate</TableHeaderColumn>
-                                    <TableHeaderColumn className="table-title align-center">US$</TableHeaderColumn>
-                                    <TableHeaderColumn className="table-title">Mark up %</TableHeaderColumn>
-                                    <TableHeaderColumn className="table-title align-center">Client Quotation</TableHeaderColumn>
-                                    <TableHeaderColumn className="table-title align-center">Status</TableHeaderColumn>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody style={{tableLayout: 'auto'}}  displayRowCheckbox={false}>
-                                {
-                                    (inspectorsList.length > 0 ? inspectorsList.map((item, index) => {
-                                           const isSelected = this.isSelected(item.id);
-                                            return (
-                                                <TableRow >
-                                                    <CustomTableCell padding="checkbox">
-                                                        <Checkbox checked={isSelected} />
-                                                    </CustomTableCell>
-                                                    <CustomTableCell>
-                                                        <div className="clear">{item.id}</div>
-                                                        <div className="clear">{item.name}</div>
-                                                        <div className="clear">{item.city+' , '+item.country.name}</div>
-                                                    </CustomTableCell>
-                                                    <CustomTableCell>{item.country?item.country.name:""}</TableRowColumn>
-                                                    <CustomTableCell>
-                                                        <div>Inspection Fee </div>
-                                                        <div>Travel Expense</div>
-                                                        <div>Others</div>
-                                                    </CustomTableCell>
-                                                    <CustomTableCell>
-                                                        <div>1200</div>
-                                                        <div>300</div>
-                                                    </CustomTableCell>
-                                                     <CustomTableCell>
-                                                        <div>30</div>
-                                                        <div>10</div>
-                                                    </CustomTableCell>
-                                                    <CustomTableCell>
-                                                        <div>1560</div>
-                                                        <div>330</div>
-                                                    </CustomTableCell>
-                                                    <CustomTableCell>
-                                                        <div>InspectionService</div> 
-                                                        <div>Traveling/Waiting Charges</div>
-                                                        <div>Estimated Inspection Days</div>
-                                                        <div>Estimated Trave/Waiting Days</div>
-                                                    </CustomTableCell>
-                                                    <CustomTableCell>
-                                                        <div>30</div> 
-                                                        <div>$250</div>
-                                                        <div>5</div>
-                                                    </CustomTableCell>
-                                                     <CustomTableCell>
-                                                        <div>30</div> 
-                                                        <div>$10</div>
-                                                        <div>0</div>
-                                                    </CustomTableCell>
-                                                     <CustomTableCell>
-                                                        <div>$455</div> 
-                                                        <div>$275</div>
-                                                        <div>5</div>
-                                                    </CustomTableCell>
-                                                     <CustomTableCell>
-                                                        <div>Attachments Edit</div> 
-                                                        <div>Cancel</div>
-                                                    </CustomTableCell>
-                                                </TableRow>
-                                            );
-                                        }) :  <TableRow><TableRowColumn className='no-record'>No record found</TableRowColumn></TableRow>)
-                                }
-                            </TableBody>
-                        </Table>
+            <BootstrapTable
+              data={this.props.enquiryInspectorMatches}
+              selectRow={selectRow}
+              store={ {selected : selectedUserIds } }
+              striped
+              hover
+              condensed
+              pagination
+              insertRow
+              deleteRow
+              search
+            >
+              <TableHeaderColumn dataField="id" isKey dataAlign="right" dataSort>Product ID</TableHeaderColumn>
+              <TableHeaderColumn dataField="name" dataSort>Product Name</TableHeaderColumn>
+              <TableHeaderColumn dataField="price" dataAlign="center" dataFormat={format}>Product Price</TableHeaderColumn>
+            </BootstrapTable>
+
           </div>);
       } else {
         return(<div>
