@@ -1403,17 +1403,21 @@ p {
 }
 
 .admin-leftside-menu {
-  float: left;
-  width: 20%;
-  margin-right: 5px;
+    float: left;
+    width: 18%;
+    margin-right: 0;
+    box-shadow: 0 1px 6px rgba(0,0,0,.117647), 0 1px 4px rgba(0,0,0,.117647);
+    border-right: 1px solid #ccc;
+    min-height: 400px;
 }
-
+.admin-leftside-menu>div{
+  padding-top: 0px !important;
+}
 .admin-rightside-content {
   float: left;
-  width: 75%;
-  margin-left: 20px;
-  padding-left: 20px;
-  border-left: 1px solid #ccc;
+  width: 80.8%;
+  margin-left: 0px;
+  padding-left: 15px;
 }
 
 .assign-inspector-dialog {

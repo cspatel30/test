@@ -13,6 +13,7 @@ import { _getDeafultColumnsWidth, _selectNewRecordsIfAllSelected, toggleSelectAl
  from '../reactTableCustomFunctions';
 
 import moment from 'momentDate';
+import PageBase from './PageBase';
 import './admin.scss';
 
 export default class AdminEnquiryPage extends Component {
@@ -696,7 +697,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "inspectorQuotationFp",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.inspectorQuotationFp}</span>
                           </div>
 
@@ -713,7 +714,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "inspectorOrderAmountAfterDeduction",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.inspectorOrderAmountAfterDeduction}</span>
                           </div>
 
@@ -730,7 +731,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "clientMarkup",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.clientMarkup}</span>
                           </div>
 
@@ -747,7 +748,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "clientQuotation",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.clientQuotation}</span>
                           </div>
 
@@ -764,7 +765,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "fee",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.fee}</span>
                           </div>
 
@@ -781,7 +782,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "inspectionFee",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.inspectionFee}</span>
                           </div>
 
@@ -798,7 +799,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "travelingFee",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.travelingFee}</span>
                           </div>
 
@@ -815,7 +816,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "inspectionDuration",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.inspectionDuration}</span>
                           </div>
 
@@ -832,7 +833,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "travelingDuration",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.travelingDuration}</span>
                           </div>
 
@@ -849,7 +850,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "totalInspectionFees",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.totalInspectionFees}</span>
                           </div>
 
@@ -866,7 +867,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "inspectorOrderAmount",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.inspectorOrderAmount}</span>
                           </div>
 
@@ -883,7 +884,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "inspectorClientMarkup",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.inspectorClientMarkup}</span>
                           </div>
 
@@ -900,7 +901,7 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "clientQuotation",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
+                          <div>
                             <span>{original.clientQuotation}</span>
                           </div>
 
@@ -1151,41 +1152,32 @@ export default class AdminEnquiryPage extends Component {
 
   renderActions(enquiry) {
     return (
-        <div className="clear enquiry-actions-main">
-          <FlatButton>Edit Enquiry</FlatButton>
-          <FlatButton>Add to Inspectors</FlatButton>
-          <FlatButton>Send to Inspectors</FlatButton>
-          <FlatButton>Send to Clients</FlatButton>
-          <FlatButton>Create Order</FlatButton>
-          <FlatButton>Delete</FlatButton>
-           <FlatButton>Attach File</FlatButton>
-          <FlatButton>View Attachment</FlatButton>
-          <FlatButton>Edit Quotations</FlatButton>
-          <FlatButton>Save</FlatButton>
-          <FlatButton>Cancel</FlatButton>
-          <FlatButton>View Message</FlatButton>
-          <FlatButton>Edit Message</FlatButton>
+        <div className="global_grid_menu_insidetabs no-padding col-xs-12 col-sm-12">
+            <div className="dropdown-right clear custom-dropdown">
+                <DropdownButton
+                    title={
+                        <span><i className="fa fa-ellipsis-v"></i></span>
+                    }
+                    id="global_grid_menu_insidetabs"
+                >
+                    <MenuItem>Edit Enquiry</MenuItem>
+                    <MenuItem>Add to Inspectors</MenuItem>
+                    <MenuItem>Send to Inspectors</MenuItem>
+                    <MenuItem>Send to Clients</MenuItem>
+                    <MenuItem>Create Order</MenuItem>
+                    <MenuItem>Delete</MenuItem>
+                    <MenuItem>Attach File</MenuItem>
+                    <MenuItem>View Attachment</MenuItem>
+                    <MenuItem>Edit Quotations</MenuItem>
+                    <MenuItem>Save</MenuItem>
+                    <MenuItem>Cancel</MenuItem>
+                    <MenuItem>View Message</MenuItem>
+                    <MenuItem>Edit Message</MenuItem>
+                </DropdownButton>
+            </div>
         </div>
       );
-
-    var actions = [];
-    if(enquiry.status !== 'CANCELLED' && enquiry.status !== 'COMPLETED') {
-      actions.push(<div className="btn" key={"enquiry_action_cancel_"+enquiry.id}>
-        <button onClick={ () => this.cancelEnquiry(enquiry.id)}>Cancel</button>
-        </div>);
-    }
-    
-    if(enquiry.status == 'CREATED') {
-      actions.push(<div className="btn" key={"enquiry_action_updatequote_"+enquiry.id}>
-        <button onClick={ () => this.openUpdateQuoteDialog(enquiry.id)}>Edit  Quote</button>
-      </div>);
-      actions.push(<div className="btn" key={"enquiry_action_assign_si_"+enquiry.id}>
-        <NavLink to={`${this.props.match.url}/enquiry/${enquiry.id}/inspectors/`}><button>Assign Inspectors</button></NavLink>
-      </div>);
-    }
-
-    return actions;
-  }
+}
 
   renderEnquiries(enquiries) {
     var items = [];
@@ -1244,12 +1236,14 @@ export default class AdminEnquiryPage extends Component {
 
   render() {
     if(this.props.enquiries && this.props.enquiries.length > 0) {
-      return(<div className="enquiries"> 
-            <h1>Enquiries</h1>
-            {this.renderActions()}
-            {this.renderEnquiries(this.props.enquiries)}
-            {this.renderUpdateQuoteDialog()}
-      </div>);
+      return(
+          <PageBase title={"Enquiries"}>
+            <div>
+                {this.renderActions()}
+                {this.renderEnquiries(this.props.enquiries)}
+                {this.renderUpdateQuoteDialog()}
+            </div>
+      </PageBase>);
     } else {
       return(<div className="enquiries"> 
         Fetching enquiries
