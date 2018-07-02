@@ -174,7 +174,7 @@ class CustomizedTable extends Component {
                         <div><span className="titleEnquiry">Port</span> - <span className="value">{n.portData.name}, {n.portData.countryName}</span></div>
                         <div><span className="titleEnquiry">From </span>- <span className="value">{formatDate(n.startTime)}</span><span className="titleEnquiry"> to</span> - <span className="value">{formatDate(n.endTime)}</span></div>
                         <div><MessageComponent message={n.message}/></div>  
-                        <div><span className="value"><a href="#"> { "VIEW SUGGESTED INSPECTORS"}</a></span></div>  
+                        <div><span className="value"><a href="#"> { "VIEW ADDED INSPECTORS"}</a></span></div>  
                       </div>
                     </div> 
                 </CustomTableCell>
@@ -185,7 +185,7 @@ class CustomizedTable extends Component {
                         <div><span className="value" align="center">{n.proposalstatus}</span></div>
                         <div><span className="proposal value"><a href="/proposal/">{'VIEW PROPOSALS'}</a></span></div>
                         <div><span className="titleEnquiry">{'Recommended Inspector'} </span>- <span className="value">{n.inspectorname !== ''  ? n.inspectorname.name : ''}</span></div>
-                        <div><span className="titleEnquiry">Amount-US$ </span><span className="value">{n.inspectoramount !== null ? n.inspectoramount.amountinspector : ''}</span></div>
+                        <div><span className="titleEnquiry">Amount-US$ </span><span className="value">{n.inspectoramount !== null ? n.inspectoramount.amountinspector : '20000'}</span><div>{n.inspectoramount !== null ? 'Estimated Price' : 'Fixed Price'}</div></div>
                         <div><span className="inspector value"><a href="#">{'VIEW FULL PROFILE'}</a></span></div>
                       </div>
                     </div> 
@@ -201,8 +201,8 @@ class CustomizedTable extends Component {
                   <CustomTableCell> 
                     <div className="enquiry-details-box">
                       <div className="details">
-                        <div><span className="value"><a href="#">{'CREATE ORDER'}</a></span></div>
-                        <div><span className="actions value"><a href="#">{'VIEW REPORT'}</a></span></div>
+                        <div><span className="value"><a href="#">{'ADD INSPECTORS'}</a></span></div>
+                        <div><span className="actions value"><a href="#">{'USE ENQUIRY'}</a></span></div>
                       </div>
                     </div> 
                   </CustomTableCell>
