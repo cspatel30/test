@@ -11,6 +11,7 @@ import { _getDeafultColumnsWidth, _selectNewRecordsIfAllSelected, toggleSelectAl
  toggleRow, _removeColumnsIfNotNeeded, _createFiltersQueryString, _createSortedDataString } 
  from '../reactTableCustomFunctions';
 import PageBase from './PageBase';
+import Confirm from 'react-confirm-bootstrap';
 import './admin.scss';
 
 export default class AdminOrderComponent extends Component {
@@ -55,30 +56,84 @@ export default class AdminOrderComponent extends Component {
   		this.props.getAdminOrders();
   	}
 
-  	if(!this.props.orders && props.orders) {
+  	if(1 || !this.props.orders && props.orders) {
       const { tableStates } = this.state;
       let tableStatesCustom = tableStates;
       let data =  [
                         {
-                          "id": 11,
-                          "no": 3,
-                          "name": "Capt. Sachin D Khaire",
-                          "location": "Gujarat India",
-                          "inspectorQuotationFp": 1000,
-                          "inspectorOrderAmountAfterDeduction": 850,
-                          "clientMarkup": "15%",
-                          "clientQuotation":"1150",
-                          "rate": "Per Hour",
-                          "inspectionFee": 750,
-                          "travelingFee": 250,
-                          "inspectionDuration": "1",
-                          "travelingDuration" : "2",
-                          "inspectorTotalEstimatedQuotation": "$1,250",
-                          "inspectorOrderAmount": "$1,062",
-                          "inspectorClientMarkup": "15%",
-                          "inspectorClientQuotation": "$1,437",
-                          "status": "Sent"                          
-                        }];
+                            "createdOn" : "2018-03-21T14:01:51.000Z",
+                            "customerQuote" : null,
+                            "email" : "mailsanjayyadav@gmail.com",
+                            "endTime" : 1522261800000,
+                            "endTimeFmt" : "2018-03-29",
+                            "id" : 24,
+                            "imo" : "940044",
+                            "portId" : 7576,
+                            "startTime" : 1522348200000,
+                            "startTimeFmt" : "2018-03-30",
+                            "status" : "CREATED",
+                            "vesselName" : "Bulk Carrier",
+                            "vesselTypeDisplayName" : "Oil/Chemical Tanker",
+                            "inspectionType" : "Pre-Purchase Inspection",
+                            "portData" :{
+                                "id": [7576],
+                                "name": "16N RED SEA", 
+                                "regionCode": "AS",
+                                "regionName": "Asia",
+                                "countryName": "SAUDI ARABIA",
+                                "countryCode": "SA"
+                            },
+                            "client": {
+                                "name": "ABS Shipping",
+                                "id": 1
+                            },
+                            "clientMessage": "Use our reporting format",
+                            "assignedInspector": {
+                               "name": "Inspector",
+                                "id": 1
+                            },
+                            "adminMessage": "Use Client Report Format",
+                            "clientOrderAmount": "$1,150",
+                            "inspectorQuotationAmount": "$1,000",
+                            "inspectorOrderAmount": "$850"
+                        },
+                        {
+                            "createdOn" : "2018-03-21T14:01:51.000Z",
+                            "customerQuote" : null,
+                            "email" : "mailsanjayyadav@gmail.com",
+                            "endTime" : 1522261800000,
+                            "endTimeFmt" : "2018-03-29",
+                            "id" : 25,
+                            "imo" : "940044",
+                            "portId" : 7576,
+                            "startTime" : 1522348200000,
+                            "startTimeFmt" : "2018-03-30",
+                            "status" : "CANCELLED",
+                            "vesselName" : "Bulk Carrier",
+                            "vesselTypeDisplayName" : "Oil/Chemical Tanker",
+                            "inspectionType" : "Pre-Purchase Inspection",
+                            "portData" :{
+                                "id": [7576],
+                                "name": "16N RED SEA", 
+                                "regionCode": "AS",
+                                "regionName": "Asia",
+                                "countryName": "SAUDI ARABIA",
+                                "countryCode": "SA"
+                            },
+                            "client": {
+                                "name": "ABS Shipping",
+                                "id": 1
+                            },
+                            "clientMessage": "Use our reporting format",
+                            "assignedInspector": {
+                               "name": "Inspector",
+                                "id": 1
+                            },
+                            "adminMessage": "Use Client Report Format",
+                            "clientOrderAmount": "$1,000",
+                            "inspectorOrderAmount": "$850"
+                        }
+                ];
       tableStatesCustom.rows = data;//props.orders;
   		this.setState((state) => { state.orders = data; state.tableStates = tableStatesCustom;});
   	}
@@ -131,6 +186,7 @@ export default class AdminOrderComponent extends Component {
   }
 
   renderAdminOrders(admin, orders) {
+      console.log("orders???", orders);
       return (
            <ReactTable
             data={orders}
@@ -271,9 +327,9 @@ export default class AdminOrderComponent extends Component {
                 headerStyle:  _getDeafultColumnsWidth({minWidth:45})
               },
              {
-                id: "id",
-                Header: 'Ref No.',
-                accessor: "id",
+                id: "createdOn",
+                Header: 'PO No.',
+                accessor: "createdOn",
                 Cell: ({ original }) => {
                     return (
                         <div  className="columns-lower-Case-text">
@@ -392,25 +448,7 @@ export default class AdminOrderComponent extends Component {
                 style: _getDeafultColumnsWidth(),
                 headerStyle:  _getDeafultColumnsWidth()
             },
-            
             {
-              id: "email",
-              Header: 'Email',
-              accessor: "email",
-              Cell: ({ original }) => {
-                  return (
-                      <div  className="columns-lower-Case-text">
-                        {original.email}
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
-           {
               id: "startTime",
               Header: 'Period',
               accessor: "startTime",
@@ -426,17 +464,17 @@ export default class AdminOrderComponent extends Component {
               filterable: false,
               style: _getDeafultColumnsWidth(),
               headerStyle:  _getDeafultColumnsWidth()
-          },
-           {
-              id: "clientName",
+            },
+            {
+              id: "client>name",
               Header: 'Client Name',
-              accessor: "clientName",
+              accessor: "client>name",
               Cell: ({ original }) => {
                   return (
                       <div  className="columns-lower-Case-text">
                         {original.clientName?
                             <span>
-                              {original.clientName}
+                              {original.client.name}
                               <br />
                               <NavLink to={""}> View Profile</NavLink>
                             </span>
@@ -452,66 +490,35 @@ export default class AdminOrderComponent extends Component {
               headerStyle:  _getDeafultColumnsWidth()
           },
           {
-              id: "maxBiddingPrice",
-              Header: 'Max. Bidding Price',
-              accessor: "maxBiddingPrice",
-              Cell: ({ original }) => {
-                  return (
-                      <div>
-                        {original.maxBiddingPrice?original.maxBiddingPrice:""}
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
-          
-           {
-              id: "inspectorQuote",
-              Header: 'Inspector Deduction',
-              accessor: "inspectorQuote",
-              Cell: ({ original }) => {
-                  return (
-                      <div>
-                          15%
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
-          
-          {
-              id: "customerQuote",
-              Header: 'Client Mark Up',
-              accessor: "customerQuote",
-              Cell: ({ original }) => {
-                  return (
-                      <div>
-                         15%
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
-          {
-              id: "quotationMethos",
-              Header: 'Additional Charges',
-              accessor: "quotationMethos",
+              id: "clientMessage",
+              Header: 'Client Message',
+              accessor: "clientMessage",
               Cell: ({ original }) => {
                   return (
                       <div  className="columns-lower-Case-text">
-                      
+                        From {this.formatDate(original.startTime)} to {this.formatDate(original.endTime)}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+            },
+           {
+              id: "assignedInspector",
+              Header: 'Assigned Inspector',
+              accessor: "assignedInspector",
+              Cell: ({ original }) => {
+                  return (
+                      <div>
+                         {original.assignedInspector?
+                             <span>
+                                {original.assignedInspector.name}
+                                {original.assignedInspector.id}
+                             </span>
+                         :""}
                       </div>
 
                   );
@@ -521,16 +528,67 @@ export default class AdminOrderComponent extends Component {
               style: _getDeafultColumnsWidth(),
               headerStyle:  _getDeafultColumnsWidth()
           },
-           {
-              id: "totalInspectionFees",
+          
+          {
+              id: "adminMessage",
               Header: 'Admin Message',
-              accessor: "totalInspectionFees",
+              accessor: "adminMessage",
               Cell: ({ original }) => {
                   return (
                       <div>
-                       
+                         {original.adminMessage}
                       </div>
 
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          {
+              id: "clientOrderAmount",
+              Header: 'Client Order Amount',
+              accessor: "clientOrderAmount",
+              Cell: ({ original }) => {
+                  return (
+                      <div>
+                        {original.clientOrderAmount}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+
+          {
+              id: "inspectorQuotationAmount",
+              Header: 'Inspector Quotation Amount',
+              accessor: "inspectorQuotationAmount",
+              Cell: ({ original }) => {
+                  return (
+                      <div>
+                        {original.inspectorQuotationAmount}
+                      </div>
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "inspectorOrderAmount",
+              Header: 'Inspector Order Amount',
+              accessor: "inspectorOrderAmount",
+              Cell: ({ original }) => {
+                  return (
+                      <div>
+                        {original.inspectorOrderAmount}
+                      </div>
                   );
               },
               sortable:false,
@@ -555,7 +613,7 @@ export default class AdminOrderComponent extends Component {
               style: _getDeafultColumnsWidth(),
               headerStyle:  _getDeafultColumnsWidth()
           },
-           {
+          {
               id: "status",
               Header: 'Current Status',
               accessor: "status",
@@ -571,7 +629,65 @@ export default class AdminOrderComponent extends Component {
               filterable: false,
               style: _getDeafultColumnsWidth(),
               headerStyle:  _getDeafultColumnsWidth()
-          }
+          },
+          {
+                id: "actions",
+                accessor: "",
+                Cell: ({ original }) => {
+                    let oppositeStatus = (original.status=="1")?"inactive":"active";
+                    let userStatus  = (original.status!="1")?"inactive":"active";
+                    return (
+                        <div className="action-tab-datables">
+                            <div  className="dropdown-right">
+                                <DropdownButton
+                                    title={
+                                        <span><i className="fa fa-ellipsis-v"></i></span>
+                                    }
+                                    id={original.id}
+                                >
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Edit</a>
+                                    </li>
+                                    
+                                     <li>
+                                        <a role="main" tabIndex="-1">
+                                            <Confirm
+                                                onConfirm={()=>{}}
+                                                body={"Are you sure you want to delete this order?"}
+                                                onfirmText={"Ok"}
+                                                title={"Delete Order"}>
+                                                <div>
+                                                    Delete Order
+                                                </div>
+                                            </Confirm>
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Attach File</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Send to inspector</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Go to enquiry</a>
+                                    </li>
+                                </DropdownButton>
+                            </div>
+                        </div>
+                    );
+                },
+                Header: x => {
+                    return (
+                        <span></span>
+                    );
+                },
+                sortable: false,
+                filterable: false,
+                resizable: false,
+                width: 60,
+                style: _getDeafultColumnsWidth({minWidth:60}),
+                headerStyle:  _getDeafultColumnsWidth({minWidth:60})
+            }
 
         ];
 
@@ -592,18 +708,14 @@ export default class AdminOrderComponent extends Component {
  	if(this.props.userProfile) {
       if(this.state.orders && this.state.orders.length > 0) {
 		returnHtml =  (
-          <div className="page d-flex flex-column">
-          	<h1>Your Orders</h1>
-          	<div className="orders"> 
+            <div className="orders"> 
           		<div className="error">{this.state.errorMsg}</div>
-              {this.renderAdminOrders(userProfile, orders)}
-          	</div>
-          </div>
+                {this.renderAdminOrders(userProfile, orders)}
+            </div>
       	);
 	  } else {
   		returnHtml =  (
           <div className="page">
-          	<h1>Your Orders</h1>
             <div className="orders">
           	   <p>You have no pending orders</p>
             </div>
@@ -617,7 +729,7 @@ export default class AdminOrderComponent extends Component {
 	  }
 
       return (
-           <PageBase title={"Enquiries"}>
+           <PageBase title={"Manage Orders"}>
                 <div>
                     {returnHtml}
                 </div>

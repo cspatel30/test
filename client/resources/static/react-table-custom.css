@@ -1,9 +1,12 @@
+.ReactTable{
+    min-height: 300px;
+}
 .ReactTable .rt-td {
     overflow: inherit !important;
 }
 .dropdown-right ul.dropdown-menu{
     float: right;
-    right:0px;
+    right:30%;
     left: inherit;
 }
 .ReactTable .rt-th, .ReactTable .rt-td {
@@ -64,4 +67,13 @@
 }
 .react-table-subcomponent-main {
     padding: 15px;
+}
+.ReactTable .dropdown-right ul.dropdown-menu{
+    float:right;
+    right:0;
+    left:inherit;
+}
+button:focus{
+    outline: none !important;
+    box-shadow: none !important;
 }

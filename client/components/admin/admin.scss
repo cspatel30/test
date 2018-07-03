@@ -7,10 +7,6 @@
         font-size: 12px;
         color: #777;
     }
-    .panel-body .dropdown-menu li a:hover,.panel-body  .dropdown-menu li a:focus {
-        background: #2196F3;
-        color: #fff !important;
-    }
     .headline {
         margin: 15px 0;
         padding: 5px 0 10px;
@@ -111,6 +107,9 @@
     .text-align-left-react-table {
       text-align: left!important; 
     }
+    .dropdown-menu li{
+        padding-left: 0px
+    }
     .dropdown-menu li a{
       color: #999 !important;
       padding: 4px 20px;
@@ -120,16 +119,11 @@
       font-weight: 400;
       line-height: 1.42857143;
       white-space: nowrap;
+      cursor:pointer;
     }
     .dropdown-menu li a:focus, .panel-body .dropdown-menu li a:hover {
         background: #007bff !important;
         color: #fff!important;
-        padding: 4px 20px;
-        display: block;
-        clear: both;
-        font-weight: 400;
-        line-height: 1.42857143;
-        white-space: nowrap;
     }
     .custom-dropdown .dropdown button, .custom-dropdown .dropdown button:hover, .rt-td .dropdown button, .rt-td .dropdown button:hover {
       border: none!important;
@@ -173,5 +167,13 @@
         border-radius: 4px;
         text-transform: uppercase;
       }
+    }
+
+    .enqueries-form{
+        align-items: center;
+        margin-bottom: 50px;
+    }
+    .form-control {
+       padding: 8px;
     }
 }

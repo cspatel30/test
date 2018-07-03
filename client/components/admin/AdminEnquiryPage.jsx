@@ -1,6 +1,7 @@
 // import 'regenerator-runtime/runtime';
-
 import React, { Component } from 'react';
+import _ from 'lodash';
+import {WAIT} from '../../constants';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -12,6 +13,7 @@ import { _getDeafultColumnsWidth, _selectNewRecordsIfAllSelected, toggleSelectAl
  toggleRow, _removeColumnsIfNotNeeded, _createFiltersQueryString, _createSortedDataString } 
  from '../reactTableCustomFunctions';
 
+import Confirm from 'react-confirm-bootstrap';
 import moment from 'momentDate';
 import PageBase from './PageBase';
 import './admin.scss';
@@ -63,6 +65,10 @@ export default class AdminEnquiryPage extends Component {
             imagePath : "",
             apiCallRecords : {callOccurance:0, noRecordExist: false},
             selected: {}, selectAll: 0,
+          },
+          markupFieldsDeduction: {
+              inspector: 15,
+              client: 15
           }      
 
     };
@@ -78,13 +84,17 @@ export default class AdminEnquiryPage extends Component {
     this.setSelectedRecordsInState = this.setSelectedRecordsInState.bind(this);
     this._setColumnsListSubComponent = this._setColumnsListSubComponent.bind(this);
     this._loadSubcomponentData = this._loadSubcomponentData.bind(this);
-    
-
+    this._loadApiDatapageLoadFilter =  _.debounce(this._loadApiDatapageLoadFilter.bind(this), WAIT);
+    this._loadSubcomponentDataFilter =  _.debounce(this._loadSubcomponentDataFilter.bind(this), WAIT);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentWillMount() {
     if(this.props.userProfile) {
-      this.props.getCustomerEnquiries();
+        let { tableStates } = this.state;
+        let tableStatesCustom = tableStates;
+        tableStatesCustom.rows = this.props.getCustomerEnquiries();
+        this.setState((state) => { state.orders = tableStatesCustom});
     }
   }
 
@@ -178,6 +188,7 @@ export default class AdminEnquiryPage extends Component {
         let columnsList = [];
         const { removeColumnsFromGrid, _updateUserActiveStatus,
             isListOpenInModal, showInlineDetailInfo } = this.props;
+        const { markupFieldsDeduction } = this.state;    
         columnsList =  [
               {
                 id: "checkbox",
@@ -285,7 +296,7 @@ export default class AdminEnquiryPage extends Component {
                 accessor: "imo",
                 Cell: ({ original }) => {
                     return (
-                        <div  className="columns-lower-Case-text">
+                        <div>
                           {original.imo}
                         </div>
 
@@ -429,7 +440,7 @@ export default class AdminEnquiryPage extends Component {
               accessor: "maxBiddingPrice",
               Cell: ({ original }) => {
                   return (
-                      <div  className="columns-lower-Case-text">
+                      <div>
                         {original.maxBiddingPrice?original.maxBiddingPrice:""}
                       </div>
 
@@ -447,8 +458,8 @@ export default class AdminEnquiryPage extends Component {
               accessor: "inspectorQuote",
               Cell: ({ original }) => {
                   return (
-                      <div  className="columns-lower-Case-text">
-                          15%
+                      <div>
+                          {markupFieldsDeduction.inspector}%
                       </div>
 
                   );
@@ -465,8 +476,8 @@ export default class AdminEnquiryPage extends Component {
               accessor: "customerQuote",
               Cell: ({ original }) => {
                   return (
-                      <div  className="columns-lower-Case-text">
-                         15%
+                      <div>                         
+                          {markupFieldsDeduction.client}%
                       </div>
 
                   );
@@ -499,7 +510,7 @@ export default class AdminEnquiryPage extends Component {
               accessor: "totalInspectionFees",
               Cell: ({ original }) => {
                   return (
-                      <div  className="columns-lower-Case-text">
+                      <div>
                        
                       </div>
 
@@ -516,7 +527,7 @@ export default class AdminEnquiryPage extends Component {
               accessor: "totalexpense",
               Cell: ({ original }) => {
                   return (
-                      <div  className="columns-lower-Case-text">
+                      <div>
                         {original.totalexpense?original.totalexpense:""}
                       </div>
 
@@ -533,7 +544,7 @@ export default class AdminEnquiryPage extends Component {
               accessor: "status",
               Cell: ({ original }) => {
                   return (
-                      <div  className="columns-lower-Case-text">
+                      <div>
                         {original.status}
                       </div>
 
@@ -543,7 +554,66 @@ export default class AdminEnquiryPage extends Component {
               filterable: false,
               style: _getDeafultColumnsWidth(),
               headerStyle:  _getDeafultColumnsWidth()
-          }
+          },
+          {
+                id: "actions",
+                accessor: "",
+                Cell: ({ original }) => {
+                    let oppositeStatus = (original.status=="1")?"inactive":"active";
+                    let userStatus  = (original.status!="1")?"inactive":"active";
+                    return (
+                        <div className="action-tab-datables">
+                            <div  className="dropdown-right">
+                                <DropdownButton
+                                    title={
+                                        <span><i className="fa fa-ellipsis-v"></i></span>
+                                    }
+                                    id={original.id}
+                                >
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Edit</a>
+                                    </li>
+                                    
+                                     <li>
+                                        <a role="main" tabIndex="-1">
+                                            <Confirm
+                                                onConfirm={()=>{}}
+                                                body={"Are you sure you want to delete this order?"}
+                                                onfirmText={"Ok"}
+                                                title={"Delete Order"}>
+                                                <div>
+                                                    Delete Order
+                                                </div>
+                                            </Confirm>
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Attach File</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Send to inspector</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Go to enquiry</a>
+                                    </li>
+                                </DropdownButton>
+                            </div>
+                        </div>
+                    );
+                },
+                Header: x => {
+                    return (
+                        <span></span>
+                    );
+                },
+                sortable: false,
+                filterable: false,
+                resizable: false,
+                width: 60,
+                style: _getDeafultColumnsWidth({minWidth:60}),
+                headerStyle:  _getDeafultColumnsWidth({minWidth:60})
+            }
+
 
         ];
 
@@ -561,7 +631,7 @@ export default class AdminEnquiryPage extends Component {
     _setColumnsListSubComponent = () => {
         let columnsList = [];
         const { removeColumnsFromGrid } = this.props;
-        const { subComponentTableData } = this.state;
+        const { subComponentTableData, markupFieldsDeduction } = this.state;
         columnsList =  [
            {
                 id: "checkbox",
@@ -715,7 +785,7 @@ export default class AdminEnquiryPage extends Component {
                   Cell: ({ original }) => {
                       return (
                           <div>
-                            <span>{original.inspectorOrderAmountAfterDeduction}</span>
+                            <span>{original.inspectorQuotationFp -  (original.inspectorQuotationFp*markupFieldsDeduction.inspector)/100}</span>
                           </div>
 
                       );
@@ -732,7 +802,7 @@ export default class AdminEnquiryPage extends Component {
                   Cell: ({ original }) => {
                       return (
                           <div>
-                            <span>{original.clientMarkup}</span>
+                            <span>{markupFieldsDeduction.client}%</span>
                           </div>
 
                       );
@@ -749,7 +819,7 @@ export default class AdminEnquiryPage extends Component {
                   Cell: ({ original }) => {
                       return (
                           <div>
-                            <span>{original.clientQuotation}</span>
+                            <span><span>{original.inspectorQuotationFp +  (original.inspectorQuotationFp*markupFieldsDeduction.inspector)/100}</span></span>
                           </div>
 
                       );
@@ -928,6 +998,23 @@ export default class AdminEnquiryPage extends Component {
                   filterable: false,
                   style: _getDeafultColumnsWidth(),
                   headerStyle:  _getDeafultColumnsWidth()
+              },
+              {
+                  id: "action",
+                  Header: 'Action',
+                  accessor: "action",
+                  Cell: ({ original }) => {
+                      return (
+                          <div  className="columns-lower-Case-text">
+                            <span>{original.status}</span>
+                          </div>
+
+                      );
+                  },
+                  sortable:false,
+                  filterable: false,
+                  style: _getDeafultColumnsWidth(),
+                  headerStyle:  _getDeafultColumnsWidth()
               }
            
         ];
@@ -1075,6 +1162,13 @@ export default class AdminEnquiryPage extends Component {
         })
     }
 
+   _loadSubcomponentDataFilter(){
+
+  }
+  _loadApiDatapageLoadFilter(){
+
+  }  
+
   renderUpdateQuoteDialog() {
     if(this.state.quoteUpdateForEnquiryId && this.state.quoteUpdateForEnquiryId > 0) {
       if(this.state.enquiryQuoteUpdated) {
@@ -1195,7 +1289,7 @@ export default class AdminEnquiryPage extends Component {
             freezeWhenExpanded={true}
             onFetchData={(state, instance) => {
                 if(state.filtered && state.filtered.length > 0) {
-                    this.props.getCustomerEnquiries();
+                    this._loadApiDatapageLoadFilter(state);
                 } else {
                      this.props.getCustomerEnquiries();
                 }
@@ -1233,12 +1327,48 @@ export default class AdminEnquiryPage extends Component {
 
     
   }
+ onChange(value, field){
+
+      this.setState((state) => { state.markupFieldsDeduction[field] = value});
+  }
+  renderMarkupFields(){
+       const { markupFieldsDeduction } = this.state;
+      return (
+            <form className="row enqueries-form">
+                <div className="col-md-6">
+                    <div className="form-group">
+                        <label for="formGroupExampleInput">Inspector Deduction</label>
+                        <input type="text" className="form-control" id="formGroupExampleInput"
+                         placeholder="15%" value={markupFieldsDeduction.inspector}
+                         onChange={(e)=>{this.onChange(e.target.value, "inspector")}}
+                         max="30"
+                         />
+                    </div>
+                </div>
+
+                <div className="col-md-6">
+                    <div className="form-group">
+                        <label for="formGroupExampleInput2">Client Mark up</label>
+                        <input type="text" className="form-control" id="formGroupExampleInput2" placeholder="15%"
+                         value = {markupFieldsDeduction.client}
+                         onChange={(e)=>{this.onChange(e.target.value, "client")}}
+                         max="30"
+                         />
+                    </div>
+                </div>
+                {/*<div className="clear col-md-6">
+                    <button className="btn btn-class" onClick="">Submit</button>
+                </div>*/}
+            </form>
+      )
+  }
 
   render() {
     if(this.props.enquiries && this.props.enquiries.length > 0) {
       return(
           <PageBase title={"Enquiries"}>
             <div>
+                {this.renderMarkupFields()}
                 {this.renderActions()}
                 {this.renderEnquiries(this.props.enquiries)}
                 {this.renderUpdateQuoteDialog()}
