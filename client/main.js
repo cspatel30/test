@@ -16,10 +16,11 @@ const userlocale = 'en';
 
 //import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import configureStore from '../stores/store.js';
-import AppContainer from '../containers/AppContainer.js';
+const initialState = {};
+import configureStore from './store/store';
+import AppContainer from './App';
 
-const store = configureStore();
+const store = configureStore(initialState);
 
 injectTapEventPlugin();
 

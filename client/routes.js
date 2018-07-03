@@ -3,32 +3,31 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
 
-import Footer from './Footer.jsx';
-import HomeHeader from './homePage/Header.js';
-import HomeFooter from './homePage/Footer.js';
-import HomePage from './pages/HomePage.jsx';
-import HomePageNew from './homePage/HomePageNew';
-import AboutPage from './pages/AboutPage.jsx';
-import PolicyPage from './pages/PolicyPage.jsx';
-import TermsPage from './pages/TermsPage.jsx';
-import NotFoundPage from './pages/NotFoundPage.jsx';
-import SampleReportsPage from './pages/SampleReportsPage.jsx';
+import HomeHeader from './components/homePage/Header.js';
+import HomeFooter from './components/homePage/Footer.js';
+import HomePage from './components/pages/HomePage.jsx';
+import HomePageNew from './components/homePage/HomePageNew';
+import AboutPage from './components/pages/AboutPage.jsx';
+import PolicyPage from './components/pages/PolicyPage.jsx';
+import TermsPage from './components/pages/TermsPage.jsx';
+import NotFoundPage from './components/pages/NotFoundPage.jsx';
+import SampleReportsPage from './components/pages/SampleReportsPage.jsx';
 
-import InspectorsContainer from '../containers/InspectorsContainer.js';
-import InspectorPublicProfileContainer from '../containers/InspectorPublicProfileContainer.js';
-import LoginContainer from '../containers/LoginContainer.js';
-import RegisterContainer from '../containers/RegisterContainer.js';
-import QuoteEnquiryContainer from '../containers/QuoteEnquiryContainer.js';
-import CustomerEnquiriesContainer from '../containers/CustomerEnquiriesContainer.js';
-import InspectorProfileContainer from '../containers/InspectorProfileContainer.js';
-import AdminHomePageContainer from '../containers/AdminHomePageContainer.js';
-import DocumentDownloadContainer from '../containers/DocumentDownloadContainer.js';
-import ContactUsContainer from '../containers/ContactUsContainer.js';
-import SetupAccountContainer from '../containers/SetupAccountContainer.js';
-import VerifyEmailContainer from '../containers/VerifyEmailContainer.js';
-import UserOrdersContainer from '../containers/UserOrdersContainer.js';
-import NewProfileContainer from '../containers/NewProfileContainer.js';
-import NewInspectorDashboardContainer from '../containers/NewInspectorDashboardContainer.js';
+import InspectorsContainer from './containers/InspectorsContainer.js';
+import InspectorPublicProfileContainer from './containers/InspectorPublicProfileContainer.js';
+import LoginContainer from './containers/LoginContainer.js';
+import RegisterContainer from './containers/RegisterContainer.js';
+import QuoteEnquiryContainer from './containers/QuoteEnquiryContainer.js';
+import CustomerEnquiriesContainer from './containers/CustomerEnquiriesContainer.js';
+import InspectorProfileContainer from './containers/InspectorProfileContainer.js';
+import AdminHomePageContainer from './containers/AdminHomePageContainer.js';
+import DocumentDownloadContainer from './containers/DocumentDownloadContainer.js';
+import ContactUsContainer from './containers/ContactUsContainer.js';
+import SetupAccountContainer from './containers/SetupAccountContainer.js';
+import VerifyEmailContainer from './containers/VerifyEmailContainer.js';
+import UserOrdersContainer from './containers/UserOrdersContainer.js';
+import NewProfileContainer from './containers/NewProfileContainer.js';
+import NewInspectorDashboardContainer from './containers/NewInspectorDashboardContainer.js';
 
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
