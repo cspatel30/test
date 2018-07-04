@@ -16,9 +16,10 @@ app.use('/public', express.static(path.join(__dirname,"./client/resources/static
 // app.use('/public', express.static(path.join(__dirname,"./client/resources/static/")));
 app.use(cookieParser())
 
-var routes = require('./service/routes/');
-routes(app);
-
+app.get('/*', function (req, resp) {
+  console.log("respond with index html");
+  resp.sendFile(path.join(`${__dirname}/client/index.html`));
+});
 
 app.listen(port);
 

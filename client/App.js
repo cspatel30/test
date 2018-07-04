@@ -42,9 +42,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		initialiseUser: (token) => {
-       		dispatch(verifyToken(token));
-       		dispatch(initApp());
-    	}
+			dispatch(verifyToken(token));
+			dispatch(initApp());
+    }
 	};
 }
 
