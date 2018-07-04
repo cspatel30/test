@@ -1,5 +1,5 @@
 import Request from 'axios';
-import { TOKEN_VARIFIED } from '../constants/ActionsTypes';
+import { TOKEN_VERIFIED } from '../constants/ActionsTypes';
 
 const ip = '/api';
 function makeRequest(method, api = '/login', data) {
@@ -9,9 +9,9 @@ function makeRequest(method, api = '/login', data) {
 
 
 // sync actions
-export function tokenVarified(payload) { return ({ type: TOKEN_VARIFIED, payload }); }
+export function tokenVerified(payload) { return ({ type: TOKEN_VERIFIED, payload }); }
 
 
 //async actions or server request from front-end
-export function varifyToken() { return dispatch => makeRequest('get', '/auth/validate/token/')
-  .then(response => dispatch(tokenVarified(response.data)));     }
+export function verifyToken() { return dispatch => makeRequest('get', '/auth/validate/token/')
+  .then(response => dispatch(tokenVerified(response.data)));     }

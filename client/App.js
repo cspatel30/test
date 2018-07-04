@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import { verifyToken } from '../actions/auth';
-import { initApp } from '../actions/app';
+import { verifyToken } from './actions/auth2';
+import { initApp } from './actions/app';
 
 import {FormattedMessage} from 'react-intl';
 import { BrowserRouter, browserHistory } from 'react-router-dom';

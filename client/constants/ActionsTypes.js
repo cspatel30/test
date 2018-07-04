@@ -1,5 +1,5 @@
 /*  Auth constants   */
-export const TOKEN_VARIFIED = 'TOKEN_VARIFIED';
+export const TOKEN_VERIFIED = 'TOKEN_VERIFIED';
 
 
 
