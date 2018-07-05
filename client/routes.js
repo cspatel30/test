@@ -63,7 +63,7 @@ export default class Body extends Component {
               <Route exact path="/setup/account/:requestToken" component={SetupAccountContainer} />
               <Route path="/admin" component={AdminHomePageContainer} />
               <Route exact path="/newprofile" component={NewProfileContainer} />
-              <Route exact path="/inspectordashboard" component={NewInspectorDashboardContainer} />
+              <Route exact path="/inspectordashboard" component={NewInspectorDashboardContainer} /> 
             </div>
             <HomeFooter/>
           </div>

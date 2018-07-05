@@ -17,7 +17,7 @@ const userlocale = 'en';
 //import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 const initialState = {};
-import configureStore from './store/store';
+import configureStore from './store/store_Vivek';
 import AppContainer from './App';
 
 const store = configureStore(initialState);

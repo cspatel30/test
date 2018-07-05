@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux'
-import AdminOrderComponent from '../components/admin/AdminOrderComponent.jsx';
+import AdminOrderComponent from '../components/admin/orders/AdminOrderComponent.jsx';
 
 import {getAdminOrders} from '../actions/order';
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import { verifyToken } from './actions/auth2';
+import { verifyToken } from './actions/auth';
 import { initApp } from './actions/app';
 
 import {FormattedMessage} from 'react-intl';

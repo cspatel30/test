@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 
 import AdminPage from '../components/AdminPage.jsx';
-import { login } from '../actions/auth';
+//import { login } from '../actions/auth';
+import { login } from '../actions/admin';
 
 const mapStateToProps = (state) => {
 	const {userProfile, error} = state;

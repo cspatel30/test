@@ -1404,17 +1404,22 @@ p {
 }
 
 .admin-leftside-menu {
-  float: left;
-  width: 20%;
-  margin-right: 5px;
+    float: left !important;
+    width: 18% !important;
+    margin-right: 0 !important;
+    box-shadow: 0 1px 6px rgba(0,0,0,.117647), 0 1px 4px rgba(0,0,0,.117647) !important;
+    border-right: 1px solid #ccc !important;
+    min-height: 400px !important;
 }
-
+.admin-leftside-menu>div{
+  padding-top: 0px !important;
+}
 .admin-rightside-content {
-  float: left;
-  width: 75%;
-  margin-left: 20px;
-  padding-left: 20px;
-  border-left: 1px solid #ccc;
+  float: left !important;
+  width: 80.8% !important;
+  margin-left: 0px !important;
+  padding-left: 15px !important;
+  border: none !important;
 }
 
 .assign-inspector-dialog {
