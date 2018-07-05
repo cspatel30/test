@@ -13,11 +13,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
 
-  componentWillMount() {
-  	if(!this.props.userProfile) {
-    	this.props.initialiseUser();
-    }
-  }
+  // componentWillMount() {
+  // 	if(!this.props.userProfile) {
+  //   	this.props.initialiseUser();
+  //   }
+  // }
 
   render() {
     return (
