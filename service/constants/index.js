@@ -249,9 +249,13 @@ global.mysqlConfig = {
 };
 
 global.appConfig = {
-  emailTemplatesPath : 'C:/Users/Vivek/Desktop/web/service/emailtemplates/',
+  emailTemplatesPath : '/Users/ajay/Documents/NewSI/web/service/emailtemplates/',
   accessKeyId: 'AKIAIFENAUAFOPXUTNQQ',
   secretAccessKey: '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',
   defaultFrom: 'Team ShipInspector <noreply@shipinspectors.com>',
   serverHost: 'http://localhost:7100'
 }
+
+global.apiConfig = {
+  url: 'http://sis-beta.us-east-1.elasticbeanstalk.com'
+};

@@ -1,0 +1,291 @@
+.box{
+    width:100%;
+    min-height: 80px;
+    overflow: hidden;
+}
+
+.border-danger {
+  border-color: 1px solid rgb(234, 234, 234);
+}
+
+.border-primary {
+  border-color: #dee2e6!important;
+}
+
+.text-info {
+  color: #55a3f2!important;
+}
+.btn-head {
+    border-radius: 20px;
+  }
+  .btn-blue {
+    background-color: #3f8cef !important;
+    border-radius: 18px !important;
+    height :37px !important;
+  }
+  .btn-white {
+    background-color: #ffffff !important;
+    border-radius: 18px !important;
+    height :37px !important; 
+    border:2px solid  #ee80a4;
+    color:#ee80a4;
+  }
+  .viewAttachment{
+    color:#ea5ea0;
+  }
+
+  .acceptedText{
+    color:
+    #6ac259;
+    font-weight: bold
+  }
+  .border-bottom {
+    border-bottom: 1px solid #dee2e6!important;
+}
+
+  .declinedTextAccepted{
+    color:#6ac259;
+    font-weight: bold
+  }
+  .declinedTextCompleted{
+    color:#3475ad;
+    font-weight: bold
+  }
+  .declinedTextClosed{
+    color:#9b9b9b;
+    font-weight: bold
+  }
+  .declinedTextDeclined{
+    color:#cf2340;
+    font-weight: bold
+  }
+  .closedText{
+    color:
+    rgb(155, 155, 155);
+    font-weight: bold
+  }
+  .completedText{
+    color:rgba(52, 119, 173, 1);
+    font-weight: bold
+  }
+
+  .w-40{
+    width:40%
+  }
+
+  .w-85{
+    width:85%
+  }
+
+  .pa-bottom{
+    bottom: 0
+  }
+
+  .fa-tag{
+    transform: rotate(135deg);
+    font-size: 23px;
+    margin-right: 15px;
+  }
+
+  .jumbotron-billboard .img {
+    margin-bottom: 0px;
+    opacity: 0.2;
+    color: #fff;
+    background: #000 url("https://www.oceaniacruises.com/Images/Ships/Riviera/4170/riviera.jpg") top center no-repeat;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  
+  .jumbotron h2 {
+    margin-top: 0;
+  }
+  
+  .jumbotron {
+    position: relative;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: #0303f9;
+  }
+  
+  .jumbotron .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .jumbo-txt {
+    font-size:50px;
+    text-align:center;
+    color:white;
+    margin-top:90px;
+  }
+
+  .jumbo-height {
+    height:350px;
+    background-color:#193996;
+  }
+
+  .d-flex{
+    display: flex !important;
+  }
+  .textC{
+    text-align: center;
+  }
+  .marginC{
+    margin: 0px auto ;
+  }
+  .form-control .date-time {
+    border: 1px solid #bbbcbd !important;
+    font-size: 19px !important;
+    color: #525458 !important;
+}
+
+.react-datepicker__input-container input[type=text]:not(.browser-default){
+  padding-left:35px;
+  border: 1px solid #bbbcbd !important;
+  width: 250px !important;
+  height: 40px !important;
+}
+
+.react-datepicker__input-container input[type=text]:not(.browser-default):focus{
+  padding-left:35px;
+  border: 1px solid #bbbcbd !important;
+  // -webkit-box-shadow: 1px 1px 1px 1px #252525;
+  // box-shadow: 1px 1px 1px 1px #101010;
+}
+
+.btn-filter {
+  background-color: #3f8cef !important;
+  border-radius: 18px !important;
+  height :33px !important;
+  font-weight: bold;
+}
+.btn-clear {
+  background-color: #ffffff !important;
+  border-radius: 18px !important;
+  height :33px !important;
+  border:2px solid #bfbfbf;
+  color:#bfbfbf;
+  font-weight: bold;
+}
+
+// .mainalign{
+//   margin-left:200px;
+//   margin-right:200px;
+// }
+
+.mt-10{
+  margin-top: 10px;
+}
+.ml-10{
+  margin-left: 10px;
+}
+.p-top{
+  top:8px;
+  left:6px;
+}
+
+
+// Edit CSS
+
+.box{
+  width:100%;
+  min-height: 80px;
+  overflow: hidden;
+}
+.border-danger {
+border-color: 1px solid rgb(234, 234, 234);
+}
+.border-primary {
+border-color: #dee2e6!important;
+}
+.text-info {
+color: #55a3f2!important;
+}
+.btn-head {
+  border-radius: 20px;
+}
+.btn-blue {
+  background-color: #3f8cef !important;
+  border-radius: 18px !important;
+  height :37px !important;
+}
+
+.btn-white {
+  background-color: #ffffff !important;
+  border-radius: 18px !important;
+  height :37px !important; 
+  border:2px solid  #ee80a4;
+  color:#ea3a6a;
+}
+.viewAttachment{
+  color:#ee80a4;
+}
+.acceptedText{
+  color:
+  #6ac259;
+  font-weight: bold
+}
+.border-bottom {
+  border-bottom: 1px solid #dee2e6!important;
+}
+.declinedText{
+ 
+  font-weight: bold
+}
+.closedText{
+  color:
+  rgb(155, 155, 155);
+  font-weight: bold
+}
+.completedText{
+  color:rgba(52, 119, 173, 1);
+  font-weight: bold
+}
+.w-40{
+  width:40%
+}
+.w-85{
+  width:85%
+}
+.pa-bottom{
+  bottom: 0
+}
+.fa-tag{
+  transform: rotate(135deg);
+  font-size: 20px;
+  margin-right: 15px;
+}
+.vesselDetail{ 
+  .text-info{
+  margin-right: 6px
+  }
+}
+.price-tags{
+  font-weight: bold;
+    font-size: 22px
+}
+
+.exclamatory{
+  width: 14px;
+  height: 14px;
+  border-radius: 15px;
+  background-color:#3f8cef;
+  color:#fff;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fa-info-circle{
+ font-size: 16px;
+}
+
+.results{
+  font-size: 20px
+}

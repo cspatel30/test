@@ -24,6 +24,10 @@ const commonLoaders = [
       limit: 10000,
     },
   },
+  {
+    test: /jquery-plugin/,
+    loader: 'imports?jQuery=jquery,$=jquery,this=>window',
+  }
 ];
 module.exports = {
   name: 'browser',
@@ -43,10 +47,5 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('style.css'),
-    //use this for adding jquery
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jQuery'
-    })
   ],
 };

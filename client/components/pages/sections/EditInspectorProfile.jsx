@@ -168,7 +168,7 @@ export default class EditInspectorProfile extends Component {
 										<div className="value">
 											<select style={{padding: '6px', width: 70, border: '1px solid #ccc'}} name="countryCode" value={this.state.inspectorProfile.countryCode}  onChange={this.handleInspectorInputChange}>
 																{this.renderSelectBox(this.props.countries, 'code', 'phoneCode')}
-															</select>
+											</select>
 											<input className="ml-1" style={{width: 150}} type="text" name="phone" value={this.state.inspectorProfile.phone} onChange={this.handleInspectorInputChange}/>
 										</div>
 										<div className="clear"></div>

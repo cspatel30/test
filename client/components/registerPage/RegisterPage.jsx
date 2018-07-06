@@ -9,7 +9,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import VirtualizedSelect from 'react-virtualized-select';
+import axios from 'axios';
 import './RegisterPage.scss';
+import apiConfig from '../config/constants';
 
 const styles = {
   tabs: {
@@ -41,7 +43,7 @@ export default class RegisterPage extends Component {
       termsOpen: false,
       signUpSuccess: false,
       signUpErrorMsg: "",
-      userType: "customer",
+      userType: "Customer",
       termsAgreed: false,
       registerForm: {
 
@@ -238,7 +240,6 @@ export default class RegisterPage extends Component {
   }
 
   handleSubmit(event) {
-    alert(JSON.stringify(this.state.registerForm.employmentType))
     event.preventDefault();
     var error = false;
     console.log(this.state);
@@ -250,6 +251,7 @@ export default class RegisterPage extends Component {
       registerFormError.firstName = "This field is mandatory";
     }
     if(this.state.registerForm.lastName == "") {
+      alert("last Name")
       error = true;
       registerFormError.lastName = "This field is mandatory";
     }
@@ -264,16 +266,16 @@ export default class RegisterPage extends Component {
       error = true;
     }
 
-    if(this.state.registerForm.confirmpassword == "") {
-      registerFormError.confirmpassword = "This field is mandatory";
-      error = true;
-    }
+    // if(this.state.registerForm.confirmpassword == "") {
+    //   registerFormError.confirmpassword = "This field is mandatory";
+    //   error = true;
+    // }
     //check if 2 passwords match
-    if(this.state.registerForm.password != "" && this.state.registerForm.confirmpassword != "" && 
-      this.state.registerForm.password !== this.state.registerForm.confirmpassword) {
-      error = true;
-      registerFormError.confirmpassword = "Both passwords do not match";
-    }
+    // if(this.state.registerForm.password != "" && this.state.registerForm.confirmpassword != "" && 
+    //   this.state.registerForm.password !== this.state.registerForm.confirmpassword) {
+    //   error = true;
+    //   registerFormError.confirmpassword = "Both passwords do not match";
+    // }
     if(this.state.registerForm.countryCode == "") {
       registerFormError.countryCode = "This field is mandatory";
       error = true;
@@ -289,40 +291,140 @@ export default class RegisterPage extends Component {
       registerFormError.clientCompanyName = "This field is mandatory";
     }
 
-    if(this.state.registerForm.employmentType == "") {
-      registerFormError.employmentType = "This field is mandatory";
-      error = true;
+    if(this.state.userType=="client")
+    {
+      if(this.state.registerForm.employmentType == "") {
+        registerFormError.employmentType = "This field is mandatory";
+        error = true;
+      }
+  
+      if(this.state.registerForm.qualification == "") {
+        registerFormError.qualification = "This field is mandatory";
+        error = true;
+      }
+  
+      if(this.state.registerForm.title == "") {
+        registerFormError.title = "This field is mandatory";
+        error = true;
+      }
     }
-
-    if(this.state.registerForm.qualification == "") {
-      registerFormError.qualification = "This field is mandatory";
-      error = true;
-    }
-
-    if(this.state.registerForm.title == "") {
-      registerFormError.title = "This field is mandatory";
-      error = true;
-    } 
+   
     
+    if(this.state.registerForm.firstName!='' &&this.state.registerForm.lastName!='' && this.state.registerForm.email != "" && this.state.registerForm.password != ""&&this.state.registerForm.countryCode != ""&&this.state.registerForm.clientCompanyName != ""&&this.state.registerForm.phone != ""){
+         error = false;
+    }
+   
+    // static data
+    // var data={
+    //   email : "krkhunti.elance22@gmail.com",
+    //   password : "password",
+    //   firstName : "Karshan",
+    //   lastName: "Khunti",
+    //   type:"Customer",
+    //   company:"My Company",
+    //   phone:"1234567890",
+    //   code: "+91"               
+    // }
+
+    // dynamic data
+    var data={
+       email : this.state.registerForm.email,
+       password : this.state.registerForm.password,
+       firstName  : this.state.registerForm.firstName,
+       lastName : this.state.registerForm.lastName,
+       type:this.state.userType,
+       company:this.state.registerForm.clientCompanyName,
+       phone:this.state.registerForm.phone,
+       code:this.state.registerForm.countryCode
+    }
+
     if(error) { 
+      alert("error")
       this.setState( (state) => { state.registerFormError = registerFormError; state.signUpSuccess = false;});
       return;
-    }
+    }else{
+    alert("user type "+this.state.userType)
+    console.log("data "+JSON.stringify(data))
 
-    this.setState((state) => { state.signUpSuccess = false; state.signUpErrorMsg = "", state.registerFormError = registerFormError; });
+    // //ajax call
+    //   $.ajax({
+    //     type: "POST",
+    //     url: 'http://sis-beta.us-east-1.elasticbeanstalk.com/user/sign-up',
+    //     headers : {
+    //         contentType: "application/json",
+    //     },
+    //     dataType: 'json',
+    //     data: data,
+    //     success: (data) => {
+    //     console.log("register success::"+JSON.stringify(data));
+    //     },
+    //     error: (err) => {
+    //       console.log("register error::"+JSON.stringify(err));
+    //     }
+    //   });
 
-    if(!this.state.termsAgreed) {
-      alert("Please agree to terms and conditions");
-      return;
-    }
+   // axios call
+        axios.post('http://sis-beta.us-east-1.elasticbeanstalk.com/user/sign-up', {
+            email : this.state.registerForm.email,
+            password : this.state.registerForm.password,
+            firstName  : this.state.registerForm.firstName,
+            lastName : this.state.registerForm.lastName,
+            type:this.state.userType,
+            company:this.state.registerForm.clientCompanyName,
+            phone:this.state.registerForm.phone,
+            code:this.state.registerForm.countryCode
+        })
+        .then(function (response) {
+          console.log(JSON.stringify(response)+"responce");
+        })
+        .catch(function (error) {
+          console.log(error+"error");
+        });
 
-    var registerForm = this.state.registerForm;
-    registerForm.seaport = parseInt(registerForm.seaport);
-    registerForm.country = parseInt(registerForm.country);
+      //fetch call
+      // fetch("http://sis-beta.us-east-1.elasticbeanstalk.com/user/sign-up",{
+      // method:'POST',
+      // header : {
+      //     "Content-Type":"application/json",
+      // },
+      // body:JSON.stringify({
+      //   "email" : "manikyamallu@gmail.com", "password" : "123456", "firstName" : "Manikyam", "lastName" : "allu", "type":"Customer", "company":"My Company", "phone":"9898996684", "code": "+91"
+      // })
+      // }).then((response) => response.json()).then((res) => {
+      //     console.log("getData...."+JSON.stringify(res))
+      //     //return res;
+      // })
+      // .catch((error)=>{
+      //     console.log("getData.error..."+JSON.stringify(error))
+      //     //return error;
+      // })
+    
+    // fetch('http://sis-beta.us-east-1.elasticbeanstalk.com/user/sign-up',{
+    //   method:'post',
+    //   headers: {
+    //       'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(data)
+    //   })
+    //   .then((response)=>response.json())
+    //   .then((status)=>{
+    //       console.log("status"+JSON.stringify(status))
+    //       if(status){
+    //         console.log("getData...."+JSON.stringify(status))
+    //       }
+    //       else
+    //       {
+    //         console.log("error data...."+JSON.stringify(status))
+    //       }
+    //   })
+    //   .catch((err)=>{
+    //     console.log("catch error: " + JSON.stringify(err))
+    //   })
 
-    this.setState((state) => { state.signUpErrorMsg = "";});
 
-    this.props.register(this.state.userType, registerForm);
+   }
+
+  
 
   }
 
@@ -437,7 +539,7 @@ export default class RegisterPage extends Component {
                   </div>
                   <div className="d-flex loginType pt-3 pl-0" onChange={this.selectTypeOfRegistration.bind(this)}>
                     <div>
-                      <input className="with-gap" type="radio" name="usertype" value="client" id="client" defaultChecked />
+                      <input className="with-gap" type="radio" name="usertype" value="Customer" id="client" defaultChecked />
                       <label htmlFor="client">Client</label>
                     </div>
                     <div className="pl-4">
@@ -493,9 +595,9 @@ export default class RegisterPage extends Component {
                     <div className="col-md-6 pl-0" id="containerCountryCode">
                       <select id="countryCode"  name="countryCode" value={this.state.registerForm.countryCode}  onChange={this.handleInputChange} >
                         <option value="">Code</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
+                        <option value="+91">+91</option>
+                        <option value="+44">+44</option>
+                        <option value="+1">+1</option>
                       </select>
                       <div className="errorField mt-18">{this.state.registerFormError.countryCode}</div> 
                     </div>

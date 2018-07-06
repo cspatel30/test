@@ -29,6 +29,9 @@ import VerifyEmailContainer from '../containers/VerifyEmailContainer.js';
 import UserOrdersContainer from '../containers/UserOrdersContainer.js';
 import NewProfileContainer from '../containers/NewProfileContainer.js';
 import NewInspectorDashboardContainer from '../containers/NewInspectorDashboardContainer.js';
+import QuotationContainer from '../containers/QuotationContainer.js';
+import OrdersContainer from '../containers/OrdersContainer.js';
+import ManagePageContainer from '../containers/ManagePageContainer.js';
 
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
@@ -65,6 +68,10 @@ export default class Body extends Component {
               <Route path="/admin" component={AdminHomePageContainer} />
               <Route exact path="/newprofile" component={NewProfileContainer} />
               <Route exact path="/inspectordashboard" component={NewInspectorDashboardContainer} />
+              <Route exact path="/quotation" component={QuotationContainer} />
+              <Route exact path="/inspectordashboard" component={NewInspectorDashboardContainer} />
+              <Route exact path="/enquries" component={ManagePageContainer} />
+              <Route exact path="/orders" component={OrdersContainer} />
             </div>
             <HomeFooter/>
           </div>
