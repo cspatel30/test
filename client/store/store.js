@@ -1,9 +1,9 @@
-import 'babel-polyfill';
-import { createStore, applyMiddleware} from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import Cookies from 'universal-cookie';
-import reducer from '../reducers/';
-import sagas from '../sagas/';
+
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+import rootReducer from '../reducers';
+>>>>>>> setup
 
 const cookies = new Cookies();
 
