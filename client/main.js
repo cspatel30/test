@@ -10,9 +10,10 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import '../client/resources/static/css/main.scss';
 
-require ('jquery/dist/jquery.min.js');
+// require ('jquery/dist/jquery.min.js');
+require ('./resources/static/js/jquery-3.3.1.min.js');
 require('hammerjs/hammer.min.js');
-require('../client/resources/static/js/materialize.min.js');
+require('./resources/static/js/materialize.min.js');
 
 
 import en from 'react-intl/locale-data/en';
