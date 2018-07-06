@@ -35,9 +35,9 @@ export default  class ListOfEnquiries extends Component {
   render() {
     return (
         <div>
-            <h5 className="textC">LIST OF ENQUIRIES</h5>
+            <h5 className="textC f-bold">LIST OF ENQUIRIES</h5>
       <div className="row">
-      <div className="container d-flex mt-10">
+      <div className="container d-flex justifyC mt-10">
         <div className="d-flex">
             <div className="label mt-10">From</div>
             <div className="field ml-10 position-relative">
@@ -60,11 +60,11 @@ export default  class ListOfEnquiries extends Component {
             </div>
         </div>
            
-        <div className="viewAttachment d-flex">
-        <button className="btn btn-head btn-filter pl-5 mt-5 ml-10">
+        <div className="viewAttachment d-flex alignC">
+        <button className="btn btn-head btn-filter pl-5  ml-10">
             FILTER
         </button>
-        <button className="btn btn-head btn-clear pl-5 mt-5 ml-10" onClick={this.datesClear.bind(this)}>
+        <button className="btn btn-head btn-clear pl-5  ml-10" onClick={this.datesClear.bind(this)}>
             CLEAR
         </button>
         </div>

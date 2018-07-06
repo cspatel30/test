@@ -32,7 +32,7 @@ const commonLoaders = [
 module.exports = {
   name: 'browser',
   entry: {
-    app: [path.resolve(__dirname, './client/components/main.jsx')],
+    app: [path.resolve(__dirname, './client/main.js')],
   },
   output: {
     path: path.resolve(__dirname, './client/dist/'),

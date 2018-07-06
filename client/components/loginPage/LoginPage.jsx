@@ -1,127 +1,27 @@
 import React, { Component } from 'react';
+import Select from 'react-select';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
-import {FormattedMessage} from 'react-intl';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import './LoginPage.scss';
 
-export default class LoginPage extends Component {
-
-  constructor(props) {
-    super(props);
-
+class LoginPage extends Component {
+  constructor() {
+    super();
     this.state = {
-      forgot: false,
-      forgotEmail: '',
-      fgpwdMsg: '',
-      tabIndex: 0,
-      loginForm: {
-        email: "",
-        password: ""
-      },
-      loginFormError: {
-        email: "",
-        password: ""
-      },
-      activeTab: "cust"
+      xyz: ''
     };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-
-  } 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ fgpwdMsg: nextProps.fgpwdMsg });
-  }
-  handleInputChange (event) {
-    event.persist();
-    console.log(JSON.stringify(event.target.name+" name"))
-    console.log(JSON.stringify(event.target.value)+" value")
-    this.setState((state) => { state.loginForm[event.target.name] = event.target.value });
-  }
-  toggleTab (tab) {
-    let { activeTab, fgpwdMsg, forgot, forgotEmail } = this.state;
-    if (activeTab !== tab) {
-      fgpwdMsg = '', forgot=false, forgotEmail='';
-    }
-    this.setState({ activeTab: tab, fgpwdMsg, forgot, forgotEmail });
-  }
-  handleSubmit(event) {
-    event.preventDefault();
-    var error = false;
-    var loginFormError = {  email: "", password: "" };
-
-    if(this.state.loginForm.email == "") {
-      error = true;
-      loginFormError.email = "This field is mandatory";
-    }
-    if(this.state.loginForm.password == "") {
-      loginFormError.password = "This field is mandatory";
-      error = true;
-    }
-    this.setState( (state) => { state.loginFormError = loginFormError});
-    
-    if(error) 
-      return;
-    this.props.logMeIn(this.state.tabIndex, this.state.loginForm);
-  }
-  forgotPwd() {
-    const { activeTab, forgot, forgotEmail, fgpwdMsg } = this.state;
-    if (!forgot) {
-      return <div className="forgot-pass" onClick={() => this.setState({ forgot: true })} style={{ color: '#1475af', fontSize: '16px', cursor: 'pointer' }}>Forgot Password ?</div>
-    } else {
-      return (
-        <div>
-          <div className="label">Enter Your Registered Email</div>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div className="field" style={{ margin: 0}}>
-              <input className="inputField" type="text" placeholder="Enter Your Registered Email" name="forgotEmail" value={forgotEmail} onChange={e => this.setState({ forgotEmail: e.target.value })}/>
-              <div className="errorField">{fgpwdMsg}</div>
-            </div>
-            <div onClick={() => this.onForgotPass(forgotEmail)} style={{cursor: 'pointer', padding: '15px', marginLeft: '15px', background: '#1475af', color: '#fff'}}>Reset</div>
-            <div onClick={() => this.setState({forgot: false, forgotEmail: '', fgpwdMsg: ''})} style={{cursor: 'pointer', padding: '15px', marginLeft: '15px', background: '#1475af', color: '#fff'}}>Cancel</div>
-          </div>
-        </div>
-      )
-    }
-  }
-  onForgotPass(email) {
-    if (email !== '') {
-      this.props.forgotPassword(email);
-    }
-    return;
   }
 
-  render() {
-    const { activeTab, forgot } = this.state;
-    const activeTabStyle= { background: '#1475af', color: '#fff' }
-  	const { userToken , userProfile } = this.props;
-
-  	if(userToken && userProfile) {
-  		this.props.history.push('/');
-    }
-    
-	return (
-    <div className="section bg-gray">
-    <div className="container">
-        <div className="row mt-5">
-            <div className="col-md-5 loginImageSec">
-                <div className="logoTrans text-center p-5">
-                    <img src="/public/img/LogoWhite.png" alt />
-                </div>
-                <div className="text-center text-white pt-5">
-                    Login to
-                    <br />ShipInspectors.com
-                </div>
-            </div>
-            <div className="col-md-7 loginFormSec p-5 position-relative">
-              
-                <form onSubmit={this.handleSubmit} action="/" method="post">
-                    <p className="h4 text-blue mb-4 loginTitle">Select Client or Inspector</p>
+  renderForm() {
+    return (
+      <div className="form-wrap">
+        <form onSubmit={this.handleSubmit} action="/" method="post">
+        <p className="h4 text-blue mb-4 loginTitle">Select Client or Inspector</p>
                     <div className="position-relative mDivider">
                         <div className="divider" />
                         <div className="triangle-down" />
                     </div>
-                    <div className="d-flex loginType pt-3 pl-0">
+          <div className="form-row justify-content-between">
+          <div className="d-flex loginType pt-3 pl-0">
                         <div>
                             <input className="with-gap" type="radio" name="gender" id="client" defaultChecked />
                             <label htmlFor="client">Client</label>
@@ -132,24 +32,25 @@ export default class LoginPage extends Component {
                         </div>
                     </div>
                    
-                    <div className="input-field">
-                        <img className="prefix grey-text" src="/public/img/at.png" alt />
-                        <input id="email" type="text" name="email"  value={this.state.loginForm.email} onChange={this.handleInputChange} />
-                        <label htmlFor="email">Email Address</label>
-                        <div className="errorField">{this.state.loginFormError.email}</div>
+                    <div className="input-group col-12">
+                      <div className="input-group-prepend">
+                        <div className="input-group-text"><img className="prefix grey-text" src="/public/img/at.png" alt=""/></div>
+                      </div>
+                      <input type="text" className="form-control" id="" placeholder="Your Email" />
                     </div>
                  
-                    <div className="input-field">
-                        <img className="prefix grey-text" src="/public/img/key.png" alt />
-                        <input id="password" name="password" type="password" value={this.state.loginForm.password} onChange={this.handleInputChange} />
-                        <label htmlFor="password">Password</label>
-                        <div className="errorField">{this.state.loginFormError.password}</div>
+                   <div className="input-group col-12">
+                    <div className="input-group-prepend">
+                      <div className="input-group-text"> <img className="prefix grey-text" src="/public/img/key.png" alt=""/></div>
                     </div>
-                    <div className="row align-items-center mx-0">
+                    <input type="text" className="form-control" id="" placeholder="Your Password" />
+                  </div>
+          </div>
+          <div className="row align-items-center mx-0 mt-5">
                         <div className="mr-auto">
                             <div className="d-flex align-items-center mr-auto">
-                                <input type="checkbox" className="filled-in" name="tech" id="js" />
-                                <label htmlFor="js">Remember me</label>
+                                <input type="checkbox" className="filled-in mr-2" name="tech" id="js" />
+                                <label className="mt-9" htmlFor="js">Remember me</label>
                             </div>
                             <div className="forgotPass">
                                 <a className="logincolor" href>Forgot Password?</a>
@@ -159,19 +60,41 @@ export default class LoginPage extends Component {
                             <input type="submit" defaultValue="Login" className="btn btn-outline-pink loginBtn" />
                         </div>
                     </div>
-                </form>
-               
-                <div className="position-absolute fixedBtm w-100 col-md-12 pl-1 pr-2 pb-1">
+        </form>
+        <div className="position-absolute fixedBtm w-100 col-md-12 pl-1 pr-2 pb-1">
                     <div className="toSignUp fixedBtmBg daj py-4">
                         <img className="pr-2" src="/public/img/signUpArrow.png" alt /> Don’t have an account? 
                         <Link className="logincolor" to="/register/"> Sign Up 
                    </Link>
                     </div>
                 </div>
-            </div>
+      </div>
+    )
+  }
+  render() {
+    return (
+      <div className="loginpagewrap">
+        <div className="section bg-gray">
+          <div className="container">
+            <div className="inspection-quote-wrap row">
+              <div className="col-md-5 loginImageSec">
+                <div className="logoTrans text-center p-5">
+                  <img src="/public/img/LogoWhite.png" alt />
+                </div>
+                <div className="text-center text-white pt-5">
+                  Login to
+                    <br />ShipInspectors.com
+                </div>
+              </div>
+              <div className="col-md-7 bg-white loginFormSec p-5 position-relative">
+                {this.renderForm()}
+              </div>
+              </div>
+          </div>
         </div>
-    </div>
-    </div>
-      );
+      </div>
+    );
   }
 }
+
+export default LoginPage;

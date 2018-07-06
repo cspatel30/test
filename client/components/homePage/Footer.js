@@ -11,7 +11,7 @@ const Footer = () => {
       <div className={`col-6 p-0 d-flex flex-column`}>
         {
           (side === 'left' ? leftArr : rightArr).map((x, key) => (
-            <span className="item mb-3">{x}</span>
+            <span className="item mb-3" key={key}>{x}</span>
           ))
         }
       </div>
@@ -49,7 +49,7 @@ const Footer = () => {
         <span className="hr-right mb-5" />
         <b className="mb-4">PAY ONLINE</b>
         <div className="credit-card-img">
-          <a href="http://www.credit-card-logos.com/"><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/multiple_credit-card-logos-1/credit_card_logos_17.gif" width="235" height="35" border="0" /></a>
+          <a href="http://www.credit-card-logos.com/"><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/multiple_credit-card-logos-1/credit_card_logos_17.gif" width="235" height="35" /></a>
         </div>
       </div>
     </div>

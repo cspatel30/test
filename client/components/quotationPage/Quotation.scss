@@ -47,6 +47,9 @@
   .textC{
     text-align: center;
   }
+  .f-bold{
+    font-weight: bold;
+  }
   .marginC{
     margin: 0px auto ;
   }
@@ -71,20 +74,21 @@
 }
 
 .btn-filter {
+  
   background-color: #3f8cef !important;
   border-radius: 18px !important;
-  height :37px !important;
-  font-weight: bold;
-  padding: 0 29px !important;
+  height: 33px!important;
+  font-weight: 700;
+  padding: 6px 29px!important;
 }
 .btn-clear {
   background-color: #ffffff !important;
   border-radius: 18px !important;
-  height :37px !important;
+  height :33px !important;
   border:2px solid #bfbfbf;
   color:#bfbfbf;
   font-weight: bold;
-  padding: 0 29px !important;
+  padding: 6px 29px !important;
 }
 
 .mt-10{
@@ -132,16 +136,20 @@ color: #55a3f2!important;
 .btn-blue {
   background-color: #3f8cef !important;
   border-radius: 18px !important;
-  height :37px !important;
+  height :33px !important;
+  padding: 6px 29px;
 }
 .btn-white {
   background-color: #ffffff !important;
   border-radius: 18px !important;
-  height :37px !important; 
+  height :33px !important; 
   border:2px solid  #ee80a4;
   color:#ea3a6a;
+  padding: 6px 29px;
 }
 .btn-draft {
+  
+  padding: 6px 29px!important;
   background-color: #ffffff !important;
   border-radius: 18px !important;
   height :33px !important; 
@@ -207,7 +215,7 @@ color: #55a3f2!important;
    align-items: center !important;
  }
  .justifyC{
-  align-items: center !important;
+   justify-content: center !important;
 }
  .p-top-a{
   top:7px;
@@ -270,6 +278,9 @@ color: #55a3f2!important;
     top: 6px;
     left: 6px;
  }
+ .w-3{
+   width:3% !important;
+ }
 
 
 }
@@ -299,6 +310,9 @@ width: 220px;
   .mt-6{
     margin-top:6px !important;
   }
+  .mr-6{
+    margin-right:6px !important;
+  }
   .l-color{
     font-size: 13px;
     color: #323232;
@@ -318,10 +332,10 @@ width: 220px;
   color: #488ded !important;
 }
 .tickMarkimg{
-    width: 5%;
-    height: 30px;
-    margin-right: 20px;
-    cursor: pointer;
+  width: 4%;
+  height: 28px;
+  margin-right: 20px;
+  cursor: pointer;
 }
 .mt-20{
 margin-top: 20px !important;
@@ -340,4 +354,14 @@ margin-top: 20px !important;
 .cl-top{
   top:5px;
   left:6px
+}
+.mt-75{
+  margin-top:75px !important;
+}
+.mt-9{
+  margin-top:9px !important;
+}
+
+.fs-14{
+  font-size: 14px !important;
 }

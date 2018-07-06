@@ -93,7 +93,7 @@ export default class InspectorProfilesPage extends Component {
             <div className="card">
             <div className="card-header card-header-styles d-flex alignItems ch-minheight pl-8 pr-0 ml-12">
             <div className="d-flex alignItems mr-auto pt-10">
-            <img id="picon" onClick={this.clearAllSelected.bind(this)} src={this.state.selectInspector} className="checkbox w-4 "/>
+            <img id="picon" onClick={this.clearAllSelected.bind(this)} src={this.state.selectInspector} className="checkbox wid-15 "/>
             <label className="designation"  htmlFor="checkbox">Clear all selected</label>
             </div>
               <div className="col-md-3 mr-auto"  data-toggle="buttons">

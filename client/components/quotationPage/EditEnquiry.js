@@ -248,10 +248,11 @@ export default class EditEnquiry extends Component {
 
     render() {
         return (
-            <div className="editEnquiry">
+            <div className="editEnquiry mt-75">
                 <div className="container border border-primary px-0">
                     <div className="results border-bottom border-danger py-3 d-flex alignC">
-                        <div className="ml-5 viewAttachment"> Back to inspector enquiry list </div>
+                    
+                        <div className="ml-5 viewAttachment fs-14 d-flex alignC"> <i className="fa fa-angle-left mr-6" style={{"font-size":"27px"}}></i><div className="mt-3"> Back to inspector enquiry list</div> </div>
                         <div className="ml-240 editSize"> EDIT QUOTE </div>
                     </div>
 
@@ -332,7 +333,7 @@ export default class EditEnquiry extends Component {
                                 <div>
                                     <div className="d-flex mb-3 alignC mt-20">
                                         <img className="tickMarkimg" src={this.state.fixedSelected} onClick={this.fixedPriceSelected} />
-                                        <h5>Fixed Price </h5>
+                                        <h5 className="mt-9">Fixed Price </h5>
                                     </div>
                                     <div className="d-flex mb-3 alignC">
                                         <div className="col-5 px-0">Total Fixed Price </div>
@@ -364,7 +365,8 @@ export default class EditEnquiry extends Component {
                                 <div>
                                     <div className="d-flex mb-3 alignC mt-20">
                                         <img className="tickMarkimg" src={this.state.actualSelected} onClick={this.actualPriceSelected}/>
-                                        <h5>Actual Price</h5>
+                                       
+                                        <h5 className="mt-9" >Actual Price</h5>
                                     </div>
                                     <div className="d-flex mb-3">
                                         <div className="col-5 d-flex px-0">
@@ -483,7 +485,7 @@ export default class EditEnquiry extends Component {
                                         </div>
                                     </div>
                                     <div className="d-flex align-items-center mr-auto">
-                                        <img id="picon" src={this.state.acceptTermsConditionSelected} onClick={this.termsAndConditionsChecked}className="checkbox w-4" />
+                                        <img id="picon" src={this.state.acceptTermsConditionSelected} onClick={this.termsAndConditionsChecked}className="checkbox w-3" />
                                         <label htmlFor="confirmquote">I confirm above quotation and accept Shippinginspectors.com 15% platform charges on above quotation</label>
                                     </div>
                                 </div>
