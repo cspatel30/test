@@ -153,6 +153,8 @@ export default class AdminPage extends Component {
                 <div className="errorField">{this.state.loginFormError.password}</div>
               </div>
               <div className="btn"><button>Login</button></div>
+
+              <NavLink to={'/admin/enquiry'}>Enquiry</NavLink>
             </form>
           </div> 
         </div>);

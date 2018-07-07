@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		logMeIn: (payload) => {
+		logMeIn: (payload) => {console.log("payload", payload);
 			payload['userType'] = 'admin';
        		dispatch(login(payload));
     	}
