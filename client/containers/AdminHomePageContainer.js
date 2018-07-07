@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		logMeIn: (payload) => {console.log("payload", payload);
-			payload['userType'] = 'admin';
+			// payload['userType'] = 'admin';
        		dispatch(login(payload));
     	}
 	};

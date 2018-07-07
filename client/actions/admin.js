@@ -9,18 +9,13 @@ function makeRequest(method, api = '/login', data) {
 
 /* Admin Login */
 // sync actions
-
 export function loginPayload(payload) { return ({ type: ADMIN_LOGIN, payload }); }
-
-//async actions or server request from front-end
-export function login() { return dispatch => makeRequest('post', '/login/')
-  .then(response => dispatch(loginPayload(response.data)));     }
-
-
-// sync actions
-
 export function enquiryMarkupSaveSettingsPayload(payload) { return ({ type: ENQUIRY_MARKUP, payload }); }
 
+
 //async actions or server request from front-end
-export function enquiryMarkupSaveSettings() { return dispatch => makeRequest('post', '/systemSettings/save/')
+export function login(data) { return dispatch => makeRequest('post', '/login', data)
+  .then(response => dispatch(loginPayload(response.data)));     }
+
+  export function enquiryMarkupSaveSettings() { return dispatch => makeRequest('post', '/systemSettings/save/')
   .then(response => dispatch(enquiryMarkupSaveSettingsPayload(response.data)));     }
