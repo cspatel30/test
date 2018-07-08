@@ -1,0 +1,124 @@
+  .registerSec{
+    font-size: 23px !important;
+  }
+  .mDivider {
+    height: 30px;
+  }
+  
+  .rcolor {
+    color: #fe3d6c !important;
+  }
+  
+  .pointer
+  {
+    cursor:pointer !important
+  }
+  
+  .btn-outline-gray {
+    min-width: 80px !important;
+    color: #959595  !important;
+    background-color: #fff  !important;
+    background-image: none  !important;
+    border: 2px solid #959595  !important;
+    border-radius: 45px !important;
+  }
+  
+  .signUpsmText {
+    font-size: 13px;
+  }
+  
+  .required {
+    content: "*";
+    font-weight: bold;
+    color: red
+  }
+  
+  label.active .required {
+    display: none;
+  }
+  
+  .select-wrapper input.select-dropdown {
+    margin: 16px 0 0px 0;
+    padding: 0;
+  }
+  
+  .select-wrapper {
+    margin-top: 1rem;
+  }
+  
+  .signUpBtm {
+    bottom: 3px;
+    left: 0px;
+  }
+  
+  .signUpBtmBg {
+    background: #f8f8f8;
+  }
+  .ml-5
+  {
+    margin-left: 5px !important;
+  }
+  
+  .dnone
+  {
+    display:none;
+  }
+  
+  .mt-18{
+    margin-top:18px !important;
+  }
+ 
+   .errorField{
+     color:red;
+     font-size: 14px;
+     text-align: left;
+   }
+
+   [type=radio]:checked+label:after, [type=radio]:not(:checked)+label:after {
+    content: "";
+    width: 18px !important;
+    height: 18px !important;
+    background: #14436d;
+    position: absolute;
+    top: 1px !important;
+    left: 1px !important;
+    border-radius: 100%;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+  }
+
+  .loginType{
+    padding-left:12px;
+
+    label{
+      padding-top: 5px
+    }
+  }
+  [type=radio]:checked+label, [type=radio]:not(:checked)+label {
+    font-size: 20px !important;
+}
+
+.input-field label {
+  font-size: 19px;
+  color: #525458
+}
+
+input:not([type]), input[type=date]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=email]:not(.browser-default), input[type=number]:not(.browser-default), input[type=password]:not(.browser-default), input[type=search]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=text]:not(.browser-default), input[type=time]:not(.browser-default), input[type=url]:not(.browser-default), textarea.materialize-textarea {
+  border-bottom: 1px solid #bbbcbd;
+  font-size: 19px;
+  color: #525458
+}
+.fs-14{
+  font-size: 14px !important;
+}
+.fs-16{
+  font-size: 16px !important;
+}
+.mr-20{
+  margin-right:20px !important;
+}
+
+.dropdown-content .select-dropdown{
+  overflow-x: hidden;
+  overflow-y: hidden;
+}

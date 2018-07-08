@@ -20,14 +20,19 @@ const commonLoaders = [
     test: /\.(png|jpg|jpeg|svg|woff|woff2|ttf|eot|ico)$/,
     loader: 'url-loader',
     options: {
+      name: '[name].[ext]?[hash]',
       limit: 10000,
     },
   },
+  {
+    test: /jquery-plugin/,
+    loader: 'imports?jQuery=jquery,$=jquery,this=>window',
+  }
 ];
 module.exports = {
   name: 'browser',
   entry: {
-    app: [path.resolve(__dirname, './client/components/main.jsx')],
+    app: [path.resolve(__dirname, './client/main.js')],
   },
   output: {
     path: path.resolve(__dirname, './client/dist/'),
