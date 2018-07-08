@@ -81,6 +81,11 @@ export default class AdminPage extends Component {
 
     this.props.logMeIn(this.state.loginForm);
 
+    let $this = this;
+    setTimeout(function(){console.log("this.props>>>", $this.props); }, 1000);
+
+
+
   }
 
   getListItemStyle(sectionName) {

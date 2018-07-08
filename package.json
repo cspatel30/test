@@ -25,7 +25,7 @@
     "file-loader": "^1.1.11",
     "google-map-react": "^0.24.0",
     "mysql": "^2.13.0",
-    "node-sass": "^4.5.2",
+    "node-sass": "^4.9.1",
     "nodemon": "^1.11.0",
     "regenerator-runtime": "^0.10.5",
     "sass-loader": "^6.0.4",
