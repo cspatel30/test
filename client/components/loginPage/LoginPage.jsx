@@ -66,7 +66,7 @@ export default class LoginPage extends Component {
     
     if(error) 
     return;
-    this.props.logMeIn(this.state.loginForm,'post','/login');
+    this.props.logMeIn(this.state.loginForm);
   }
 
 
