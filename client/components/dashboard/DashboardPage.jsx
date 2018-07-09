@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import Navigation from './Navigation.jsx';
-import './style/style.scss';
+import './dashboard.scss';
 
 var moment = require('moment');
 

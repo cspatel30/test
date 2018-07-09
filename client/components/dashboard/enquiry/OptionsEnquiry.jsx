@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import './style/style.scss';
+import './enquiry.scss';
 
 export default class OptionsEnquiry extends Component {
 

@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import OptionsEnquiry from '../enquiry/OptionsEnquiry.jsx';
 import MessageComponent from './Message.jsx';
-import './style/style.scss';
+import './common.scss';
 
 const CustomTableCell = withStyles(theme => ({
   head: {

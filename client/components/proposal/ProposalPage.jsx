@@ -1,10 +1,9 @@
 
 import React, { Component } from 'react';
+import moment from 'moment';
 import Banner from './Banner.jsx';
 import ProposalContent from './ProposalContent.jsx';
-import './style/style.scss';
-
-var moment = require('moment');
+import './proposal.scss';
 
 export default class ProposalPage extends Component {
 
