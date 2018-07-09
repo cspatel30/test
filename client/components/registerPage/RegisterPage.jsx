@@ -1,5 +1,3 @@
-// import 'regenerator-runtime/runtime';
-
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -11,7 +9,6 @@ import Dialog from 'material-ui/Dialog';
 import VirtualizedSelect from 'react-virtualized-select';
 import axios from 'axios';
 import './RegisterPage.scss';
-import apiConfig from '../config/constants';
 
 const styles = {
   tabs: {
@@ -118,8 +115,8 @@ export default class RegisterPage extends Component {
           registerFormError: {firstName:"",lastName:"",email:"",password: "",confirmpassword:"",countryCode:"",phone:"",employmentType:"",qualification:"",title:""}
         })
   
-        $('#client-register').show();
-        $('#inspector-register').hide();
+        document.getElementById('client-register').style.display = "block";
+        document.getElementById('inspector-register').style.display = "none";
       }
       else {
         this.setState({
@@ -127,22 +124,14 @@ export default class RegisterPage extends Component {
                         clientCity:"",clientCountry:"",clientPostalCode:"",registraiontype:""},
           registerFormError: {firstName:"",lastName:"",email:"",password: "",confirmpassword:"",countryCode:"",phone:"", clientCompanyName: ""}
         })  
-        $('#inspector-register').show();
-        $('#client-register').hide();
+        document.getElementById('inspector-register').style.display = "block";
+        document.getElementById('client-register').style.display = "none";
       }
     })
   }
-
-  handleInputChange (event) {
-    console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-    event.persist();
-    this.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-  }
-
-
-  componentDidMount() {
+  
+  componentDidUpdate(){
     var that=this;
-   
     // Country code value
     $('#containerCountryCode').on('change', 'select', function(event){ 
       console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
@@ -178,7 +167,13 @@ export default class RegisterPage extends Component {
       console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
       that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
     }); 
+  
+  }
 
+  handleInputChange (event) {
+    event.persist();
+    this.setState((state) => { state.registerForm[event.target.name] = event.target.value });
+    console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
   }
 
   componentWillMount(){
@@ -203,7 +198,6 @@ export default class RegisterPage extends Component {
       this.setState((state) => { state.signUpErrorMsg = props.error; });
     }
   }
-
 
   handleAgreementPopupOpen () {
     this.setState((state) => { state.termsOpen = true});
@@ -232,6 +226,7 @@ export default class RegisterPage extends Component {
   handleLocationInputChange (event) {
     event.persist();
     this.setState((state) => { state.registerForm.location[event.target.name] = event.target.value });
+    console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
   }
 
   toggleAgreementCheckBox (event) {
