@@ -11,7 +11,6 @@ import Dialog from 'material-ui/Dialog';
 import VirtualizedSelect from 'react-virtualized-select';
 import axios from 'axios';
 import './RegisterPage.scss';
-import apiConfig from '../config/constants';
 
 const styles = {
   tabs: {

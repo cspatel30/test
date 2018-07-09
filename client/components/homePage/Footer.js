@@ -11,7 +11,6 @@ const Footer = () => {
       <div className={`col-6 p-0 d-flex flex-column`}>
         {
           (side === 'left' ? leftArr : rightArr).map((x, key) => (
-            <span className="item mb-3">{x}</span>
             <span className="item mb-3" key={key}>{x}</span>
           ))
         }
