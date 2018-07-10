@@ -3,22 +3,6 @@ import banner from '../../images/banner.png';
 import Breadcrumb from './Breadcrumb.jsx';
 import CustomList from './CustomList.jsx';
 
-const banners = {
-    imageShip: {
-        backgroundImage: `url(${banner})`,
-        width: "100%",
-        height: "300px",
-        textAlign: "center",
-        color: "#ECEFFF",
-        backgroundSize:" cover",
-        backgroundRepeat: "no-repeat",
-        display:" flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "60px",
-        fontFamily:"proxima_novalight"
-    }
-}
 export default class Navigation extends Component {
     constructor(props) {
         super(props);
@@ -43,7 +27,7 @@ export default class Navigation extends Component {
         const {renderEnquiries,profileType,formatDate,formatMonth,pageLength} = this.props;
         return (
             <div>
-                <div style={banners.imageShip}>                   
+                <div className="imageShip">                   
                     {showname}
                 </div>
                 <div className="Navigation">

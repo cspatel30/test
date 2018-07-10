@@ -1,3 +1,18 @@
+.imageShip{
+  background-image: url('../../images/banner.png');  
+  width: 100%;
+  height: 300px;
+  text-align: center;
+  color: #ECEFFF;
+  background-size:cover;
+  background-repeat: no-repeat;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  font-family:proxima_novalight;
+}
+
 .Navigation {
   margin: -34px auto 0;
   display: flex;
@@ -7,6 +22,10 @@
   ul {
     padding: 0;
     margin: 0;
+  }
+  .breadcrumbnav
+  {
+    max-width: "80%";
   }
   .breadcrumb {
     list-style: none;

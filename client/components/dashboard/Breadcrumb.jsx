@@ -4,7 +4,7 @@ export default class Breadcrumb extends Component {
     render() {
         const {showNavigationName,showActive,selected} = this.props;
         return (
-            <div style={{maxWidth: "80%"}}>
+            <div className="breadcrumbnav">
             <ul className="breadcrumb">
             <li className={showActive === 'Manage Enquiries' ? 'active' : ''}><div className={`section ${selected === "Manage Enquiries" ? "selected" : ""}`} onClick={() => showNavigationName("Manage Enquiries")}>ENQUIRIES</div></li>
             <li className={showActive === "Find Inspectors" ? 'active' : ''}><div className={`section ${selected === "Find Inspectors" ? "selected" : ""}`} onClick={() => showNavigationName("Find Inspectors")}>FIND INSPECTORS</div></li>

@@ -27,29 +27,6 @@ const CustomTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-const
-  root = {
-    width: '100%',
-    marginTop: 3,
-    overflowX: 'inherit',
-    boxShadow: "none"
-  };
-const table = {
-  minWidth: 700
-};
-const rowt = {
-  textAlign:"left",
-  fontWeight:300,
-  verticalAlign:"top",
-  '&:nth-of-type(even)': {
-    background: 'red'
-  }
-};
-
-const rows ={
-  textAlign:"left"
-}
-
 const orders=[{id: 5, inspectionTypeDisplayName: "Dry-Dock Management", email: "abhishek@classicinformatics.com", vesselName: "test", portId: 15372,imo:"45465",inspectionTypeDisplayName:
 "Dry-Dock Management",inspectorQuote:55,inspectoramount:12000,
 inspectorname:"John",message
@@ -93,7 +70,7 @@ startTimeFmt
 endTimeFmt
 :
 "2018-06-23"}];
-console.log(orders);
+
 
 class CustomizedTable extends Component {
 
@@ -118,8 +95,8 @@ class CustomizedTable extends Component {
     switch (itemType) {
       case "Manage Enquiries":      
         return (
-          <TableRow style={rows}>
-            <CustomTableCell>Ref.No</CustomTableCell>
+          <TableRow className="tableRow">
+            <CustomTableCell >Ref.No</CustomTableCell>
             <CustomTableCell>Enquiries</CustomTableCell>
             <CustomTableCell>Quotations</CustomTableCell>
             <CustomTableCell>Status</CustomTableCell>
@@ -129,7 +106,7 @@ class CustomizedTable extends Component {
         );
       case "Manage Orders":
         return (
-          <TableRow style={rows}>
+          <TableRow className="tableRow">
           <CustomTableCell>PONo.</CustomTableCell>
           <CustomTableCell>Details</CustomTableCell>
           <CustomTableCell>Inspector</CustomTableCell>
@@ -152,8 +129,8 @@ class CustomizedTable extends Component {
     
     return (  
         
-      <Paper style={root}>
-        <Table style={table} className="Listing">
+      
+        <Table className="Listing">
           <TableHead>
           {this.getTableHeaders()}
           </TableHead>
@@ -161,7 +138,7 @@ class CustomizedTable extends Component {
             
             {itemType == "Manage Enquiries" && this.getItems(page,renderEnquiries).map(n => {
               return (
-                <TableRow style={rowt} key={n.id}>
+                <TableRow className="detailsTableRow" key={n.id}>
                   <CustomTableCell component="th" scope="row">
                   {n.id} 
                   </CustomTableCell>
@@ -212,7 +189,7 @@ class CustomizedTable extends Component {
 
               {itemType == "Manage Orders" && this.getItems(page,orders).map(n => {
               return (
-                <TableRow style={rowt} key={n.id}>
+                <TableRow className="detailsTableRow" key={n.id}>
                   <CustomTableCell component="th" scope="row">
                   {n.id}
                   </CustomTableCell>
@@ -260,7 +237,7 @@ class CustomizedTable extends Component {
             
           </TableBody>
         </Table>
-      </Paper>
+      
       
     );
   

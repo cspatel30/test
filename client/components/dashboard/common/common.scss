@@ -79,8 +79,28 @@
         margin: -15px 0 0;
         border-radius: 4px;
         left: 234px;
-        }
+        }        
   }
   table.Listing tr:nth-child(even) {
     background: #fafafa;
   }
+  .Listing{
+    min-width: 700;
+    width: 100%;
+    margin-top: 3;
+    overflow-x: inherit;
+  }
+  .tableRow{
+    text-align:left;      
+  } 
+  .detailsTableRow{
+    text-align:left;
+    font-weight:300;
+    vertical-align:top;    
+  }
+  // .maintable{
+  //   width: 100%;
+  //   margin-top: 3;
+  //   overflow-x: inherit;
+  //   box-shadow: none;
+  // }

@@ -35,27 +35,6 @@ const CustomTableCell = withStyles(theme => ({
 }))(TableCell);
 
 
-const table = {
-  minWidth: 700,
-  width: '100%',
-  marginTop: 3,
-  marginBottom :0,
-  overflowX: 'inherit',
-  boxShadow: "rgba(0, 0, 0, 0.2) 0px -2px 8px 0px"
-};
-const rowt = {
-  textAlign:"left",
-  fontWeight:300,
-  verticalAlign:"top"
-};
-
-const rows ={
-  textAlign:"left"
-}
-
-const root= {
-    color: "#FE3D6C",
-}
 
 const proposals=[{id:5,name:'M.chan',consultant:'Marine Engineer Consultant',engineer:'Chief Engineer',rating:'3',city:'Shanghai',country:'China',type:'Car carrie Ship',areas:['Singapore','Indonesia','Malaysia'],experience:'5',amount:'1050',message:'Excluding boat charges Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',status:'Availability',from:'08-08-2018',to:'08-18-2018'},{id:6,name:'Howard Ford',consultant:'Marine Engineer Consultant',engineer:'Chief Engineer',rating:'4',city:'Janisview',country:'',type:'Car carrie Ship',areas:['Singapore','Indonesia','Malaysia'],experience:'5',amount:'1150',message:'Excluding boat charges Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',status:'Availability',from:'08-08-2018',to:'08-18-2018'},{id:7,name:'M.chan',consultant:'Marine Engineer Consultant',engineer:'Chief Engineer',rating:'3',city:'Shanghai',country:'China',type:'Car carrie Ship',areas:['Singapore','Indonesia','Malaysia'],experience:'5',amount:'1050',message:'Excluding boat charges Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',status:'Availability',from:'08-08-2018',to:'08-18-2018'}];
 
@@ -122,9 +101,9 @@ class ProposalList extends Component {
     return (  
         
       
-        <Table style={table}>
+        <Table className="proposaltable">
           <TableHead>
-          <TableRow style={rows}>
+          <TableRow classname="proposalhead">
             <CustomTableCell colSpan="2"><Checkbox                    
                     onChange={this.toggleAllCheckbox}  style={{ color: "#FE3D6C" }}                 
                 /></CustomTableCell>
@@ -144,7 +123,7 @@ class ProposalList extends Component {
               {this.getItems(page,proposals).map(n => {
                 console.log(this.state.setId[n.id]);
               return (
-                <TableRow style={rowt}>
+                <TableRow className="proposalrow">
                   <CustomTableCell component="th" scope="row" style={{width:"5%"}}>
                   <FormGroup row>
         <FormControlLabel

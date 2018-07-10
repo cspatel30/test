@@ -4,7 +4,7 @@ import ReactPaginate from "react-paginate";
 import leftarrow from '../../images/left-arrow.svg';
 import rightarrow from '../../images/right-arrow.svg';
 import OrderContent from './orders/OrderContent.jsx';
-import './dashboard.scss';
+
 
 export default class CustomList extends Component {
     constructor(props) {

@@ -1,3 +1,17 @@
+.imageShip{
+  background-image: url('../../images/banner.png');  
+  width: 100%;
+  height: 300px;
+  text-align: center;
+  color: #ECEFFF;
+  background-size:cover;
+  background-repeat: no-repeat;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  font-family:proxima_novalight;
+}
 .proposalContainer {
   max-width:80%;
   margin:0 auto 20px;
@@ -17,6 +31,45 @@
     font-size: 18px;
     cursor: pointer;
   }
+  .card{
+    width: "100%";
+  }
+  .bullet{
+    display: inline-block;
+    margin: 0 2px;
+    transform: scale(0.8);
+  }
+  .title{      
+    font-size: 24px;
+    font-family:proxima_novaregular;
+    color: #1B8CEF;
+    font-weight: bold;
+  }
+  .refno {     
+    font-size: 16px;
+    font-family:proxima_novaregular;
+    color: #000000;
+  }
+  .subtitle{
+    font-size: 16px;
+    font-family:proxima_novaregular;
+    color: #1B8CEF;
+    line-height: 19px;
+    padding: 0 0 13px;
+  }
+  .imgtitle{
+    font-size: 14px;
+    font-family:proxima_novaregular;
+    color: #9B9B9B;
+    line-height: 17px;
+    padding: 0 0 5px;
+  }
+  .description{      
+    font-family:proxima_novaregular;
+    font-size: 14px;
+    color: #000000;
+    line-height: 20px;
+  }
   .proposalImg{
     text-align:center;
   }
@@ -29,6 +82,8 @@
   .proposalEngineer span.consultant{
     color: #1D76AD;
   }
+
+  
   .proposalEngineer span.ship{
       line-height:14px;
   }
@@ -146,7 +201,11 @@
     position: relative;
   }
   
-  
+  .viewBreak{
+    color:#E72C7D;
+    margin-bottom:16px;
+    margin-top:0px;
+  }
   .dropdownBreak:before {
     content: "";
     display: inline-block;
@@ -161,12 +220,35 @@
   .Imagetext{
     padding: 2px 17px 8px;
   }
+  .profileImg{
+    border-radius: "50%";
+  }
+
+  .proposaltable{
+    min-width: 700px;
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom :0px;
+    overflow-x: inherit;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px -2px 8px 0px;
+  }
   
+  .proposalrow{
+    text-align:left;
+    font-weight:300;
+    vertical-align:top;
+  }
+  .proposalhead{
+    text-align:left;
+  }
   .rTable {
     display: table;  
   }
   .rTableRow {
     display: table-row;
+  }
+  .rTableRow .charges{
+    border-bottom: 1px solid #ddd;
   }
   .rTableHeading {
     display: table-header-group;  
@@ -174,6 +256,10 @@
   .rTableCell, .rTableHead {
     display: table-cell;
     padding: 1px 10px;  
+  }
+  .rTableCell .price{
+    color: "#1B8CEF";
+    font-weight: "bold";
   }
   .rTableHeading {
     display: table-header-group;  
