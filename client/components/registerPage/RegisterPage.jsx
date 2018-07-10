@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import VirtualizedSelect from 'react-virtualized-select';
-import axios from 'axios';
+import Select from 'react-select';
 import './RegisterPage.scss';
 
 const styles = {
@@ -91,7 +91,13 @@ export default class RegisterPage extends Component {
         qualification: "",
         title:""
 
-      }
+      },
+      selectedOption: '',
+      countryCode: "",
+      employmentType: "",
+      qualification: "",
+      inspectorCountry: "",
+      title:""
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -102,15 +108,16 @@ export default class RegisterPage extends Component {
     this.handleAgreementPopupClose = this.handleAgreementPopupClose.bind(this);
     this.portOptionRenderer = this.portOptionRenderer.bind(this);
     this.selectTypeOfRegistration = this.selectTypeOfRegistration.bind(this);
+    //this.getDropdownConstants = this.getDropdownConstants.bind(this);
   } 
 
   selectTypeOfRegistration(event) {
     this.setState({
       registraiontype: event.target.value
     }, () => {
-     
-      if (this.state.registraiontype === "client") {
-        this.setState({
+      if (this.state.registraiontype !== "inspector") {
+    
+     this.setState({
           registerForm: {firstName:"",lastName:"",email:"",password:"",confirmpassword:"",countryCode:"",phone:"",inspectorCompanyName:"",employmentType: "",qualification: "",title:""},
           registerFormError: {firstName:"",lastName:"",email:"",password: "",confirmpassword:"",countryCode:"",phone:"",employmentType:"",qualification:"",title:""}
         })
@@ -119,7 +126,7 @@ export default class RegisterPage extends Component {
         document.getElementById('inspector-register').style.display = "none";
       }
       else {
-        this.setState({
+     this.setState({
           registerForm: {firstName:"",lastName:"",email:"",password:"",confirmpassword:"",countryCode:"",phone:"",inspectorCompanyName:"",employmentType: "",qualification: "",title:"",
                         clientCity:"",clientCountry:"",clientPostalCode:"",registraiontype:""},
           registerFormError: {firstName:"",lastName:"",email:"",password: "",confirmpassword:"",countryCode:"",phone:"", clientCompanyName: ""}
@@ -130,66 +137,71 @@ export default class RegisterPage extends Component {
     })
   }
   
-  componentDidUpdate(){
-    var that=this;
-    // Country code value
-    $('#containerCountryCode').on('change', 'select', function(event){ 
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-    that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-     });
-    
-    // Employment Type value
-    $('#employmentTypeContainer').on('change', 'select', function(event){ 
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-      });
-
-    // Qualification value   
-    $('#qualificationContainer').on('change', 'select', function(event){ 
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-    that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-    });
-    
-    // Title value   
-    $('#titleContainer').on('change', 'select', function(event){ 
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-    });  
-
-    // City value   
-    $('#cityContainer').on('change', 'select', function(event){
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value)) 
-      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-    }); 
-
-    // Country value   
-    $('#countryContainer').on('change', 'select', function(event){ 
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-    }); 
-  
-  }
-
   handleInputChange (event) {
     event.persist();
     this.setState((state) => { state.registerForm[event.target.name] = event.target.value });
     console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
   }
 
-  componentWillMount(){
-    $(document).ready(function () {
-      $('.dropdown-button').dropdown({
-          constrainWidth: false,
-          hover: true,
-          belowOrigin: true,
-          alignment: 'left'
-      });
-      $('select').material_select();
-      
-      $('.button-collapse').sideNav();
-    });
+  handleCountryChange = (countryCode) => {
+    console.log(JSON.stringify(countryCode))
+    this.setState({ countryCode });
+    console.log(`Selected Option: ${countryCode.value}`);
+  
   }
 
+  handleEmploymentTypeChange = (employmentType) => {
+    console.log(JSON.stringify(employmentType))
+    this.setState({ employmentType });
+    console.log(`Selected Option: ${employmentType.value}`);
+  
+  }
+
+  handleQualificationChange = (qualification) => {
+    console.log(JSON.stringify(qualification))
+    this.setState({ qualification });
+    console.log(`Selected Option: ${qualification.value}`);
+  
+  }
+
+  handleInspectorCountryChange = (inspectorCountry) => {
+    console.log(JSON.stringify(inspectorCountry))
+    this.setState({ inspectorCountry });
+    console.log(`Selected Option: ${inspectorCountry.value}`);
+  
+  }
+
+  handleTitleChange = (title) => {
+    console.log(JSON.stringify(title))
+    this.setState({ title });
+    console.log(`Selected Option: ${title.value}`);
+  
+  }
+
+  handleChange = (selectedOption) => {
+    console.log(JSON.stringify(selectedOption))
+    this.setState({ selectedOption });
+    console.log(`Selected Option: ${selectedOption.value}`);
+  
+  }
+  componentWillMount(){
+    // this.getDropdownConstants();
+  }
+   // getDropdownConstants() {
+  //   fetch("http://sis-beta.us-east-1.elasticbeanstalk.com/init/getDropdownConstants",{
+  //     method:'GET',
+  //     headers : {
+  //         "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxd2VydHlAZ21haWwuY29tIiwiZXhwIjoxNTMyMDc3MTQ4fQ.D_WvIwv2E891YW_GMwwK6OfJifZDmtTLexaWhOUnpDUjn9C2ZRGVejbTVOwnu1tr0Il7ofcOZeiJsbeScsyAug"
+  //     }
+  //     }).then((response) => response.json()).then((res) => {
+  //         console.log("getData...."+JSON.stringify(res))
+  //         //return res;
+  //     })
+  //     .catch((error)=>{
+  //         console.log("getData.error..."+JSON.stringify(error))
+  //         //return error;
+  //     })
+  // }
   componentWillReceiveProps(props) {
     if(props.signUpSuccess) {
       this.setState((state) => { state.signUpSuccess = props.signUpSuccess; });
@@ -246,7 +258,6 @@ export default class RegisterPage extends Component {
       registerFormError.firstName = "This field is mandatory";
     }
     if(this.state.registerForm.lastName == "") {
-      alert("last Name")
       error = true;
       registerFormError.lastName = "This field is mandatory";
     }
@@ -305,21 +316,9 @@ export default class RegisterPage extends Component {
     }
    
     
-    if(this.state.registerForm.firstName!='' &&this.state.registerForm.lastName!='' && this.state.registerForm.email != "" && this.state.registerForm.password != ""&&this.state.registerForm.countryCode != ""&&this.state.registerForm.clientCompanyName != ""&&this.state.registerForm.phone != ""){
+    if(this.state.registerForm.firstName!='' &&this.state.registerForm.lastName!='' && this.state.registerForm.email != "" && this.state.registerForm.password != ""&&this.state.countryCode != ""&&this.state.registerForm.clientCompanyName != ""&&this.state.registerForm.phone != ""){
          error = false;
     }
-   
-    // static data
-    // var data={
-    //   email : "krkhunti.elance22@gmail.com",
-    //   password : "password",
-    //   firstName : "Karshan",
-    //   lastName: "Khunti",
-    //   type:"Customer",
-    //   company:"My Company",
-    //   phone:"1234567890",
-    //   code: "+91"               
-    // }
 
     // dynamic data
     var data={
@@ -330,97 +329,19 @@ export default class RegisterPage extends Component {
        type:this.state.userType,
        company:this.state.registerForm.clientCompanyName,
        phone:this.state.registerForm.phone,
-       code:this.state.registerForm.countryCode
+       code:this.state.countryCode.value
+
     }
 
-    if(error) { 
-      alert("error")
+    if(error) {
+      //alert("error")
       this.setState( (state) => { state.registerFormError = registerFormError; state.signUpSuccess = false;});
       return;
     }else{
-    alert("user type "+this.state.userType)
+    //alert("user type "+this.state.userType)
     console.log("data "+JSON.stringify(data))
-
-    // //ajax call
-    //   $.ajax({
-    //     type: "POST",
-    //     url: 'http://sis-beta.us-east-1.elasticbeanstalk.com/user/sign-up',
-    //     headers : {
-    //         contentType: "application/json",
-    //     },
-    //     dataType: 'json',
-    //     data: data,
-    //     success: (data) => {
-    //     console.log("register success::"+JSON.stringify(data));
-    //     },
-    //     error: (err) => {
-    //       console.log("register error::"+JSON.stringify(err));
-    //     }
-    //   });
-
-   // axios call
-        axios.post('http://sis-beta.us-east-1.elasticbeanstalk.com/user/sign-up', {
-            email : this.state.registerForm.email,
-            password : this.state.registerForm.password,
-            firstName  : this.state.registerForm.firstName,
-            lastName : this.state.registerForm.lastName,
-            type:this.state.userType,
-            company:this.state.registerForm.clientCompanyName,
-            phone:this.state.registerForm.phone,
-            code:this.state.registerForm.countryCode
-        })
-        .then(function (response) {
-          console.log(JSON.stringify(response)+"responce");
-        })
-        .catch(function (error) {
-          console.log(error+"error");
-        });
-
-      //fetch call
-      // fetch("http://sis-beta.us-east-1.elasticbeanstalk.com/user/sign-up",{
-      // method:'POST',
-      // header : {
-      //     "Content-Type":"application/json",
-      // },
-      // body:JSON.stringify({
-      //   "email" : "manikyamallu@gmail.com", "password" : "123456", "firstName" : "Manikyam", "lastName" : "allu", "type":"Customer", "company":"My Company", "phone":"9898996684", "code": "+91"
-      // })
-      // }).then((response) => response.json()).then((res) => {
-      //     console.log("getData...."+JSON.stringify(res))
-      //     //return res;
-      // })
-      // .catch((error)=>{
-      //     console.log("getData.error..."+JSON.stringify(error))
-      //     //return error;
-      // })
-    
-    // fetch('http://sis-beta.us-east-1.elasticbeanstalk.com/user/sign-up',{
-    //   method:'post',
-    //   headers: {
-    //       'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(data)
-    //   })
-    //   .then((response)=>response.json())
-    //   .then((status)=>{
-    //       console.log("status"+JSON.stringify(status))
-    //       if(status){
-    //         console.log("getData...."+JSON.stringify(status))
-    //       }
-    //       else
-    //       {
-    //         console.log("error data...."+JSON.stringify(status))
-    //       }
-    //   })
-    //   .catch((err)=>{
-    //     console.log("catch error: " + JSON.stringify(err))
-    //   })
-
-
+    this.props.registerMe(data);
    }
-
-  
-
   }
 
   renderSelectBox = (datasource, placeholder, keyField='id', textField='name') => {
@@ -517,7 +438,24 @@ export default class RegisterPage extends Component {
   renderForm() {
     const actions = [
     <FlatButton label="I Agree" primary={true} onClick={this.handleAgreementPopupClose}/>];
-      
+    const { selectedOption } = this.state;
+    const value = selectedOption && selectedOption.value;
+    
+    const { countryCode } = this.state;
+    const country = countryCode && countryCode.value;
+
+    const { employmentType } = this.state;
+    const employment = employmentType && employmentType.value;
+
+    const { qualification } = this.state;
+    const selectedQualification = qualification && qualification.value;
+
+    const { inspectorCountry } = this.state;
+    const selectedInspectorCountry = inspectorCountry && inspectorCountry.value;
+
+    const { title } = this.state;
+    const selectedTitle = title && title.value;
+    
     if(!this.state.signUpSuccess) {
       return (
         <div className="section bg-gray registerSec">
@@ -525,7 +463,7 @@ export default class RegisterPage extends Component {
             <div className="row mt-5">
               <div className="col-md-12 SignUpFormSec p-5 position-relative">
                 {/* Material form login */}
-                <form className="mb-5 pb-5"  onSubmit={this.handleSubmit} action="/" method="post">
+                <form id="RegistrationForm" className="mb-5 pb-5"  onSubmit={this.handleSubmit} action="/" method="post">
                   <p className="h4 text-blue mb-4 SignUpTitleMain pl-0">Register on ShipInspectors.com</p>
                   <p className="h4 text-blue mb-4 loginTitle pl-0">Select Client or Inspector</p>
                   <div className="position-relative mDivider">
@@ -588,12 +526,15 @@ export default class RegisterPage extends Component {
                   </div>
                   <div className="d-flex col-md-6 pl-0">
                     <div className="col-md-6 pl-0" id="containerCountryCode">
-                      <select id="countryCode"  name="countryCode" value={this.state.registerForm.countryCode}  onChange={this.handleInputChange} >
-                        <option value="">Code</option>
-                        <option value="+91">+91</option>
-                        <option value="+44">+44</option>
-                        <option value="+1">+1</option>
-                      </select>
+                    <Select
+                      name="form-field-name"
+                      placeholder="Code"
+                      value={country}
+                      onChange={this.handleCountryChange}
+                      options={[
+                        { value: '+91', label: '+91' },
+                        { value: '+1', label: '+1' },
+                      ]}/>
                       <div className="errorField mt-18">{this.state.registerFormError.countryCode}</div> 
                     </div>
                     <div className="col-md-6 pr-0">
@@ -648,7 +589,7 @@ export default class RegisterPage extends Component {
                     </div>
                     <div className="col-md-6 pr-0">
                       <div className="input-field">
-                        <input id="clientPostalCode" name="clientPostalCode" type="text" value={this.state.registerForm.clientCountry} onChange={this.handleInputChange}/>
+                        <input id="clientPostalCode" name="clientPostalCode" type="text" value={this.state.registerForm.clientPostalCode} onChange={this.handleInputChange}/>
                         <label htmlFor="clientPostalCode">Postal Code</label>
                       </div>
                     </div>
@@ -666,55 +607,58 @@ export default class RegisterPage extends Component {
                       </div>
                     </div>
                     <div className="col-md-6 pr-0" id="employmentTypeContainer">
-                      <select name="employmentType" defaultValue={this.state.registerForm.employmentType} onChange={this.handleInputChange}>
-                        <option value=""  required>Employment Type</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
+                    <Select
+                      name="form-field-name"
+                      value={employment}
+                      placeholder="Employment Type"
+                      onChange={this.handleEmploymentTypeChange}
+                      options={[
+                        { value: 'one', label: 'One' },
+                        { value: 'two', label: 'Two' },
+                      ]}
+                    />
                       <div className="errorField mt-18">{this.state.registerFormError.employmentType}</div> 
                     </div>
                   </div>
                   <div className="d-flex mb-5">
                     <div className="col-md-6 pl-0" id="qualificationContainer">
-                      <select  name="qualification" defaultValue={this.state.registerForm.qualification} onChange={this.handleInputChange}>
-                        <option value="" required>Qualification</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
+                    <Select
+                      name="form-field-name"
+                      placeholder="Qualification"
+                      value={selectedQualification}
+                      onChange={this.handleQualificationChange}
+                      options={[
+                        { value: 'MCA', label: 'MCA' },
+                        { value: 'B.tech', label: 'B.tech' },
+                      ]}/>
                       <div className="errorField mt-18">{this.state.registerFormError.qualification}</div>
                     </div>
                     <div className="col-md-6 pr-0" id="titleContainer">
-                      <select name="title" defaultValue={this.state.registerForm.title} onChange={this.handleInputChange}>
-                        <option value="" required>Title</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
+                    <Select
+                      name="form-field-name"
+                      placeholder="Title"
+                      value={selectedTitle}
+                      onChange={this.handleTitleChange}
+                      options={[
+                        { value: 'title1', label: 'title1' },
+                        { value: 'title2', label: 'title2' },
+                      ]}/>
                       <div className="errorField mt-18">{this.state.registerFormError.title}</div>
                     </div>
                   </div>
                   <div className="d-flex mb-5">
                     <div className="col-md-6 pl-0" id="inspectorCityContainer">
-                      <select name="inspectorCity" defaultValue={this.state.registerForm.inspectorCity} onChange={this.handleInputChange}>
-                        <option value="" selected required>City</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
+                    <Select
+                      name="form-field-name"
+                      placeholder="Country"
+                      value={selectedInspectorCountry}
+                      onChange={this.handleInspectorCountryChange}
+                      options={[
+                        { value: 'US', label: 'USA' },
+                        { value: 'UK', label: 'UK' },
+                      ]}/>
                     </div>
-                    <div className="col-md-6 pr-0" id="inspectorCountryContainer">
-                      <select name="inspectorCountry" defaultValue={this.state.registerForm.country} onChange={this.handleInputChange}>
-                        <option value="" required>Country</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="d-flex mb-5">
-                    <div className="col-md-6 pl-0">
+                    <div className="col-md-6 pr-0">
                       <div className="input-field">
                         <input id="inspectorPostalCode" name="inspectorPostalCode" type="text" value={this.state.registerForm.postalcode} onChange={this.handleInputChange}/>
                         <label htmlFor="inspectorPostalCode">Postal Code</label>
@@ -748,6 +692,7 @@ export default class RegisterPage extends Component {
 
   render() {
     const { userToken , userProfile } = this.props;
+    
 
   	if(userToken && userProfile) {
   		this.props.history.push('/');
