@@ -1,25 +1,54 @@
 import Request from 'axios';
-import { ADMIN_LOGIN, ENQUIRY_MARKUP } from '../constants/ActionsTypes';
+import { USER_PROFILE, ENQUIRY_MARKUP, ADMIN_ENQUIRY_LIST, ADMIN_ORDER_LIST } from '../constants/ActionsTypes';
 
 const ip = 'http://sis-beta.us-east-1.elasticbeanstalk.com';
 function makeRequest(method, api = '/login', data) {
+	
   return Request[method](ip + api, data)
-        .then(r => { let headers = r; 
+        .then(r => { console.log( "api", api, method); let headers = r; 
         	r.headers["access-control-expose-headers"] = '*';
         	r.headers["Content-Type"] = 'application/json';
-        	console.log("r headers", headers); 
+        	if(api!='/login'){
+        		r.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBzaGlwaW5zcGVjdG9ycy5jb20iLCJleHAiOjE1MzIwNzcxMjB9.Mm-ZDQJuuw_Oy0GuGXJEgk5rXevemzteco5xirtWe50n_CO2n7IQ4EODIDKNIXexXCY_lg3TNiT6TsZuhMG_1A'
+        	}
+        	console.log(api, "r headers", headers); 
         	return headers});
 }
 
 /* Admin Login */
-// sync actions
-export function loginPayload(payload) { console.log("Admin Login Payload Response", payload);return ({ type: ADMIN_LOGIN, payload }); }
-export function enquiryMarkupSaveSettingsPayload(payload) { return ({ type: ENQUIRY_MARKUP, payload }); }
 
+export function loginPayload(payload) { console.log("Admin Login Payload Response", payload);return (
+	{    type: USER_PROFILE, 
+		payload: payload.data
+	}); 
+}
 
 //async actions or server request from front-end
 export function login(data) { return dispatch => makeRequest('post', '/login', data)
   .then(response => dispatch(loginPayload(response)));     }
+ /* END */
+ 
+ /* Enquiry Markup Save */
+export function enquiryMarkupSaveSettingsPayload(payload) { return ({ type: ENQUIRY_MARKUP, payload }); } 
 
-  export function enquiryMarkupSaveSettings() { return dispatch => makeRequest('post', '/systemSettings/save/')
+  export function enquiryMarkupSaveSettings() { return dispatch => makeRequest('post', '/systemSettings/save')
   .then(response => dispatch(enquiryMarkupSaveSettingsPayload(response.data)));     }
+
+/* END */
+
+ /* Enquiry Markup Save */
+export function getEnquiryListPayload(payload) { return ({ type: ADMIN_ENQUIRY_LIST, payload }); } 
+
+  export function getEnquiryList(data) { return dispatch => makeRequest('get', '/enquiry/getAll?page='+data.page+'&size='+data.pageSize, '')
+  .then(response => dispatch(getEnquiryListPayload(response)));     }
+  
+/* END */
+
+
+ /* Order List */
+export function getAdminOrdersPayload(payload) { return ({ type: ADMIN_ENQUIRY_LIST, payload }); } 
+
+  export function getAdminOrders(data) { return dispatch => makeRequest('get', '/enquiry/getAll?page='+data.page+'&size='+data.pageSize, '')
+  .then(response => dispatch(getAdminOrdersPayload(response)));     }
+  
+/* END */

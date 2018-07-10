@@ -87,20 +87,27 @@ export default class AdminEnquiryPage extends Component {
     this._loadApiDatapageLoadFilter =  _.debounce(this._loadApiDatapageLoadFilter.bind(this), WAIT);
     this._loadSubcomponentDataFilter =  _.debounce(this._loadSubcomponentDataFilter.bind(this), WAIT);
     this.onChange = this.onChange.bind(this);
+    this._getApiCall = this._getApiCall.bind(this);
   }
 
   componentWillMount() {
     if(this.props.userProfile) {
-        let { tableStates } = this.state;
-        let tableStatesCustom = tableStates;
-        tableStatesCustom.rows = this.props.getCustomerEnquiries();
-        this.setState((state) => { state.orders = tableStatesCustom});
+      this._getApiCall();
     }
   }
 
+  _getApiCall(){
+        let { tableStates } = this.state;
+        let tableStatesCustom = tableStates;
+        this.props.getAdminEnquiries({page: tableStates.page, pageSize: tableStates.pageSize});
+        if(this.props.adminEnquiryList){
+          tableStatesCustom.rows = this.props.adminEnquiryList;
+          this.setState((state) => { state.tableStates = tableStatesCustom});
+        }
+  }
   componentWillReceiveProps(props) {
     if(!this.props.userProfile && props.userProfile) {
-      this.props.getCustomerEnquiries();
+       this._getApiCall();
     }
     if(!this.props.enquiryQuoteUpdated && props.enquiryQuoteUpdated)
       this.state.enquiryQuoteUpdated = true;
@@ -205,7 +212,7 @@ export default class AdminEnquiryPage extends Component {
                                             className="checkbox"
                                             checked={this.state.tableStates.selected[original.id] === true}
                                             onChange={() => {
-                                                // let rowResponse = toggleRow(original.id, this.state.tableStates.selected, this.props.selectOneRecordOnly? this.props.getCustomerEnquiries():false);
+                                                // let rowResponse = toggleRow(original.id, this.state.tableStates.selected, this.props.selectOneRecordOnly? this.props.getAdminEnquiries():false);
                                                 // this.setSelectedRecordsInState(rowResponse);
                                             }}
                                         />
@@ -1001,9 +1008,32 @@ export default class AdminEnquiryPage extends Component {
                   accessor: "action",
                   Cell: ({ original }) => {
                       return (
-                          <div  className="columns-lower-Case-text">
-                            <span>{original.status}</span>
+                         <div className="action-tab-datables">
+                            <div  className="dropdown-right">
+                                 <DropdownButton
+                                    title={
+                                        <span><i className="fa fa-ellipsis-v"></i></span>
+                                    }
+                                    id={original.id}
+                                >
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Attach File</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">View Attachment</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Edit Quotations</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">View Message</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1">Edit Message</a>
+                                    </li>
+                                </DropdownButton>
                           </div>
+                        </div> 
 
                       );
                   },
@@ -1255,14 +1285,7 @@ export default class AdminEnquiryPage extends Component {
                     <MenuItem>Send to Inspectors</MenuItem>
                     <MenuItem>Send to Clients</MenuItem>
                     <MenuItem>Create Order</MenuItem>
-                    <MenuItem>Delete</MenuItem>
-                    <MenuItem>Attach File</MenuItem>
-                    <MenuItem>View Attachment</MenuItem>
-                    <MenuItem>Edit Quotations</MenuItem>
-                    <MenuItem>Save</MenuItem>
-                    <MenuItem>Cancel</MenuItem>
-                    <MenuItem>View Message</MenuItem>
-                    <MenuItem>Edit Message</MenuItem>
+                    <MenuItem>Delete</MenuItem>                   
                 </DropdownButton>
             </div>
         </div>
@@ -1287,7 +1310,7 @@ export default class AdminEnquiryPage extends Component {
                 if(state.filtered && state.filtered.length > 0) {
                     this._loadApiDatapageLoadFilter(state);
                 } else {
-                     this.props.getCustomerEnquiries();
+                      this._getApiCall();
                 }
             }}
             className={ "-striped -highlight apply-action-column-datatabl"}
@@ -1303,12 +1326,12 @@ export default class AdminEnquiryPage extends Component {
                             <br />
                              
                             <ReactTable
-                              data={subComponentTableData.rows}
+                              data={rows1.enquiryQuotation}
                               columns={this._setColumnsListSubComponent()}
                               defaultPageSize={3}
                               showPagination={false}
                               onFetchData={(state, instance) => {
-                                  this._loadSubcomponentData();
+                                  
                               }}
                              />
                     </div>
@@ -1344,13 +1367,15 @@ export default class AdminEnquiryPage extends Component {
   }
 
   render() {
-    if(this.props.enquiries && this.props.enquiries.length > 0) {
+
+    const { tableStates } = this.state;
+    console.log(tableStates.rows);
+    if(tableStates.rows && tableStates.rows.length > 0) {
       return(
           <PageBase title={"Enquiries"}>
             <div>
                 {this.renderMarkupFields()}
-                {this.renderActions()}
-                {this.renderEnquiries(this.props.enquiries)}
+                {this.renderEnquiries(tableStates.rows)}
                 {this.renderUpdateQuoteDialog()}
             </div>
       </PageBase>);

@@ -42,100 +42,31 @@ export default class AdminOrderComponent extends Component {
   	}
     this._setColumnsList = this._setColumnsList.bind(this);
     this.setSelectedRecordsInState = this.setSelectedRecordsInState.bind(this);
+     this._getApiCall = this._getApiCall.bind(this);
   }
 
   componentWillMount() {
-    if(this.props.userProfile) {
-      this.props.getAdminOrders();
+
+    if(this.props.userProfile) {      
+      this._getApiCall();
     }
+  }
+
+   _getApiCall(){
+        let { tableStates } = this.state;
+        let tableStatesCustom = tableStates;
+        this.props.getAdminOrders({page: tableStates.page, pageSize: tableStates.pageSize});
+        if(this.props.adminOrderList){
+          tableStatesCustom.rows = this.props.adminOrderList;
+          this.setState((state) => { state.tableStates = tableStatesCustom});
+        }
   }
 
   componentWillReceiveProps(props) {
   	if(!this.props.userProfile && props.userProfile) {
-  		this.props.getAdminOrders();
+  		this._getApiCall();
   	}
 
-  	if(1 || !this.props.orders && props.orders) {
-      const { tableStates } = this.state;
-      let tableStatesCustom = tableStates;
-      let data =  [
-                        {
-                            "createdOn" : "2018-03-21T14:01:51.000Z",
-                            "customerQuote" : null,
-                            "email" : "mailsanjayyadav@gmail.com",
-                            "endTime" : 1522261800000,
-                            "endTimeFmt" : "2018-03-29",
-                            "id" : 24,
-                            "imo" : "940044",
-                            "portId" : 7576,
-                            "startTime" : 1522348200000,
-                            "startTimeFmt" : "2018-03-30",
-                            "status" : "CREATED",
-                            "vesselName" : "Bulk Carrier",
-                            "vesselTypeDisplayName" : "Oil/Chemical Tanker",
-                            "inspectionType" : "Pre-Purchase Inspection",
-                            "portData" :{
-                                "id": [7576],
-                                "name": "16N RED SEA", 
-                                "regionCode": "AS",
-                                "regionName": "Asia",
-                                "countryName": "SAUDI ARABIA",
-                                "countryCode": "SA"
-                            },
-                            "client": {
-                                "name": "ABS Shipping",
-                                "id": 1
-                            },
-                            "clientMessage": "Use our reporting format",
-                            "assignedInspector": {
-                               "name": "Inspector",
-                                "id": 1
-                            },
-                            "adminMessage": "Use Client Report Format",
-                            "clientOrderAmount": "$1,150",
-                            "inspectorQuotationAmount": "$1,000",
-                            "inspectorOrderAmount": "$850"
-                        },
-                        {
-                            "createdOn" : "2018-03-21T14:01:51.000Z",
-                            "customerQuote" : null,
-                            "email" : "mailsanjayyadav@gmail.com",
-                            "endTime" : 1522261800000,
-                            "endTimeFmt" : "2018-03-29",
-                            "id" : 25,
-                            "imo" : "940044",
-                            "portId" : 7576,
-                            "startTime" : 1522348200000,
-                            "startTimeFmt" : "2018-03-30",
-                            "status" : "CANCELLED",
-                            "vesselName" : "Bulk Carrier",
-                            "vesselTypeDisplayName" : "Oil/Chemical Tanker",
-                            "inspectionType" : "Pre-Purchase Inspection",
-                            "portData" :{
-                                "id": [7576],
-                                "name": "16N RED SEA", 
-                                "regionCode": "AS",
-                                "regionName": "Asia",
-                                "countryName": "SAUDI ARABIA",
-                                "countryCode": "SA"
-                            },
-                            "client": {
-                                "name": "ABS Shipping",
-                                "id": 1
-                            },
-                            "clientMessage": "Use our reporting format",
-                            "assignedInspector": {
-                               "name": "Inspector",
-                                "id": 1
-                            },
-                            "adminMessage": "Use Client Report Format",
-                            "clientOrderAmount": "$1,000",
-                            "inspectorOrderAmount": "$850"
-                        }
-                ];
-      tableStatesCustom.rows = data;//props.orders;
-  		this.setState((state) => { state.orders = data; state.tableStates = tableStatesCustom;});
-  	}
 
   	this.setState((state) => { state.errorMsg = props.error; })
   }
@@ -700,14 +631,14 @@ export default class AdminOrderComponent extends Component {
 
   render() {
   const { userProfile } = this.props;
-  const { orders } = this.state;
+  const { orders, tableStates} = this.state;
   let returnHtml = '';
  	if(this.props.userProfile) {
-      if(this.state.orders && this.state.orders.length > 0) {
+      if(this.state.tableStates.rows && this.state.tableStates.rows.length > 0) {
 		returnHtml =  (
             <div className="orders"> 
           		<div className="error">{this.state.errorMsg}</div>
-                {this.renderAdminOrders(userProfile, orders)}
+                {this.renderAdminOrders(userProfile, this.state.tableStates.rows)}
             </div>
       	);
 	  } else {

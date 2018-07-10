@@ -5,14 +5,14 @@ import AdminPage from '../components/AdminPage.jsx';
 import { login } from '../actions/admin';
 
 const mapStateToProps = (state) => {
-	const {userProfile, error} = state;
-  	return  {userProfile, error};
+	const {adminReducer, userProfile, error} = state;
+  	return  {userProfile: adminReducer.userProfile, error};
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		logMeIn: (payload) => {console.log("payload", payload);
-			// payload['userType'] = 'admin';
+			//payload['userType'] = 'admin';
        		dispatch(login(payload));
     	}
 	};

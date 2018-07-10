@@ -80,12 +80,6 @@ export default class AdminPage extends Component {
       return;
 
     this.props.logMeIn(this.state.loginForm);
-
-    let $this = this;
-    setTimeout(function(){console.log("this.props>>>", $this.props); }, 1000);
-
-
-
   }
 
   getListItemStyle(sectionName) {
@@ -110,6 +104,7 @@ export default class AdminPage extends Component {
                 rightIcon={<ActionInfo />}>
                 <NavLink className="link" to={`${this.props.match.url}/orders`} onClick={() => {this.renderSection('orders')}}>Orders</NavLink>
               </ListItem>
+              
             </List>
           </div>);
   }
@@ -126,7 +121,6 @@ export default class AdminPage extends Component {
   render() {
 
     const {userProfile } = this.props;
-    
     if(userProfile) {
       if(userProfile.type == 'admin') {
         return (<div>
@@ -158,9 +152,7 @@ export default class AdminPage extends Component {
                 <div className="errorField">{this.state.loginFormError.password}</div>
               </div>
               <div className="btn"><button>Login</button></div>
-
-              <NavLink to={'/admin/enquiry'}>Enquiry</NavLink>
-            </form>
+           </form>
           </div> 
         </div>);
     }
