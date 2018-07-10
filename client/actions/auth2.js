@@ -1,10 +1,17 @@
 import Request from 'axios';
 import { TOKEN_VERIFIED, LOGIN, REGISTER, DROP_DOWN_VALUES } from '../constants/ActionsTypes';
+import Cookie from 'js-cookie';
 
 const ip = 'http://sis-beta.us-east-1.elasticbeanstalk.com';
 var headers = {
-  'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxd2VydHlAZ21haWwuY29tIiwiZXhwIjoxNTMyMDc3MTQ4fQ.D_WvIwv2E891YW_GMwwK6OfJifZDmtTLexaWhOUnpDUjn9C2ZRGVejbTVOwnu1tr0Il7ofcOZeiJsbeScsyAug'
-}
+  'Authorization': Cookie.get('token')
+};
+// let axiosConfig = {
+//   headers: {
+//       'Content-Type': 'application/json;charset=UTF-8',
+//       "Access-Control-Allow-Origin": "*",
+//   }
+// };
 export  function makeRequest(method,  api = api, data) {
   return Request[method](ip + api, data, headers)
   .then(r => r);
@@ -24,11 +31,12 @@ export function verifyToken() { return dispatch => makeRequest('get', '/auth/val
 
 //LOGIN
 export function login(data) { return dispatch => makeRequest('post', '/login', data)
-  .then(response => dispatch(loggedIn(response.data))); }
+  .then(response => dispatch(loggedIn(response.data))); 
+}
 
 //SIGNUP
-  export function signup(data) { return dispatch => makeRequest('post', '/user/sign-up', data)
-  .then(response =>{
+export function signup(data) { return dispatch => makeRequest('post', '/user/sign-up', data)
+  .then(response => {
     console.log("response is:"+JSON.stringify(response))
     dispatch(registerd(response.data))
   }) 
