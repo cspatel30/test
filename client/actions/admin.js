@@ -15,40 +15,28 @@ function makeRequest(method, api = '/login', data) {
         	return headers});
 }
 
-/* Admin Login */
-
 export function loginPayload(payload) { console.log("Admin Login Payload Response", payload);return (
 	{    type: USER_PROFILE, 
 		payload: payload.data
 	}); 
 }
+export function enquiryMarkupSaveSettingsPayload(payload) { return ({ type: ENQUIRY_MARKUP, payload }); }
+export function getEnquiryListPayload(payload) { return ({ type: ADMIN_ENQUIRY_LIST, payload }); }
+export function getAdminOrdersPayload(payload) { return ({ type: ADMIN_ENQUIRY_LIST, payload }); }
+
 
 //async actions or server request from front-end
 export function login(data) { return dispatch => makeRequest('post', '/login', data)
-  .then(response => dispatch(loginPayload(response)));     }
- /* END */
- 
- /* Enquiry Markup Save */
-export function enquiryMarkupSaveSettingsPayload(payload) { return ({ type: ENQUIRY_MARKUP, payload }); } 
+  .then(response => dispatch(loginPayload(response.data)));     }
 
-  export function enquiryMarkupSaveSettings() { return dispatch => makeRequest('post', '/systemSettings/save')
+  /* Enquiry Markup Save */ 
+export function enquiryMarkupSaveSettings(data) { return dispatch => makeRequest('post', '/systemSettings/save', data)
   .then(response => dispatch(enquiryMarkupSaveSettingsPayload(response.data)));     }
 
-/* END */
+ /* Enquiry Markup Save */ 
+export function getEnquiryList(data) { return dispatch => makeRequest('get', '/enquiry/getAll?page='+data.page+'&size='+data.pageSize)
+  .then(response => dispatch(getEnquiryListPayload(response.data)));     }
 
- /* Enquiry Markup Save */
-export function getEnquiryListPayload(payload) { return ({ type: ADMIN_ENQUIRY_LIST, payload }); } 
-
-  export function getEnquiryList(data) { return dispatch => makeRequest('get', '/enquiry/getAll?page='+data.page+'&size='+data.pageSize, '')
-  .then(response => dispatch(getEnquiryListPayload(response)));     }
-  
-/* END */
-
-
- /* Order List */
-export function getAdminOrdersPayload(payload) { return ({ type: ADMIN_ENQUIRY_LIST, payload }); } 
-
-  export function getAdminOrders(data) { return dispatch => makeRequest('get', '/enquiry/getAll?page='+data.page+'&size='+data.pageSize, '')
+ /* Order List */ 
+export function getAdminOrders(data) { return dispatch => makeRequest('get', '/enquiry/getAll?page='+data.page+'&size='+data.pageSize)
   .then(response => dispatch(getAdminOrdersPayload(response)));     }
-  
-/* END */
