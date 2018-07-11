@@ -10,12 +10,27 @@ export default class NewProfilePage extends Component {
 
   constructor(props) {
     super(props);
+    this.state={
+      profileDetails:''
+    }
     };
+  
+    componentWillMount(){
+     var response=this.props.getMyProfileInfo()
+    }
+    componentWillReceiveProps(props){
+      //console.log("userprofile"+JSON.stringify(props.authReducer.myProfileData.data))
+      this.setState({
+        profileDetails:props.authReducer.myProfileData.data
+      })
+      
+    }
+    
 
   render() {
     return (
         <div className="bg-white">
-          <UserProfileDetailsPage/>
+          <UserProfileDetailsPage {...this.state}/>
           <UserProfileDashboardPage/>
         </div>
     );

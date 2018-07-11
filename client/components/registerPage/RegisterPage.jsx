@@ -108,7 +108,6 @@ export default class RegisterPage extends Component {
     this.handleAgreementPopupClose = this.handleAgreementPopupClose.bind(this);
     this.portOptionRenderer = this.portOptionRenderer.bind(this);
     this.selectTypeOfRegistration = this.selectTypeOfRegistration.bind(this);
-    //this.getDropdownConstants = this.getDropdownConstants.bind(this);
   } 
 
   selectTypeOfRegistration(event) {
@@ -184,24 +183,9 @@ export default class RegisterPage extends Component {
     console.log(`Selected Option: ${selectedOption.value}`);
   
   }
-  componentWillMount(){
-    // this.getDropdownConstants();
+  componentWillMount() {
+    console.log('const Values: ' + localStorage.getItem('constantValues'))
   }
-   // getDropdownConstants() {
-  //   fetch("http://sis-beta.us-east-1.elasticbeanstalk.com/init/getDropdownConstants",{
-  //     method:'GET',
-  //     headers : {
-  //         "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxd2VydHlAZ21haWwuY29tIiwiZXhwIjoxNTMyMDc3MTQ4fQ.D_WvIwv2E891YW_GMwwK6OfJifZDmtTLexaWhOUnpDUjn9C2ZRGVejbTVOwnu1tr0Il7ofcOZeiJsbeScsyAug"
-  //     }
-  //     }).then((response) => response.json()).then((res) => {
-  //         console.log("getData...."+JSON.stringify(res))
-  //         //return res;
-  //     })
-  //     .catch((error)=>{
-  //         console.log("getData.error..."+JSON.stringify(error))
-  //         //return error;
-  //     })
-  // }
   componentWillReceiveProps(props) {
     if(props.signUpSuccess) {
       this.setState((state) => { state.signUpSuccess = props.signUpSuccess; });
@@ -297,7 +281,7 @@ export default class RegisterPage extends Component {
       registerFormError.clientCompanyName = "This field is mandatory";
     }
 
-    if(this.state.userType=="client")
+    if(this.state.userType=="inspector")
     {
       if(this.state.registerForm.employmentType == "") {
         registerFormError.employmentType = "This field is mandatory";
@@ -462,7 +446,7 @@ export default class RegisterPage extends Component {
           <div className="container">
             <div className="row mt-5">
               <div className="col-md-12 SignUpFormSec p-5 position-relative">
-                {/* Material form login */}
+           
                 <form id="RegistrationForm" className="mb-5 pb-5"  onSubmit={this.handleSubmit} action="/" method="post">
                   <p className="h4 text-blue mb-4 SignUpTitleMain pl-0">Register on ShipInspectors.com</p>
                   <p className="h4 text-blue mb-4 loginTitle pl-0">Select Client or Inspector</p>
