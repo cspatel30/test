@@ -5,8 +5,9 @@ import AdminPage from '../components/AdminPage.jsx';
 import { login } from '../actions/admin';
 
 const mapStateToProps = (state) => {
-	const {adminReducer, userProfile, error} = state;
-  	return  {userProfile: adminReducer.userProfile, error};
+	const {adminReducer, error} = state;
+	const { adminAuthToken, userProfile } = adminReducer;
+  	return  {userProfile, adminAuthToken, error};
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -564,7 +564,7 @@ let adminOrderList = [
                 ];
 
 const initialState = {
-  userProfile: '', 
+  adminAuthToken: '', 
   enquiryMarkup: '',
   adminEnquiryList: enquiryList,
   adminOrderList: adminOrderList
@@ -572,8 +572,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'USER_PROFILE':
-      return _.assign({}, state, { userProfile: action.payload });
+    case 'ADMIN_AUTH_TOKEN':
+      return _.assign({}, state, { adminAuthToken: action.payload });
     case 'ENQUIRY_MARKUP':
     return _.assign({}, state, { enquiryMarkup: action.payload });  
     case 'ADMIN_ENQUIRY_LIST': console.log("set ADMIN_ENQUIRY_LIST action payload", enquiryList);

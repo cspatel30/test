@@ -7,6 +7,7 @@ export const WAIT = 800;
 /*  order constants   */
 
 /* Admin */
+export const ADMIN_AUTH_TOKEN = 'ADMIN_AUTH_TOKEN';
 export const USER_PROFILE = 'USER_PROFILE';
 export const ENQUIRY_MARKUP = 'ENQUIRY_MARKUP';
 export const ADMIN_ENQUIRY_LIST = 'ADMIN_ENQUIRY_LIST';

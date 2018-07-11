@@ -91,7 +91,7 @@ export default class AdminEnquiryPage extends Component {
   }
 
   componentWillMount() {
-    if(this.props.userProfile) {
+    if(this.props.adminAuthToken) {
       this._getApiCall();
     }
   }
@@ -106,7 +106,7 @@ export default class AdminEnquiryPage extends Component {
         }
   }
   componentWillReceiveProps(props) {
-    if(!this.props.userProfile && props.userProfile) {
+    if(!this.props.adminAuthToken && props.adminAuthToken) {
        this._getApiCall();
     }
     if(!this.props.enquiryQuoteUpdated && props.enquiryQuoteUpdated)

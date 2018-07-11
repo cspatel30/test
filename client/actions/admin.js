@@ -1,24 +1,51 @@
 import Request from 'axios';
-import { USER_PROFILE, ENQUIRY_MARKUP, ADMIN_ENQUIRY_LIST, ADMIN_ORDER_LIST } from '../constants/ActionsTypes';
+import { ADMIN_AUTH_TOKEN, USER_PROFILE, ENQUIRY_MARKUP, ADMIN_ENQUIRY_LIST, ADMIN_ORDER_LIST } from '../constants/ActionsTypes';
 
+import { storeAdminToken, getAdminToken } from '../common/global';
 const ip = 'http://sis-beta.us-east-1.elasticbeanstalk.com';
-function makeRequest(method, api = '/login', data) {
-	
-  return Request[method](ip + api, data)
-        .then(r => { console.log( "api", api, method); let headers = r; 
-        	r.headers["access-control-expose-headers"] = '*';
-        	r.headers["Content-Type"] = 'application/json';
-        	if(api!='/login'){
-        		r.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBzaGlwaW5zcGVjdG9ycy5jb20iLCJleHAiOjE1MzIwNzcxMjB9.Mm-ZDQJuuw_Oy0GuGXJEgk5rXevemzteco5xirtWe50n_CO2n7IQ4EODIDKNIXexXCY_lg3TNiT6TsZuhMG_1A'
-        	}
-        	console.log(api, "r headers", headers); 
-        	return headers});
-}
 
-export function loginPayload(payload) { console.log("Admin Login Payload Response", payload);return (
-	{    type: USER_PROFILE, 
-		payload: payload.data
-	}); 
+
+
+
+async function  makeRequest(method, api = '/login', data) {
+
+  if(api!='/login'){
+    let storageFunction =  async () => {  
+      
+       let adminToken = await getAdminToken();
+        let headers = {
+                  'Access-Control-Allow-Origin': "*",
+                  'Content-Type': "application/json",
+                  'Authorization': adminToken.token
+        };
+
+    console.log("call to get async function", headers);
+      return Request[method](ip + api, data, headers={headers})
+        .then(r => r);
+    }
+    await storageFunction();
+    
+   }
+   else{  
+    var headers = {
+      'access-control-expose-headers': "*",
+      'Content-Type': "application/json"
+      }
+      console.log("reducer Header", headers);
+      return Request[method](ip + api, data, headers={headers})
+      .then(r => r);
+    }
+  
+ }
+
+
+export function loginPayload(payload) { 
+  let storageFunction = async () => { console.log("payload");await storeAdminToken({token: payload.data}); }
+  storageFunction();
+  return (
+  	{    type: ADMIN_AUTH_TOKEN, 
+  		   payload: payload
+  	}); 
 }
 export function enquiryMarkupSaveSettingsPayload(payload) { return ({ type: ENQUIRY_MARKUP, payload }); }
 export function getEnquiryListPayload(payload) { return ({ type: ADMIN_ENQUIRY_LIST, payload }); }

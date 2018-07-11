@@ -7,10 +7,9 @@ import AdminEnquiryPage from '../components/admin/enquiry/AdminEnquiryPage.jsx';
 import { enquiryMarkupSaveSettings, getEnquiryList } from '../actions/admin';
 
 const mapStateToProps = (state) => {
-	// const { userProfile, error, adminEnquiryList, enquiryMarkup} = state;
- //  	return { userProfile, error, adminEnquiryList, enquiryMarkup};
-    const {adminReducer, userProfile, error} = state;
-    return  {userProfile: adminReducer.userProfile, adminEnquiryList: adminReducer.adminEnquiryList, error};
+    const {adminReducer, error} = state;
+    const { adminEnquiryList, adminAuthToken, userProfile } = adminReducer;
+    return  {userProfile, adminAuthToken, adminEnquiryList, error};
 }
 
 const mapDispatchToProps = (dispatch) => {

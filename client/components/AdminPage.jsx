@@ -120,9 +120,9 @@ export default class AdminPage extends Component {
 
   render() {
 
-    const {userProfile } = this.props;
-    if(userProfile) {
-      if(userProfile.type == 'admin') {
+    const {adminAuthToken } = this.props;
+    if(adminAuthToken) {
+      if(1) {
         return (<div>
             {this.renderSideMenu()}
             <div className="admin-rightside-content">
