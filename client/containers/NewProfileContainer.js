@@ -4,9 +4,12 @@ import {getMyProfileDetails} from '../actions/auth2'
 
 
 const mapStateToProps = (state) => {
-    //console.log("redux profile"+JSON.stringify(state.authReducer.myProfileData))
+	// if(state.myProfileData.data.educations){
+    //     console.log("container profile...."+ JSON.stringify(state.myProfileData.data.educations))
+    //   }
 	const myProfileData = state
-  	return myProfileData;
+	  return myProfileData;
+	  
 }
 
 const mapDispatchToProps = (dispatch) => {

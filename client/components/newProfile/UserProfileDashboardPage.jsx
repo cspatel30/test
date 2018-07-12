@@ -13,21 +13,34 @@ export default class UserProfileDashboard extends Component {
 
   constructor(props) {
     super(props);
+    this.state={
+      userDashboard:''
+    }
   } 
+
+  componentWillReceiveProps(props){
+    if(props){
+        this.setState({
+          userDashboard:props.profileDetails
+        })
+    }  
+    //console.log("dashbboard"+JSON.stringify(props.profileDetails))
+  }
+
 
   render() {
         return (
           <div className="row mt-60 bg-white">
             <div className="col-md-4 pr-0">
-                <Skills/>
+                <Skills {...this.state}/>
                 <EmployeeHistory/>
-                <PersonalDetails/>
+                <PersonalDetails {...this.state} />
             </div>
             <div className="col-md-8 pl-0">
                 <WorkHistory/>
-                <EducationQualification/>
+                <EducationQualification {...this.state} />
                 <AreasCovered/>
-                <Documents/>
+                <Documents {...this.state}/>
             </div>
           </div>
         );

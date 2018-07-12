@@ -14,7 +14,27 @@ const Skills=[
     }
 ]
 export default class SkillsPage extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state={
+          skills:''
+        }
+      } 
+    
+      componentWillReceiveProps(props){
+        if(props){
+            // this.setState({
+            //     skills:props.userDashboard
+            // })
+            var skillspilt = props.userDashboard.skills.split(",");
+             this.setState({
+                skills:skillspilt
+            })
+        }  
+        // console.log("skills"+JSON.stringify(props.userDashboard))
+        // console.log("skills22"+JSON.stringify(props.userDashboard.skills))
+        // console.log("skills33"+JSON.stringify(Skills))
+      }
   render() {
       return (
         <div className="col-md-12" style={{float: "left", marginBottom: "15px"}}>

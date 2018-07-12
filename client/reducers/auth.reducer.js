@@ -23,9 +23,9 @@ export default (state = initialState, action) => {
       return _.assign({}, state, { signupData: action.payload });
     case 'MYPROFILE':
       return _.assign({}, state, { myProfileData: action.payload });
-    case 'DROP_DOWN_VALUES':
-      localStorage.setItem('constantValues', JSON.stringify(action.payload));
-      return _.assign({}, state, { dropDownConstants: action.payload });
+    // case 'DROP_DOWN_VALUES':
+    //   localStorage.setItem('constantValues', JSON.stringify(action.payload));
+    //   return _.assign({}, state, { dropDownConstants: action.payload });
     case 'GETLISTINSPECTORS':
       return _.assign({}, state, { getListInspectors: action.payload });
     default:

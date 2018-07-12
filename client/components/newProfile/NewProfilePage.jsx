@@ -19,7 +19,10 @@ export default class NewProfilePage extends Component {
      var response=this.props.getMyProfileInfo()
     }
     componentWillReceiveProps(props){
-      //console.log("userprofile"+JSON.stringify(props.authReducer.myProfileData.data))
+      if(props.authReducer.myProfileData.data.educations){
+        // console.log("userprofiletype...."+ typeof(props.authReducer.myProfileData.data.educations))
+      }
+     
       this.setState({
         profileDetails:props.authReducer.myProfileData.data
       })
@@ -31,7 +34,7 @@ export default class NewProfilePage extends Component {
     return (
         <div className="bg-white">
           <UserProfileDetailsPage {...this.state}/>
-          <UserProfileDashboardPage/>
+          <UserProfileDashboardPage {...this.state}/>
         </div>
     );
   }

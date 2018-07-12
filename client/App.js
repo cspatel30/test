@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { verifyToken } from './actions/auth2';
 import { initApp } from './actions/app';
-import { dropDownValues } from './actions/auth2'
+//import { dropDownValues } from './actions/auth2'
 
 import {FormattedMessage} from 'react-intl';
 import { BrowserRouter, browserHistory } from 'react-router-dom';
@@ -18,7 +18,7 @@ class App extends Component {
   	// if(!this.props.userProfile) {
     // 	this.props.initialiseUser();
 		// }
-		this.props.getDropdownConstants();
+		//	this.props.getDropdownConstants();
   }
 
   render() {
@@ -46,10 +46,11 @@ const mapDispatchToProps = (dispatch) => {
 		initialiseUser: (token) => {
 			dispatch(verifyToken(token));
 			dispatch(initApp());
-		},
-		getDropdownConstants: () => {
-			dispatch(dropDownValues());
 		}
+		// ,
+		// getDropdownConstants: () => {
+		// 	dispatch(dropDownValues());
+		// }
 	};
 }
 
