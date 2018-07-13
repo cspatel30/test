@@ -4,20 +4,16 @@ import Cookie from 'js-cookie';
 
 const ip = 'http://sis-beta.us-east-1.elasticbeanstalk.com';
 
-export function makeGetRequest(method, api = api) {
+function makeGetRequest(method, api = api) {
   var token = Cookie.get('token')
-  var headers = {
-    'Authorization': token
-  };
+  var headers = { 'Authorization': token };
   return Request[method](ip + api, headers = { headers })
     .then(r => r);
 }
 
-export function makePostRequest(method, api = api, data) {
+function makePostRequest(method, api = api, data) {
   var token = Cookie.get('token')
-  var headers = {
-    'Authorization': token
-  };
+  var headers = { 'Authorization': token };
   return Request[method](ip + api, data, headers = { headers })
     .then(r => r);
 }
@@ -70,21 +66,10 @@ export function login(data) {
 }
 //SIGNUP
 export function signup(data) {
-  if(data.type!=="INSPECTOR"){
-    console.log("CUSTOMER")
-     return dispatch => makePostRequest('post', '/user/sign-up', data)
-     .then(response => {
-       console.log("customer response is:"+JSON.stringify(response))
-       dispatch(registerd(response.data))
-     })
-  }else {
-   console.log("INSPECTOR")
-     return dispatch => makePostRequest('post', '/inspector/sign-up', data)
-     .then(response => {
-       dispatch(registerd(response.data))
-     })
-     .catch(error => console.log("inspector signup error: "+JSON.stringify(error)))
-  }
+  const userType = data.type !== 'INSPECTOR' ? 'user' : 'inspector';
+  return dispatch => makePostRequest('post', `/${userType}/sign-up`, data)
+  .then(response => dispatch(registerd(response.data)))
+  .catch(error => console.log("inspector signup error: "+JSON.stringify(error)));
 }
 
 //PROFILE

@@ -9,8 +9,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		registerMe: (type, payload) => {
-			payload['type'] = payload.type;
+		registerMe: (payload) => {
        		dispatch(signup(payload));
 		}
 	};
