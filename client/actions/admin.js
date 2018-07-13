@@ -1,47 +1,53 @@
 import Request from 'axios';
 import { ADMIN_AUTH_TOKEN, USER_PROFILE, ENQUIRY_MARKUP, ADMIN_ENQUIRY_LIST, ADMIN_ORDER_LIST } from '../constants/ActionsTypes';
+import { getApiHeader } from '../common/global';
+import Cookie from 'js-cookie';
 
-import { storeAdminToken, getAdminToken } from '../common/global';
 const ip = 'http://sis-beta.us-east-1.elasticbeanstalk.com';
 
+ function  makeRequest(method, api = '/login', data) {
 
-
-
-async function  makeRequest(method, api = '/login', data) {
-
-  if(api!='/login'){
-    let storageFunction =  async () => {  
-      
-       let adminToken = await getAdminToken();
-        let headers = {
-                  'Access-Control-Allow-Origin': "*",
-                  'Content-Type': "application/json",
-                  'Authorization': adminToken.token
-        };
-
-    console.log("call to get async function", headers);
-      return Request[method](ip + api, data, headers={headers})
-        .then(r => r);
-    }
-    await storageFunction();
-    
-   }
-   else{  
-    var headers = {
+  
+    let headers = {
       'access-control-expose-headers': "*",
       'Content-Type': "application/json"
       }
-      console.log("reducer Header", headers);
       return Request[method](ip + api, data, headers={headers})
       .then(r => r);
-    }
   
  }
 
+export function makeGetRequest(method, api = api, tokenNotRequired) {
+  let defaultHeader =  {adminToken: true};
+  if(tokenNotRequired){
+    delete defaultHeader.adminToken;
+  }
+  var headers = getApiHeader(defaultHeader);
+  return Request[method](ip + api, headers = { headers })
+    .then(r => r);
+}
+
+export function makePostRequest(method, api = api, data, tokenNotRequired) {
+  let defaultHeader =  { 'adminToken': true,
+                         'Access-Control-Allow-Origin': true
+                       };
+  if(tokenNotRequired){
+    delete defaultHeader.adminToken;
+  }
+  var headers = getApiHeader(defaultHeader);
+  var headers = {
+          'access-control-expose-headers': "*",
+          'Content-Type': "application/json"
+          }
+  console.log("headers>>>",{ headers}, data);
+  return Request[method](ip + api, data, headers = { headers })
+    .then(r => r);
+}
 
 export function loginPayload(payload) { 
-  let storageFunction = async () => { console.log("payload");await storeAdminToken({token: payload.data}); }
-  storageFunction();
+  // let storageFunction = async () => { console.log("payload");await storeAdminToken({token: payload.data}); }
+  // storageFunction();
+ Cookie.set('token', payload.token);
   return (
   	{    type: ADMIN_AUTH_TOKEN, 
   		   payload: payload
@@ -53,17 +59,16 @@ export function getAdminOrdersPayload(payload) { return ({ type: ADMIN_ENQUIRY_L
 
 
 //async actions or server request from front-end
-export function login(data) { return dispatch => makeRequest('post', '/login', data)
+export function login(data) { return dispatch => makePostRequest('post', '/login', data, true)
   .then(response => dispatch(loginPayload(response.data)));     }
-
   /* Enquiry Markup Save */ 
-export function enquiryMarkupSaveSettings(data) { return dispatch => makeRequest('post', '/systemSettings/save', data)
+export function enquiryMarkupSaveSettings(data) { return dispatch => makeGetRequest('post', '/systemSettings/save', false)
   .then(response => dispatch(enquiryMarkupSaveSettingsPayload(response.data)));     }
 
  /* Enquiry Markup Save */ 
-export function getEnquiryList(data) { return dispatch => makeRequest('get', '/enquiry/getAll?page='+data.page+'&size='+data.pageSize)
+export function getEnquiryList(data) { return dispatch => makeGetRequest('get', '/enquiry/getAll?page='+data.page+'&size='+data.pageSize, false)
   .then(response => dispatch(getEnquiryListPayload(response.data)));     }
 
  /* Order List */ 
-export function getAdminOrders(data) { return dispatch => makeRequest('get', '/enquiry/getAll?page='+data.page+'&size='+data.pageSize)
+export function getAdminOrders(data) { return dispatch => makeGetRequest('get', '/enquiry/getAll?page='+data.page+'&size='+data.pageSize, false)
   .then(response => dispatch(getAdminOrdersPayload(response)));     }

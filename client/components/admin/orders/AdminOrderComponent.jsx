@@ -47,7 +47,7 @@ export default class AdminOrderComponent extends Component {
 
   componentWillMount() {
 
-    if(this.props.userProfile) {      
+    if(this.props.adminAuthToken) {      
       this._getApiCall();
     }
   }
@@ -63,7 +63,7 @@ export default class AdminOrderComponent extends Component {
   }
 
   componentWillReceiveProps(props) {
-  	if(!this.props.userProfile && props.userProfile) {
+  	if(!this.props.adminAuthToken && props.adminAuthToken) {
   		this._getApiCall();
   	}
 
@@ -630,15 +630,16 @@ export default class AdminOrderComponent extends Component {
   }
 
   render() {
-  const { userProfile } = this.props;
+  const { adminAuthToken } = this.props;
   const { orders, tableStates} = this.state;
   let returnHtml = '';
- 	if(this.props.userProfile) {
+  console.log("tableStates>>", tableStates);
+ 	if(adminAuthToken) {
       if(this.state.tableStates.rows && this.state.tableStates.rows.length > 0) {
 		returnHtml =  (
             <div className="orders"> 
           		<div className="error">{this.state.errorMsg}</div>
-                {this.renderAdminOrders(userProfile, this.state.tableStates.rows)}
+                {this.renderAdminOrders(adminAuthToken, this.state.tableStates.rows)}
             </div>
       	);
 	  } else {

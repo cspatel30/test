@@ -36,9 +36,9 @@
   },
   "dependencies": {
     "@material-ui/core": "^1.2.2",
+    "AsyncStorage": "^0.1.5",
     "aws-sdk": "^2.186.0",
     "axios": "^0.16.1",
-    "AsyncStorage": "^0.1.5",
     "bluebird": "^3.5.1",
     "body-parser": "^1.17.1",
     "bootstrap": "^4.0.0",
@@ -57,6 +57,7 @@
     "google-maps-react": "^1.0.19",
     "highcharts": "^5.0.11",
     "intl": "^1.2.5",
+    "js-cookie": "^2.2.0",
     "jsonwebtoken": "^8.2.1",
     "material-ui": "^0.18.1",
     "material-ui-rating": "^1.4.1",

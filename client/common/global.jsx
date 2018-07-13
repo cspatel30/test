@@ -29,3 +29,31 @@ export const isEmptyObject = (obj) => {
     }
     return JSON.stringify(obj) === JSON.stringify({});
 }
+
+export const getApiHeader = (headerContent) => {
+    let head = {
+        'Content-Type': 'application/json'
+    };
+
+    if(headerContent && !isEmptyObject(headerContent)) {
+        if (headerContent.adminAuthToken) {
+            head['Authorization'] = Cookie.get('adminToken');
+        }
+        if (headerContent.Accept) {
+            head['Accept'] = headerContent.Accept;
+        }
+
+        if(headerContent.ContentType == "no"){
+            delete head['Content-Type'];
+        }
+        else if (headerContent.ContentType) {
+            head['Content-Type'] = headerContent.ContentType;
+        }
+
+        if (headerContent['Access-Control-Allow-Origin']) {
+            head['Access-Control-Allow-Origin'] = '*';
+        }
+    }
+    
+    return head;
+}

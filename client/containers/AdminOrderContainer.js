@@ -5,8 +5,9 @@ import AdminOrderComponent from '../components/admin/orders/AdminOrderComponent.
 import {getAdminOrders} from '../actions/admin';
 
 const mapStateToProps = (state) => {
-	const {adminReducer, userProfile, error} = state;
-    return  {userProfile: adminReducer.userProfile, adminOrderList: adminReducer.adminOrderList, error};
+    const {adminReducer, error} = state;
+    const { adminOrderList, adminAuthToken, userProfile } = adminReducer;
+    return  {userProfile, adminAuthToken, adminOrderList, error};
 }
 
 const mapDispatchToProps = (dispatch) => {
