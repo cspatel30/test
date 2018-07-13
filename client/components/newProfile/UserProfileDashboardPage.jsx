@@ -24,7 +24,6 @@ export default class UserProfileDashboard extends Component {
           userDashboard:props.profileDetails
         })
     }  
-    //console.log("dashbboard"+JSON.stringify(props.profileDetails))
   }
 
 
@@ -33,13 +32,13 @@ export default class UserProfileDashboard extends Component {
           <div className="row mt-60 bg-white">
             <div className="col-md-4 pr-0">
                 <Skills {...this.state}/>
-                <EmployeeHistory/>
+                <EmployeeHistory {...this.state}/>
                 <PersonalDetails {...this.state} />
             </div>
             <div className="col-md-8 pl-0">
                 <WorkHistory/>
                 <EducationQualification {...this.state} />
-                <AreasCovered/>
+                <AreasCovered {...this.state} />
                 <Documents {...this.state}/>
             </div>
           </div>

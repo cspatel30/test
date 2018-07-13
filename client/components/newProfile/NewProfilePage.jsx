@@ -19,14 +19,11 @@ export default class NewProfilePage extends Component {
      var response=this.props.getMyProfileInfo()
     }
     componentWillReceiveProps(props){
-      if(props.authReducer.myProfileData.data.educations){
-        // console.log("userprofiletype...."+ typeof(props.authReducer.myProfileData.data.educations))
+      if(props){
+        this.setState({
+          profileDetails:props.authReducer.myProfileData.data
+        })
       }
-     
-      this.setState({
-        profileDetails:props.authReducer.myProfileData.data
-      })
-      
     }
     
 
