@@ -15,10 +15,10 @@ class MyAccount extends Component {
         <Header {...this.props} />
         <div>
           <CustomerProfileContainer id="profile" />
-          <div className="shadowDivider" id="billing" />
-          <CustomerBillingContainer id="billing" />
           <div className="shadowDivider" />
-          <CustomerSettingContainer id="setting" />
+          <CustomerBillingContainer />
+          <div className="shadowDivider" id="setting"/>
+          <CustomerSettingContainer  />
         </div>
         <Footer />
       </div>
