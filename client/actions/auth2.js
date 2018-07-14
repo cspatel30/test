@@ -15,3 +15,6 @@ export function tokenVerified(payload) { return ({ type: TOKEN_VERIFIED, payload
 //async actions or server request from front-end
 export function verifyToken() { return dispatch => makeRequest('get', '/auth/validate/token/')
   .then(response => dispatch(tokenVerified(response.data)));     }
+
+
+  
