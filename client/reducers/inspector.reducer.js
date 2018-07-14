@@ -8,9 +8,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'MYPROFILE':
+    case 'MY_PROFILE':
       return _.assign({}, state, { myProfileData: action.payload });
-    case 'GETLISTINSPECTORS':
+    case 'GET_LIST_INSPECTORS':
       return _.assign({}, state, { getListInspectors: action.payload });
     default:
       return state;

@@ -1,5 +1,5 @@
 import Request from 'axios';
-import { GETLISTINSPECTORS, MYPROFILE } from '../constants/ActionsTypes';
+import { GET_LIST_INSPECTORS, MY_PROFILE } from '../constants/ActionsTypes';
 import Cookie from 'js-cookie';
 
 const ip = 'http://sis-beta.us-east-1.elasticbeanstalk.com';
@@ -19,8 +19,8 @@ function makePostRequest(method, api = api, data) {
 }
 
 // sync actions
-export function gotMyProfileDetails(payload) { return ({ type: MYPROFILE, payload }); }
-export function gotListInspectors(payload) { return ({ type: GETLISTINSPECTORS, payload }); }
+export function gotMyProfileDetails(payload) { return ({ type: MY_PROFILE, payload }); }
+export function gotListInspectors(payload) { return ({ type: GET_LIST_INSPECTORS, payload }); }
 
 
 // async actions
