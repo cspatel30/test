@@ -22,7 +22,7 @@ export default class InspectorDashboardPage extends Component {
     componentWillReceiveProps(props){
         if(props){
             this.setState({
-                listOfInspectors:props.authReducer.getListInspectors.data
+                listOfInspectors:props
             })
         }  
        // console.log("userinspectorsdetailspage"+JSON.stringify(props.authReducer.getListInspectors))

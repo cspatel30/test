@@ -381,8 +381,8 @@ export default class RegisterPage extends Component {
       this.setState( (state) => { state.registerFormError = registerFormError; state.signUpSuccess = false;});
       return;
     }else{
-      //console.log("data "+JSON.stringify(data))
-      this.props.registerMe(this.state.userType, data);
+      //console.log("$!GN UP: "+JSON.stringify(data))
+      this.props.registerMe(data);
    }
   }
 

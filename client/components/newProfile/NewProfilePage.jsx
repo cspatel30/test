@@ -21,7 +21,7 @@ export default class NewProfilePage extends Component {
     componentWillReceiveProps(props){
       if(props){
         this.setState({
-          profileDetails:props.authReducer.myProfileData.data
+          profileDetails:props
         })
       }
     }

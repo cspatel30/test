@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
 import NewProfilePage from '../components/newProfile/NewProfilePage.jsx'
-import {getMyProfileDetails} from '../actions/auth2'
+import {getMyProfileDetails} from '../actions/newInspector'
 
 
 const mapStateToProps = (state) => {
-	const myProfileData = state
+	const myProfileData = state.inspectorReducer.myProfileData.data
 	return myProfileData;
 }
 

@@ -30,7 +30,16 @@ export default class LoginPage extends Component {
 
   } 
   componentWillReceiveProps(nextProps) {
-    alert(JSON.stringify(nextProps))
+    console.log("login props..."+JSON.stringify(nextProps))
+    if(nextProps.data){
+      if(nextProps.data.userType=='I'){
+        console.log("Inspector")
+        this.props.history.push('/newprofile')
+      }else{
+        console.log("Customer")
+        this.props.history.push('/')
+      }
+    }
     this.setState({ fgpwdMsg: nextProps.fgpwdMsg });
   }
 
@@ -69,8 +78,6 @@ export default class LoginPage extends Component {
     this.props.logMeIn(this.state.loginForm);
   }
 
-
-  
   forgotPwd() {
     const { activeTab, forgot, forgotEmail, fgpwdMsg } = this.state;
     if (!forgot) {

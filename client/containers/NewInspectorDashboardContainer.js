@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import InspectorDashboardPage from '../components/inspectorDashboard/InspectorDashboardPage.jsx';
-import { getAllInspectors } from '../actions/auth2'
+import { getAllInspectors } from '../actions/newInspector'
 
 
 const mapStateToProps = (state) => {
     //console.log("redux inspectors"+JSON.stringify(state.authReducer))
-    const allInspectorsData = state
+    const allInspectorsData = state.inspectorReducer.getListInspectors.data
   	return allInspectorsData;
   //  console.log("manik inspectors"+JSON.stringify(state))
 	

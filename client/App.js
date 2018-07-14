@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { verifyToken } from './actions/auth2';
 import { initApp } from './actions/app';
-import { dropDownValues } from './actions/auth2'
+import { dropDownValues } from './actions/app'
 
 import {FormattedMessage} from 'react-intl';
 import { BrowserRouter, browserHistory } from 'react-router-dom';
@@ -37,6 +37,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
+	console.log("mapStateToProps$$$ "+JSON.stringify(state))
 	const {userToken, userProfile} = state;
   	return  {userToken, userProfile};
 }
