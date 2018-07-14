@@ -1,26 +1,30 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, HashRouter } from "react-router-dom";
-import CustomerBillingContainer from "../containers/CustomerBillingContainer";
-import CustomerSettingContainer from "../containers/CustomerSettingContainer";
-import CustomerProfileContainer from "../containers/CustomerProfileContainer";
-import MainHeader from "./homePage/Header";
-import Footer from "./homePage/Footer";
-import Header from "./myAccount/Header";
+
+
+// import CustomerBillingContainer from "../containers/CustomerBillingContainer";
+import BillingPage from '../components/myAccount/billing/BillingPage';
+
+// import CustomerSettingContainer from "../containers/CustomerSettingContainer";
+import SettingPage from '../components/myAccount/setting/SettingPage';
+
+// import CustomerProfileContainer from "../containers/CustomerProfileContainer";
+import ProfilePage from '../components/myAccount/profile/ProfilePage';
+
+import ClientHeader from "./ClientHeader";
 
 class MyAccount extends Component {
   render() {
     return (
       <div>
-        <MainHeader />
-        <Header {...this.props} />
+        <ClientHeader {...this.props} />
         <div>
-          <CustomerProfileContainer id="profile" />
+          <ProfilePage id="profile" {...this.props} />
           <div className="shadowDivider" id="billing" />
-          <CustomerBillingContainer id="billing" />
+          <BillingPage id="billing" {...this.props} />
           <div className="shadowDivider" />
-          <CustomerSettingContainer id="setting" />
+          <SettingPage id="setting" {...this.props} />
         </div>
-        <Footer />
       </div>
     );
   }
