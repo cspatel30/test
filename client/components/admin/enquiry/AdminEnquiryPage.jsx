@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 import { _getDeafultColumnsWidth, _selectNewRecordsIfAllSelected, toggleSelectAll,
  toggleRow, _removeColumnsIfNotNeeded, _createFiltersQueryString, _createSortedDataString } 
  from '../reactTableCustomFunctions';
-
+import { isEmptyObject } from '../../../common/global';
 import Confirm from 'react-confirm-bootstrap';
 import moment from 'moment';
 import PageBase from '../PageBase';
@@ -34,8 +34,11 @@ export default class AdminEnquiryPage extends Component {
         customerQuote: "",
         inspectorQuote: ""
       },
-
-      tableStates:  {
+      markupFieldsDeduction: {
+        inspector: 0,
+        client: 0
+    },   
+    tableStates:  {
             rows: [],
             columns: [],
             page: 1,
@@ -50,27 +53,7 @@ export default class AdminEnquiryPage extends Component {
             apiCallRecords : {callOccurance:0, noRecordExist: false},
             previewImage: {imagePreviewOpen: false, selectedImage: "", title: "" },
             selected: {}, selectAll: 0,
-        } ,
-      subComponentTableData: {
-           rows: [],
-            columns: [],
-            page: 1,
-            pageSize: 20,
-            totalRecords: 1,
-            totalPagesWithRecords: 1,
-            sorted: "",
-            filtered: "",
-            dataTableLoading: false,
-            filtered: [],  selected: {}, selectAll: 0, setDefaultSelectedRecords:false,
-            imagePath : "",
-            apiCallRecords : {callOccurance:0, noRecordExist: false},
-            selected: {}, selectAll: 0,
-          },
-          markupFieldsDeduction: {
-              inspector: 15,
-              client: 15
-          }      
-
+        }
     };
 
     this.cancelEnquiry = this.cancelEnquiry.bind(this);
@@ -83,9 +66,8 @@ export default class AdminEnquiryPage extends Component {
     this._setColumnsList = this._setColumnsList.bind(this);
     this.setSelectedRecordsInState = this.setSelectedRecordsInState.bind(this);
     this._setColumnsListSubComponent = this._setColumnsListSubComponent.bind(this);
-    this._loadSubcomponentData = this._loadSubcomponentData.bind(this);
+    this._loadApiDatapageLoad =  this._loadApiDatapageLoad.bind(this);
     this._loadApiDatapageLoadFilter =  _.debounce(this._loadApiDatapageLoadFilter.bind(this), WAIT);
-    this._loadSubcomponentDataFilter =  _.debounce(this._loadSubcomponentDataFilter.bind(this), WAIT);
     this.onChange = this.onChange.bind(this);
     this._getApiCall = this._getApiCall.bind(this);
   }
@@ -98,16 +80,50 @@ export default class AdminEnquiryPage extends Component {
 
   _getApiCall(){
         let { tableStates } = this.state;
-        let tableStatesCustom = tableStates;
-        this.props.getAdminEnquiries({page: tableStates.page, pageSize: tableStates.pageSize});
-        if(this.props.adminEnquiryList){
-          tableStatesCustom.rows = this.props.adminEnquiryList;
-          this.setState((state) => { state.tableStates = tableStatesCustom});
-        }
+        
+        let queryData = {
+            page: tableStates.page,
+            pageSize: tableStates.pageSize,
+            sorted: tableStates.sorted,
+            filtered: tableStates.filtered
+        };
+
+        const { conditionalRequiredFilter } = this.props;
+        if(conditionalRequiredFilter){
+            if(queryData.filtered){
+                queryData.filtered = queryData.filtered+'&'+conditionalRequiredFilter;
+            }
+            else {
+                queryData.filtered = conditionalRequiredFilter;
+            }
+
+        }      
+        this.props.getAdminEnquiries(queryData);  
+        this.props.getEnquiryMarkupSettings();      
   }
   componentWillReceiveProps(props) {
     if(!this.props.adminAuthToken && props.adminAuthToken) {
        this._getApiCall();
+    }
+    if((isEmptyObject(this.props.adminEnquiryList) || isEmptyObject(this.state.tableStates.rows)) && !isEmptyObject(props.adminEnquiryList)){
+        let { tableStates } = this.state;
+        let tableStatesCustom = tableStates;
+        let enquiry = props.adminEnquiryList.data;
+        tableStatesCustom.rows = enquiry.content;
+        tableStatesCustom.totalRecords = enquiry.totalPages;
+        tableStatesCustom.pageSize = enquiry.size;
+        tableStatesCustom.totalPagesWithRecords = Math.ceil(enquiry.totalPages/enquiry.size);
+        tableStatesCustom.dataTableLoading = false;
+        this.setState((state) => { state.tableStates = tableStatesCustom});
+        
+    }
+    /* Update Markup */
+    if((!this.props.enquiryMarkup || props.enquiryMarkup!=this.props.enquiryMarkup) && props.enquiryMarkup){
+        let markupFieldsDeduction = {
+                                        client: this.props.enquiryMarkup.customerServiceCharge,
+                                        inspector: this.props.enquiryMarkup.inspectorServiceCharge
+                                    }
+        this.setState((state) => { state.markupFieldsDeduction = markupFieldsDeduction});
     }
     if(!this.props.enquiryQuoteUpdated && props.enquiryQuoteUpdated)
       this.state.enquiryQuoteUpdated = true;
@@ -296,13 +312,13 @@ export default class AdminEnquiryPage extends Component {
                 headerStyle:  _getDeafultColumnsWidth()
             },
              {
-                id: "imo",
+                id: "imoNumber",
                 Header: 'IMO No.#',
-                accessor: "imo",
+                accessor: "imoNumber",
                 Cell: ({ original }) => {
                     return (
                         <div>
-                          {original.imo}
+                          {original.imoNumber}
                         </div>
 
                     );
@@ -313,13 +329,13 @@ export default class AdminEnquiryPage extends Component {
                 headerStyle:  _getDeafultColumnsWidth()
             },
              {
-                id: "vesselTypeDisplayName",
+                id: "vesselType",
                 Header: 'Vessel Type',
-                accessor: "vesselTypeDisplayName",
+                accessor: "vesselType",
                 Cell: ({ original }) => {
                     return (
                         <div  className="columns-lower-Case-text">
-                          {original.vesselTypeDisplayName}
+                          {original.vesselType}
                         </div>
 
                     );
@@ -330,13 +346,13 @@ export default class AdminEnquiryPage extends Component {
                 headerStyle:  _getDeafultColumnsWidth()
             },
              {
-              id: "message",
+              id: "clientMessage",
               Header: 'Client Message',
-              accessor: "message",
+              accessor: "clientMessage",
               Cell: ({ original }) => {
                   return (
                       <div  className="columns-lower-Case-text">
-                        {original.message}
+                        {original.clientMessage}
                       </div>
 
                   );
@@ -364,13 +380,13 @@ export default class AdminEnquiryPage extends Component {
               headerStyle:  _getDeafultColumnsWidth()
           },
             {
-                id: "portData>name",
+                id: "port>name",
                 Header: 'Port',
-                accessor: "portData>name",
+                accessor: "port>name",
                 Cell: ({ original }) => {
                     return (
                         <div  className="columns-lower-Case-text">
-                          {original.portData?original.portData.name:""} <b> {original.portData.countryName}</b>
+                          {original.port?original.port.countryCode:""} <b> {original.port.countryName}</b>
                         </div>
 
                     );
@@ -382,13 +398,13 @@ export default class AdminEnquiryPage extends Component {
             },
             
             {
-              id: "email",
+              id: "user>email",
               Header: 'Email',
-              accessor: "email",
+              accessor: "user>email",
               Cell: ({ original }) => {
                   return (
                       <div  className="columns-lower-Case-text">
-                        {original.email}
+                        {original.user?original.user.email:""}
                       </div>
 
                   );
@@ -416,15 +432,15 @@ export default class AdminEnquiryPage extends Component {
               headerStyle:  _getDeafultColumnsWidth()
           },
            {
-              id: "clientName",
+              id: "user>name",
               Header: 'Client Name',
-              accessor: "clientName",
+              accessor: "user>name",
               Cell: ({ original }) => {
                   return (
                       <div  className="columns-lower-Case-text">
-                        {original.clientName?
+                        {original.user?
                             <span>
-                              {original.clientName}
+                              {original.user?original.user.name:""}
                               <br />
                               <NavLink to={""}> View Profile</NavLink>
                             </span>
@@ -440,13 +456,13 @@ export default class AdminEnquiryPage extends Component {
               headerStyle:  _getDeafultColumnsWidth()
           },
           {
-              id: "maxBiddingPrice",
+              id: "maxBidAmount",
               Header: 'Max. Bidding Price',
-              accessor: "maxBiddingPrice",
+              accessor: "maxBidAmount",
               Cell: ({ original }) => {
                   return (
                       <div>
-                        {original.maxBiddingPrice?original.maxBiddingPrice:""}
+                        {original.maxBidAmount?original.maxBidAmount:""}
                       </div>
 
                   );
@@ -729,15 +745,15 @@ export default class AdminEnquiryPage extends Component {
                 headerStyle:  _getDeafultColumnsWidth({minWidth:100})
               },
                {
-                  id: "id",
+                  id: "inspector>name",
                   Header: 'Inspector.',
-                  accessor: "id",
+                  accessor: "inspector>name",
                   Cell: ({ original }) => {
                       return (
                           <div  className="columns-lower-Case-text">
-                            <span>{original.name}</span> &nbsp;
-                            <span>{original.id}</span> &nbsp;
-                            <span>{original.no}</span> &nbsp;
+                            <span>{original.inspector.name}</span> &nbsp;
+                            <span>{original.inspector.id}</span> &nbsp;
+                            <span>{original.inspector.imoNumber}</span> &nbsp;
                           </div>
 
                       );
@@ -748,13 +764,13 @@ export default class AdminEnquiryPage extends Component {
                   headerStyle:  _getDeafultColumnsWidth()
               },
               {
-                  id: "location",
+                  id: "inspector>country",
                   Header: 'Location',
-                  accessor: "location",
+                  accessor: "inspector>country",
                   Cell: ({ original }) => {
                       return (
                           <div  className="columns-lower-Case-text">
-                            <span>{original.location}</span>
+                            <span>{original.inspector.city + ' '+original.inspector.country}</span>
                           </div>
 
                       );
@@ -765,13 +781,13 @@ export default class AdminEnquiryPage extends Component {
                   headerStyle:  _getDeafultColumnsWidth()
               },
               {
-                  id: "inspectorQuotationFp",
+                  id: "quotationAmount",
                   Header: 'Inspector  Quotation Fixed Price (US$)  .',
-                  accessor: "inspectorQuotationFp",
+                  accessor: "quotationAmount",
                   Cell: ({ original }) => {
                       return (
                           <div>
-                            <span>{original.inspectorQuotationFp}</span>
+                            <span>{original.quotationAmount}</span>
                           </div>
 
                       );
@@ -782,13 +798,15 @@ export default class AdminEnquiryPage extends Component {
                   headerStyle:  _getDeafultColumnsWidth()
               },
               {
-                  id: "inspectorOrderAmountAfterDeduction",
+                  id: "inspectorPaidAmount",
                   Header: 'Inspector Order Amount (US$) After Deduction',
-                  accessor: "inspectorOrderAmountAfterDeduction",
+                  accessor: "inspectorPaidAmount",
                   Cell: ({ original }) => {
                       return (
                           <div>
-                            <span>{original.inspectorQuotationFp -  (original.inspectorQuotationFp*markupFieldsDeduction.inspector)/100}</span>
+                            <span>{/*original.inspectorQuotationFp -  (original.inspectorQuotationFp*markupFieldsDeduction.inspector)/100*/}
+                                {original.inspectorPaidAmount}
+                            </span>
                           </div>
 
                       );
@@ -799,13 +817,13 @@ export default class AdminEnquiryPage extends Component {
                   headerStyle:  _getDeafultColumnsWidth()
               },
                {
-                  id: "clientMarkup",
+                  id: "customerInvoicePer",
                   Header: 'Client Mark up',
-                  accessor: "clientMarkup",
+                  accessor: "customerInvoicePer",
                   Cell: ({ original }) => {
                       return (
                           <div>
-                            <span>{markupFieldsDeduction.client}%</span>
+                            <span>{original.customerInvoicePer}%</span>
                           </div>
 
                       );
@@ -816,13 +834,15 @@ export default class AdminEnquiryPage extends Component {
                   headerStyle:  _getDeafultColumnsWidth()
               },
                {
-                  id: "clientQuotation",
+                  id: "customerInvoiceAmount",
                   Header: 'Client Quotation (US$) ( E+G)',
-                  accessor: "clientQuotation",
+                  accessor: "customerInvoiceAmount",
                   Cell: ({ original }) => {
                       return (
                           <div>
-                            <span><span>{original.inspectorQuotationFp +  (original.inspectorQuotationFp*markupFieldsDeduction.inspector)/100}</span></span>
+                            <span><span>{/*original.inspectorQuotationFp +  (original.inspectorQuotationFp*markupFieldsDeduction.inspector)/100 */}
+                                {original.customerInvoiceAmount}
+                            </span></span>
                           </div>
 
                       );
@@ -833,13 +853,13 @@ export default class AdminEnquiryPage extends Component {
                   headerStyle:  _getDeafultColumnsWidth()
               },
                {
-                  id: "fee",
+                  id: "inspectorPaidPer",
                   Header: 'Rate (Per Hour or Per Day)',
-                  accessor: "fee",
+                  accessor: "inspectorPaidPer",
                   Cell: ({ original }) => {
                       return (
                           <div>
-                            <span>{original.fee}</span>
+                            <span>{original.inspectorPaidPer}</span>
                           </div>
 
                       );
@@ -890,7 +910,7 @@ export default class AdminEnquiryPage extends Component {
                   Cell: ({ original }) => {
                       return (
                           <div>
-                            <span>{original.inspectionDuration}</span>
+                            <span>{original.availableFrom}-{original.availableTo}</span>
                           </div>
 
                       );
@@ -1055,146 +1075,7 @@ export default class AdminEnquiryPage extends Component {
         return columnsList;
     }
 
-    _loadSubcomponentData(requestData) {
-        const {subComponentTableData} = this.state;
-        let subComponentTableDataCustom = subComponentTableData;
-        subComponentTableDataCustom.rows =  [
-                        {
-                          "id": 11,
-                          "no": 3,
-                          "name": "Capt. Sachin D Khaire",
-                          "location": "Gujarat India",
-                          "inspectorQuotationFp": 1000,
-                          "inspectorOrderAmountAfterDeduction": 850,
-                          "clientMarkup": "15%",
-                          "clientQuotation":"1150",
-                          "rate": "Per Hour",
-                          "inspectionFee": 750,
-                          "travelingFee": 250,
-                          "inspectionDuration": "1",
-                          "travelingDuration" : "2",
-                          "inspectorTotalEstimatedQuotation": "$1,250",
-                          "inspectorOrderAmount": "$1,062",
-                          "inspectorClientMarkup": "15%",
-                          "inspectorClientQuotation": "$1,437",
-                          "status": "Sent"                          
-                        },
-                        {
-                          "id": 12,
-                          "no": 5,
-                          "name": "Capt. Sachin D Khaire",
-                          "location": "Gujarat India",
-                          "inspectorQuotationFp": 1000,
-                          "inspectorOrderAmountAfterDeduction": 850,
-                          "clientMarkup": "15%",
-                          "clientQuotation":"1150",
-                          "rate": "Per Hour",
-                          "inspectionFee": 750,
-                          "travelingFee": 250,
-                          "inspectionDuration": "1",
-                          "travelingDuration" : "2",
-                          "inspectorTotalEstimatedQuotation": "$1,250",
-                          "inspectorOrderAmount": "$1,062",
-                          "inspectorClientMarkup": "15%",
-                          "inspectorClientQuotation": "$1,437",
-                          "status": "Sent"                          
-                        },
-                        {
-                          "id": 11,
-                          "no": 3,
-                          "name": "Capt. Sachin D Khaire",
-                          "location": "Gujarat India",
-                          "inspectorQuotationFp": 1000,
-                          "inspectorOrderAmountAfterDeduction": 850,
-                          "clientMarkup": "15%",
-                          "clientQuotation":"1150",
-                          "rate": "Per Hour",
-                          "inspectionFee": 750,
-                          "travelingFee": 250,
-                          "inspectionDuration": "1",
-                          "travelingDuration" : "2",
-                          "inspectorTotalEstimatedQuotation": "$1,250",
-                          "inspectorOrderAmount": "$1,062",
-                          "inspectorClientMarkup": "15%",
-                          "inspectorClientQuotation": "$1,437",
-                          "status": "Sent"                          
-                        },
-                        {
-                          "id": 13,
-                          "no": 3,
-                          "name": "Capt. Sachin D Khaire",
-                          "location": "Gujarat India",
-                          "inspectorQuotationFp": 1000,
-                          "inspectorOrderAmountAfterDeduction": 850,
-                          "clientMarkup": "15%",
-                          "clientQuotation":"1150",
-                          "rate": "Per Hour",
-                          "inspectionFee": 750,
-                          "travelingFee": 250,
-                          "inspectionDuration": "1",
-                          "travelingDuration" : "2",
-                          "inspectorTotalEstimatedQuotation": "$1,250",
-                          "inspectorOrderAmount": "$1,062",
-                          "inspectorClientMarkup": "15%",
-                          "inspectorClientQuotation": "$1,437",
-                          "status": "Sent"                          
-                        },
-                        {
-                          "id": 14,
-                          "no": 3,
-                          "name": "Capt. Sachin D Khaire",
-                          "location": "Gujarat India",
-                          "inspectorQuotationFp": 1000,
-                          "inspectorOrderAmountAfterDeduction": 850,
-                          "clientMarkup": "15%",
-                          "clientQuotation":"1150",
-                          "rate": "Per Hour",
-                          "inspectionFee": 750,
-                          "travelingFee": 250,
-                          "inspectionDuration": "1",
-                          "travelingDuration" : "2",
-                          "inspectorTotalEstimatedQuotation": "$1,250",
-                          "inspectorOrderAmount": "$1,062",
-                          "inspectorClientMarkup": "15%",
-                          "inspectorClientQuotation": "$1,437",
-                          "status": "Sent"                          
-                        },
-                        {
-                          "id": 15,
-                          "no": 3,
-                          "name": "Capt. Sachin D Khaire",
-                          "location": "Gujarat India",
-                          "inspectorQuotationFp": 1000,
-                          "inspectorOrderAmountAfterDeduction": 850,
-                          "clientMarkup": "15%",
-                          "clientQuotation":"1150",
-                          "rate": "Per Hour",
-                          "inspectionFee": 750,
-                          "travelingFee": 250,
-                          "inspectionDuration": "1",
-                          "travelingDuration" : "2",
-                          "inspectorTotalEstimatedQuotation": "$1,250",
-                          "inspectorOrderAmount": "$1,062",
-                          "inspectorClientMarkup": "15%",
-                          "inspectorClientQuotation": "$1,437",
-                          "status": "Sent"                          
-                        }
-
-                      ];
-
-                      console.log("subComponentTableDataCustom>>>", subComponentTableDataCustom);
-        this.setState({
-          subComponentTableData: subComponentTableDataCustom
-        })
-    }
-
-   _loadSubcomponentDataFilter(){
-
-  }
-  _loadApiDatapageLoadFilter(){
-
-  }  
-
+   
   renderUpdateQuoteDialog() {
     if(this.state.quoteUpdateForEnquiryId && this.state.quoteUpdateForEnquiryId > 0) {
       if(this.state.enquiryQuoteUpdated) {
@@ -1292,31 +1173,69 @@ export default class AdminEnquiryPage extends Component {
       );
 }
 
+_loadApiDatapageLoadFilter(requestData){
+    this._loadApiDatapageLoad(requestData);
+}
+
+_loadApiDatapageLoad(requestData){
+    const { tableStates } = this.state;
+    let pageNumber = requestData.page + 1;
+
+    if (requestData.pageSize !== tableStates.pageSize) {
+        pageNumber = 1;
+    }
+
+    let filteredData = "";
+    if (requestData.filtered && requestData.filtered.length > 0) {
+        filteredData = _createFiltersQueryString(requestData.filtered);
+    }
+
+    let sortedData = '';
+    if (requestData.sorted && requestData.sorted.length > 0) {
+        let id = requestData.sorted[0].id;
+        sortedData = _createSortedDataString(id, requestData.sorted[0].desc);
+    }
+
+    this.setState({
+        page: pageNumber,
+        pageSize: requestData.pageSize,
+        sorted: sortedData,
+        filtered: filteredData,
+        dataTableLoading: true
+
+    }, function stateUpdateComplete() {
+        this._getApiCall();
+    }.bind(this));
+      
+    }
   renderEnquiries(enquiries) {
     var items = [];
-     const { subComponentTableData } = this.state;
-     console.log("subComponentTableData?>>", subComponentTableData);
-    
-   return (
+    const { subComponentTableData, tableStates } = this.state;
+    console.log("tableStates.totalRecords > tableStates.pageSize", tableStates.totalRecords > tableStates.pageSize, tableStates);
+    return (
          <ReactTable
             data={enquiries}
             filterable
             columns={this._setColumnsList()}
+            defaultPageSize={tableStates.pageSize}
             minRows={0}
-            showPagination={false}
+            showPagination={tableStates.totalRecords > tableStates.pageSize ? true : false}
+            pageSizeOptions={[20]}
+            pages={tableStates.totalPagesWithRecords ? tableStates.totalPagesWithRecords : 1}
             manual
             freezeWhenExpanded={true}
             onFetchData={(state, instance) => {
                 if(state.filtered && state.filtered.length > 0) {
                     this._loadApiDatapageLoadFilter(state);
                 } else {
-                      this._getApiCall();
+                     this._loadApiDatapageLoad(state);
                 }
             }}
             className={ "-striped -highlight apply-action-column-datatabl"}
 
             SubComponent={(row) => {
                 let rows1 = Object.assign({}, row.original);
+                console.log("rows1.enquiryQuotation>>>", rows1);
                 return (
                     <div className="react-table-remove-headers react-table-subcomponent-main">
                            <em>
@@ -1328,12 +1247,9 @@ export default class AdminEnquiryPage extends Component {
                             <ReactTable
                               data={rows1.enquiryQuotation}
                               columns={this._setColumnsListSubComponent()}
-                              defaultPageSize={3}
                               showPagination={false}
-                              onFetchData={(state, instance) => {
-                                  
-                              }}
-                             />
+                              minRows = {0}
+                              />
                     </div>
                 )
             }}
@@ -1369,7 +1285,6 @@ export default class AdminEnquiryPage extends Component {
   render() {
 
     const { tableStates } = this.state;
-    console.log(tableStates.rows);
     if(tableStates.rows && tableStates.rows.length > 0) {
       return(
           <PageBase title={"Enquiries"}>

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 // import {FormattedMessage} from 'react-intl';
@@ -10,6 +9,7 @@ import { _getDeafultColumnsWidth, _selectNewRecordsIfAllSelected, toggleSelectAl
  toggleRow, _removeColumnsIfNotNeeded, _createFiltersQueryString, _createSortedDataString } 
  from '../reactTableCustomFunctions';
 import PageBase from '../PageBase';
+import { isEmptyObject } from '../../../common/global';
 import Confirm from 'react-confirm-bootstrap';
 import '../admin.scss';
 
@@ -43,30 +43,35 @@ export default class AdminOrderComponent extends Component {
     this._setColumnsList = this._setColumnsList.bind(this);
     this.setSelectedRecordsInState = this.setSelectedRecordsInState.bind(this);
      this._getApiCall = this._getApiCall.bind(this);
+     this._loadApiDatapageLoad = this._loadApiDatapageLoad.bind(this);
   }
 
   componentWillMount() {
-
-    if(this.props.adminAuthToken) {      
+    if(this.props.adminAuthToken) {
       this._getApiCall();
     }
   }
-
    _getApiCall(){
-        let { tableStates } = this.state;
-        let tableStatesCustom = tableStates;
-        this.props.getAdminOrders({page: tableStates.page, pageSize: tableStates.pageSize});
-        if(this.props.adminOrderList){
-          tableStatesCustom.rows = this.props.adminOrderList;
-          this.setState((state) => { state.tableStates = tableStatesCustom});
-        }
+       const { tableStates } = this.state;
+       this.props.getAdminOrders({page: tableStates.page, pageSize: tableStates.pageSize});
   }
 
   componentWillReceiveProps(props) {
   	if(!this.props.adminAuthToken && props.adminAuthToken) {
   		this._getApiCall();
-  	}
-
+      }
+    
+      if((isEmptyObject(this.props.adminOrderList) || isEmptyObject(this.state.tableStates.rows)) && !isEmptyObject(props.adminOrderList)){
+        let { tableStates } = this.state;
+        let tableStatesCustom = tableStates;
+        let enquiry = props.adminOrderList.data;
+        tableStatesCustom.rows = enquiry.content;
+        tableStatesCustom.totalRecords = enquiry.totalPages;
+        tableStatesCustom.pageSize = enquiry.size;
+        tableStatesCustom.totalPagesWithRecords = Math.ceil(enquiry.totalPages/enquiry.size);
+        tableStatesCustom.dataTableLoading = false;
+        this.setState((state) => { state.tableStates = tableStatesCustom});
+    }
 
   	this.setState((state) => { state.errorMsg = props.error; })
   }
@@ -114,18 +119,63 @@ export default class AdminOrderComponent extends Component {
       </Dialog>
     )
   }
+  
+_loadApiDatapageLoadFilter(requestData){
+    this._loadApiDatapageLoad(requestData);
+}
+
+_loadApiDatapageLoad(requestData){
+    const { tableStates } = this.state;
+    let pageNumber = requestData.page + 1;
+
+    if (requestData.pageSize !== tableStates.pageSize) {
+        pageNumber = 1;
+    }
+
+    let filteredData = "";
+    if (requestData.filtered && requestData.filtered.length > 0) {
+        filteredData = _createFiltersQueryString(requestData.filtered);
+    }
+
+    let sortedData = '';
+    if (requestData.sorted && requestData.sorted.length > 0) {
+        let id = requestData.sorted[0].id;
+        sortedData = _createSortedDataString(id, requestData.sorted[0].desc);
+    }
+
+    this.setState({
+        page: pageNumber,
+        pageSize: requestData.pageSize,
+        sorted: sortedData,
+        filtered: filteredData,
+        dataTableLoading: true
+
+    }, function stateUpdateComplete() {
+        this._getApiCall();
+    }.bind(this));
+      
+    }
 
   renderAdminOrders(admin, orders) {
-      console.log("orders???", orders);
+      const { tableStates  } = this.state;
       return (
            <ReactTable
             data={orders}
             filterable
             columns={this._setColumnsList()}
             minRows={0}
-            showPagination={false}
+            showPagination={tableStates.totalRecords > tableStates.pageSize ? true : false}
+            pageSizeOptions={[20]}
+            pages={tableStates.totalPagesWithRecords ? tableStates.totalPagesWithRecords : 1}
             manual
             freezeWhenExpanded={true}
+            onFetchData={(state, instance) => {
+                if(state.filtered && state.filtered.length > 0) {
+                } else {
+                    console.log("React Table>>>>>>>>>>>>>>>>");
+                     this._loadApiDatapageLoad(state);
+                }
+            }}
             className={ "-striped -highlight apply-action-column-datatabl"}
             />
       )
@@ -292,13 +342,13 @@ export default class AdminOrderComponent extends Component {
                 headerStyle:  _getDeafultColumnsWidth()
             },
              {
-                id: "imo",
+                id: "imoNumber",
                 Header: 'IMO No.#',
-                accessor: "imo",
+                accessor: "imoNumber",
                 Cell: ({ original }) => {
                     return (
                         <div>
-                          {original.imo}
+                          {original.imoNumber}
                         </div>
 
                     );
@@ -309,13 +359,13 @@ export default class AdminOrderComponent extends Component {
                 headerStyle:  _getDeafultColumnsWidth()
             },
              {
-                id: "vesselTypeDisplayName",
+                id: "vesselType",
                 Header: 'Vessel Type',
-                accessor: "vesselTypeDisplayName",
+                accessor: "vesselType",
                 Cell: ({ original }) => {
                     return (
                         <div  className="columns-lower-Case-text">
-                          {original.vesselTypeDisplayName}
+                          {original.vesselType}
                         </div>
 
                     );
@@ -360,13 +410,13 @@ export default class AdminOrderComponent extends Component {
               headerStyle:  _getDeafultColumnsWidth()
           },
             {
-                id: "portData>name",
+                id: "port>name",
                 Header: 'Port',
-                accessor: "portData>name",
+                accessor: "port>name",
                 Cell: ({ original }) => {
                     return (
                         <div  className="columns-lower-Case-text">
-                          {original.portData?original.portData.name:""} <b> {original.portData.countryName}</b>
+                          {original.port?original.port.name:""} <b> {original.port.countryName}</b>
                         </div>
 
                     );
@@ -394,15 +444,15 @@ export default class AdminOrderComponent extends Component {
               headerStyle:  _getDeafultColumnsWidth()
             },
             {
-              id: "client>name",
+              id: "user>name",
               Header: 'Client Name',
-              accessor: "client>name",
+              accessor: "user>name",
               Cell: ({ original }) => {
                   return (
                       <div  className="columns-lower-Case-text">
-                        {original.clientName?
+                        {original.user?
                             <span>
-                              {original.client.name}
+                              {original.user.name}
                               <br />
                               <NavLink to={""}> View Profile</NavLink>
                             </span>
@@ -417,34 +467,17 @@ export default class AdminOrderComponent extends Component {
               style: _getDeafultColumnsWidth(),
               headerStyle:  _getDeafultColumnsWidth()
           },
-          {
-              id: "clientMessage",
-              Header: 'Client Message',
-              accessor: "clientMessage",
-              Cell: ({ original }) => {
-                  return (
-                      <div  className="columns-lower-Case-text">
-                        From {this.formatDate(original.startTime)} to {this.formatDate(original.endTime)}
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-            },
            {
-              id: "assignedInspector",
+              id: "inspector>name",
               Header: 'Assigned Inspector',
-              accessor: "assignedInspector",
+              accessor: "inspector>name",
               Cell: ({ original }) => {
                   return (
                       <div>
-                         {original.assignedInspector?
+                         {original.inspector?
                              <span>
-                                {original.assignedInspector.name}
-                                {original.assignedInspector.id}
+                                {original.inspector.name}
+                                {original.inspector.id}
                              </span>
                          :""}
                       </div>
@@ -475,13 +508,13 @@ export default class AdminOrderComponent extends Component {
               headerStyle:  _getDeafultColumnsWidth()
           },
           {
-              id: "clientOrderAmount",
+              id: "customerInvoiceAmount",
               Header: 'Client Order Amount',
-              accessor: "clientOrderAmount",
+              accessor: "customerInvoiceAmount",
               Cell: ({ original }) => {
                   return (
                       <div>
-                        {original.clientOrderAmount}
+                     customerInvoiceAmount   {original.customerInvoiceAmount}
                       </div>
 
                   );
@@ -493,13 +526,13 @@ export default class AdminOrderComponent extends Component {
           },
 
           {
-              id: "inspectorQuotationAmount",
+              id: "quotationAmount",
               Header: 'Inspector Quotation Amount',
-              accessor: "inspectorQuotationAmount",
+              accessor: "quotationAmount",
               Cell: ({ original }) => {
                   return (
                       <div>
-                        {original.inspectorQuotationAmount}
+                        {original.quotationAmount}
                       </div>
                   );
               },
@@ -509,13 +542,13 @@ export default class AdminOrderComponent extends Component {
               headerStyle:  _getDeafultColumnsWidth()
           },
            {
-              id: "inspectorOrderAmount",
+              id: "inspectorPaidAmount",
               Header: 'Inspector Order Amount',
-              accessor: "inspectorOrderAmount",
+              accessor: "inspectorPaidAmount",
               Cell: ({ original }) => {
                   return (
                       <div>
-                        {original.inspectorOrderAmount}
+                        {original.inspectorPaidAmount}
                       </div>
                   );
               },

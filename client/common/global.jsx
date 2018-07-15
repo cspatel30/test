@@ -1,5 +1,6 @@
 import React from 'react';
 import { AsyncStorage } from 'AsyncStorage';
+import Cookie from 'js-cookie';
 
 /* Admin Local Storage */
 export const storeAdminToken = user => {
