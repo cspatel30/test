@@ -80,7 +80,7 @@ class Profile extends React.Component {
                   <span>Customer ID <span className="padding">{userProfile.id}</span></span>
                 </div>
                 <div className="row form-group informationText">
-                  <Person style={{color: '#0c6092'}}/><span className="padding">{userProfile.name}</span>
+                  <Person style={{color: '#0c6092'}}/><span className="padding">{`${userProfile.firstName} ${userProfile.lastName}`}</span>
                 </div>
                 <div className="row form-group informationText">
                   <Phone style={{color: '#0c6092'}}/><span className="padding">{userProfile.phone}</span>
@@ -89,7 +89,7 @@ class Profile extends React.Component {
                    <span style={{color: '#0c6092', fontSize: 18, fontWeight: 500}}>@</span><span className="padding">{userProfile.email}</span>
                 </div>
                 <div className="row form-group informationText">
-                  <ContactPhone style={{color: '#0c6092'}}/><span className="padding">{userProfile.work_phone}</span>
+                  <ContactPhone style={{color: '#0c6092'}}/><span className="padding">{userProfile.work_phone || 'NA'}</span>
                 </div>
                 <div className="row form-group informationText">
                   <Language style={{color: '#0c6092'}}/><span className="padding">{userProfile.company}</span>

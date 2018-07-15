@@ -16,7 +16,7 @@ class Header extends Component {
         <div className="mx-3 pointer"onClick={()=>{this.props.history.push('/quotation')}}>QUOTATION ENQUIRIES</div>
         <div className="mx-3 pointer" onClick={()=>{this.props.history.push('/login')}}><i className="fa fa-sign-in mr-1" aria-hidden="true" />LOGIN</div>
         <div className="mx-3 pointer" onClick={()=>{this.props.history.push('/register')}}><i className="fa fa-pencil-square-o mr-1" aria-hidden="true" />SIGN UP</div>
-        <div className="mx-2 pointer" onClick={()=>{this.props.history.push('/newprofile')}}><button type="button" className="btn btn-head btn-pink">PROFILE</button></div>
+        <div className="mx-2 pointer" onClick={()=>{this.props.history.push('/newprofile/client')}}><button type="button" className="btn btn-head btn-pink">PROFILE</button></div>
         <div className="mx-2 pointer" onClick={()=>{this.props.history.push('/inspectordashboard')}}><button type="button" className="btn btn-head btn-white align-items-center">INSPECTOR DASHBOARD</button></div>
     </div>
   </div>

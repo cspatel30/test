@@ -20,7 +20,7 @@ function makePostRequest(method, api = api, data) {
 
 // SYNC ACTIONS //
 export function tokenVerified(payload) { return ({ type: TOKEN_VERIFIED, payload }); }
-export function loggedIn(payload) { return ({ type: LOGIN, payload }); }
+export function loggedIn(login, profile) { return ({ type: LOGIN, payload: { login, profile } }); }
 export function registerd(payload) { return ({ type: REGISTER, payload }); }
 
 
@@ -35,7 +35,7 @@ export function login(data) {
       Cookie.set('token', response.data.data.token);
       const userType = response.data.data.userType !== 'I' ? 'user' : 'inspector';
         makeGetRequest('get', `/${userType}/myProfile`, data)
-        .then(profile => dispatch(loggedIn(response.data)))
+        .then(profile => dispatch(loggedIn(response.data, profile)))
         .catch(err => console.log("error: " + JSON.stringify(err)))
     })
     .catch(err => console.log("error in login: " + JSON.stringify(err)))

@@ -31,6 +31,7 @@ import NewInspectorDashboardContainer from '../client/containers/NewInspectorDas
 import QuotationContainer from '../client/containers/QuotationContainer.js';
 import OrdersContainer from '../client/containers/OrdersContainer.js';
 import ManagePageContainer from '../client/containers/ManagePageContainer.js';
+import CustomerMyAccountContainer from './containers/CustomerMyAccountContainer.js';
 
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
@@ -70,6 +71,7 @@ export default class Body extends Component {
               <Route exact path="/quotation" component={QuotationContainer} />
               <Route exact path="/enquries" component={ManagePageContainer} />
               <Route exact path="/orders" component={OrdersContainer} />
+              <Route exact path="/newprofile/client" component={CustomerMyAccountContainer} />
             </div>
             <HomeFooter/>
           </div>
