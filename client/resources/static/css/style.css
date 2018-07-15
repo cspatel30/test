@@ -939,6 +939,16 @@ p {
   color: #1f9bed;
 }
 
+<<<<<<< HEAD:client/resources/static/style.css
+.leftHalf {
+  /* width: 48%;
+  float: left; */
+}
+.rightHalf {
+  /* width: 48%;
+  float: right; */
+}
+=======
 /* .leftHalf {
   width: 48%;
   float: left;
@@ -947,6 +957,7 @@ p {
   width: 48%;
   float: right;
 } */
+>>>>>>> setup:client/resources/static/css/style.css
 
 .login-page {
   flex: 6;
@@ -1100,10 +1111,17 @@ p {
   cursor: pointer;
 }
 
+<<<<<<< HEAD:client/resources/static/style.css
+.contact-form .btn {
+  /* width: 25%;
+  float: right; */
+}
+=======
 /* .contact-form .btn {
   width: 25%;
   float: right;
 } */
+>>>>>>> setup:client/resources/static/css/style.css
 
 .contact-form .forgot-pass {
   color: #1475af;
@@ -1554,6 +1572,123 @@ input {
   padding: 8px;
 }
 
+<<<<<<< HEAD:client/resources/static/style.css
+.hrStyle {
+  border-top: 1px solid rgba(0,0,0,.1);
+}
+
+.myAccountHeadline {
+  margin: 50px 0;
+}
+
+.accountHeader {
+ /* background: url(http://localhost:7100/resources/static/images/banner.png); */
+ padding-top: 180px;
+}
+
+.nav-link{ 
+  color: white;
+  font-size: 16px;
+  margin-bottom: 0px;
+  padding: 0.7rem 3rem !important;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.headlineText{
+  font-size: 26px;
+  margin: 20px;
+}
+
+.addressLabel {
+  color: #1b99c4;
+  font-size: 18px;
+}
+
+.shadowDivider {
+  height: 50px;
+  box-shadow: 0 13px 0px 0 #766e6e17, 0 14px 0px 0 #e9ecef63;
+}
+
+.subHeadlineText {
+  float: 'left';
+  color: #0c6092; 
+  font-size: 24px;
+}
+
+.companyImage {
+  width: 100%;
+}
+
+.paypalImage {
+  width: 30%;
+  vertical-align: middle;
+}
+.paypalImageBox {
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.paymentCardStyles {
+  padding: 20px;
+  margin: 20px;
+  background-color: #d3d3d3a3 !important;
+}
+
+.imageEdit {
+  position: absolute;
+  right: 15px;
+}
+
+.informationText{ 
+  font-size: 18px;
+  color: rgb(97, 94, 92)
+}
+
+.paymentOptions {
+  font-size: 20px;
+  color: rgb(97, 94, 92);
+}
+
+.profileIcon {
+  color: #0c6092;
+}
+
+.padding {
+  padding-left: 10px; 
+}
+
+.companyLogoView {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.clientAccountText {
+  color: white;
+  font-size: 55px;
+  font-weight: 200;
+  position: relative;
+  top: 90px;
+}
+
+.btn {
+  border-radius:  1.45rem !important; 
+}
+
+.upwordIcon {
+  padding: 8px 12px; 
+  border-radius: 50%;
+  box-shadow: 0 -1px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+}
+
+.input-group-text {
+  background-color: white !important;
+  border-right-style: none !important;
+}
+=======
 
 
 
+>>>>>>> setup:client/resources/static/css/style.css

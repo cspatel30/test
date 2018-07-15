@@ -14,6 +14,15 @@ export const ADMIN_ENQUIRY_LIST = 'ADMIN_ENQUIRY_LIST';
 export const ADMIN_ORDER_LIST = 'ADMIN_ORDER_LIST';
 /* Admin end */
 
+
+/*  order constants   */
+
+
+/* client start */
+export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
+export const CHANGE_USER_PASSWORD = 'CHANGE_USER_PASSWORD';
+/* client end */
+
 export const LOGIN = 'LOGIN';
 export const REGISTER = 'REGISTER';
 export const DROP_DOWN_VALUES = 'DROP_DOWN_VALUES';

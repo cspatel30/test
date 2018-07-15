@@ -21,6 +21,10 @@ app.get('/*', function (req, resp) {
   resp.sendFile(path.join(`${__dirname}/client/index.html`));
 });
 
+// app.use('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname,"./client/index.html"));
+// });
+
 app.listen(port);
 
 console.log('shipping inspector RESTful API server started on: ' + port);
