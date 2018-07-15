@@ -3,13 +3,13 @@ import { Switch, Route, Redirect, HashRouter } from "react-router-dom";
 
 
 // import CustomerBillingContainer from "../containers/CustomerBillingContainer";
-import BillingPage from '../components/myAccount/billing/BillingPage';
+import BillingPage from './billing/BillingPage';
 
 // import CustomerSettingContainer from "../containers/CustomerSettingContainer";
-import SettingPage from '../components/myAccount/setting/SettingPage';
+import SettingPage from './setting/SettingPage';
 
 // import CustomerProfileContainer from "../containers/CustomerProfileContainer";
-import ProfilePage from '../components/myAccount/profile/ProfilePage';
+import ProfilePage from './profile/ProfilePage';
 
 import ClientHeader from "./ClientHeader";
 
