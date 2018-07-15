@@ -557,23 +557,6 @@ _loadApiDatapageLoad(requestData){
               style: _getDeafultColumnsWidth(),
               headerStyle:  _getDeafultColumnsWidth()
           },
-           {
-              id: "totalexpense",
-              Header: 'Recommended Quotation',
-              accessor: "totalexpense",
-              Cell: ({ original }) => {
-                  return (
-                      <div>
-                        {original.totalexpense?original.totalexpense:""}
-                      </div>
-
-                  );
-              },
-              sortable:false,
-              filterable: false,
-              style: _getDeafultColumnsWidth(),
-              headerStyle:  _getDeafultColumnsWidth()
-          },
           {
               id: "status",
               Header: 'Current Status',
