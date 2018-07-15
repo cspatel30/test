@@ -63,7 +63,7 @@ class Profile extends React.Component {
 
         <div className="row  align-items-center mt-3 mb-3" >
           <div className="col-sm-3 companyLogoView">
-            <img src="../../../resources/static/images/companyLogo.png" className="companyImage" />
+            <img src="/public/img/companyLogo.png" className="companyImage" />
             {this.state.isEdit && <Edit className="imageEdit" onClick={() => {alert("Upload New company Image")}} />}
           </div>
           {this.state.isEdit ? (
