@@ -1,18 +1,20 @@
 import { connect } from 'react-redux'
 import Login from '../components/loginPage/LoginPage.jsx';
-
-import { login, forgotPassword } from '../actions/auth';
-
+import { login } from '../actions/auth2';
 
 const mapStateToProps = (state) => {
-	const { userToken, userProfile, error, fgpwdMsg  } = state;
-  	return {userToken, userProfile, error, fgpwdMsg  };
+	console.log("LOGIN DATA"+JSON.stringify( state.authReducer.loginData))
+	const loginData=state.authReducer.loginData;
+	// get authReducer's data using state.authReducer, for loginData -> state.authReducer.loginData
+	// const {loginData,userToken, userProfile, error, fgpwdMsg  } = state;
+	
+  	return loginData;
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		logMeIn: (tabIndex, payload) => {
-			payload['userType'] = tabIndex == 0 ? 'customer': 'inspector';
+		logMeIn: (payload) => {
+			//payload['userType'] = tabIndex == 0 ? 'customer': 'inspector';
        		dispatch(login(payload));
 		},
 		forgotPassword: (email) => {

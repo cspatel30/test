@@ -4,8 +4,25 @@ import './newProfile.scss';
 
 
 export default class PersonalDetailsPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state={
+          personalDetails:''
+        }
+      } 
+    
+      componentWillReceiveProps(props){
+        if(props){
+            this.setState({
+                personalDetails:props.userDashboard
+            })
+        }  
+        //console.log("personal"+JSON.stringify(props))
+      }
+    
 
     render() {
+        const {personalDetails}=this.state
         return (
             <div className="col-md-12 fl mb-15">
                 <div className="trapezoid">
@@ -17,27 +34,27 @@ export default class PersonalDetailsPage extends Component {
                         <tbody>
                             <tr>
                                 <th className="fw-500">Name as per Passport</th>
-                                <td>Lavania Ragvendra</td>
+                                <td>{personalDetails.passportName}</td>
                             </tr>
                             <tr>
                                 <th className="fw-500">Nationality</th>
-                                <td>Indian</td>
+                                <td>{personalDetails.nationality}</td>
                             </tr>
                             <tr>
                                 <th className="fw-500">Passport Number</th>
-                                <td>Z2226781</td>
+                                <td>{personalDetails.passport}</td>
                             </tr>
                             <tr>
                                 <th className="fw-500">Date of Birth</th>
-                                <td>Jul 4th 1979</td>
+                                <td>{personalDetails.dob}</td>
                             </tr>
                             <tr>
                                 <th className="fw-500">Nearest Airport</th>
-                                <td>Hong Kong</td>
+                                <td>{personalDetails.nearestAirport}</td>
                             </tr>
                             <tr>
                                 <th className="fw-500">Valid Visas</th>
-                                <td></td>
+                                <td>{personalDetails.validVis}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -2,20 +2,24 @@ import React, { Component } from 'react';
 import ReactStars from 'react-stars';
 import './newProfile.scss';
 
-const Areas=[
-    {
-        countryName:"India"
-    },
-    {
-        countryName:"Vienam"
-    },
-    {
-        countryName:"China"
-    }
-]
 export default class AreasCovered extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state={
+            areasCovered:[]
+        }
+      } 
+    
+      componentWillReceiveProps(props){
+        if(props.userDashboard.coveredArea){
+            var areaspilt = props.userDashboard.coveredArea.split(",");
+            this.setState({
+                areasCovered:areaspilt
+            })
+        }  
+      }
     render() {
+        if(this.state.areasCovered){
         return (
             <div className="col-md-4 fl">
                 <div className="trapezoid">
@@ -26,9 +30,9 @@ export default class AreasCovered extends Component {
                     <table className="table borderless covered">
                         <tbody>
                             {
-                                Areas.map((country, key)=>{
+                                this.state.areasCovered.map((country, key)=>{
                                     return <tr>
-                                        <td>{country.countryName}</td>
+                                        <td>{country}</td>
                                     </tr>
                                 })
                             }
@@ -36,6 +40,10 @@ export default class AreasCovered extends Component {
                     </table>    
                 </div>
            </div>
-        );
+            );
+        }
+        else{
+            return <h6>Loading...</h6>
+        }
     }
 }

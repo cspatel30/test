@@ -11,7 +11,22 @@ import './InspectorDashboard.scss';
 export default class InspectorDashboardPage extends Component {
     constructor(props){
         super(props);
+        this.state={
+            listOfInspectors:''
+        }
     }
+    componentWillMount() {
+        this.props.getAllInspectors()
+    }
+
+    componentWillReceiveProps(props){
+        if(props){
+            this.setState({
+                listOfInspectors:props
+            })
+        }  
+       // console.log("userinspectorsdetailspage"+JSON.stringify(props.authReducer.getListInspectors))
+      }
    
   render() {
     return (
@@ -24,7 +39,7 @@ export default class InspectorDashboardPage extends Component {
                <FilterInspector/>
        </div>
         <div className="col-md-6">
-            <InspectorProfiles/>
+            <InspectorProfiles {...this.state}/>
         </div>
         <div className="col-md-3 pr-0">
             <TopRatedInspectors/>

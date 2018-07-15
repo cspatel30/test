@@ -21,10 +21,12 @@ export const VERIFY_EMAIL = 'VERIFY_EMAIL';
 export const VERIFY_EMAIL_SUCCESS = 'VERIFY_EMAIL_SUCCESS';
 export const VERIFY_EMAIL_FAILURE = 'VERIFY_EMAIL_FAILURE';
 
-export function login(payload) {
+export function login(payload,method,api) {
   return {
     type: LOGIN,
-    payload : payload
+    payload : payload,
+    method:method,
+    api:api
   };
 }
 

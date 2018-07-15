@@ -1,24 +1,33 @@
+import Request from 'axios';
+import { DROP_DOWN_VALUES } from '../constants/ActionsTypes';
+import Cookie from 'js-cookie';
 
-export const INIT_APP = 'INIT_APP';
-export const INIT_APP_SUCCESS = 'INIT_APP_SUCCESS';
-export const INIT_APP_FAILURE = 'INIT_APP_FAILURE';
+const ip = 'http://sis-beta.us-east-1.elasticbeanstalk.com';
 
-export function initApp() {
-  return {
-    type: INIT_APP
-  };
+function makeGetRequest(method, api = api) {
+  var token = Cookie.get('token')
+  var headers = { 'Authorization': token };
+  return Request[method](ip + api, headers = { headers })
+    .then(r => r);
 }
 
-export function initAppSuccess(config) {
-  return {
-    type: INIT_APP_SUCCESS,
-    payload: config
-  };
+function makePostRequest(method, api = api, data) {
+  var token = Cookie.get('token')
+  var headers = { 'Authorization': token };
+  return Request[method](ip + api, data, headers = { headers })
+    .then(r => r);
 }
 
-export function initAppFailure(error) {
-  return {
-    type: INIT_APP_FAILURE,
-    payload: error
-  };
+// sync actions
+export function gotDropDownValues(payload) { return ({ type: DROP_DOWN_VALUES, payload }); }
+
+
+// async actions
+export function dropDownValues() { return dispatch => makeGetRequest('get', '/init/getDropdownConstants')
+  .then((response) =>{
+    dispatch(gotDropDownValues(response.data))
+  })
+  .catch((err)=>{
+    console.log("error in ddc: "+JSON.stringify(err))
+  });
 }
