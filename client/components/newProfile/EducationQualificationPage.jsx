@@ -2,23 +2,23 @@ import React, { Component } from 'react';
 import ReactStars from 'react-stars';
 import './newProfile.scss';
 
-const Qualifications =[
-    {
-        level:"Graduate",
-        courseName:"Master Marine License",
-        institution:"",
-        fromTo:""
-    },
-    {
-        level:"Diploma",
-        courseName:"Chief Engineer License",
-        institution:"",
-        fromTo:""
-    }
-]
 export default class EducationQualificationPage extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state={
+            educationData:[]
+        }
+      } 
+    
+      componentWillReceiveProps(props){
+        if(props.userDashboard.educations){
+            this.setState({
+                educationData:props.userDashboard.educations
+            })
+        }  
+      }
   render() {
+      const {educationData} = this.state
         return (
             <div className="col-md-12 fl mb-15">
                 <div className="trapezoid">
@@ -35,19 +35,21 @@ export default class EducationQualificationPage extends Component {
                                 <th className="fw-500">From-To</th>
                             </tr>
                             {
-                                Qualifications.map((qualification, key)=>{
+                                educationData && educationData.length>0 ? 
+                                educationData.map((qualification, key)=>{
                                     return <tr>
                                         <td>{qualification.level}</td>
                                         <td>{qualification.courseName}</td>
                                         <td>{qualification.institution}</td>
-                                        <td>{qualification.fromTo}</td>
+                                        <td>{qualification.startDate}-{qualification.endDate}</td>
                                     </tr>
-                                })
+                                }):""
                             }
                         </tbody>
                     </table>
                 </div>
             </div>
         );
-    }
+     }
+    
 }

@@ -2747,10 +2747,7 @@ select.custom-dropdown-norm {
 /* inspector page css */
 
 div.example input[type=text] {
-  padding-bottom: 4px;
-  padding-top: 22px;
-  padding-left: 15px;
-  padding-right: 0;
+  padding: 4px 0 4px 15px;
   font-size: 17px;
   border: 1px solid lightgrey;
   float: left;
@@ -2963,4 +2960,8 @@ li {
 
  .example input[type=text]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]){
   border:1px solid grey !important;
+}
+.btn, .btn-flat, .btn-large{
+  line-height: 0px !important;
+
 }

@@ -14,12 +14,16 @@
       }
       .btn-pink {
         background: deeppink;
-        border: 2px solid #cc006d;
+       border: 2px solid #cc006d;
+       height:38px!important
       }
       .btn-white {
         border: 2px solid blue;
         background: white;
         color: blue;
+        padding: 2px 29px 0px;
+        height:38px!important
+       
       }
     }
 }

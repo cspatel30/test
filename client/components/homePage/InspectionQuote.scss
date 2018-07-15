@@ -37,7 +37,7 @@
             display: flex;
             align-items: center;
             color: #495057;
-            // font-size: 85%;
+             font-size: 19px;
           }
           .Select-clear-zone {
             display: none;
@@ -67,3 +67,16 @@
     }
   }
 }
+
+.InspectionQuote{
+
+  input:not([type]), input[type=date]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=email]:not(.browser-default), input[type=number]:not(.browser-default), input[type=password]:not(.browser-default), input[type=search]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=text]:not(.browser-default), input[type=time]:not(.browser-default), input[type=url]:not(.browser-default), textarea.materialize-textarea{
+      width: auto;
+      margin: 0 0 0px;
+  }
+  
+  .form-row .input-group {
+    margin-bottom: 20px;
+  }
+  
+  }

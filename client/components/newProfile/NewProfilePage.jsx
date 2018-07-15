@@ -10,13 +10,28 @@ export default class NewProfilePage extends Component {
 
   constructor(props) {
     super(props);
+    this.state={
+      profileDetails:''
+    }
     };
+  
+    componentWillMount(){
+     var response=this.props.getMyProfileInfo()
+    }
+    componentWillReceiveProps(props){
+      if(props){
+        this.setState({
+          profileDetails:props
+        })
+      }
+    }
+    
 
   render() {
     return (
         <div className="bg-white">
-          <UserProfileDetailsPage/>
-          <UserProfileDashboardPage/>
+          <UserProfileDetailsPage {...this.state}/>
+          <UserProfileDashboardPage {...this.state}/>
         </div>
     );
   }
