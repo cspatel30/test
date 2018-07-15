@@ -31,9 +31,10 @@ const commonLoaders = [
 ];
 module.exports = {
   name: 'browser',
-  entry: {
-    app: [path.resolve(__dirname, './client/main.js')],
-  },
+  entry: ["babel-polyfill", "./client/main.js"],
+  // entry: {
+  //   app: [path.resolve(__dirname, './client/main.js')],
+  // },
   output: {
     path: path.resolve(__dirname, './client/dist/'),
     // publicPath: '/dist/',
