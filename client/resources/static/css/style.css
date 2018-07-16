@@ -939,26 +939,6 @@ p {
   color: #1f9bed;
 }
 
-<<<<<<< HEAD:client/resources/static/style.css
-.leftHalf {
-  /* width: 48%;
-  float: left; */
-}
-.rightHalf {
-  /* width: 48%;
-  float: right; */
-}
-=======
-/* .leftHalf {
-  width: 48%;
-  float: left;
-}
-.rightHalf {
-  width: 48%;
-  float: right;
-} */
->>>>>>> setup:client/resources/static/css/style.css
-
 .login-page {
   flex: 6;
   padding: 20px;
@@ -1110,18 +1090,6 @@ p {
   text-decoration: underline;
   cursor: pointer;
 }
-
-<<<<<<< HEAD:client/resources/static/style.css
-.contact-form .btn {
-  /* width: 25%;
-  float: right; */
-}
-=======
-/* .contact-form .btn {
-  width: 25%;
-  float: right;
-} */
->>>>>>> setup:client/resources/static/css/style.css
 
 .contact-form .forgot-pass {
   color: #1475af;
@@ -1572,8 +1540,9 @@ input {
   padding: 8px;
 }
 
-<<<<<<< HEAD:client/resources/static/style.css
-.hrStyle {
+/* richa's code */
+
+/* .hrStyle {
   border-top: 1px solid rgba(0,0,0,.1);
 }
 
@@ -1582,7 +1551,6 @@ input {
 }
 
 .accountHeader {
- /* background: url(http://localhost:7100/resources/static/images/banner.png); */
  padding-top: 180px;
 }
 
@@ -1686,9 +1654,4 @@ input {
 .input-group-text {
   background-color: white !important;
   border-right-style: none !important;
-}
-=======
-
-
-
->>>>>>> setup:client/resources/static/css/style.css
+} */
