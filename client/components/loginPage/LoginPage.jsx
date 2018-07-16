@@ -31,8 +31,8 @@ export default class LoginPage extends Component {
   } 
   componentWillReceiveProps(nextProps) {
     console.log("login props..."+JSON.stringify(nextProps))
-    if(nextProps.data){
-      if(nextProps.data.userType=='I'){
+    if(nextProps.loginData.data){
+      if(nextProps.loginData.data.userType=='I'){
         console.log("Inspector")
         this.props.history.push('/newprofile')
       }else{
@@ -49,7 +49,6 @@ export default class LoginPage extends Component {
     console.log("value "+JSON.stringify(event.target.value))
     this.setState((state) => { state.loginForm[event.target.name] = event.target.value });
   }
-
 
   toggleTab (tab) {
     let { activeTab, fgpwdMsg, forgot, forgotEmail } = this.state;
@@ -115,9 +114,9 @@ export default class LoginPage extends Component {
     }
     
 	return (
-    <div className="section bg-gray">
+    <div className="section bg-gray loginSec">
     <div className="container">
-        <div className="row mt-5">
+        <div className="row col-md-10 mx-auto mt-5">
             <div className="col-md-5 loginImageSec">
                 <div className="logoTrans text-center p-5">
                     <img src="/public/img/LogoWhite.png" alt />
@@ -148,23 +147,23 @@ export default class LoginPage extends Component {
                    
                     <div className="input-field">
                         <img className="prefix grey-text" src="/public/img/at.png" alt />
-                        <input id="email" type="text" name="email"  value={this.state.loginForm.email} onChange={this.handleInputChange} />
-                        <label htmlFor="email">Email Address</label>
+                        <input id="email" type="text" name="email"  value={this.state.loginForm.email} onChange={this.handleInputChange} placeholder="Email" />
+                        {/* <label htmlFor="email">Email Address</label> */}
                         <div className="errorField">{this.state.loginFormError.email}</div>
                     </div>
                  
                     <div className="input-field">
                         <img className="prefix grey-text" src="/public/img/key.png" alt />
-                        <input id="password" name="password" type="password" value={this.state.loginForm.password} onChange={this.handleInputChange} />
-                        <label htmlFor="password">Password</label>
+                        <input id="password" name="password" type="password" value={this.state.loginForm.password} onChange={this.handleInputChange} placeholder="Password" />
+                        {/* <label htmlFor="password">Password</label> */}
                         <div className="errorField">{this.state.loginFormError.password}</div>
                     </div>
                     <div className="row align-items-center mx-0">
                         <div className="mr-auto">
-                            <div className="d-flex align-items-center mr-auto">
-                                <input type="checkbox" className="filled-in" name="tech" id="js" />
-                                <label htmlFor="js">Remember me</label>
-                            </div>
+                          <div className="d-flex align-items-center mr-auto ">
+                            <input   type="checkbox" value="value1"/>
+                            <label   className="W-100"for="styled-checkbox-1">Remeber Me</label>
+                          </div>
                             <div className="forgotPass">
                                 <a className="logincolor" href>Forgot Password?</a>
                             </div>

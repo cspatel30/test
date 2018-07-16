@@ -21,7 +21,7 @@ export default class EmployeeHistoryPage extends Component {
         return (
             <div className="col-md-12 fl mb-15">
                 <div className="trapezoid">
-                    <div className="title mr-auto pl-3 emp-history-minheight">Employeement History</div>
+                    <div className="title mr-auto pl-3 emp-history-minheight">Employement History</div>
                     <div className="rtCorner"></div>
                 </div>
                 <div className="d-flex p-3 tags shadow">

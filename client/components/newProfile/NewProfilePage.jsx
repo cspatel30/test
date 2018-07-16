@@ -1,7 +1,6 @@
-// import 'regenerator-runtime/runtime';
-
 import React, { Component } from 'react';
 import ReactStars from 'react-stars';
+import Cookie from 'js-cookie';
 import UserProfileDashboardPage from './UserProfileDashboardPage.jsx';
 import UserProfileDetailsPage from './UserProfileDetailsPage.jsx';
 import './newProfile.scss';
@@ -13,10 +12,11 @@ export default class NewProfilePage extends Component {
     this.state={
       profileDetails:''
     }
-    };
+  };
   
     componentWillMount(){
-     var response=this.props.getMyProfileInfo()
+      const token = Cookie.get('token')
+      token?this.props.getMyProfileInfo():this.props.history.push('/')
     }
     componentWillReceiveProps(props){
       if(props){

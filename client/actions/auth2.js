@@ -20,23 +20,21 @@ function makePostRequest(method, api = api, data) {
 
 // SYNC ACTIONS //
 export function tokenVerified(payload) { return ({ type: TOKEN_VERIFIED, payload }); }
-export function loggedIn(payload) { return ({ type: LOGIN, payload }); }
+export function loggedIn(payload) {return ({ type: LOGIN, payload });}
 export function registerd(payload) { return ({ type: REGISTER, payload }); }
-
 
 //ASYNC ACTIONS or SERVER REQUEST FROM FRONT-END //
 export function verifyToken() { return dispatch => makeGetRequest('get', '/auth/validate/token/')
-    .then(response => dispatch(tokenVerified(response.data)));
+  .then(response => dispatch(tokenVerified(response.data)));
 }
 
+//LOGIN
 export function login(data) {
+  console.log("LOG!N: "+JSON.stringify(data))
   return dispatch => makePostRequest('post', '/login', data)
     .then(response => {
       Cookie.set('token', response.data.data.token);
-      const userType = response.data.data.userType !== 'I' ? 'user' : 'inspector';
-        makeGetRequest('get', `/${userType}/myProfile`, data)
-        .then(profile => dispatch(loggedIn(response.data)))
-        .catch(err => console.log("error: " + JSON.stringify(err)))
+      dispatch(loggedIn(response.data))
     })
     .catch(err => console.log("error in login: " + JSON.stringify(err)))
 }
