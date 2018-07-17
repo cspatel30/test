@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import AdminAssignInspectorPage from '../components/admin/AdminAssignInspectorPage.jsx';
+import AdminAssignInspectorPage from '../components/admin/enquiry/AdminAssignInspectorPage.jsx';
 
 import {  searchInspectorsForEnquiry, assignInspectorsForEnquiry } from '../actions/enquiry';
 

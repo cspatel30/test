@@ -30,14 +30,27 @@ export default class LoginPage extends Component {
 
   } 
   componentWillReceiveProps(nextProps) {
+    console.log("login props..."+JSON.stringify(nextProps))
+    if(nextProps.data){
+      if(nextProps.data.userType=='I'){
+        console.log("Inspector")
+        this.props.history.push('/newprofile')
+      }else{
+        console.log("Customer")
+        this.props.history.push('/')
+      }
+    }
     this.setState({ fgpwdMsg: nextProps.fgpwdMsg });
   }
+
   handleInputChange (event) {
     event.persist();
-    console.log(JSON.stringify(event.target.name+" name"))
-    console.log(JSON.stringify(event.target.value)+" value")
+    console.log(" name "+JSON.stringify(event.target.name))
+    console.log("value "+JSON.stringify(event.target.value))
     this.setState((state) => { state.loginForm[event.target.name] = event.target.value });
   }
+
+
   toggleTab (tab) {
     let { activeTab, fgpwdMsg, forgot, forgotEmail } = this.state;
     if (activeTab !== tab) {
@@ -61,9 +74,10 @@ export default class LoginPage extends Component {
     this.setState( (state) => { state.loginFormError = loginFormError});
     
     if(error) 
-      return;
-    this.props.logMeIn(this.state.tabIndex, this.state.loginForm);
+    return;
+    this.props.logMeIn(this.state.loginForm);
   }
+
   forgotPwd() {
     const { activeTab, forgot, forgotEmail, fgpwdMsg } = this.state;
     if (!forgot) {

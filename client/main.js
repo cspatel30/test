@@ -1,11 +1,19 @@
 // import 'regenerator-runtime/runtime';
 var React = require("react");
 var ReactDOM = require("react-dom");
+import $ from 'jquery';
+window.jQuery = $;
+window.$ = $;
 import { Provider } from 'react-redux';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import './resources/static/main.scss';
+import './resources/static/css/main.scss';
+
+// require ('jquery/dist/jquery.min.js');
+require ('./resources/static/js/jquery-3.3.1.min.js');
+require('hammerjs/hammer.min.js');
+require('./resources/static/js/materialize.min.js');
 
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';

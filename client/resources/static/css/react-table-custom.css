@@ -1,0 +1,84 @@
+.ReactTable{
+    min-height: 300px;
+}
+.ReactTable .rt-td {
+    overflow: inherit !important;
+}
+.dropdown-right ul.dropdown-menu{
+    float: right;
+    right:30%;
+    left: inherit;
+}
+.ReactTable .rt-th, .ReactTable .rt-td {
+    white-space: inherit;
+}
+.ReactTable .rt-td a:hover {
+    text-decoration: underline;
+}
+.react-table-subcomponent-main {
+    padding: "20px"
+}
+.react-table-subcomponent-main h2 {
+    font-size: 26px;
+    padding: 10px 0;
+    text-transform: uppercase;
+    color: #1f9bed !important;
+    margin: 0;
+    margin-bottom: 10px;
+}
+.ReactTable .dropdown-menu{
+    height: 0px !important;
+    display: block !important;
+    overflow:hidden !important;
+    border: 0px solid #f00;
+    box-shadow: none;
+    background-color: transparent;
+    padding:0px
+}
+.ReactTable .open>.dropdown-menu{
+    height: auto !important;
+    overflow:visible !important;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    border: 1px solid rgba(0,0,0,.15);
+    background-color: #fff;
+    padding:5px 0;
+}
+.ReactTable .rt-tbody .rt-td{
+    text-align: center;
+}
+.ReactTable .rt-tbody .rt-td .columns-lower-Case-text{
+    text-align: left;
+}
+.react-table-subcomponent-main .ReactTable.-striped .rt-tr.-odd{
+    background: #fff !important;
+}
+.rt-tbody, .ReactTable .rt-table {
+    overflow: visible !important;
+}
+.ReactTable{
+    overflow-x: auto !important;
+}
+.react-table-subcomponent-main .rt-tr.-odd {
+    background: #fff;
+}
+.ReactTable .rt-tbody .rt-td{
+    white-space: normal !important;
+    word-wrap: break-word;
+}
+.react-table-subcomponent-main {
+    padding: 15px;
+}
+.ReactTable .dropdown-right ul.dropdown-menu{
+    float:right;
+    right:0;
+    left:inherit;
+}
+button:focus{
+    outline: none !important;
+    box-shadow: none !important;
+}
+.dropdown-toggle {
+    background: none !important;
+    outline: none !important;
+    border: none !important;
+}

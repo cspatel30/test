@@ -2067,8 +2067,10 @@ form.example::after {
   color: rgb(255, 255, 255) !important;
   font-weight: bold !important;
   font-size: 13px !important;
-  padding: 0px 20px !important;
-  min-width: 180px !important
+  font-weight: 700!important;
+  font-size: 13px!important;
+  padding: 6px 27px!important;
+  min-width: 180px !important;
 }
 .enquiryButtonNot{
   border-radius: 50px !important ;
@@ -2076,7 +2078,7 @@ form.example::after {
   color: #ea3a6a !important;
   font-weight: bold !important;
   font-size: 13px !important;
-  padding: 0px 20px !important;
+  padding: 6px 27px!important;
   border: 2px solid #ea3a6a !important;
 }
 
@@ -2114,7 +2116,7 @@ form.example::after {
 
 .map-pointer {
   font-size: 15px;
-  color: blue;
+  color:#3377ad;
 }
 
 .mt-0 {
@@ -2745,10 +2747,7 @@ select.custom-dropdown-norm {
 /* inspector page css */
 
 div.example input[type=text] {
-  padding-bottom: 4px;
-  padding-top: 4px;
-  padding-left: 15px;
-  padding-right: 0;
+  padding: 4px 0 4px 15px;
   font-size: 17px;
   border: 1px solid lightgrey;
   float: left;
@@ -2756,7 +2755,9 @@ div.example input[type=text] {
   background: #fff;
   font-weight: 400
 }
-
+div.example input[type=text]:focus{
+  border: 1px solid grey !important;
+}
 div.example button {
   float: left;
   width: 7%;
@@ -2953,3 +2954,14 @@ li {
   margin-left: 0px!important;
 }
 
+.wid-15{
+  width:15.5% !important;
+}
+
+ .example input[type=text]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]){
+  border:1px solid grey !important;
+}
+.btn, .btn-flat, .btn-large{
+  line-height: 0px !important;
+
+}

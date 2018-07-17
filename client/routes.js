@@ -13,21 +13,26 @@ import TermsPage from './components/pages/TermsPage.jsx';
 import NotFoundPage from './components/pages/NotFoundPage.jsx';
 import SampleReportsPage from './components/pages/SampleReportsPage.jsx';
 
-import InspectorsContainer from './containers/InspectorsContainer.js';
-import InspectorPublicProfileContainer from './containers/InspectorPublicProfileContainer.js';
-import LoginContainer from './containers/LoginContainer.js';
-import RegisterContainer from './containers/RegisterContainer.js';
-import QuoteEnquiryContainer from './containers/QuoteEnquiryContainer.js';
-import CustomerEnquiriesContainer from './containers/CustomerEnquiriesContainer.js';
-import InspectorProfileContainer from './containers/InspectorProfileContainer.js';
-import AdminHomePageContainer from './containers/AdminHomePageContainer.js';
-import DocumentDownloadContainer from './containers/DocumentDownloadContainer.js';
-import ContactUsContainer from './containers/ContactUsContainer.js';
-import SetupAccountContainer from './containers/SetupAccountContainer.js';
-import VerifyEmailContainer from './containers/VerifyEmailContainer.js';
-import UserOrdersContainer from './containers/UserOrdersContainer.js';
-import NewProfileContainer from './containers/NewProfileContainer.js';
-import NewInspectorDashboardContainer from './containers/NewInspectorDashboardContainer.js';
+import InspectorsContainer from '../client/containers/InspectorsContainer.js';
+import InspectorPublicProfileContainer from '../client/containers/InspectorPublicProfileContainer.js';
+import LoginContainer from '../client/containers/LoginContainer.js';
+import RegisterContainer from '../client/containers/RegisterContainer.js';
+import QuoteEnquiryContainer from '../client/containers/QuoteEnquiryContainer.js';
+import CustomerEnquiriesContainer from '../client/containers/CustomerEnquiriesContainer.js';
+import InspectorProfileContainer from '../client/containers/InspectorProfileContainer.js';
+import AdminHomePageContainer from '../client/containers/AdminHomePageContainer.js';
+import DocumentDownloadContainer from '../client/containers/DocumentDownloadContainer.js';
+import ContactUsContainer from '../client/containers/ContactUsContainer.js';
+import SetupAccountContainer from '../client/containers/SetupAccountContainer.js';
+import VerifyEmailContainer from '../client/containers/VerifyEmailContainer.js';
+import UserOrdersContainer from '../client/containers/UserOrdersContainer.js';
+import NewProfileContainer from '../client/containers/NewProfileContainer.js';
+import NewInspectorDashboardContainer from '../client/containers/NewInspectorDashboardContainer.js';
+import QuotationContainer from '../client/containers/QuotationContainer.js';
+import OrdersContainer from '../client/containers/OrdersContainer.js';
+import ManagePageContainer from '../client/containers/ManagePageContainer.js';
+import CustomerMyAccountContainer from './containers/CustomerMyAccountContainer.js';
+
 import DashboardContainer from './containers/DashboardContainer.js';
 import ProposalContainer from './containers/ProposalContainer.js';
 
@@ -64,10 +69,15 @@ export default class Body extends Component {
               <Route exact path="/verify/email/:requestToken" component={VerifyEmailContainer} />
               <Route exact path="/setup/account/:requestToken" component={SetupAccountContainer} />
               <Route path="/admin" component={AdminHomePageContainer} />
+              <Route path="/admin/login" component={AdminHomePageContainer} />
               <Route exact path="/newprofile" component={NewProfileContainer} />
-              <Route exact path="/inspectordashboard" component={NewInspectorDashboardContainer} />
+              <Route exact path="/inspectordashboard" component={NewInspectorDashboardContainer} /> 
+              <Route exact path="/quotation" component={QuotationContainer} />
+              <Route exact path="/enquries" component={ManagePageContainer} />
+              <Route exact path="/orders" component={OrdersContainer} />
+              <Route exact path="/newprofile/client" component={CustomerMyAccountContainer} />
               <Route exact path="/dashboard" component={DashboardContainer} />   
-              <Route exact path="/proposal" component={ProposalContainer} /> 
+              <Route exact path="/proposal" component={ProposalContainer} />
             </div>
             <HomeFooter/>
           </div>

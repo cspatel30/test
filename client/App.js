@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import { verifyToken } from './actions/auth2';
+import { verifyToken } from './actions/auth';
 import { initApp } from './actions/app';
+import { dropDownValues } from './actions/app'
 
 import {FormattedMessage} from 'react-intl';
 import { BrowserRouter, browserHistory } from 'react-router-dom';
@@ -13,11 +14,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
 
-  // componentWillMount() {
-  // 	if(!this.props.userProfile) {
-  //   	this.props.initialiseUser();
-  //   }
-  // }
+  componentWillMount() {
+  	// if(!this.props.userProfile) {
+    // 	this.props.initialiseUser();
+		// }
+		this.props.getDropdownConstants();
+  }
 
   render() {
     return (
@@ -25,7 +27,7 @@ class App extends Component {
 		    <MuiThemeProvider>	
 		      <div>
 		      	<ActionInProgressContainer/>
-            {/* <HeaderContainer/> */}
+             {/* <HeaderContainer/> */}
 		        <Routes />
 		      </div>
 		    </MuiThemeProvider>  
@@ -44,7 +46,10 @@ const mapDispatchToProps = (dispatch) => {
 		initialiseUser: (token) => {
 			dispatch(verifyToken(token));
 			dispatch(initApp());
-    }
+		},
+		getDropdownConstants: () => {
+			dispatch(dropDownValues());
+		}
 	};
 }
 

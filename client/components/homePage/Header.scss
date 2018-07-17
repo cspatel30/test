@@ -1,4 +1,5 @@
 .header-wrapper {
+    box-shadow: 0 1px 6px rgba(0,0,0,.117647),0 1px 4px rgba(0,0,0,.117647)!important;
     height: 100px;
     background: #ffffff;
     .logo {
@@ -13,12 +14,16 @@
       }
       .btn-pink {
         background: deeppink;
-        border: 2px solid #cc006d;
+       border: 2px solid #cc006d;
+       height:38px!important
       }
       .btn-white {
         border: 2px solid blue;
         background: white;
         color: blue;
+        padding: 2px 29px 0px;
+        height:38px!important
+       
       }
     }
 }

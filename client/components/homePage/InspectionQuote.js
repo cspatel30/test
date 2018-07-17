@@ -12,7 +12,7 @@ class InspectionQuote extends Component {
 
   renderForm() {
     return (
-      <div className="my-5 form-wrap">
+      <div className="my-5 form-wrap InspectionQuote">
         <form>
           <div className="form-row justify-content-between">
             <div className="input-group col-3">

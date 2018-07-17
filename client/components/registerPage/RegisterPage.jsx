@@ -1,5 +1,3 @@
-// import 'regenerator-runtime/runtime';
-
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -9,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import VirtualizedSelect from 'react-virtualized-select';
+import Select from 'react-select';
 import './RegisterPage.scss';
 
 const styles = {
@@ -41,7 +40,7 @@ export default class RegisterPage extends Component {
       termsOpen: false,
       signUpSuccess: false,
       signUpErrorMsg: "",
-      userType: "customer",
+      userType: "CUSTOMER",
       termsAgreed: false,
       registerForm: {
 
@@ -69,9 +68,9 @@ export default class RegisterPage extends Component {
         title:"",
         clientCity: "",
         clientCountry:"",
-        clientPostalCode:"",
+        inspectorPostalCode:"",
         position: "",
-        registraiontype:""
+        userType:""
       },
       registerFormError: {
 
@@ -92,7 +91,17 @@ export default class RegisterPage extends Component {
         qualification: "",
         title:""
 
-      }
+      },
+      selectedOption: '',
+      countryCode: "",
+      employmentType: "",
+      qualification: "",
+      inspectorCountry: "",
+      title:"",
+      code:[],
+      country:[],
+      Qualification:"",
+      Title:""
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -107,92 +116,112 @@ export default class RegisterPage extends Component {
 
   selectTypeOfRegistration(event) {
     this.setState({
-      registraiontype: event.target.value
+      userType: event.target.value
     }, () => {
-     
-      if (this.state.registraiontype === "client") {
-        this.setState({
+    if (this.state.userType !== "INSPECTOR") {
+    
+     this.setState({
           registerForm: {firstName:"",lastName:"",email:"",password:"",confirmpassword:"",countryCode:"",phone:"",inspectorCompanyName:"",employmentType: "",qualification: "",title:""},
           registerFormError: {firstName:"",lastName:"",email:"",password: "",confirmpassword:"",countryCode:"",phone:"",employmentType:"",qualification:"",title:""}
         })
   
-        $('#client-register').show();
-        $('#inspector-register').hide();
+        document.getElementById('client-register').style.display = "block";
+        document.getElementById('inspector-register').style.display = "none";
       }
       else {
-        this.setState({
+     this.setState({
           registerForm: {firstName:"",lastName:"",email:"",password:"",confirmpassword:"",countryCode:"",phone:"",inspectorCompanyName:"",employmentType: "",qualification: "",title:"",
-                        clientCity:"",clientCountry:"",clientPostalCode:"",registraiontype:""},
+                        clientCity:"",clientCountry:"",clientPostalCode:"",userType:""},
           registerFormError: {firstName:"",lastName:"",email:"",password: "",confirmpassword:"",countryCode:"",phone:"", clientCompanyName: ""}
         })  
-        $('#inspector-register').show();
-        $('#client-register').hide();
+        document.getElementById('inspector-register').style.display = "block";
+        document.getElementById('client-register').style.display = "none";
       }
     })
   }
-
+  
   handleInputChange (event) {
-    console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
     event.persist();
     this.setState((state) => { state.registerForm[event.target.name] = event.target.value });
+    console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
   }
 
+  handleCountryChange = (countryCode) => {
+    console.log(JSON.stringify(countryCode))
+    this.setState({ countryCode });
+    console.log(`Selected Option: ${countryCode.value}`);
+  
+  }
 
+  handleEmploymentTypeChange = (employmentType) => {
+    console.log(JSON.stringify(employmentType))
+    this.setState({ employmentType });
+    console.log(`Selected Option: ${employmentType.value}`);
+  
+  }
+
+  handleQualificationChange = (qualification) => {
+    console.log(JSON.stringify(qualification))
+    this.setState({ qualification });
+    console.log(`Selected Option: ${qualification.value}`);
+  
+  }
+
+  handleInspectorCountryChange = (inspectorCountry) => {
+    console.log(JSON.stringify(inspectorCountry))
+    this.setState({ inspectorCountry });
+    console.log(`Selected Option: ${inspectorCountry.value}`);
+  
+  }
+
+  handleTitleChange = (title) => {
+    console.log(JSON.stringify(title))
+    this.setState({ title });
+    console.log(`Selected Option: ${title.value}`);
+  
+  }
+
+  handleChange = (selectedOption) => {
+    console.log(JSON.stringify(selectedOption))
+    this.setState({ selectedOption });
+    console.log(`Selected Option: ${selectedOption.value}`);
+  
+  }
   componentDidMount() {
-    var that=this;
-   
-    // Country code value
-    $('#containerCountryCode').on('change', 'select', function(event){ 
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-    that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-     });
-    
-    // Employment Type value
-    $('#employmentTypeContainer').on('change', 'select', function(event){ 
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-      });
+    var countries = localStorage.getItem('countries')?JSON.parse(localStorage.getItem('countries')):""
 
-    // Qualification value   
-    $('#qualificationContainer').on('change', 'select', function(event){ 
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-    that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-    });
-    
-    // Title value   
-    $('#titleContainer').on('change', 'select', function(event){ 
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-    });  
+    var Qualification = localStorage.getItem('Qualification')?localStorage.getItem('Qualification'):""
 
-    // City value   
-    $('#cityContainer').on('change', 'select', function(event){
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value)) 
-      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-    }); 
-
-    // Country value   
-    $('#countryContainer').on('change', 'select', function(event){ 
-      console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
-      that.setState((state) => { state.registerForm[event.target.name] = event.target.value });
-    }); 
-
+    var titles = localStorage.getItem('titles')?localStorage.getItem('titles'):""
+    var ParseTit = localStorage.getItem('titles')?JSON.parse(localStorage.getItem('titles')):""
+    var JSONTit = localStorage.getItem('titles')?JSON.stringify(localStorage.getItem('titles')):""
+    // console.log("titles data: "+titles)
+    // console.log("PARSE TIT: "+ParseTit)
+    // console.log("JSONTit data: "+JSONTit)
+    if(countries!="") {
+      var A = []
+      var X = []
+      if(countries.length>0) {
+        countries.map((country, key)=>{
+          if(country){
+            var C = country
+            var B = {}
+            var Y = {}
+            B.value=C.phoneCode,
+            B.label="+"+C.phoneCode
+            Y.value=C.id,
+            Y.label=C.name
+            A.push(B)
+            X.push(Y)
+          }
+        })
+        this.setState({
+          code:A,
+          country:X
+          })
+      }
+    }
   }
-
-  componentWillMount(){
-    $(document).ready(function () {
-      $('.dropdown-button').dropdown({
-          constrainWidth: false,
-          hover: true,
-          belowOrigin: true,
-          alignment: 'left'
-      });
-      $('select').material_select();
-      
-      $('.button-collapse').sideNav();
-    });
-  }
-
   componentWillReceiveProps(props) {
     if(props.signUpSuccess) {
       this.setState((state) => { state.signUpSuccess = props.signUpSuccess; });
@@ -201,7 +230,6 @@ export default class RegisterPage extends Component {
       this.setState((state) => { state.signUpErrorMsg = props.error; });
     }
   }
-
 
   handleAgreementPopupOpen () {
     this.setState((state) => { state.termsOpen = true});
@@ -230,6 +258,7 @@ export default class RegisterPage extends Component {
   handleLocationInputChange (event) {
     event.persist();
     this.setState((state) => { state.registerForm.location[event.target.name] = event.target.value });
+    console.log("Name"+JSON.stringify(event.target.name)+"value"+JSON.stringify(event.target.value))
   }
 
   toggleAgreementCheckBox (event) {
@@ -238,7 +267,6 @@ export default class RegisterPage extends Component {
   }
 
   handleSubmit(event) {
-    alert(JSON.stringify(this.state.registerForm.employmentType))
     event.preventDefault();
     var error = false;
     console.log(this.state);
@@ -264,16 +292,16 @@ export default class RegisterPage extends Component {
       error = true;
     }
 
-    if(this.state.registerForm.confirmpassword == "") {
-      registerFormError.confirmpassword = "This field is mandatory";
-      error = true;
-    }
+    // if(this.state.registerForm.confirmpassword == "") {
+    //   registerFormError.confirmpassword = "This field is mandatory";
+    //   error = true;
+    // }
     //check if 2 passwords match
-    if(this.state.registerForm.password != "" && this.state.registerForm.confirmpassword != "" && 
-      this.state.registerForm.password !== this.state.registerForm.confirmpassword) {
-      error = true;
-      registerFormError.confirmpassword = "Both passwords do not match";
-    }
+    // if(this.state.registerForm.password != "" && this.state.registerForm.confirmpassword != "" && 
+    //   this.state.registerForm.password !== this.state.registerForm.confirmpassword) {
+    //   error = true;
+    //   registerFormError.confirmpassword = "Both passwords do not match";
+    // }
     if(this.state.registerForm.countryCode == "") {
       registerFormError.countryCode = "This field is mandatory";
       error = true;
@@ -289,41 +317,73 @@ export default class RegisterPage extends Component {
       registerFormError.clientCompanyName = "This field is mandatory";
     }
 
-    if(this.state.registerForm.employmentType == "") {
-      registerFormError.employmentType = "This field is mandatory";
-      error = true;
+    if(this.state.userType=="INSPECTOR")
+    {
+      if(this.state.registerForm.employmentType == "") {
+        registerFormError.employmentType = "This field is mandatory";
+        error = true;
+      }
+  
+      if(this.state.registerForm.qualification == "") {
+        registerFormError.qualification = "This field is mandatory";
+        error = true;
+      }
+  
+      if(this.state.registerForm.title == "") {
+        registerFormError.title = "This field is mandatory";
+        error = true;
+      }
     }
-
-    if(this.state.registerForm.qualification == "") {
-      registerFormError.qualification = "This field is mandatory";
-      error = true;
-    }
-
-    if(this.state.registerForm.title == "") {
-      registerFormError.title = "This field is mandatory";
-      error = true;
-    } 
+   
     
-    if(error) { 
+    if(this.state.registerForm.firstName!='' &&this.state.registerForm.lastName!='' && this.state.registerForm.email != "" && this.state.registerForm.password != ""&&this.state.countryCode != ""&&this.state.registerForm.clientCompanyName != ""&&this.state.registerForm.phone != ""){
+         error = false;
+    }
+
+    // dynamic data
+    if (this.state.userType !== "INSPECTOR") {
+      var data={
+        type:this.state.userType,
+        firstName  : this.state.registerForm.firstName,
+        lastName : this.state.registerForm.lastName,
+        email : this.state.registerForm.email,
+        password : this.state.registerForm.password,
+        code:this.state.countryCode.value,
+        phone:this.state.registerForm.phone,
+        company:this.state.registerForm.clientCompanyName,
+        building:this.state.registerForm.building,
+        street:this.state.registerForm.street,
+        city:this.state.registerForm.clientCity,
+        country:this.state.registerForm.clientCountry,
+        postalCode:this.state.registerForm.clientPostalCode
+        
+     }
+    }else {
+      var data={
+        type:this.state.userType,
+        firstName  : this.state.registerForm.firstName,
+        lastName : this.state.registerForm.lastName,
+        email : this.state.registerForm.email,
+        password : this.state.registerForm.password,
+        code:this.state.countryCode.value,
+        phone:this.state.registerForm.phone,
+        company:this.state.registerForm.inspectorCompanyName,
+        employmentType:this.state.employmentType.value,
+        qualification:this.state.qualification.value,
+        title:this.state.title.value,
+        country:this.state.inspectorCountry.value,
+        postalCode:this.state.registerForm.inspectorPostalCode
+     }
+    }
+
+    if(error) {
+      //alert("error")
       this.setState( (state) => { state.registerFormError = registerFormError; state.signUpSuccess = false;});
       return;
-    }
-
-    this.setState((state) => { state.signUpSuccess = false; state.signUpErrorMsg = "", state.registerFormError = registerFormError; });
-
-    if(!this.state.termsAgreed) {
-      alert("Please agree to terms and conditions");
-      return;
-    }
-
-    var registerForm = this.state.registerForm;
-    registerForm.seaport = parseInt(registerForm.seaport);
-    registerForm.country = parseInt(registerForm.country);
-
-    this.setState((state) => { state.signUpErrorMsg = "";});
-
-    this.props.register(this.state.userType, registerForm);
-
+    }else{
+      //console.log("$!GN UP: "+JSON.stringify(data))
+      this.props.registerMe(data);
+   }
   }
 
   renderSelectBox = (datasource, placeholder, keyField='id', textField='name') => {
@@ -420,15 +480,32 @@ export default class RegisterPage extends Component {
   renderForm() {
     const actions = [
     <FlatButton label="I Agree" primary={true} onClick={this.handleAgreementPopupClose}/>];
-      
+    const { selectedOption } = this.state;
+    const value = selectedOption && selectedOption.value;
+    
+    const { countryCode } = this.state;
+    const country = countryCode && countryCode.value;
+
+    const { employmentType } = this.state;
+    const employment = employmentType && employmentType.value;
+
+    const { qualification } = this.state;
+    const selectedQualification = qualification && qualification.value;
+
+    const { inspectorCountry } = this.state;
+    const selectedInspectorCountry = inspectorCountry && inspectorCountry.value;
+
+    const { title } = this.state;
+    const selectedTitle = title && title.value;
+    
     if(!this.state.signUpSuccess) {
       return (
         <div className="section bg-gray registerSec">
           <div className="container">
             <div className="row mt-5">
               <div className="col-md-12 SignUpFormSec p-5 position-relative">
-                {/* Material form login */}
-                <form className="mb-5 pb-5"  onSubmit={this.handleSubmit} action="/" method="post">
+           
+                <form id="RegistrationForm" className="mb-5 pb-5"  onSubmit={this.handleSubmit} action="/" method="post">
                   <p className="h4 text-blue mb-4 SignUpTitleMain pl-0">Register on ShipInspectors.com</p>
                   <p className="h4 text-blue mb-4 loginTitle pl-0">Select Client or Inspector</p>
                   <div className="position-relative mDivider">
@@ -437,11 +514,11 @@ export default class RegisterPage extends Component {
                   </div>
                   <div className="d-flex loginType pt-3 pl-0" onChange={this.selectTypeOfRegistration.bind(this)}>
                     <div>
-                      <input className="with-gap" type="radio" name="usertype" value="client" id="client" defaultChecked />
+                      <input className="with-gap" type="radio" name="usertype" value="CUSTOMER" id="client" defaultChecked />
                       <label htmlFor="client">Client</label>
                     </div>
                     <div className="pl-4">
-                      <input className="with-gap" type="radio" value="inspector" name="usertype" id="inspector" />
+                      <input className="with-gap" type="radio" value="INSPECTOR" name="usertype" id="inspector" />
                       <label htmlFor="inspector">Inspector</label>
                     </div>
                   </div>
@@ -491,12 +568,12 @@ export default class RegisterPage extends Component {
                   </div>
                   <div className="d-flex col-md-6 pl-0">
                     <div className="col-md-6 pl-0" id="containerCountryCode">
-                      <select id="countryCode"  name="countryCode" value={this.state.registerForm.countryCode}  onChange={this.handleInputChange} >
-                        <option value="">Code</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
+                    <Select
+                      name="form-field-name"
+                      placeholder="Code"
+                      value={country}
+                      onChange={this.handleCountryChange}
+                      options={this.state.code}/>
                       <div className="errorField mt-18">{this.state.registerFormError.countryCode}</div> 
                     </div>
                     <div className="col-md-6 pr-0">
@@ -551,7 +628,7 @@ export default class RegisterPage extends Component {
                     </div>
                     <div className="col-md-6 pr-0">
                       <div className="input-field">
-                        <input id="clientPostalCode" name="clientPostalCode" type="text" value={this.state.registerForm.clientCountry} onChange={this.handleInputChange}/>
+                        <input id="clientPostalCode" name="clientPostalCode" type="text" value={this.state.registerForm.clientPostalCode} onChange={this.handleInputChange}/>
                         <label htmlFor="clientPostalCode">Postal Code</label>
                       </div>
                     </div>
@@ -569,57 +646,57 @@ export default class RegisterPage extends Component {
                       </div>
                     </div>
                     <div className="col-md-6 pr-0" id="employmentTypeContainer">
-                      <select name="employmentType" defaultValue={this.state.registerForm.employmentType} onChange={this.handleInputChange}>
-                        <option value=""  required>Employment Type</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
+                    <Select
+                      name="form-field-name"
+                      value={employment}
+                      placeholder="Employment Type"
+                      onChange={this.handleEmploymentTypeChange}
+                      options={[
+                        { value: 'one', label: 'One' },
+                        { value: 'two', label: 'Two' },
+                      ]}
+                    />
                       <div className="errorField mt-18">{this.state.registerFormError.employmentType}</div> 
                     </div>
                   </div>
                   <div className="d-flex mb-5">
                     <div className="col-md-6 pl-0" id="qualificationContainer">
-                      <select  name="qualification" defaultValue={this.state.registerForm.qualification} onChange={this.handleInputChange}>
-                        <option value="" required>Qualification</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
+                    <Select
+                      name="form-field-name"
+                      placeholder="Qualification"
+                      value={selectedQualification}
+                      onChange={this.handleQualificationChange}
+                      options={[
+                        { value: 'MCA', label: 'MCA' },
+                        { value: 'B.tech', label: 'B.tech' },
+                      ]}/>
                       <div className="errorField mt-18">{this.state.registerFormError.qualification}</div>
                     </div>
                     <div className="col-md-6 pr-0" id="titleContainer">
-                      <select name="title" defaultValue={this.state.registerForm.title} onChange={this.handleInputChange}>
-                        <option value="" required>Title</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
+                    <Select
+                      name="form-field-name"
+                      placeholder="Title"
+                      value={selectedTitle}
+                      onChange={this.handleTitleChange}
+                      options={[
+                        { value: 'MM', label: 'title1' },
+                        { value: 'WCI', label: 'title2' },
+                      ]}/>
                       <div className="errorField mt-18">{this.state.registerFormError.title}</div>
                     </div>
                   </div>
                   <div className="d-flex mb-5">
                     <div className="col-md-6 pl-0" id="inspectorCityContainer">
-                      <select name="inspectorCity" defaultValue={this.state.registerForm.inspectorCity} onChange={this.handleInputChange}>
-                        <option value="" selected required>City</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
+                    <Select
+                      name="form-field-name"
+                      placeholder="Country"
+                      value={selectedInspectorCountry}
+                      onChange={this.handleInspectorCountryChange}
+                      options={this.state.country}/>
                     </div>
-                    <div className="col-md-6 pr-0" id="inspectorCountryContainer">
-                      <select name="inspectorCountry" defaultValue={this.state.registerForm.country} onChange={this.handleInputChange}>
-                        <option value="" required>Country</option>
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="d-flex mb-5">
-                    <div className="col-md-6 pl-0">
+                    <div className="col-md-6 pr-0">
                       <div className="input-field">
-                        <input id="inspectorPostalCode" name="inspectorPostalCode" type="text" value={this.state.registerForm.postalcode} onChange={this.handleInputChange}/>
+                        <input id="inspectorPostalCode" name="inspectorPostalCode" type="text" value={this.state.registerForm.inspectorPostalcode} onChange={this.handleInputChange}/>
                         <label htmlFor="inspectorPostalCode">Postal Code</label>
                       </div>
                     </div>
@@ -651,6 +728,7 @@ export default class RegisterPage extends Component {
 
   render() {
     const { userToken , userProfile } = this.props;
+    
 
   	if(userToken && userProfile) {
   		this.props.history.push('/');
