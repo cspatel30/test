@@ -1,56 +1,23 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
+const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
-import { verifyToken } from './actions/auth';
-import { initApp } from './actions/app';
-import { dropDownValues } from './actions/app'
+var express = require('express'),
+  app = express(),
+  port = process.env.PORT || 7100;
 
-import {FormattedMessage} from 'react-intl';
-import { BrowserRouter, browserHistory } from 'react-router-dom';
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser())
 
-import Routes from './routes';
-import ActionInProgressContainer from './containers/ActionInProgressContainer.js';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+app.use('/dist', express.static(path.join(process.cwd(), 'dist')));
+app.use('/public', express.static(path.join(process.cwd(), 'public')));
 
-class App extends Component {
+app.get('/*', function (req, resp) {
+  console.log("respond with index html");
+  resp.sendFile(path.join(process.cwd(), 'public/index.html'));
+});
 
-  componentWillMount() {
-  	// if(!this.props.userProfile) {
-    // 	this.props.initialiseUser();
-		// }
-		this.props.getDropdownConstants();
-  }
+app.listen(port);
 
-  render() {
-    return (
-	    <BrowserRouter history={browserHistory}> 
-		    <MuiThemeProvider>	
-		      <div>
-		      	<ActionInProgressContainer/>
-            {/* <HeaderContainer/> */}
-		        <Routes />
-		      </div>
-		    </MuiThemeProvider>  
-	    </BrowserRouter>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-	const {userToken, userProfile} = state;
-  	return  {userToken, userProfile};
-}
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		initialiseUser: (token) => {
-			dispatch(verifyToken(token));
-			dispatch(initApp());
-		},
-		getDropdownConstants: () => {
-			dispatch(dropDownValues());
-		}
-	};
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+console.log('shipping inspector RESTful API server started on: ' + port);

@@ -1,6 +1,4 @@
 @import './bootstrap.css';
-$fa-font-path : '../../../../node_modules/font-awesome/fonts';
-@import '../../../../node_modules/font-awesome/scss/font-awesome.scss';
 @import '../../../../node_modules/react-table/react-table.css';
 @import './carousel.css';
 @import './react-bootstrap-table.css';
@@ -9,7 +7,7 @@ $fa-font-path : '../../../../node_modules/font-awesome/fonts';
 @import './react-datetime.css';
 @import './react-select.css';
 @import './react-tabs.css';
-// @import './style.css';
+@import './style.css';
 // @import './materialize.min.css';
 
 .row-column-center {
