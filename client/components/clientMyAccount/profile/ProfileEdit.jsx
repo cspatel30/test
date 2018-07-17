@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import '../client.scss';
 class ProfileEdit extends React.Component {
   state = {
     userProfile: {
@@ -38,7 +38,7 @@ class ProfileEdit extends React.Component {
 
   render() {
     return (
-      <div className="col-sm-9">
+      <div className="client-wrap col-sm-9">
         <form
           onSubmit={e => {
             this.handleSubmit(e);

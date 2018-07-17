@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Key from 'material-ui/svg-icons/communication/vpn-key';
+import '../client.scss';
+
 class ChangePassword extends React.Component {
 
   state = {
@@ -50,7 +52,7 @@ class ChangePassword extends React.Component {
 
   render() {
     return (
-      <div className="col-12">
+      <div className="client-wrap col-12">
         <span className="subHeadlineText" >Change Password</span>
         <form
           style={{ padding: '20px 0' }}
