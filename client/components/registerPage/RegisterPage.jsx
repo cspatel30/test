@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import VirtualizedSelect from 'react-virtualized-select';
-import Select from 'react-select';
+import Select from 'react-select-plus';
 import './RegisterPage.scss';
 
 const styles = {
@@ -175,7 +175,7 @@ export default class RegisterPage extends Component {
   }
 
   handleTitleChange = (title) => {
-    console.log(JSON.stringify(title))
+    console.log(title)
     this.setState({ title });
     console.log(`Selected Option: ${title.value}`);
   
@@ -264,6 +264,16 @@ export default class RegisterPage extends Component {
   toggleAgreementCheckBox (event) {
     event.persist();
     this.setState((state) => { state.termsAgreed = event.target.checked});
+  }
+  resetform(){ 
+    if (this.state.userType !== "INSPECTOR") {
+      this.setState({countryCode:"",code:"",
+      registerForm: {firstName:"",lastName:"",email:"",password:"",confirmpassword:"",countryCode:"",phone:"",inspectorCompanyName:"",employmentType: "",qualification: "",title:"",clientCity:"",clientCountry:"",clientPostalCode:"",userType:"",building:"",street:"",clientCompanyName:""                
+      }})
+    }
+    else{
+    this.setState({countryCode:"", cod:"",employmentType:"",qualification:"",title:"",inspectorCountry:"",registerForm: { firstName:"", lastName:"", email:"", password:"", phone:"",  inspectorPostalCode:"",inspectorCompanyName:""}})
+    }
   }
 
   handleSubmit(event) {
@@ -669,7 +679,8 @@ export default class RegisterPage extends Component {
                       onChange={this.handleQualificationChange}
                       options={[
                         { value: 'MM', label: 'Master Mariner' },
-                        { value: 'PGE', label: 'Post Graduate in Engineer' },
+                        { value: 'MEE', label: 'Marine Electrical Engineering' },
+                        { value: 'CME', label: 'Chief Marine Engineer' },
                       ]}/>
                       <div className="errorField mt-18">{this.state.registerFormError.qualification}</div>
                     </div>
@@ -679,10 +690,35 @@ export default class RegisterPage extends Component {
                       placeholder="Title"
                       value={selectedTitle}
                       onChange={this.handleTitleChange}
-                      options={[
-                        { value: 'MM', label: 'title1' },
-                        { value: 'WCI', label: 'title2' },
-                      ]}/>
+                      options={[{
+                        label: 'Cargo  Survyor',
+                        value: 'CS',
+                      },
+                      {
+                        label: 'Marine Arbitrator',
+                        value: 'MA'
+                      },
+                      {
+                        label: 'Ship Technical Inspector',
+                        value: 'STI'
+                      },
+                      {
+                        label: 'Technical Superintendent',
+                        value: 'TS'
+                      },
+                      {
+                        label: '────────────────',
+                        options: [{
+                          label: 'Port Captain',
+                          value: 'PC'
+                        }, {
+                          label: 'Marine Superintendent',
+                          value: 'MS'
+                        }, {
+                          label: 'Bunker Surveyor',
+                          value: 'BS'
+                        }]
+                      }]}/>
                       <div className="errorField mt-18">{this.state.registerFormError.title}</div>
                     </div>
                   </div>
@@ -712,7 +748,7 @@ export default class RegisterPage extends Component {
                   <div className="daj signUpBtmBg py-3">
                     <div className="text-center d-flex">
                       <input type="submit" className="btn btn-outline-pink loginBtn mr-20" defaultValue="SIGN UP"/>
-                      <input type="button" defaultValue="RESET" className="btn btn-outline-gray loginBtn"/>
+                      <input type="button" defaultValue="RESET" className="btn btn-outline-gray loginBtn" onClick ={this.resetform.bind(this)}/>
                     </div>
                   </div>
                 </div>

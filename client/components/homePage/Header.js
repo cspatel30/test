@@ -38,7 +38,7 @@ class Header extends Component {
                   <div className="mx-3 pointer"><img src="https://i1.wp.com/askgerald.co.za/wp-content/uploads/2014/08/Mark-profile-pic-colour-round.png?fit=453%2C449" style={{"height": "55px",
     "width": "55px"}} /></div>
                   <div className="mx-3 pointer" style={{fontWeight: 500,
-    "fontSize": "16px"}}>Inspector</div>
+    "fontSize": "16px"}}>username</div>
                   <div className="mx-2 pointer" onClick={()=>{this.props.history.push('/newprofile')}}><button type="button" className="btn btn-head btn-pink">PROFILE</button></div>
                   <div className="mx-2 pointer" onClick={this.logout.bind(this)}><button type="button" className="btn btn-head btn-white align-items-center">LOGOUT</button></div>
                 </div>
