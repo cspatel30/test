@@ -93,6 +93,7 @@
     "react-google-maps": "^9.4.5",
     "react-highcharts": "^12.0.0",
     "react-intl": "^2.3.0",
+    "react-paginate": "^5.2.3",
     "react-onclickoutside": "^6.7.1",
     "react-read-more": "^1.0.0",
     "react-redux": "^5.0.4",
@@ -112,6 +113,7 @@
     "redux-logger": "^3.0.1",
     "redux-saga": "^0.15.3",
     "redux-thunk": "^2.2.0",
+    "read-more-react": "^1.0.6",
     "style-loader": "^0.17.0",
     "tls": "0.0.1",
     "ultrases": "^0.1.3"

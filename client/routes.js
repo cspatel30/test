@@ -34,6 +34,9 @@ import ManagePageContainer from '../client/containers/ManagePageContainer.js';
 import CustomerMyAccountContainer from './containers/CustomerMyAccountContainer.js';
 import InspectorEditContainer from './containers/InspectorEditContainer.js';
 
+import DashboardContainer from './containers/DashboardContainer.js';
+import ProposalContainer from './containers/ProposalContainer.js';
+
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
   return null;
@@ -72,11 +75,13 @@ export default class Body extends Component {
               <Route path="/admin" component={AdminHomePageContainer} />
               <Route path="/admin/login" component={AdminHomePageContainer} />
               <Route exact path="/newprofile" component={NewProfileContainer} />
-              <Route exact path="/inspectordashboard" component={NewInspectorDashboardContainer} />
+              <Route exact path="/inspectordashboard" component={NewInspectorDashboardContainer} /> 
               <Route exact path="/quotation" component={QuotationContainer} />
               <Route exact path="/enquries" component={ManagePageContainer} />
               <Route exact path="/orders" component={OrdersContainer} />
               <Route exact path="/newprofile/client" component={CustomerMyAccountContainer} />
+              <Route exact path="/dashboard" component={DashboardContainer} />   
+              <Route exact path="/proposal" component={ProposalContainer} />
             </div>
             <HomeFooter/>
           </div>

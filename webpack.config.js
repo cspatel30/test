@@ -17,9 +17,9 @@ const commonLoaders = [
   {
     test: /\.css/,
     loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader?minimize=true' }),
-  },
+  },  
   {
-    test: /\.(png|jpg|jpeg|svg|woff|woff2|ttf|eot|ico)$/,
+    test: /\.(png|jpg|jpeg|svg|woff|woff2|otf|ttf|eot|ico)$/,
     loader: 'url-loader',
     options: {
       name: '[name].[ext]?[hash]',

@@ -3,11 +3,11 @@ import AddressDetails from "./AddressDetails";
 import PaymentDetails from "./PaymentDetails";
 import CreditCard from "material-ui/svg-icons/action/credit-card";
 import ArrowUpword from "material-ui/svg-icons/navigation/arrow-upward";
-
+import '../client.scss';
 class Billing extends React.Component {
   render() {
     return (
-      <div>
+      <div className="client-wrap">
         <div className="container myAccountHeadline">
           <span>
             <CreditCard />
@@ -28,3 +28,4 @@ class Billing extends React.Component {
 }
 
 export default Billing;
+// good

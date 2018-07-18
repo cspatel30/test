@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-
+import './client.scss';
 class ClientHeader extends Component {
   render() {
     console.log("props in header" ,this.props);
     const {hash } = this.props.location;
     return (
-      <div style={{textAlign: 'center', background: 'url(/public/img/banner.png)'}}>
+      <div className="client-wrap" style={{textAlign: 'center', background: 'url(/public/img/banner.png)'}}>
         <span className="clientAccountText">Client Account</span>
         <ul className="nav nav-tabs justify-content-center accountHeader">
           <li className="nav-item">
