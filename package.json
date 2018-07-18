@@ -70,6 +70,7 @@
     "net": "^1.0.2",
     "nodemailer": "^4.4.1",
     "popper.js": "^1.14.3",
+    "rc-animate": "^2.4.4",
     "rc-slider": "^8.6.1",
     "react": "^15.6.2",
     "react-addons-shallow-compare": "^15.6.0",

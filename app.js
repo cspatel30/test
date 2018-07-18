@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 
 var express = require('express'),
   app = express(),
-  port = process.env.PORT || 7100;
+  port = process.env.PORT || 3001;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
