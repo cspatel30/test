@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const isProd = process.env.NODE_ENV === 'production';
 
 const commonLoaders = [
   {
@@ -44,6 +45,7 @@ module.exports = {
   module: {
     loaders: commonLoaders,
   },
+  devtool: isProd ? false : "sourcemap",
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.scss'],
   },
