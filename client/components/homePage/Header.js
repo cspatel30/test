@@ -39,6 +39,7 @@ class Header extends Component {
     "width": "55px"}} /></div>
                   <div className="mx-3 pointer" style={{fontWeight: 500,
     "fontSize": "16px"}}>username</div>
+                    <div className="mx-3 pointer" onClick={()=>{this.props.history.push('/enquries')}}>ENQURIES</div>
                   <div className="mx-2 pointer" onClick={()=>{this.props.history.push('/newprofile')}}><button type="button" className="btn btn-head btn-pink">PROFILE</button></div>
                   <div className="mx-2 pointer" onClick={this.logout.bind(this)}><button type="button" className="btn btn-head btn-white align-items-center">LOGOUT</button></div>
                 </div>
@@ -55,4 +56,3 @@ class Header extends Component {
 }
 
 export default withRouter(Header);
-

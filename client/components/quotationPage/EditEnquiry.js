@@ -252,7 +252,7 @@ export default class EditEnquiry extends Component {
                 <div className="container border border-primary px-0">
                     <div className="results border-bottom border-danger py-3 d-flex alignC">
                     
-                        <div className="ml-5 viewAttachment fs-14 d-flex alignC"> <i className="fa fa-angle-left mr-6" style={{"font-size":"27px"}}></i><div className="mt" style = {{"margin-top":"2px"}}> Back to inspector enquiry list</div> </div>
+                        <div className="ml-5 viewAttachment fs-14 d-flex alignC"> <i className="fa fa-angle-left mr-6" style={{"fontSize":"27px"}}></i><div className="mt" style = {{"margin-top":"2px"}}> Back to inspector enquiry list</div> </div>
                         <div className="ml-240 editSize"> EDIT QUOTE </div>
                     </div>
 

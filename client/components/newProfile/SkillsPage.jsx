@@ -18,7 +18,7 @@ export default class SkillsPage extends Component {
         }
     }
     render() {
-        if (this.state.DSkills && this.state.DSkills.length > 0) {
+       
             return (
                 <div className="col-md-12" style={{ float: "left", marginBottom: "15px" }}>
                     <div className="trapezoid">
@@ -26,26 +26,24 @@ export default class SkillsPage extends Component {
                         <div className="rtCorner"></div>
                     </div>
                     <div className="shadow skill-minheight">
+                   
                         <div className="d-flex p-3 tags ">
-                            {this
-                                .state
-                                .DSkills
-                                .map((skill, key) => {
-                                    return <div className="tag d-flex mt-25">
-                                        <div className="tagBg"></div>
-                                        <div className="bgTag">{skill}
-                                            <span data-role="remove"></span>
+                            {
+                                (this.state.DSkills && this.state.DSkills.length > 0) ? (
+                                    this.state.DSkills.map((skill, key) => {
+                                        return <div className="tag d-flex mt-25">
+                                            <div className="tagBg"></div>
+                                            <div className="bgTag">{skill}
+                                                <span data-role="remove"></span>
+                                            </div>
                                         </div>
-                                    </div>
-                                })
-}
+                                    })
+                                ) : (null)
+                            }
                         </div>
                     </div>
                 </div>
             );
-        } else {
-            return <h4></h4>
-        }
 
     }
 }

@@ -4,10 +4,8 @@ import { getAllEnquiries } from '../actions/newEnquiry'
 
 
 const mapStateToProps = (state) => {
-    //console.log("redux inspectors"+JSON.stringify(state.authReducer))
     const allEnquriesData = state
   	return allEnquriesData;
-  //  console.log(" inspectors"+JSON.stringify(state)
 }
 
 const mapDispatchToProps = (dispatch) => {

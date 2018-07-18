@@ -4,7 +4,6 @@ import {getMyProfileDetails} from '../actions/newInspector'
 
 
 const mapStateToProps = (state) => {
-	console.log("MAPSTATETOPROPS: "+JSON.stringify(state.inspectorReducer))
 	const  myProfileData  = state.inspectorReducer.myProfileData.data
 	return  myProfileData ;
 }

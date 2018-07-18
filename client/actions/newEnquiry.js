@@ -23,8 +23,7 @@ export function gotAllListEnquiries(payload) { return ({ type: LIST_OF_ALL_ENQUI
 
 
 // async actions
-export function getAllEnquiries(){return dispatch => makeGetRequest('get','/enquiry/getAll?page=0&size=2')
+export function getAllEnquiries(){return dispatch => makeGetRequest('get','/enquiry/getAllEnquiryForInspector?page=0&size=3&from=2018-01-01&to=2018-07-30&status=ORDERED')
   .then((response) => dispatch(gotAllListEnquiries(response.data)))
   .catch((err)=> console.log("error in gotAllListEnquiries: "+JSON.stringify(err)))
 }
-

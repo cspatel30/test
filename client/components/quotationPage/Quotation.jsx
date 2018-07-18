@@ -11,10 +11,10 @@ export default class QuotaionPage extends Component {
   render() {
     return (
       <div className="i-dashboard">
-          <BannerPage />
-          <ListOfEnquiries/>
-          <EditEnquiry/>
-       </div>
+        <BannerPage />
+        <ListOfEnquiries/>
+        <EditEnquiry/>
+      </div>
     );
   }
 }

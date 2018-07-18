@@ -37,7 +37,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-	console.log("mapStateToProps$$$ "+JSON.stringify(state))
+	//console.log("mapStateToProps$$$ "+JSON.stringify(state))
 	const {userToken, userProfile} = state;
   	return  {userToken, userProfile};
 }

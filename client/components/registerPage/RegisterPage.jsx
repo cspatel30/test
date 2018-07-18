@@ -100,8 +100,9 @@ export default class RegisterPage extends Component {
       title:"",
       code:[],
       country:[],
-      Qualification:"",
-      Title:""
+      Qualifications:[],
+      topTitles:[],
+      titles:[]
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -190,14 +191,10 @@ export default class RegisterPage extends Component {
   componentDidMount() {
     var countries = localStorage.getItem('countries')?JSON.parse(localStorage.getItem('countries')):""
 
-    var Qualification = localStorage.getItem('Qualification')?localStorage.getItem('Qualification'):""
+    var Qualifications = localStorage.getItem('Qualification')?JSON.parse(localStorage.getItem('Qualification')):""
 
-    var titles = localStorage.getItem('titles')?localStorage.getItem('titles'):""
-    var ParseTit = localStorage.getItem('titles')?JSON.parse(localStorage.getItem('titles')):""
-    var JSONTit = localStorage.getItem('titles')?JSON.stringify(localStorage.getItem('titles')):""
-    // console.log("titles data: "+titles)
-    // console.log("PARSE TIT: "+ParseTit)
-    // console.log("JSONTit data: "+JSONTit)
+    var titles = localStorage.getItem('titles')?JSON.parse(localStorage.getItem('titles')):""
+    
     if(countries!="") {
       var A = []
       var X = []
@@ -220,6 +217,46 @@ export default class RegisterPage extends Component {
           country:X
           })
       }
+    }
+    if(titles!="") {
+      var topTitlesArr = []
+      var titlesArr = []
+      var secObj = {}
+      Object.keys(titles).map((title, index) =>{
+        if(index<=5){
+          var topTitlesObj={}
+          var label = titles[title]
+          topTitlesObj.label=label
+          topTitlesObj.value=title
+          topTitlesArr.push(topTitlesObj)
+        }else {
+          var titlesObj={}
+          var label = titles[title]
+          titlesObj.label=label
+          titlesObj.value=title
+          titlesArr.push(titlesObj)
+        }
+      })
+      secObj.label = "────────────────"
+      secObj.options = titlesArr;
+      topTitlesArr.push(secObj)
+      this.setState({
+        topTitles:topTitlesArr,
+        titles:titlesArr
+      })
+    }
+    if(Qualifications!="") {
+      var Qualify = []
+      Object.keys(Qualifications).map((title, index) =>{
+          var qualificationObj={}
+          var label = Qualifications[title]
+          qualificationObj.label=label
+          qualificationObj.value=title
+          Qualify.push(qualificationObj)
+      })
+      this.setState({
+        Qualifications:Qualify
+      })
     }
   }
   componentWillReceiveProps(props) {
@@ -505,9 +542,11 @@ export default class RegisterPage extends Component {
     const { inspectorCountry } = this.state;
     const selectedInspectorCountry = inspectorCountry && inspectorCountry.value;
 
-    const { title } = this.state;
+    const { title,topTitles } = this.state;
     const selectedTitle = title && title.value;
-    
+    if(topTitles.length>0){
+      var Titles = topTitles
+    }
     if(!this.state.signUpSuccess) {
       return (
         <div className="section bg-gray registerSec">
@@ -581,6 +620,7 @@ export default class RegisterPage extends Component {
                     <Select
                       name="form-field-name"
                       placeholder="Code"
+                      openOnFocus={true}
                       value={country}
                       onChange={this.handleCountryChange}
                       options={this.state.code}/>
@@ -658,6 +698,7 @@ export default class RegisterPage extends Component {
                     <div className="col-md-6 pr-0" id="employmentTypeContainer">
                     <Select
                       name="form-field-name"
+                      openOnFocus={true}
                       value={employment}
                       placeholder="Employment Type"
                       onChange={this.handleEmploymentTypeChange}
@@ -675,50 +716,20 @@ export default class RegisterPage extends Component {
                     <Select
                       name="form-field-name"
                       placeholder="Qualification"
+                      openOnFocus={true}
                       value={selectedQualification}
                       onChange={this.handleQualificationChange}
-                      options={[
-                        { value: 'MM', label: 'Master Mariner' },
-                        { value: 'MEE', label: 'Marine Electrical Engineering' },
-                        { value: 'CME', label: 'Chief Marine Engineer' },
-                      ]}/>
+                      options={this.state.Qualifications}/>
                       <div className="errorField mt-18">{this.state.registerFormError.qualification}</div>
                     </div>
                     <div className="col-md-6 pr-0" id="titleContainer">
                     <Select
                       name="form-field-name"
                       placeholder="Title"
+                      openOnFocus={true}
                       value={selectedTitle}
                       onChange={this.handleTitleChange}
-                      options={[{
-                        label: 'Cargo  Survyor',
-                        value: 'CS',
-                      },
-                      {
-                        label: 'Marine Arbitrator',
-                        value: 'MA'
-                      },
-                      {
-                        label: 'Ship Technical Inspector',
-                        value: 'STI'
-                      },
-                      {
-                        label: 'Technical Superintendent',
-                        value: 'TS'
-                      },
-                      {
-                        label: '────────────────',
-                        options: [{
-                          label: 'Port Captain',
-                          value: 'PC'
-                        }, {
-                          label: 'Marine Superintendent',
-                          value: 'MS'
-                        }, {
-                          label: 'Bunker Surveyor',
-                          value: 'BS'
-                        }]
-                      }]}/>
+                      options={Titles}/>
                       <div className="errorField mt-18">{this.state.registerFormError.title}</div>
                     </div>
                   </div>
@@ -727,6 +738,7 @@ export default class RegisterPage extends Component {
                     <Select
                       name="form-field-name"
                       placeholder="Country"
+                      openOnFocus={true}
                       value={selectedInspectorCountry}
                       onChange={this.handleInspectorCountryChange}
                       options={this.state.country}/>
