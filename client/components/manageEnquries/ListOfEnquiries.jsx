@@ -40,7 +40,7 @@ export default  class ListOfEnquiries extends Component {
         <div className="d-flex">
             <div className="label mt-10">From</div>
             <div className="field ml-10 position-relative">
-            <i className="fa fa-calendar position-absolute p-top" style={{"font-size":"24"}}></i>
+            <i className="fa fa-calendar position-absolute p-top" style={{"fontSize":"24px"}}></i>
                 <DatePicker
                     selected={this.state.startDate}
                     onChange={this.startDateChange}
@@ -50,7 +50,7 @@ export default  class ListOfEnquiries extends Component {
         <div className="d-flex">
             <div className="label mt-10 ml-10">To</div>
             <div className="field ml-10 position-relative">
-            <i className="fa fa-calendar position-absolute p-top" style={{"font-size":"24"}}></i>
+            <i className="fa fa-calendar position-absolute p-top" style={{"fontSize":"24px"}}></i>
                     <DatePicker
                         selected={this.state.endDate}
                         onChange={this.endDateChange}

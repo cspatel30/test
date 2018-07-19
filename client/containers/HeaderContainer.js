@@ -5,6 +5,7 @@ import { logout } from '../actions/auth';
 
 
 const mapStateToProps = (state) => {
+	console.log("$TSATE: "+JSON.stringify(state))
 	const { userToken, userProfile, logout } = state;
   	return {userToken, userProfile, logout};
 }

@@ -11,22 +11,31 @@
   .form-row {
     .input-group {
       border-bottom: 1px solid darkgray;
-      .input-group-text {
-        background-color: #f2f2f2;
-        border: none;
-        font-size: 1.5rem;
-        padding: 0 !important;
+      display: flex;
+      flex-wrap: nowrap !important;
+      .input-group-prepend {
+        flex: 1;
+        .input-group-text {
+          background-color: #f2f2f2;
+          border: none;
+          font-size: 1.5rem;
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+        }
       }
       .form-control {
+        flex: 9;
         border: none;
         background-color: #f2f2f2;
+        padding: 10px 0;
+        font-size: 1.2vw;
         &:focus {
           box-shadow: none;
         }
       }
 
       .field-select {
-        width: 100%;
+        flex: 9;
         outline: none;
         // box-shadow: 0 0 1px 0 rgba(0,0,0,.35);
         .Select-control {
@@ -38,7 +47,7 @@
             display: flex;
             align-items: center;
             color: #495057;
-             font-size: 19px;
+            font-size: 1.2vw;
           }
           .Select-clear-zone {
             display: none;

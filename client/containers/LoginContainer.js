@@ -4,11 +4,11 @@ import { login } from '../actions/auth2';
 
 const mapStateToProps = (state) => {
 	console.log("LOGIN DATA"+JSON.stringify( state.authReducer.loginData))
-	const loginData=state.authReducer.loginData;
+	//const loginData=state.authReducer.loginData;
 	// get authReducer's data using state.authReducer, for loginData -> state.authReducer.loginData
-	// const {loginData,userToken, userProfile, error, fgpwdMsg  } = state;
-	
-  	return { loginData };
+	 const {loginData } = state.authReducer;
+  	return {loginData };
+
 }
 
 const mapDispatchToProps = (dispatch) => {

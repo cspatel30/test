@@ -1063,11 +1063,11 @@ p {
   padding: 0 10px;
 }
   
-.country-option-focused : {
+.country-option-focused  {
   background-color: rgba(0, 126, 255, 0.1)
 }
 
-.country-option-selected : {
+.country-option-selected  {
   font-weight: bold
 }
 

@@ -30,20 +30,6 @@ export default class FilterInspectorPage extends Component {
     constructor(props){
         super(props);
     }
-
-    componentWillMount(){
-        $(document).ready(function () {
-          $('.dropdown-button').dropdown({
-              constrainWidth: false,
-              hover: true,
-              belowOrigin: true,
-              alignment: 'left'
-          });
-          $('select').material_select();
-          
-          $('.button-collapse').sideNav();
-        });
-      }
    
   render() {
         return (

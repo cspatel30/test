@@ -30,7 +30,7 @@ import NewProfileContainer from '../client/containers/NewProfileContainer.js';
 import NewInspectorDashboardContainer from '../client/containers/NewInspectorDashboardContainer.js';
 import QuotationContainer from '../client/containers/QuotationContainer.js';
 import OrdersContainer from '../client/containers/OrdersContainer.js';
-import ManagePageContainer from '../client/containers/ManagePageContainer.js';
+import ManagePageContainer from '../client/containers/EnquriesContainer.js';
 import CustomerMyAccountContainer from './containers/CustomerMyAccountContainer.js';
 import InspectorEditContainer from './containers/InspectorEditContainer.js';
 

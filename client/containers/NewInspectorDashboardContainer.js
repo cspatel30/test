@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
     //console.log("redux inspectors"+JSON.stringify(state.authReducer))
     const allInspectorsData = state.inspectorReducer.getListInspectors.data
   	return allInspectorsData;
-  //  console.log("manik inspectors"+JSON.stringify(state))
+  //  console.log(" inspectors"+JSON.stringify(state))
 	
 }
 

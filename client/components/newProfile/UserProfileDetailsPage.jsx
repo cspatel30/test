@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactStars from 'react-stars';
 import MapWithASearchBox from './MapPage.jsx';
+import Cookie from 'js-cookie';
 import './newProfile.scss';
 
 export default class UserProfileDetailsPage extends Component {
@@ -14,6 +15,8 @@ export default class UserProfileDetailsPage extends Component {
     if(props){
         this.setState({
             userProfile:props.profileDetails
+        },()=>{
+            Cookie.set("inspector_name",this.state.userProfile.firstName)
         })
     }  
     //console.log("userprofiledetailspage"+JSON.stringify(props.profileDetails))
