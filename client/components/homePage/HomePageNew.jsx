@@ -4,6 +4,8 @@ import Carousel from './Carousel';
 import HowItWorks from './HowItWorks';
 import WhyShipInspector from './WhyShipInspector';
 import Inspection from './Inspection';
+import News from './News';
+import ContactUs from './ContactUs';
 import './HomePage.scss'
 
 export default class HomePageNew extends Component {
@@ -24,6 +26,14 @@ export default class HomePageNew extends Component {
         <br />
         <Inspection />
         <InspectionQuote />
+        <br />
+        <br />
+        <br />
+        <News />
+        <br />
+        <br />
+        <br />
+        <ContactUs />
       </div>
     );
   }
