@@ -5,6 +5,7 @@ import HowItWorks from './HowItWorks';
 import WhyShipInspector from './WhyShipInspector';
 import Inspection from './Inspection';
 import News from './News';
+import Testimonials from './Testimonials';
 import ContactUs from './ContactUs';
 import './HomePage.scss'
 
@@ -30,6 +31,10 @@ export default class HomePageNew extends Component {
         <br />
         <br />
         <News />
+        <br />
+        <br />
+        <br />
+        <Testimonials />
         <br />
         <br />
         <br />
