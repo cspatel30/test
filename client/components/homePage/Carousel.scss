@@ -1,0 +1,58 @@
+.Carousel {
+  %primary-button {
+    padding: 10px;
+    border-radius: 30px;
+    min-width: 170px;
+    height: 40px;
+    border: none;
+  }
+  %secondary-button {
+    @extend %primary-button;
+    color: #fe3d6b;
+    background: white;
+    border: 1px solid #fe3d6b; 
+  }
+  .control-dots{
+    top: 50%;
+    right: -45%;
+    transform: rotateZ(90deg);
+    text-align: center;
+    bottom: inherit !important;
+  }
+  .mb-2 {
+    font-size: 3rem;
+  }
+  .about {
+    padding: 10px 20px;
+    width: 90%;
+    margin: auto;
+    @media all and (max-width: 768px) {
+      padding: 5px;
+      width: 96%;
+    }
+    >div {
+      padding: 2rem;
+      >img {
+        max-width: 100%;
+        width: 500px;
+        height: 300px;
+        object-fit: cover;
+      }
+    }
+    .content{
+      h3{
+        color: #14436d;
+      }
+      b {
+        font-size: 1.3rem;
+      }
+      p{
+        font-size: 1.3rem;
+        color: #c7c7c7;
+      }
+      button {
+        @extend %secondary-button;
+      }
+    }
+  }
+}

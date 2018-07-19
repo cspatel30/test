@@ -1,0 +1,87 @@
+%primary-button {
+  padding: 10px;
+  border-radius: 30px;
+  min-width: 210px;
+  height: 40px;
+  color: white;
+  background: #fe3d6b;
+  border: none;
+}
+%secondary-button {
+  @extend %primary-button;
+  color: #fe3d6b;
+  background: white;
+  border: 1px solid #fe3d6b; 
+}
+.HomePage {
+  background: #fff;
+  .divider {
+    clear: both;
+    width: 80%;
+    margin: auto;
+    border: 0.5px solid rgba(34,36,38,.15);
+  }
+  .WhyShipInspector{
+    width: 90%;
+    @media all and (min-width: 768px) {
+      float: right;
+    }
+    @media all and (max-width: 768px) {
+      margin: auto;
+    }
+    &-quotes {
+      h2{
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1.2rem;
+        color: #c7c7c7;
+      }
+      ul {
+        padding-left: 20px;
+        font-size: 1.2rem;
+        list-style-type: disc;
+        color: #14436d;
+      }
+    }
+    &-register {
+      >img {
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
+      .join-us {
+        width: 80%;
+        span{
+          color: #14436d;
+        }
+      }
+    }
+    &-action {
+      @media all and (max-width: 768px) {
+        text-align: center;
+      }
+      padding-top: 20px;
+      button[class="enquiryBtn"]{
+        @extend %secondary-button;
+        @media all and (max-width: 768px) {
+          margin-bottom: 10px;
+        }
+      }
+      button[class="joinBtn"]{
+        @extend %primary-button;
+      }
+    }
+  }
+  .Inspection{
+    clear: both;
+    width: 90%;
+    margin: auto;
+    &-header {
+      text-align: center;
+      p{
+        width: 80%;
+        margin: auto;
+      }
+    }
+  }
+}
