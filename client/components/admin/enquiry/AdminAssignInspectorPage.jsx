@@ -150,12 +150,12 @@ export default class AdminAssignInspectorPage extends Component {
       return (<div className="success">Inspectors Assigned Successfully</div>);
     }
     else {
-      if(this.props.enquiryInspectorMatches && this.props.enquiryInspectorMatches.length > 0) {
+      if(this.props.adminInspectorsList && this.props.adminInspectorsList.length > 0) {
         return(
           <div>
             {this.renderErrorMessage()}
             <div style={{marginTop: 10, marginBottom: 10, textAlign: 'right'}}><button onClick={this.assignInspectors}>Assign Inspectors</button></div>
-            <BootstrapTable keyField='userId' data={ this.props.enquiryInspectorMatches } columns={ columns } striped condensed bordered={false}
+            <BootstrapTable keyField='userId' data={ this.props.adminInspectorsList } columns={ columns } striped condensed bordered={false}
             noDataIndication="No matches found" selectRow={selectRow} store={ {selected : selectedUserIds } }/>
           </div>);
       } else {

@@ -70,6 +70,7 @@ export default class AdminEnquiryPage extends Component {
     this._loadApiDatapageLoadFilter =  _.debounce(this._loadApiDatapageLoadFilter.bind(this), WAIT);
     this.onChange = this.onChange.bind(this);
     this._getApiCall = this._getApiCall.bind(this);
+    this.approveQuotation = this.approveQuotation.bind(this);
   }
 
   componentWillMount() {
@@ -102,7 +103,7 @@ export default class AdminEnquiryPage extends Component {
         this.props.getEnquiryMarkupSettings();      
   }
   componentWillReceiveProps(props) {
-    if(!this.props.adminAuthToken && props.adminAuthToken) {
+    if(!this.props.adminAuthToken && props.adminAuthToken && (!this.props.adminRefreshApiList || props.adminRefreshApiList!=this.props.adminRefreshApiList )) {
        this._getApiCall();
     }
     if((isEmptyObject(this.props.adminEnquiryList) || isEmptyObject(this.state.tableStates.rows)) && !isEmptyObject(props.adminEnquiryList)){
@@ -119,19 +120,31 @@ export default class AdminEnquiryPage extends Component {
     }
     /* Update Markup */
     if((!this.props.enquiryMarkup || props.enquiryMarkup!=this.props.enquiryMarkup) && props.enquiryMarkup){
-        let markupFieldsDeduction = {
-                                        client: this.props.enquiryMarkup.customerServiceCharge,
-                                        inspector: this.props.enquiryMarkup.inspectorServiceCharge
+      let markup = props.enquiryMarkup;
+      let markupFieldsDeduction = {
+                                        client: markup.customerServiceCharge,
+                                        inspector: markup.inspectorServiceCharge
                                     }
         this.setState((state) => { state.markupFieldsDeduction = markupFieldsDeduction});
     }
+    
     if(!this.props.enquiryQuoteUpdated && props.enquiryQuoteUpdated)
       this.state.enquiryQuoteUpdated = true;
   }
 
+  approveQuotation(quotationId){
+      console.log(">approveQuotation",quotationId);
+    this.props.approveQuotation(quotationId)
+  }
+
+
   cancelEnquiry(enquiryId) {
-    console.log("cancel enquiry = "+ enquiryId);
-    this.props.cancelEnquiry(enquiryId);
+      console.log("Delete enquiry", enquiryId);
+    this.props.deleteEnquiry(enquiryId);
+  }
+
+  editEnquiry(data){
+
   }
 
   formatDate(dateTime) {
@@ -591,14 +604,17 @@ export default class AdminEnquiryPage extends Component {
                                     }
                                     id={original.id}
                                 >
-                                    <li role="presentation">
-                                        <a role="main" tabIndex="-1">Edit</a>
+                                   
+                                   <li role="presentation">
+                                        <a role="main" tabIndex="-1"  onClick={()=>{this.editEnquiry(original.id)}}>Edit enquiry</a>
                                     </li>
-                                    
+                                    <li role="presentation">
+                                        <NavLink to={'/admin/enquiries/enquiry/'+original.id+'/inspectors'}>Assign inspector</NavLink>
+                                    </li>
                                      <li>
                                         <a role="main" tabIndex="-1">
                                             <Confirm
-                                                onConfirm={()=>{}}
+                                                onConfirm={()=>{this.cancelEnquiry(original.id)}}
                                                 body={"Are you sure you want to delete this order?"}
                                                 onfirmText={"Ok"}
                                                 title={"Delete Order"}>
@@ -607,12 +623,6 @@ export default class AdminEnquiryPage extends Component {
                                                 </div>
                                             </Confirm>
                                         </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a role="main" tabIndex="-1">Attach File</a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a role="main" tabIndex="-1">Send to inspector</a>
                                     </li>
                                     <li role="presentation">
                                         <a role="main" tabIndex="-1">Go to enquiry</a>
@@ -1043,10 +1053,13 @@ export default class AdminEnquiryPage extends Component {
                                         <a role="main" tabIndex="-1">View Attachment</a>
                                     </li>
                                     <li role="presentation">
-                                        <a role="main" tabIndex="-1">Edit Quotations</a>
+                                        <a role="main" tabIndex="-1" onClick={() => {this.updateQuotation(true)}}>Edit Quotations</a>
                                     </li>
                                     <li role="presentation">
                                         <a role="main" tabIndex="-1">View Message</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="main" tabIndex="-1"  onClick={() => {this.approveQuotation(original.id)}}>Approve Quotation</a>
                                     </li>
                                     <li role="presentation">
                                         <a role="main" tabIndex="-1">Edit Message</a>
@@ -1267,8 +1280,8 @@ _loadApiDatapageLoad(requestData){
   saveEnquiryMarkups(){
       this.props.enquiryMarkupSaveSettings(
           {
-              customerServiceCharge: this.state.markupFieldsDeduction.client,
-              inspectorServiceCharge: this.state.markupFieldsDeduction.inspector
+              customerServiceCharge: parseInt(this.state.markupFieldsDeduction.client),
+              inspectorServiceCharge: parseInt(this.state.markupFieldsDeduction.inspector)
           });
   }
 
