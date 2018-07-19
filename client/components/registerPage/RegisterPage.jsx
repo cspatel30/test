@@ -401,7 +401,7 @@ export default class RegisterPage extends Component {
         building:this.state.registerForm.building,
         street:this.state.registerForm.street,
         city:this.state.registerForm.clientCity,
-        country:this.state.registerForm.clientCountry,
+        country:this.state.inspectorCountry.value,
         postalCode:this.state.registerForm.clientPostalCode
         
      }
@@ -561,7 +561,7 @@ export default class RegisterPage extends Component {
                     <div className="divider" />
                     <div className="triangle-down" />
                   </div>
-                  <div className="d-flex loginType pt-3 pl-0" onChange={this.selectTypeOfRegistration.bind(this)}>
+                  <div className="d-flex loginType pt-3 pl-0" onChange={this.selectTypeOfRegistration.bind(this)} style={{paddingBottom:"35px"}}>
                     <div>
                       <input className="with-gap" type="radio" name="usertype" value="CUSTOMER" id="client" defaultChecked />
                       <label htmlFor="client">Client</label>
@@ -670,11 +670,17 @@ export default class RegisterPage extends Component {
                     </div>
                   </div>
                   <div className="d-flex mb-5">
-                  <div className="col-md-6 pl-0">
-                      <div className="input-field">
+                    <div className="col-md-6 pl-0">
+                        <Select
+                          name="form-field-name"
+                          placeholder="Country"
+                          openOnFocus={true}
+                          value={selectedInspectorCountry}
+                          onChange={this.handleInspectorCountryChange}
+                          options={this.state.country}/>
+                      {/* <div className="input-field">
                         <input id="clientCountry" name="clientCountry" type="text" value={this.state.registerForm.clientCountry} onChange={this.handleInputChange} placeholder="Country"/>
-                        {/* <label htmlFor="country">Country</label> */}
-                      </div>
+                      </div> */}
                     </div>
                     <div className="col-md-6 pr-0">
                       <div className="input-field">
@@ -785,7 +791,6 @@ export default class RegisterPage extends Component {
 
     return (
           <div className="page">
-          	<h1 style={{ marginLeft: '15%' }}>Register on ShipInspectors.com</h1>
           	{this.renderActionMessage()}
             {this.renderForm()}
           </div>

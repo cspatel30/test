@@ -115,75 +115,96 @@ export default class LoginPage extends Component {
     
 	return (
     <div className="section bg-gray loginSec">
-    <div className="container">
-        <div className="row col-md-10 mx-auto mt-5">
-            <div className="col-md-5 loginImageSec">
-                <div className="logoTrans text-center p-5">
-                    <img src="/public/img/LogoWhite.png" alt />
-                </div>
-                <div className="text-center text-white pt-5">
-                    Login to
-                    <br />ShipInspectors.com
-                </div>
+      <div className="modal fade" id="myModal">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            {/* Modal Header */}
+            <div className="modal-header">
+              <h4 className="modal-title">Modal Heading</h4>
+              <button type="button" className="close" data-dismiss="modal">×</button>
             </div>
-            <div className="col-md-7 loginFormSec p-5 position-relative">
-              
-                <form onSubmit={this.handleSubmit} action="/" method="post">
-                    <p className="h4 text-blue mb-4 loginTitle">Select Client or Inspector</p>
-                    <div className="position-relative mDivider">
-                        <div className="divider" />
-                        <div className="triangle-down" />
-                    </div>
-                    <div className="d-flex loginType pt-3 pl-0">
-                        <div>
-                            <input className="with-gap" type="radio" name="gender" id="client" defaultChecked />
-                            <label htmlFor="client">Client</label>
-                        </div>
-                        <div className="pl-4">
-                            <input className="with-gap" type="radio" name="gender" id="inspector" />
-                            <label htmlFor="inspector">Inspector</label>
-                        </div>
-                    </div>
-                   
-                    <div className="input-field">
-                        <img className="prefix grey-text" src="/public/img/at.png" alt />
-                        <input id="email" type="text" name="email"  value={this.state.loginForm.email} onChange={this.handleInputChange} placeholder="Email" />
-                        {/* <label htmlFor="email">Email Address</label> */}
-                        <div className="errorField">{this.state.loginFormError.email}</div>
-                    </div>
-                 
-                    <div className="input-field">
-                        <img className="prefix grey-text" src="/public/img/key.png" alt />
-                        <input id="password" name="password" type="password" value={this.state.loginForm.password} onChange={this.handleInputChange} placeholder="Password" />
-                        {/* <label htmlFor="password">Password</label> */}
-                        <div className="errorField">{this.state.loginFormError.password}</div>
-                    </div>
-                    <div className="row align-items-center mx-0">
-                        <div className="mr-auto">
-                          <div className="d-flex align-items-center mr-auto ">
-                            <input   type="checkbox" value="value1"/>
-                            <label   className="W-100"for="styled-checkbox-1">Remeber Me</label>
-                          </div>
-                            <div className="forgotPass">
-                                <a className="logincolor" href>Forgot Password?</a>
-                            </div>
-                        </div>
-                        <div className="text-center">
-                            <input type="submit" defaultValue="Login" className="btn btn-outline-pink loginBtn" />
-                        </div>
-                    </div>
-                </form>
-               
-                <div className="position-absolute fixedBtm w-100 col-md-12 pl-1 pr-2 pb-1">
-                    <div className="toSignUp fixedBtmBg daj py-4">
-                        <img className="pr-2" src="/public/img/signUpArrow.png" alt /> Don’t have an account? 
-                        <Link className="logincolor" to="/register/"> Sign Up 
-                   </Link>
-                    </div>
-                </div>
+            {/* Modal body */}
+            <div className="modal-body">
+              Modal body..
             </div>
+            {/* Modal footer */}
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+      <div className="container">
+          <div className="row col-md-10 mx-auto mt-5">
+              <div className="col-md-5 loginImageSec">
+                  <div className="logoTrans text-center p-5">
+                      <img src="/public/img/LogoWhite.png" alt />
+                  </div>
+                  <div className="text-center text-white pt-5">
+                      Login to
+                      <br />ShipInspectors.com
+                  </div>
+              </div>
+              <div className="col-md-7 loginFormSec p-5 position-relative">
+                
+                  <form onSubmit={this.handleSubmit} action="/" method="post">
+                      <p className="h4 text-blue mb-4 loginTitle">Select Client or Inspector</p>
+                      <div className="position-relative mDivider">
+                          <div className="divider" />
+                          <div className="triangle-down" />
+                      </div>
+                      <div className="d-flex loginType pt-3 pl-0">
+                          <div>
+                              <input className="with-gap" type="radio" name="gender" id="client" defaultChecked />
+                              <label htmlFor="client">Client</label>
+                          </div>
+                          <div className="pl-4">
+                              <input className="with-gap" type="radio" name="gender" id="inspector" />
+                              <label htmlFor="inspector">Inspector</label>
+                          </div>
+                      </div>
+                    
+                      <div className="input-field">
+                          <img className="prefix grey-text" src="/public/img/at.png" alt />
+                          <input id="email" type="text" name="email"  value={this.state.loginForm.email} onChange={this.handleInputChange} placeholder="Email" />
+                          {/* <label htmlFor="email">Email Address</label> */}
+                          <div className="errorField">{this.state.loginFormError.email}</div>
+                      </div>
+                  
+                      <div className="input-field">
+                          <img className="prefix grey-text" src="/public/img/key.png" alt />
+                          <input id="password" name="password" type="password" value={this.state.loginForm.password} onChange={this.handleInputChange} placeholder="Password" />
+                          {/* <label htmlFor="password">Password</label> */}
+                          <div className="errorField">{this.state.loginFormError.password}</div>
+                      </div>
+                      <div className="row align-items-center mx-0">
+                          <div className="mr-auto">
+                            <div className="d-flex align-items-center mr-auto ">
+                              <input   type="checkbox" value="value1"/>
+                              <label   className="W-100"for="styled-checkbox-1">Remeber Me</label>
+                            </div>
+                              <div className="forgotPass">
+                              <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                              Forgot Password?
+                            </button>
+                              </div>
+                          </div>
+                          <div className="text-center">
+                              <input type="submit" defaultValue="Login" className="btn btn-outline-pink loginBtn" />
+                          </div>
+                      </div>
+                  </form>
+                
+                  <div className="position-absolute fixedBtm w-100 col-md-12 pl-1 pr-2 pb-1">
+                      <div className="toSignUp fixedBtmBg daj py-4">
+                          <img className="pr-2" src="/public/img/signUpArrow.png" alt /> Don’t have an account? 
+                          <Link className="logincolor" to="/register/"> Sign Up 
+                    </Link>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
       );
   }
