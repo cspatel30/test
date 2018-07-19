@@ -1,17 +1,19 @@
 import { connect } from 'react-redux'
 
 import AdminPage from '../components/AdminPage.jsx';
-import { login } from '../actions/auth';
+//import { login } from '../actions/auth';
+import { login } from '../actions/admin';
 
 const mapStateToProps = (state) => {
-	const {userProfile, error} = state;
-  	return  {userProfile, error};
+	const {adminReducer, error} = state;
+	const { adminAuthToken, userProfile } = adminReducer;
+  	return  {userProfile, adminAuthToken, error};
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		logMeIn: (payload) => {
-			payload['userType'] = 'admin';
+		logMeIn: (payload) => {console.log("payload", payload);
+			//payload['userType'] = 'admin';
        		dispatch(login(payload));
     	}
 	};

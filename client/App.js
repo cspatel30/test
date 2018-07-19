@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import { verifyToken } from './actions/auth2';
+import { verifyToken } from './actions/auth';
 import { initApp } from './actions/app';
 import { dropDownValues } from './actions/app'
 
@@ -27,7 +27,7 @@ class App extends Component {
 		    <MuiThemeProvider>	
 		      <div>
 		      	<ActionInProgressContainer/>
-            {/* <HeaderContainer/> */}
+             {/* <HeaderContainer/> */}
 		        <Routes />
 		      </div>
 		    </MuiThemeProvider>  
@@ -37,7 +37,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-	//console.log("mapStateToProps$$$ "+JSON.stringify(state))
 	const {userToken, userProfile} = state;
   	return  {userToken, userProfile};
 }

@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
 	// get authReducer's data using state.authReducer, for loginData -> state.authReducer.loginData
 	 const {loginData } = state.authReducer;
   	return {loginData };
+
 }
 
 const mapDispatchToProps = (dispatch) => {

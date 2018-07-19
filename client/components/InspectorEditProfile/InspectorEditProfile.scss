@@ -1,0 +1,170 @@
+.InspectorEditProfile{
+  %primary-button {
+    padding: 10px;
+    border-radius: 30px;
+    min-width: 160px;
+    height: 40px;
+  }
+  %secodary-button {
+    @extend %primary-button;
+    color: #fe3d6b;
+    background: white;
+    border: 2px solid #fe3d6b; 
+  }
+  .banner {
+    position: relative;
+    margin-bottom: 30px;
+    img[class="bg"]{
+      width: 100%;
+      height: 300px;
+      overflow: hidden; 
+    }
+    h1 {
+      position: absolute;
+      color: white;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      width: 100%;
+      text-align: center;
+    }
+  }
+  .profile-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 2px;
+    margin: auto;
+    position: relative;
+    width: 80%;
+    box-shadow: 0px 0px 4px 10px rgba(0,0,0,0.02);
+    margin-bottom: 30px;
+    @media all and (max-width: 576px) {
+      padding: 3rem 1rem;
+    }
+  }
+  .Details {
+    .image-holder{
+      text-align: center;
+    }
+    .user {
+      display: inline-block;
+      position: relative;
+      img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+      }
+      button{
+        position: absolute;
+        top: 0;
+        right: -15px;
+        background: transparent;
+        padding: 0px;
+        color: #000;
+        border: none;
+      }
+    }
+  }
+  .Skills {
+    h1 {
+      margin-bottom: 20px;
+    }
+  }
+  .Personal {
+    h1 {
+      margin-bottom: 20px;
+    }
+  }
+  .Documents {
+    h1 {
+      margin-bottom: 20px;
+    }
+    button[class="primary"] {
+      @extend %primary-button;
+    }
+    button[class="secondary"]{
+      @extend %primary-button;
+      background-color: #fe3d6b;
+    }
+    .field {
+      padding-bottom: 10px;
+      span {
+        padding-left: 16px;
+        font-size: 16px;
+        line-height: 28.5px;
+        color: rgb(82, 84, 88);
+      }
+    }
+    .field.primary {
+      border-bottom: 1px solid #1f9bed;
+    }
+    .field.secondary {
+      border-bottom: 1px solid #fe3d6b;
+    }
+  }
+  .Qualifications {
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      h1 {
+        margin-bottom: 20px;
+      }
+      button {
+        @extend %primary-button;
+      }
+    }
+    button[class="secondary"]{
+      @extend %secodary-button;
+    }
+  }
+  .form {
+    .field {
+      position: relative;
+      margin-bottom: 30px;
+      label {
+        padding-left: 10px;
+        position: absolute;
+        top: -15px;
+        left: 0;
+        color: #2178b4;
+        i {
+          padding-left: 2px;
+          font-weight: bold;
+          font-style: normal;
+          color: #fe3d6b;
+        }
+      }
+      img {
+        position: absolute;
+        right: 0;
+        bottom: 6px;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-bottom: 1px solid #d3d3d3;
+        &:focus {
+          border-bottom: 1px solid #fe3d6b !important;
+        }
+      }
+      textarea{
+        width: 100%;
+        padding: 0 10px;
+        border: none;
+        border-bottom: 1px solid #d3d3d3;
+        font-size: 19px;
+        line-height: 28.5px;
+        color: rgb(82, 84, 88);
+        &:focus {
+          border-bottom: 1px solid #fe3d6b !important;
+        }
+        &::placeholder{
+          font-size: 19px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}

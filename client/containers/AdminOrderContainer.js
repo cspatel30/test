@@ -1,18 +1,19 @@
 
 import { connect } from 'react-redux'
-import AdminOrderComponent from '../components/admin/AdminOrderComponent.jsx';
+import AdminOrderComponent from '../components/admin/orders/AdminOrderComponent.jsx';
 
-import {getAdminOrders} from '../actions/order';
+import {getAdminOrders} from '../actions/admin';
 
 const mapStateToProps = (state) => {
-	const { userProfile, error, orders } = state;
-  	return {userProfile, error, orders };
+    const {adminReducer, error} = state;
+    const { adminOrderList, adminAuthToken, userProfile } = adminReducer;
+    return  {userProfile, adminAuthToken, adminOrderList, error};
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {	
-        getAdminOrders: () => {
-        dispatch(getAdminOrders());
+        getAdminOrders: (payload) => {
+        dispatch(getAdminOrders(payload));
       }
 	};
 }

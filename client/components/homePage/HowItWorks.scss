@@ -1,0 +1,40 @@
+.HowItWorks {
+  padding: 2rem 10px 3rem;
+  &-header{
+    p {
+      font-size: 1.3rem;
+      color: #c7c7c7;
+    }
+  }
+  .process{
+    width: 90%;
+    margin: auto;
+    &-card {
+      padding: 10px 5px;
+      >img {
+        width: 170px;
+        height: 170px;
+        margin: auto;
+      }
+      .title {
+        color: #14436d;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .description {
+        font-size: 0.8rem;
+        color: #c7c7c7;
+        margin-bottom: 20px;
+      }
+      .action {
+        color:#fe3d6b;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        &:hover {
+          color:#fe3d6b;
+        }
+      }
+    }
+  }
+}

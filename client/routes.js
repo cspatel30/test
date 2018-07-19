@@ -31,6 +31,8 @@ import NewInspectorDashboardContainer from '../client/containers/NewInspectorDas
 import QuotationContainer from '../client/containers/QuotationContainer.js';
 import OrdersContainer from '../client/containers/OrdersContainer.js';
 import ManagePageContainer from '../client/containers/EnquriesContainer.js';
+import CustomerMyAccountContainer from './containers/CustomerMyAccountContainer.js';
+import InspectorEditContainer from './containers/InspectorEditContainer.js';
 
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
@@ -48,7 +50,10 @@ export default class Body extends Component {
               {/* <Route exact path="/" component={HomePage}/> */}
               <Route exact path="/" component={HomePageNew}/>
               <Route exact path="/inspectors/" component={InspectorsContainer} />
-              <Route exact path="/inspector/profile/:id" component={InspectorPublicProfileContainer} />
+              <Switch>
+                <Route exact path="/inspector/profile/edit" component={InspectorEditContainer} />
+                <Route exact path="/inspector/profile/:id" component={InspectorPublicProfileContainer} />
+              </Switch>
               <Route exact path="/enquiry/" component={QuoteEnquiryContainer} />
               <Route exact path="/about/" component={AboutPage} />
               <Route exact path="/contact/" component={ContactUsContainer} />
@@ -65,11 +70,13 @@ export default class Body extends Component {
               <Route exact path="/verify/email/:requestToken" component={VerifyEmailContainer} />
               <Route exact path="/setup/account/:requestToken" component={SetupAccountContainer} />
               <Route path="/admin" component={AdminHomePageContainer} />
+              <Route path="/admin/login" component={AdminHomePageContainer} />
               <Route exact path="/newprofile" component={NewProfileContainer} />
               <Route exact path="/inspectordashboard" component={NewInspectorDashboardContainer} />
               <Route exact path="/quotation" component={QuotationContainer} />
               <Route exact path="/enquries" component={ManagePageContainer} />
               <Route exact path="/orders" component={OrdersContainer} />
+              <Route exact path="/newprofile/client" component={CustomerMyAccountContainer} />
             </div>
             <HomeFooter/>
           </div>

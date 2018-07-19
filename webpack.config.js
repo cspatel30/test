@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const isProd = process.env.NODE_ENV === 'production';
 
 const commonLoaders = [
   {
@@ -31,21 +33,33 @@ const commonLoaders = [
 ];
 module.exports = {
   name: 'browser',
-  entry: {
-    app: [path.resolve(__dirname, './client/main.js')],
-  },
+  entry: ["babel-polyfill", "./client/main.js"],
+  // entry: {
+  //   app: [path.resolve(__dirname, './client/main.js')],
+  // },
   output: {
-    path: path.resolve(__dirname, './client/dist/'),
-    // publicPath: '/dist/',
+    publicPath: '/',
+    path: path.resolve(process.cwd(), 'dist'),
     filename: 'bundle.js',
   },
   module: {
     loaders: commonLoaders,
   },
+  devtool: isProd ? false : "sourcemap",
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.scss'],
   },
   plugins: [
     new ExtractTextPlugin('style.css'),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(process.cwd(), 'client/resources/static/'),
+        to: path.resolve(process.cwd(), 'public/'),
+      },
+      {
+        from: path.resolve(process.cwd(), 'client/index.html'),
+        to: path.resolve(process.cwd(), 'public/'),
+      }
+    ]),
   ],
 };
