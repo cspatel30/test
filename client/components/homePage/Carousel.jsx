@@ -3,33 +3,38 @@ import { Carousel } from 'react-responsive-carousel';
 import './Carousel.scss';
 
 export default () => <div className="Carousel">
-  <Carousel
-    showThumbs={false}
-    showArrows={false}
-    axis="vertical">
-    <div>
-      <img src="/public/img/banner.png" />
+  <div className="imageSlider">
+    <Carousel
+      showThumbs={false}
+      showArrows={false}
+      showStatus={false}
+      axis="vertical">
+      <div>
+        <img src="/public/img/banner.png" />
+      </div>
+      <div>
+        <img src="/public/img/banner.png" />
+      </div>
+      <div>
+        <img src="/public/img/banner.png" />
+      </div>
+      <div>
+        <img src="/public/img/banner.png" />
+      </div>
+      <div>
+        <img src="/public/img/banner.png" />
+      </div>
+    </Carousel>
+    <div className="topBanner-content">
+      <h1>Find and Hire Expert Ship Inspectors</h1>
+      <h4>Industry&apos;s First Maritime Freelancer Portal</h4>
+      <div className="topBanner-content-actions">
+        <button>FIND INSPECTOR</button>
+        <button>GET QUOTATION</button>
+      </div>
     </div>
-    <div>
-      <img src="/public/img/banner.png" />
-    </div>
-    <div>
-      <img src="/public/img/banner.png" />
-    </div>
-    <div>
-      <img src="/public/img/banner.png" />
-    </div>
-    <div>
-      <img src="/public/img/banner.png" />
-      <p className="legend">
-        Legend
-    </p>
-    </div>
-  </Carousel>
+  </div>
   <center>
-    <br />
-    <br />
-    <br />
     <h1 className="mb-2">Shipinspectors.com</h1>
     <br />
     <br />

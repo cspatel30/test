@@ -12,6 +12,43 @@
     background: white;
     border: 1px solid #fe3d6b; 
   }
+  .carousel .slide img {
+    min-height: 60vh;
+    width: auto;
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 0% 100%);
+  }
+  .imageSlider{
+    position: relative;
+    height: 80vh;
+    .topBanner{
+      &-content {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        width: 80%;
+        text-align: center;
+        &-actions {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          @media all and (max-width: 768px) {
+            flex-direction: column;
+          }
+          button {
+            @extend %primary-button;
+            max-width: 200px;
+            color: white;
+            margin: 10px;
+            background: transparent;
+            border: 1px solid white;
+          }
+        }
+      }
+    }
+  }
   .control-dots{
     top: 50%;
     right: -45%;

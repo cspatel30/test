@@ -149,6 +149,17 @@
       }
     }
   }
+  .Testimonial{
+    background: url("/public/img/banner.png");
+    &-header{
+      h1{
+        color: white;
+      }
+      p{
+        color: white;
+      }
+    }
+  }
   .ContactUs{
     width: 80%;
     margin: auto;
