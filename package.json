@@ -36,7 +36,7 @@
     "webpack": "^2.6.1"
   },
   "dependencies": {
-    "@material-ui/core": "^1.4.0",
+    "@material-ui/core": "^1.2.0",
     "AsyncStorage": "^0.1.5",
     "aws-sdk": "^2.186.0",
     "axios": "^0.16.1",
@@ -62,7 +62,7 @@
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
     "jsonwebtoken": "^8.2.1",
-    "material-ui": "^0.19.1",
+    "material-ui": "^0.18.1",
     "material-ui-rating": "^1.4.1",
     "moment": "^2.22.1",
     "morgan": "^1.8.1",
