@@ -18,14 +18,15 @@ const commonLoaders = [
     test: /\.css/,
     loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader?minimize=true' }),
   },
-  {
-    test: /\.(png|jpg|jpeg|svg|woff|woff2|ttf|eot|ico)$/,
-    loader: 'url-loader',
-    options: {
-      name: '[name].[ext]?[hash]',
-      limit: 10000,
-    },
-  },
+  { test: /\.(png|jpg|svg|woff|woff2|otf|ttf|eot|ico)$/, loader: "url-loader" },  
+  // {
+  //   test: /\.(png|jpg|jpeg|svg|woff|woff2|otf|ttf|eot|ico)$/,
+  //   loader: 'url-loader',
+  //   options: {
+  //     name: '[name].[ext]?[hash]',
+  //     limit: 10000,
+  //   },
+  // },
   {
     test: /jquery-plugin/,
     loader: 'imports?jQuery=jquery,$=jquery,this=>window',
