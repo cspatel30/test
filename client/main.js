@@ -1,9 +1,9 @@
 // import 'regenerator-runtime/runtime';
 var React = require("react");
 var ReactDOM = require("react-dom");
-import $ from 'jquery';
-window.jQuery = $;
-window.$ = $;
+// import $ from 'jquery';
+// window.jQuery = $;
+// window.$ = $;
 import { Provider } from 'react-redux';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import injectTapEventPlugin from 'react-tap-event-plugin';

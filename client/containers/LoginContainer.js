@@ -3,12 +3,11 @@ import Login from '../components/loginPage/LoginPage.jsx';
 import { login } from '../actions/auth2';
 
 const mapStateToProps = (state) => {
-	console.log("LOGIN DATA"+JSON.stringify( state.authReducer.loginData))
+	console.log("LOGIN DATA"+JSON.stringify( state.authReducer ))
 	//const loginData=state.authReducer.loginData;
-	// get authReducer's data using state.authReducer, for loginData -> state.authReducer.loginData
+	// get authReducer's data using state.authReducer, for loginData -> state.authReducer.loginDatas
 	 const {loginData } = state.authReducer;
   	return {loginData };
-
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,5 +1,5 @@
 import Request from 'axios';
-import { TOKEN_VERIFIED, GETLISTINSPECTORS, LOGIN, REGISTER, MYPROFILE } from '../constants/ActionsTypes';
+import { TOKEN_VERIFIED, LOGIN, REGISTER, MYPROFILE } from '../constants/ActionsTypes';
 import Cookie from 'js-cookie';
 
 const ip = 'http://sis-beta.us-east-1.elasticbeanstalk.com';
@@ -33,6 +33,7 @@ export function login(data) {
   console.log("LOG!N: "+JSON.stringify(data))
   return dispatch => makePostRequest('post', '/login', data)
     .then(response => {
+      console.log("success response: "+JSON.stringify(response))
       Cookie.set('token', response.data.data.token);
       dispatch(loggedIn(response.data))
     })

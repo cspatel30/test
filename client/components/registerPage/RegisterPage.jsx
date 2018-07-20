@@ -102,7 +102,8 @@ export default class RegisterPage extends Component {
       country:[],
       Qualifications:[],
       topTitles:[],
-      titles:[]
+      titles:[],
+      employmentTypes:[]
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -193,6 +194,8 @@ export default class RegisterPage extends Component {
 
     var Qualifications = localStorage.getItem('Qualification')?JSON.parse(localStorage.getItem('Qualification')):""
 
+    var employmentTypes = localStorage.getItem('employmentType')?JSON.parse(localStorage.getItem('employmentType')):""
+
     var titles = localStorage.getItem('titles')?JSON.parse(localStorage.getItem('titles')):""
     
     if(countries!="") {
@@ -256,6 +259,19 @@ export default class RegisterPage extends Component {
       })
       this.setState({
         Qualifications:Qualify
+      })
+    }
+    if(employmentTypes!="") {
+      var empTypes = []
+      Object.keys(employmentTypes).map((title, index) =>{
+          var empTypesObj={}
+          var label = employmentTypes[title]
+          empTypesObj.label=label
+          empTypesObj.value=title
+          empTypes.push(empTypesObj)
+      })
+      this.setState({
+        employmentTypes:empTypes
       })
     }
   }
@@ -628,7 +644,7 @@ export default class RegisterPage extends Component {
                     </div>
                     <div className="col-md-6 pr-0">
                       <div className="input-field">
-                        <input id="phone" name="phone" type="text" value={this.state.registerForm.phone} onChange={this.handleInputChange} placeholder="Phone"/>
+                        <input id="phone" name="phone" type="number" value={this.state.registerForm.phone} onChange={this.handleInputChange} placeholder="Phone" maxLength={10}/>
                         {/* <label htmlFor="phone">Phone
                           <span className="required">*</span>
                         </label> */}
@@ -684,7 +700,7 @@ export default class RegisterPage extends Component {
                     </div>
                     <div className="col-md-6 pr-0">
                       <div className="input-field">
-                        <input id="clientPostalCode" name="clientPostalCode" type="text" value={this.state.registerForm.clientPostalCode} onChange={this.handleInputChange} placeholder="Postal Code"/>
+                        <input id="clientPostalCode" name="clientPostalCode" type="number" value={this.state.registerForm.clientPostalCode} onChange={this.handleInputChange} placeholder="Postal Code"/>
                         {/* <label htmlFor="clientPostalCode">Postal Code</label> */}
                       </div>
                     </div>
@@ -708,11 +724,7 @@ export default class RegisterPage extends Component {
                       value={employment}
                       placeholder="Employment Type"
                       onChange={this.handleEmploymentTypeChange}
-                      options={[
-                        { value: 'EMP', label: 'Employe' },
-                        { value: 'SELFEMP', label: 'Self Employe' },
-                        { value: 'CONTR', label: 'Contract' }
-                      ]}
+                      options={this.state.employmentTypes}
                     />
                       <div className="errorField mt-18">{this.state.registerFormError.employmentType}</div> 
                     </div>
@@ -751,7 +763,7 @@ export default class RegisterPage extends Component {
                     </div>
                     <div className="col-md-6 pr-0">
                       <div className="input-field">
-                        <input id="inspectorPostalCode" name="inspectorPostalCode" type="text" value={this.state.registerForm.inspectorPostalcode} onChange={this.handleInputChange} placeholder="Postal Code"/>
+                        <input id="inspectorPostalCode" name="inspectorPostalCode" type="number" value={this.state.registerForm.inspectorPostalcode} onChange={this.handleInputChange} placeholder="Postal Code"/>
                         {/* <label htmlFor="inspectorPostalCode">Postal Code</label> */}
                       </div>
                     </div>
@@ -759,8 +771,8 @@ export default class RegisterPage extends Component {
                   </div>
                   <div className="signUpsmText col-md-12 text-gray py-4 pl-0 fs-14">
                     By clicking sign up button, I confirm I have read and accept Sinotech Marine
-                    <a className="rcolor"> Privacy Policy </a> and
-                    <a className="rcolor"> Terms and Conditions </a>.
+                    <a className="rcolor pointer" onClick={()=> this.props.history.push('/policy/')}> Privacy Policy </a> and
+                    <a className="rcolor pointer" onClick={()=> this.props.history.push('/terms/')}> Terms and Conditions </a>.
                   </div>
                   <div className="position-absolute signUpBtm w-100 col-md-12 py-3">
                   <div className="daj signUpBtmBg py-3">

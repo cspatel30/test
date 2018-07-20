@@ -10,8 +10,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getAllEnquiries: () => {
-       		dispatch(getAllEnquiries());
+		getAllEnquiries: (data) => {
+			console.log("dataforDates"+ JSON.stringify(data))
+       		dispatch(getAllEnquiries(data));
     	}
 	};
 }
