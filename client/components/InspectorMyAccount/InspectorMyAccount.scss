@@ -1,0 +1,142 @@
+.InspectorMyAccount{
+  %primary-button {
+    padding: 10px;
+    border-radius: 30px;
+    min-width: 120px;
+    height: 40px;
+  }
+  %secodary-button {
+    @extend %primary-button;
+    color: #fe3d6b;
+    background: white;
+    border: 2px solid #fe3d6b; 
+  }
+  .banner {
+    position: relative;
+    margin-bottom: 30px;
+    img[class="bg"]{
+      width: 100%;
+      height: 300px;
+      overflow: hidden; 
+    }
+    h1 {
+      position: absolute;
+      color: white;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      width: 100%;
+      text-align: center;
+    }
+  }
+  &-Form{
+    width: 90%;
+    margin: auto;
+    margin-top: 30px;
+    h3 {
+      font-size: 1.5rem;
+      padding-bottom: 10px;
+      margin: 10px 0;
+      border-bottom: 1px solid #d3d3d3;
+    }
+  }
+  &-Profile {
+    >h4 {
+      color: #0d99f0;
+      font-weight: bold;
+    }
+    .imageWrapper {
+      text-align: left;
+      img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border: 1px solid #0d99f0;
+        margin: auto;
+      }
+    }
+    &-Form {
+      >div[class="row"] {
+        align-items: center;
+        margin-bottom: 10px;
+        p{
+          margin: 0;
+          >span {
+            color: #0d99f0;
+          }
+        }
+      }
+      padding: 10px 10px 10px 0;
+      i {
+        color: #0d99f0;
+      }
+      button {
+        @extend %secodary-button;
+      }
+    }
+  }
+  &-Address {
+    >div[class="row"] {
+      align-items: center;
+      margin-bottom: 10px;
+      p{
+        margin: 0;
+        >span {
+          color: #0d99f0;
+        }
+      }
+    }
+    padding: 10px 10px 10px 0;
+    i {
+      color: #0d99f0;
+    }
+    button {
+      @extend %secodary-button;
+    }
+  }
+  &-Settings {
+    >div[class="row"] {
+      align-items: center;
+      margin-bottom: 10px;
+      i {
+        color: #0d99f0;
+      }
+      p{
+        margin: 0;
+        >span {
+          color: #0d99f0;
+        }
+      }
+    }
+    .field {
+      position: relative;
+      margin-bottom: 30px;
+      label {
+        padding-left: 10px;
+        position: absolute;
+        top: -25px;
+        left: 5px;
+        color: #c7c7c7;
+        i {
+          padding-left: 2px;
+          font-weight: bold;
+          font-style: normal;
+          color: #fe3d6b;
+        }
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border: 1px solid #d3d3d3;
+        &:focus {
+          border: 1px solid #fe3d6b !important;
+        }
+      }
+    }
+    button {
+      @extend %secodary-button;
+    }
+  }
+}
