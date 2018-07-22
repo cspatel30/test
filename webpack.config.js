@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const isProd = process.env.NODE_ENV === 'production';
 
 const commonLoaders = [
   {
@@ -29,6 +28,7 @@ const commonLoaders = [
 ];
 module.exports = {
   name: 'browser',
+  mode: 'development',
   entry: ["babel-polyfill", "./client/main.js"],
   // entry: {
   //   app: [path.resolve(__dirname, './client/main.js')],
@@ -38,10 +38,17 @@ module.exports = {
     path: path.resolve(process.cwd(), 'dist'),
     filename: 'bundle.js',
   },
-  module: {
-    loaders: commonLoaders,
+  devServer: {
+    inline: true,
+    port: 7100,
+    index: '/public/index.html',
+    historyApiFallback: true,
+    disableHostCheck: true
   },
-  devtool: isProd ? false : "sourcemap",
+  module: {
+    rules: commonLoaders,
+  },
+  devtool: "sourcemap",
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.scss'],
   },

@@ -4,9 +4,10 @@
   "description": "shipinspector",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect --harmony app.js",
-    "watch": "webpack --progress --watch --config=webpack.config.js",
-    "build:prod": "webpack --progress --config=webpack.config.js -p"
+    "server": "nodemon --inspect --harmony app.js",
+    "watch": "webpack --progress --watch --config webpack.config.js",
+    "start": "webpack-dev-server --mode development --config webpack.config.js",
+    "build:prod": "webpack --mode production --config webpack.config.prod.js"
   },
   "author": "sanjayyadav",
   "license": "ISC",
@@ -20,9 +21,10 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "compression-webpack-plugin": "^1.1.11",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^0.28.1",
-    "extract-text-webpack-plugin": "^2.1.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
     "google-map-react": "^0.24.0",
     "mysql": "^2.13.0",
@@ -33,7 +35,9 @@
     "style-loader": "^0.17.0",
     "uglifyjs-webpack-plugin": "^0.4.3",
     "url-loader": "^1.0.1",
-    "webpack": "^2.6.1"
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.4",
+    "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
     "@material-ui/core": "^1.2.2",
