@@ -16,13 +16,26 @@ export default  class ListOfEnquiries extends Component {
        startDateChange(date) {
         this.setState({
           startDate: date
+        },()=>{
+            alert("startDate"+JSON.stringify(this.state.startDate))
         });
       }
       endDateChange(date) {
         this.setState({
           endDate: date
+        },()=>{
+            alert("endDate"+JSON.stringify(this.state.endDate))
         });
       }
+
+      sendDates(){
+          alert("sending Dates")
+          var dates={}
+          dates.startDate=this.state.startDate
+          dates.endDate=this.state.endDate
+          this.props.sendDates(dates)
+      }
+
       datesClear() {
         this.setState({
           startDate: '',
@@ -59,7 +72,7 @@ export default  class ListOfEnquiries extends Component {
         </div>
            
         <div className="viewAttachment d-flex">
-        <button className="btn btn-head btn-filter pl-5 mt-5 ml-10">
+        <button className="btn btn-head btn-filter pl-5 mt-5 ml-10" onClick={this.sendDates.bind(this)}>
             FILTER
         </button>
         <button className="btn btn-head btn-clear pl-5 mt-5 ml-10" onClick={this.datesClear.bind(this)}>
@@ -72,4 +85,3 @@ export default  class ListOfEnquiries extends Component {
     );
   }
 }
-

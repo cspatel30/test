@@ -25,10 +25,6 @@ const commonLoaders = [
       name: '[name].[ext]?[hash]',
       limit: 10000,
     },
-  },
-  {
-    test: /jquery-plugin/,
-    loader: 'imports?jQuery=jquery,$=jquery,this=>window',
   }
 ];
 module.exports = {

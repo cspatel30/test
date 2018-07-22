@@ -13,6 +13,7 @@ export default (state = initialState, action) => {
     case 'DROP_DOWN_VALUES':
       localStorage.setItem('countries', JSON.stringify(action.payload.countries))
       localStorage.setItem('Qualification', JSON.stringify(action.payload.highestQualification))
+      localStorage.setItem('employmentType', JSON.stringify(action.payload.employmentType))
       localStorage.setItem('titles', JSON.stringify(action.payload.title))
       localStorage.setItem('inspectionTypes', JSON.stringify(action.payload.inspectionType))      
       return _.assign({}, state, { dropDownConstants: action.payload });

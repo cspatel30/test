@@ -4,7 +4,7 @@ import Cookie from 'js-cookie';
 const initialState = {
   loginData: '',
   signupData: '',
-  profile: '',
+  profile: ''
 };
 
 export default (state = initialState, action) => {

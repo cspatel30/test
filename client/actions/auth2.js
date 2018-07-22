@@ -34,7 +34,7 @@ export function login(data) {
   console.log("LOG!N: "+JSON.stringify(data))
   return dispatch => makePostRequest('post', '/login', data)
     .then(response => {
-      dispatch(loggedIn(response.data.data))
+      dispatch(loggedIn(response.data.data));
     })
     .catch(err => console.log("error in login: " + JSON.stringify(err)))
 }

@@ -3,26 +3,30 @@ import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import './LoginPage.scss';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
+const customContentStyle = {
+  width: '100%',
+  maxWidth: 450,
+};
 export default class LoginPage extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      forgot: false,
-      forgotEmail: '',
-      fgpwdMsg: '',
-      tabIndex: 0,
+      open: false,
       loginForm: {
         email: "",
-        password: ""
+        password: "",
       },
       loginFormError: {
         email: "",
         password: ""
-      },
-      activeTab: "cust"
+      }      
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -30,7 +34,6 @@ export default class LoginPage extends Component {
 
   } 
   componentWillReceiveProps(nextProps) {
-    console.log("login props..."+JSON.stringify(nextProps))
     if(nextProps.loginData.data){
       if(nextProps.loginData.data.userType=='I'){
         console.log("Inspector")
@@ -50,13 +53,6 @@ export default class LoginPage extends Component {
     this.setState((state) => { state.loginForm[event.target.name] = event.target.value });
   }
 
-  toggleTab (tab) {
-    let { activeTab, fgpwdMsg, forgot, forgotEmail } = this.state;
-    if (activeTab !== tab) {
-      fgpwdMsg = '', forgot=false, forgotEmail='';
-    }
-    this.setState({ activeTab: tab, fgpwdMsg, forgot, forgotEmail });
-  }
   handleSubmit(event) {
     event.preventDefault();
     var error = false;
@@ -71,68 +67,72 @@ export default class LoginPage extends Component {
       error = true;
     }
     this.setState( (state) => { state.loginFormError = loginFormError});
-    
     if(error) 
     return;
     this.props.logMeIn(this.state.loginForm);
   }
 
-  forgotPwd() {
-    const { activeTab, forgot, forgotEmail, fgpwdMsg } = this.state;
-    if (!forgot) {
-      return <div className="forgot-pass" onClick={() => this.setState({ forgot: true })} style={{ color: '#1475af', fontSize: '16px', cursor: 'pointer' }}>Forgot Password ?</div>
-    } else {
-      return (
-        <div>
-          <div className="label">Enter Your Registered Email</div>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div className="field" style={{ margin: 0}}>
-              <input className="inputField" type="text" placeholder="Enter Your Registered Email" name="forgotEmail" value={forgotEmail} onChange={e => this.setState({ forgotEmail: e.target.value })}/>
-              <div className="errorField">{fgpwdMsg}</div>
-            </div>
-            <div onClick={() => this.onForgotPass(forgotEmail)} style={{cursor: 'pointer', padding: '15px', marginLeft: '15px', background: '#1475af', color: '#fff'}}>Reset</div>
-            <div onClick={() => this.setState({forgot: false, forgotEmail: '', fgpwdMsg: ''})} style={{cursor: 'pointer', padding: '15px', marginLeft: '15px', background: '#1475af', color: '#fff'}}>Cancel</div>
-          </div>
-        </div>
-      )
-    }
-  }
-  onForgotPass(email) {
-    if (email !== '') {
-      this.props.forgotPassword(email);
-    }
-    return;
-  }
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
+  // forgotPwd() {
+  //   const { activeTab, forgot, forgotEmail, fgpwdMsg } = this.state;
+  //   if (!forgot) {
+  //     return <div className="forgot-pass" onClick={() => this.setState({ forgot: true })} style={{ color: '#1475af', fontSize: '16px', cursor: 'pointer' }}>Forgot Password ?</div>
+  //   } else {
+  //     return (
+  //       <div>
+  //         <div className="label">Enter Your Registered Email</div>
+  //         <div style={{ display: 'flex', alignItems: 'center' }}>
+  //           <div className="field" style={{ margin: 0}}>
+  //             <input className="inputField" type="text" placeholder="Enter Your Registered Email" name="forgotEmail" value={forgotEmail} onChange={e => this.setState({ forgotEmail: e.target.value })}/>
+  //             <div className="errorField">{fgpwdMsg}</div>
+  //           </div>
+  //           <div onClick={() => this.onForgotPass(forgotEmail)} style={{cursor: 'pointer', padding: '15px', marginLeft: '15px', background: '#1475af', color: '#fff'}}>Reset</div>
+  //           <div onClick={() => this.setState({forgot: false, forgotEmail: '', fgpwdMsg: ''})} style={{cursor: 'pointer', padding: '15px', marginLeft: '15px', background: '#1475af', color: '#fff'}}>Cancel</div>
+  //         </div>
+  //       </div>
+  //     )
+  //   }
+  // }
 
   render() {
-    const { activeTab, forgot } = this.state;
-    const activeTabStyle= { background: '#1475af', color: '#fff' }
+    const actions = [
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+    ];
   	const { userToken , userProfile } = this.props;
-
   	if(userToken && userProfile) {
   		this.props.history.push('/');
     }
     
 	return (
     <div className="section bg-gray loginSec">
-      <div className="modal fade" id="myModal">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            {/* Modal Header */}
-            <div className="modal-header">
-              <h4 className="modal-title">Modal Heading</h4>
-              <button type="button" className="close" data-dismiss="modal">×</button>
-            </div>
-            {/* Modal body */}
-            <div className="modal-body">
-              Modal body..
-            </div>
-            {/* Modal footer */}
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
+      <div>
+        <Dialog
+          title="Enter Your Registered Email"
+          actions={actions}
+          modal={true}
+          contentStyle={customContentStyle}
+          open={this.state.open}
+        >
+          <TextField
+            hintText="Email"
+          /><br />
+        </Dialog>
       </div>
       <div className="container">
           <div className="row col-md-10 mx-auto mt-5">
@@ -153,7 +153,7 @@ export default class LoginPage extends Component {
                           <div className="divider" />
                           <div className="triangle-down" />
                       </div>
-                      <div className="d-flex loginType pt-3 pl-0">
+                      <div className="d-flex loginType pt-3 pl-0" style={{paddingBottom:"35px"}}>
                           <div>
                               <input className="with-gap" type="radio" name="gender" id="client" defaultChecked />
                               <label htmlFor="client">Client</label>
@@ -184,9 +184,11 @@ export default class LoginPage extends Component {
                               <label   className="W-100"for="styled-checkbox-1">Remeber Me</label>
                             </div>
                               <div className="forgotPass">
-                              <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <span className="pointer " style={{color: "#e24f7c"}} onClick={this.handleOpen}>Forgot Password ?</span>
+                              {/* <RaisedButton label="Modal Dialog" onClick={this.handleOpen} /> */}
+                              {/* <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#myModal">
                               Forgot Password?
-                            </button>
+                            </button> */}
                               </div>
                           </div>
                           <div className="text-center">
