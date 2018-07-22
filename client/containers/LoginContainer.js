@@ -1,4 +1,4 @@
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import Login from '../components/loginPage/LoginPage.jsx';
 import { login } from '../actions/auth2';
 

@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import x from '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
+
 import './resources/static/css/main.scss';
 
 // require ('jquery/dist/jquery.min.js');

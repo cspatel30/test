@@ -9,21 +9,53 @@
       }
     }
     .nav-wrap {
-      .btn-head {
-        border-radius: 20px;
+      .option {
+        color: #333;
+        font-weight: bold;
       }
-      .btn-pink {
-        background: deeppink;
-       border: 2px solid #cc006d;
-       height:38px!important
+      .bn-head {
+        max-width: 200px;
+        padding: 10px;
+        border-radius: 30px;
+        min-width: 170px;
+        height: 40px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
       }
-      .btn-white {
-        border: 2px solid blue;
+      .bn-pink {
+        color: #fff;
+        background: #fe3d6b;
+        border: 2px solid #cc006d;
+      }
+      .bn-white {
+        border: 2px solid #4b9ade;
         background: white;
-        color: blue;
-        padding: 2px 29px 0px;
-        height:38px!important
-       
+        color: #4b9ade;
+      }
+
+      .profile-head {
+        .img-wrap {
+          height: 40px;
+          width: 40px;
+          img {
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+          }
+        }
+        .username {
+          font-size: 14px;
+          color: #4b9ade;
+          text-transform: capitalize;
+        }
+        .dropdown {
+          i {
+            font-size: 1.5vw;
+          }
+          .show {
+            transform: translate3d(-70px, 5px, 0px);
+          }
+        }
       }
     }
 }

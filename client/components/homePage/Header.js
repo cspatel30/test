@@ -1,56 +1,114 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import './Header.scss';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Cookie from 'js-cookie';
-
+import { logout } from '../../actions/auth2';
+import './Header.scss';
 class Header extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state= {
-      token:''
+    this.state = {
+      token: Cookie.get('token') || null,
+      userType: Cookie.get('userType') || null,
     }
   }
-  componentWillReceiveProps(props) {
-    const profile_name = Cookie.get('inspector_name')
-    const token = Cookie.get('token')
-    this.setState({token})
+  
+  componentWillReceiveProps(nextProps) {
+    let token, userType;
+    if (this.props.auth.loginData !== nextProps.auth.loginData) {
+      userType = Cookie.get('userType') || null;
+      token = Cookie.get('token') || null;
+      this.setState({ token: token, userType: userType });
+    }
   }
-  componentWillMount() {
-    const profile_name = Cookie.get('inspector_name')
-    const token = Cookie.get('token')
-    this.setState({token})
-  }
+
   logout() {
-    Cookie.remove('token')
-    localStorage.clear();
+    this.props.dispatch(logout());
     this.props.history.push('/')
   }
-  render() {
-    const token = this.state.token ? this.state.token : ''
-   
+
+  renderProfileDropdown() {
     return (
-      <div className="header-wrapper d-flex align-items-center justify-content-between px-5">
-        <div className="logo mx-2"><img src="/public/img/headerLogo.jpg" alt="#logo"/></div>
-            {
-              (token)?(
-                <div className="nav-wrap d-flex align-items-center">
-                  <div className="mx-3 pointer"><img src="https://i1.wp.com/askgerald.co.za/wp-content/uploads/2014/08/Mark-profile-pic-colour-round.png?fit=453%2C449" style={{height: "55px",width: "55px"}} /></div>
-                  <div className="mx-3 pointer" style={{fontWeight: 500, fontSize: "16px"}}>username</div>
-                    <div className="mx-3 pointer" onClick={()=>{this.props.history.push('/enquries')}}>ENQURIES</div>
-                  <div className="mx-2 pointer" onClick={()=>{this.props.history.push('/newprofile')}}><button type="button" className="btn btn-head btn-pink">PROFILE</button></div>
-                  <div className="mx-2 pointer" onClick={this.logout.bind(this)}><button type="button" className="btn btn-head btn-white align-items-center">LOGOUT</button></div>
-                </div>
-              ):(
-                <div className="nav-wrap d-flex align-items-center">
-                  <div className="mx-3 pointer" onClick={()=>{this.props.history.push('/login')}}><i className="fa fa-sign-in mr-1" aria-hidden="true" />LOGIN</div>
-                  <div className="mx-3 pointer" onClick={()=>{this.props.history.push('/register')}}><i className="fa fa-pencil-square-o mr-1" aria-hidden="true" />SIGN UP</div>
-                </div>
-              )
-            }
+      <div className="profile-head mx-3 d-flex align-items-center">
+        <div className="img-wrap"><img src="https://images.firstpost.com/wp-content/uploads/2017/03/disha-patani_380.jpg" /></div>
+        <div className="username mx-2">Raghav Lawaniya</div>
+        <div className="dropdown">
+          <i className="fa fa-angle-down pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a className="dropdown-item pointer">Option 1</a>
+            <a className="dropdown-item pointer">Option 2</a>
+            <a className="dropdown-item pointer" onClick={() => this.logout()}>Logout</a>
+          </div>
+        </div>
       </div>
     )
-  }    
+  }
+
+  renderOptions() {
+    const { token, userType }  = this.state;
+    if (token && userType) {
+      if (userType === 'I') {
+        return this.renderInspectorOptions();
+      }
+      else {
+        return this.renderClientOptions();
+      }
+    }
+    else {
+      return this.renderHomeOptions();
+    }
+  }
+
+  renderHomeOptions() {
+    return (
+      <div className="nav-wrap d-flex align-items-center">
+        <div className="mx-3 pointer option">HOW IT WORKS</div>
+        <div className="mx-3 pointer option">CONTACT US</div>
+        <div className="mx-3 pointer option" onClick={() => { this.props.history.push('/login') }}><i className="fa fa-sign-in mr-1" aria-hidden="true" />LOGIN</div>
+        <div className="mx-3 pointer option" onClick={() => { this.props.history.push('/register') }}><i className="fa fa-pencil-square-o mr-1" aria-hidden="true" />SIGN UP</div>
+        <div className="mx-2 pointer" onClick={() => {}}><button type="button" className="bn-head bn-pink">FIND INSPECTOR</button></div>
+        <div className="mx-2 pointer" onClick={() => {}}><button type="button" className="bn-head bn-white">INSPECTION ENQUIRY</button></div>
+      </div>
+    )
+  }
+  renderInspectorOptions() {
+    return (
+      <div className="nav-wrap d-flex align-items-center">
+        <div className="mx-3 pointer" onClick={() => {}}><button type="button" className="bn-head bn-pink">AFFILIATE</button></div>
+        <div className="mx-3 pointer option" onClick={() => { this.props.history.push('/newprofile') }}>MY PROFILE</div>
+        <div className="mx-3 pointer option" onClick={() => { this.props.history.push('/enquries') }}>ENQURIES</div>
+        <div className="mx-3 pointer option" onClick={() => { this.props.history.push('/orders') }}>ORDERS</div>
+        <div className="mx-3 pointer option" onClick={() => {}}>REPORTS</div>
+        {this.renderProfileDropdown()}
+      </div>
+    )
+  }
+
+  renderClientOptions() {
+    return (
+      <div className="nav-wrap d-flex align-items-center">
+        <div className="mx-3 pointer option">HOW IT WORKS</div>
+        <div className="mx-3 pointer option">CONTACT US</div>
+        <div className="mx-3 pointer option">HELP</div>
+        <div className="mx-2 pointer" onClick={() => {}}><button type="button" className="bn-head bn-pink">FIND INSPECTOR</button></div>
+        <div className="mx-2 pointer" onClick={() => {}}><button type="button" className="bn-head bn-white">INSPECTION ENQUIRY</button></div>
+        {this.renderProfileDropdown()}
+      </div>
+    )
+  }
+
+  render() {
+    const token = this.state.token ? this.state.token : ''
+
+    return (
+      <div className="header-wrapper d-flex align-items-center justify-content-between px-5">
+        <div className="logo mx-2"><img src="/public/img/headerLogo.jpg" alt="#logo" /></div>
+        {this.renderOptions()}
+      </div>
+    )
+  }
 }
 
-export default withRouter(Header);
+const select = state => ({ auth: state.authReducer });
+export default withRouter(connect(select)(Header));  

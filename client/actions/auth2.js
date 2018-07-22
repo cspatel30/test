@@ -1,5 +1,5 @@
 import Request from 'axios';
-import { TOKEN_VERIFIED, GETLISTINSPECTORS, LOGIN, REGISTER, MYPROFILE } from '../constants/ActionsTypes';
+import { TOKEN_VERIFIED, GETLISTINSPECTORS, LOGIN, REGISTER, MYPROFILE, LOGOUT } from '../constants/ActionsTypes';
 import Cookie from 'js-cookie';
 
 const ip = 'http://sis-beta.us-east-1.elasticbeanstalk.com';
@@ -19,6 +19,7 @@ function makePostRequest(method, api = api, data) {
 }
 
 // SYNC ACTIONS //
+export function logout() { return ({ type: LOGOUT }); }
 export function tokenVerified(payload) { return ({ type: TOKEN_VERIFIED, payload }); }
 export function loggedIn(payload) {return ({ type: LOGIN, payload });}
 export function registerd(payload) { return ({ type: REGISTER, payload }); }
@@ -33,8 +34,7 @@ export function login(data) {
   console.log("LOG!N: "+JSON.stringify(data))
   return dispatch => makePostRequest('post', '/login', data)
     .then(response => {
-      Cookie.set('token', response.data.data.token);
-      dispatch(loggedIn(response.data))
+      dispatch(loggedIn(response.data.data))
     })
     .catch(err => console.log("error in login: " + JSON.stringify(err)))
 }

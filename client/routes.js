@@ -5,7 +5,7 @@ import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
 
 import HomeHeader from './components/homePage/Header.js';
 import HomeFooter from './components/homePage/Footer.js';
-import HomePage from './components/pages/HomePage.jsx';
+// import HomePage from './components/pages/HomePage.jsx';
 import HomePageNew from './components/homePage/HomePageNew';
 import AboutPage from './components/pages/AboutPage.jsx';
 import PolicyPage from './components/pages/PolicyPage.jsx';
