@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+import {WAIT} from '../../../constants/ActionsTypes.js';
 import { Switch, Route, Redirect } from 'react-router-dom';
-// import {FormattedMessage} from 'react-intl';
-import moment from 'moment';
+import FlatButton from 'material-ui/FlatButton';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import ReactTable from "react-table";
 import { NavLink } from 'react-router-dom';
@@ -9,7 +10,7 @@ import { _getDeafultColumnsWidth, _selectNewRecordsIfAllSelected, toggleSelectAl
  toggleRow, _removeColumnsIfNotNeeded, _createFiltersQueryString, _createSortedDataString } 
  from '../reactTableCustomFunctions';
 import PageBase from '../PageBase';
-import { isEmptyObject } from '../../../common/global';
+import { isEmptyObject } from '../../../common/global.jsx';
 import Confirm from 'react-confirm-bootstrap';
 import '../admin.scss';
 

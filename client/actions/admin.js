@@ -1,6 +1,6 @@
 import Request from 'axios';
 import { ADMIN_AUTH_TOKEN, USER_PROFILE, ENQUIRY_MARKUP, ADMIN_ENQUIRY_LIST,
-   ADMIN_ORDER_LIST, REFRESH_API_LIST, ADMIN_CLIENTS_LIST, ADMIN_INSPECTORS_LIST  } from '../constants/ActionsTypes';
+   ADMIN_ORDER_LIST, REFRESH_API_LIST, ADMIN_CLIENTS_LIST, ADMIN_INSPECTORS_LIST, ADMIN_ASSIGN_INSPECTOR_STATUS  } from '../constants/ActionsTypes';
 import { getApiHeader } from '../common/global';
 import Cookie from 'js-cookie';
 
@@ -39,11 +39,18 @@ export function loginPayload(payload) {
   		   payload: payload
   	}); 
 }
+export function updateAdminAuthTokenPayload(payload){
+  return (
+  	{    type: ADMIN_AUTH_TOKEN, 
+  		   payload: payload
+  	}); 
+}
 export function enquiryMarkupSaveSettingsPayload(payload) {getEnquiryMarkupSettings(); return ({ type: ENQUIRY_MARKUP, payload }); }
 export function getEnquiryMarkupSettingsPayload(payload) { return ({ type: ENQUIRY_MARKUP, payload }); }
 export function getEnquiryListPayload(payload) { return ({ type: ADMIN_ENQUIRY_LIST, payload }); }
 export function getAdminOrdersPayload(payload) { return ({ type: ADMIN_ORDER_LIST, payload }); }
-export function assignInspectorPayload(payload) { return ({ type: REFRESH_API_LIST, payload:true }); }
+export function assignInspectorPayload(payload) { return ({ type: ADMIN_ASSIGN_INSPECTOR_STATUS, payload:true }); }
+export function resetAssignInspectorPayload(payload) { return ({ type: ADMIN_ASSIGN_INSPECTOR_STATUS, payload }); }
 export function getInspectorsListPayload(payload) { return ({ type: ADMIN_INSPECTORS_LIST, payload }); }
 export function approveQuotationPayload(payload) { return ({ type: REFRESH_API_LIST, payload:true }); }
 export function updateQuotationPayload(payload) { return ({ type: REFRESH_API_LIST, payload:true }); }
@@ -55,6 +62,9 @@ export function deleteEnquiryPayload(payload) { return ({ type: REFRESH_API_LIST
 //async actions or server request from front-end
 export function login(data) { return dispatch => makePostRequest('post', '/login', data, true)
   .then(response => dispatch(loginPayload(response.data)));     }
+
+export function updateAdminAuthToken(data) { return dispatch =>  dispatch(updateAdminAuthTokenPayload(data));     }
+  
   /* Enquiry Markup Save */ 
 export function enquiryMarkupSaveSettings(data) { return dispatch => makePostRequest('post', '/systemSettings/save', data)
   .then(response => dispatch(enquiryMarkupSaveSettingsPayload(response.data)));     }
@@ -82,8 +92,12 @@ export function getAdminOrders(data) { return dispatch => makeGetRequest('get', 
 export function assignInspector(data) { return dispatch => makePostRequest('post', '/enquiry/assignInspector', data)
 .then(response => dispatch(assignInspectorPayload(response.data)));   }  
 
+
+/* Reset Api refresh list variable */ 
+export function changeAssignInspectorStatus(data) { return dispatch => dispatch(resetAssignInspectorPayload(data))  }  
+
 /* Get All Inspectors */ 
-export function getInspectorsList(data) {return dispatch => makeGetRequest('get', '/inspector/getAll')//?page='+parseInt(data.page-1)+'&size='+data.pageSize)
+export function getInspectorsList(data) {return dispatch => makePostRequest('post', '/inspector/getAll', data)//?page='+parseInt(data.page-1)+'&size='+data.pageSize)
 .then(response => dispatch(getInspectorsListPayload(response.data)));  }
 
 /* Approve quotation */ 
@@ -91,11 +105,11 @@ export function approveQuotation(data) { return dispatch => makePostRequest('pos
 .then(response => dispatch(approveQuotationPayload(response.data)));   }  
 
 /* Update quotation */ 
-export function upodateQuotation(data) { return dispatch => makePostRequest('post', '/quotation/approve/', data)
+export function upodateQuotation(data) { return dispatch => makePostRequest('post', '/quotation/update/', data)
 .then(response => dispatch(updateQuotationPayload(response.data)));   }  
 
 /* Reset Api refresh list variable */ 
-export function resetAdminRefreshApiCall(data) { return dispatch => dispatch(resetAdminRefreshApiCallPayload(states))  }  
+export function resetAdminRefreshApiCall(data) { return dispatch => dispatch(resetAdminRefreshApiCallPayload(data))  }  
 
 /* Get Admin Clients List */
 export function getClientsList(data) {return dispatch => makeGetRequest('get', '/user/getAll?page='+parseInt(data.page-1)+'&size='+data.pageSize)

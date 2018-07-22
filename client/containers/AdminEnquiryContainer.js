@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import AdminEnquiryPage from '../components/admin/enquiry/AdminEnquiryPage.jsx';
+import AdminEnquiryPage from '../components/admin/enquiry/AdminEnquiryPage';
 
 // import { getCustomerEnquiries, cancelEnquiry, updateEnquiryQuote, 
 //           searchInspectorsForEnquiry, assignInspectorsForEnquiry } from '../actions/enquiry';

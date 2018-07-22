@@ -7,7 +7,8 @@ const initialState = {
   adminOrderList: {},
   adminRefreshApiList: false,
   adminInspectorsList: {}, 
-  adminClientsList: {}
+  adminClientsList: {},
+  assignInspectorStatus: false
 };
 
 export default (state = initialState, action) => {
@@ -26,6 +27,8 @@ export default (state = initialState, action) => {
     return _.assign({}, state, { adminInspectorsList: action.payload  }); 
     case 'ADMIN_CLIENTS_LIST': 
     return _.assign({}, state, { adminClientsList: action.payload  }); 
+    case 'ADMIN_ASSIGN_INSPECTOR_STATUS': 
+    return _.assign({}, state, { assignInspectorStatus: action.payload  });     
     default:
       return state;
   }

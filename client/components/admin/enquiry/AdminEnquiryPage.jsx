@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import {WAIT} from '../../../constants/ActionsTypes.js';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import Snackbar from 'material-ui/Snackbar';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import ReactTable from "react-table";
 import { NavLink } from 'react-router-dom';
 import { _getDeafultColumnsWidth, _selectNewRecordsIfAllSelected, toggleSelectAll,
- toggleRow, _removeColumnsIfNotNeeded, _createFiltersQueryString, _createSortedDataString } 
- from '../reactTableCustomFunctions';
-import { isEmptyObject } from '../../../common/global';
+ toggleRow, _removeColumnsIfNotNeeded, _createFiltersQueryString, _createSortedDataString,
+ _setTableStateWithPagination, _getSelectedRecordsKeyArray  } 
+ from '../reactTableCustomFunctions.js';
+import { isEmptyObject } from '../../../common/global.jsx';
 import Confirm from 'react-confirm-bootstrap';
 import moment from 'moment';
 import PageBase from '../PageBase';
-import AdminSetMarkupPercentage from './AdminSetMarkupPercentage';
+import AdminSetMarkupPercentage from './AdminSetMarkupPercentage.jsx';
+import EditQuotation from './EditQuotation.jsx';
 import '../admin.scss';
 
 export default class AdminEnquiryPage extends Component {
@@ -24,17 +24,25 @@ export default class AdminEnquiryPage extends Component {
     super(props);
 
     this.state = {
-      quoteUpdateForEnquiryId : null,
-      enquiryQuoteUpdated : false,
-      updateQuoteForm: {
+    quoteUpdateForEnquiryObject : null,
+    enquiryQuoteUpdated : false,
+    quotation: {
+        availableFrom: moment().format("YYYY-MM-DD"),
+        availableTo: moment().format("YYYY-MM-DD"),
+        customerInvoiceAmount: 0,
+        customerInvoicePer: 0,
+        enquiryId: this.props.enquiryId,
+        id: this.props.quotationId,
+        inspectorMessage: "",
+        inspectorPaidAmount: 0,
+        inspectorPaidPer: 0,
+        quotationAmount: 0
+    },
+    updateQuoteFormError: {
         customerQuote: "",
         inspectorQuote: ""
-      },
-      updateQuoteFormError: {
-        customerQuote: "",
-        inspectorQuote: ""
-      },
-      markupFieldsDeduction: {
+    },
+    markupFieldsDeduction: {
         inspector: 0,
         client: 0
     },   
@@ -60,9 +68,9 @@ export default class AdminEnquiryPage extends Component {
     
     this.openUpdateQuoteDialog = this.openUpdateQuoteDialog.bind(this);
     this.closeUpdateQuoteDialog = this.closeUpdateQuoteDialog.bind(this);
-    this.renderUpdateQuoteDialog = this.renderUpdateQuoteDialog.bind(this);
     this.updateQuote = this.updateQuote.bind(this);
-    this.handleQuoteFormFieldChange = this.handleQuoteFormFieldChange.bind(this);
+    this.onChangeEditQuote = this.onChangeEditQuote.bind(this);
+    this.renderUpdateQuoteDialog = this.renderUpdateQuoteDialog.bind(this);
     this._setColumnsList = this._setColumnsList.bind(this);
     this.setSelectedRecordsInState = this.setSelectedRecordsInState.bind(this);
     this._setColumnsListSubComponent = this._setColumnsListSubComponent.bind(this);
@@ -130,6 +138,12 @@ export default class AdminEnquiryPage extends Component {
     
     if(!this.props.enquiryQuoteUpdated && props.enquiryQuoteUpdated)
       this.state.enquiryQuoteUpdated = true;
+    
+     /* Reload api list*/ 
+     if(props.adminRefreshApiList){
+         this._getApiCall();
+         this.props.resetAdminRefreshApiCall(false);
+     }
   }
 
   approveQuotation(quotationId){
@@ -151,80 +165,75 @@ export default class AdminEnquiryPage extends Component {
     return moment(dateTime).format("YYYY-MM-DD");
   }
 
-  openUpdateQuoteDialog(enquiryId) {
+  openUpdateQuoteDialog(editQuotationObject, enquiryId) {
+    let quotation = this.state.quotation;
+    quotation.availableFrom = editQuotationObject.availableFrom ? editQuotationObject.availableFrom : quotation.availableFrom;
+    quotation.availableTo = editQuotationObject.availableTo ? editQuotationObject.availableTo : quotation.availableTo;
+    quotation.customerInvoiceAmount = editQuotationObject.customerInvoiceAmount ? editQuotationObject.customerInvoiceAmount : quotation.customerInvoiceAmount;
+    quotation.customerInvoicePer = editQuotationObject.customerInvoicePer ? editQuotationObject.customerInvoicePer : quotation.customerInvoicePer;
+    quotation.enquiryId = enquiryId ? enquiryId : quotation.enquiryId;
+    quotation.id = editQuotationObject.id ? editQuotationObject.id : quotation.id;
+    quotation.inspectorMessage = editQuotationObject.inspectorMessage ? editQuotationObject.inspectorMessage : quotation.inspectorMessage;
+    quotation.inspectorPaidAmount = editQuotationObject.inspectorPaidAmount ? editQuotationObject.inspectorPaidAmount : quotation.inspectorPaidAmount;
+    quotation.inspectorPaidPer = editQuotationObject.inspectorPaidPer ? editQuotationObject.inspectorPaidPer : quotation.inspectorPaidPer;
+    quotation.quotationAmount = editQuotationObject.quotationAmount ? editQuotationObject.quotationAmount : quotation.quotationAmount;
     this.setState((state) => {
-      state.updateQuoteForm = { customerQuote: "", inspectorQuote: "" };
-      state.quoteUpdateForEnquiryId = enquiryId;
-      state.enquiryQuoteUpdated = false;
+      state.quoteUpdateForEnquiryObject = quotation;
+      state.quotation = quotation;
     });
   }
 
   closeUpdateQuoteDialog() {
     this.setState((state) => {
-      state.quoteUpdateForEnquiryId = null;
+      state.quoteUpdateForEnquiryObject = null;
     });
   }
-
-
-  setSelectedRecordsInState = (rowResponse) => {
-        const { setSelectedUsersList } =  this.props;
-        let { tableStates } = this.state;
-        if(setSelectedUsersList){
-            if(this.props.selectOneRecordOnly) {
-                const data = Object.assign({}, rowResponse.selectedUserData);
-                if(rowResponse.selectedUserData && rowResponse.selectedUserData.picture){
-                    data.picture = this.state.imagePath + data.picture;
-                }
-                setSelectedUsersList({
-                    selected: rowResponse.selected,
-                    selectAll: rowResponse.selectAll,
-                    selectedUserData: data
-                });
-            }
-            else{
-                setSelectedUsersList({
-                    selected: rowResponse.selected,
-                    selectAll: rowResponse.selectAll
-                });
-
-            }
-        }
-        tableStates.selected = rowResponse.selected;
-        tableStates.selectAll = rowResponse.selectAll;
-        this.setState({tableStates: tableStates});
+  
+onChangeEditQuote(event) {
+    event.persist();
+    this.setState((state) => { state.quotation[event.target.name] = event.target.value});
+}
+updateQuote() {
+    console.log("mk", this.state.quotation);
+    this.props.upodateQuotation(this.state.quotation);
+    this.closeUpdateQuoteDialog();
+    return false;
+    
+    var updateQuoteFormError =  { customerQuote: "", inspectorQuote: ""};
+    var error = false;
+    if(this.state.updateQuoteForm.customerQuote == "") {
+      error = true;
+      updateQuoteFormError.customerQuote = "This field is mandatory";
+    }
+    if(this.state.updateQuoteForm.inspectorQuote == "") {
+      error = true;
+      updateQuoteFormError.inspectorQuote = "This field is mandatory";
+    }
+    if(error) {
+      this.setState((state) => {state.updateQuoteFormError = updateQuoteFormError});
+      return;
     }
 
-    setSelectedRecordsInState = (rowResponse) => {
-        const { setSelectedRecordList } =  this.props;
-        if(setSelectedRecordList){
-            if(this.props.selectOneRecordOnly) {
-                const data = Object.assign({}, rowResponse.selectedUserData);
-                setSelectedRecordList({
-                    selected: rowResponse.selected,
-                    selectAll: rowResponse.selectAll,
-                    selectedSingleData: data
-                });
-            }
-            else{
-                setSelectedRecordList({
-                    selected: rowResponse.selected,
-                    selectAll: rowResponse.selectAll
-                });
+    this.props.updateEnquiryQuote(enquiryId, this.state.updateQuoteForm);
+}
 
-            }
-        }
-        this.setState({
-            selected: rowResponse.selected,
-            selectAll: rowResponse.selectAll
-        });
-    }
+
+
+  setSelectedRecordsInState = (rowResponse, type) => {
+    let { tableStates } = this.state;
+    tableStates.selected = rowResponse.selected;
+    tableStates.selectAll = rowResponse.selectAll;
+    this.setState({
+        tableStates
+    });
+}
 
 
   _setColumnsList = () => {
         let columnsList = [];
         const { removeColumnsFromGrid, _updateUserActiveStatus,
             isListOpenInModal, showInlineDetailInfo } = this.props;
-        const { markupFieldsDeduction } = this.state;    
+        const { markupFieldsDeduction , tableStates} = this.state;    
         columnsList =  [
               {
                 id: "checkbox",
@@ -239,10 +248,10 @@ export default class AdminEnquiryPage extends Component {
                                         <input
                                             type="checkbox"
                                             className="checkbox"
-                                            checked={this.state.tableStates.selected[original.id] === true}
+                                            checked={tableStates.selected[original.id] === true}
                                             onChange={() => {
-                                                // let rowResponse = toggleRow(original.id, this.state.tableStates.selected, this.props.selectOneRecordOnly? this.props.getAdminEnquiries():false);
-                                                // this.setSelectedRecordsInState(rowResponse);
+                                                 let rowResponse = toggleRow(original.id, tableStates.selected, this.props.selectOneRecordOnly? tableStates.rows:false);
+                                                 this.setSelectedRecordsInState(rowResponse);
                                             }}
                                         />
                                         <span className="custom-checkbox"></span>
@@ -263,14 +272,14 @@ export default class AdminEnquiryPage extends Component {
                                         <input
                                             type="checkbox"
                                             className="checkbox"
-                                            checked={this.state.selectAll === 1}
+                                            checked={tableStates.selectAll === 1}
                                             ref={input => {
                                                 if (input) {
-                                                    input.indeterminate = this.state.selectAll === 2;
+                                                    input.indeterminate = tableStates.selectAll === 2;
                                                 }
                                             }}
                                             onChange={() => {
-                                                let rowResponse = toggleSelectAll(this.state.selectAll, this.state.rows);
+                                                let rowResponse = toggleSelectAll(tableStates.selectAll, tableStates.rows);
                                                 this.setSelectedRecordsInState(rowResponse);
                                             }}
                                         />
@@ -659,7 +668,7 @@ export default class AdminEnquiryPage extends Component {
   }
 
    /* Show List as SubComponent */
-    _setColumnsListSubComponent = () => {
+    _setColumnsListSubComponent = (enquiryId) => {
         let columnsList = [];
         const { removeColumnsFromGrid } = this.props;
         const { subComponentTableData, markupFieldsDeduction } = this.state;
@@ -761,9 +770,14 @@ export default class AdminEnquiryPage extends Component {
                   Cell: ({ original }) => {
                       return (
                           <div  className="columns-lower-Case-text">
-                            <span>{original.inspector.name}</span> &nbsp;
-                            <span>{original.inspector.id}</span> &nbsp;
-                            <span>{original.inspector.imoNumber}</span> &nbsp;
+                            { !isEmptyObject(original.inspector)?
+                                <div>
+                                    <span>{original.inspector.name}</span> &nbsp;
+                                    <span>{original.inspector.id}</span> &nbsp;
+                                    <span>{original.inspector.imoNumber}</span> &nbsp;
+                                </div>
+                                :""
+                            }
                           </div>
 
                       );
@@ -780,7 +794,11 @@ export default class AdminEnquiryPage extends Component {
                   Cell: ({ original }) => {
                       return (
                           <div  className="columns-lower-Case-text">
-                            <span>{original.inspector.city + ' '+original.inspector.country}</span>
+                            { !isEmptyObject(original.inspector)?
+                                <span>{original.inspector.city + ' '+original.inspector.country}</span>
+                                :""
+                            }
+                            
                           </div>
 
                       );
@@ -1053,7 +1071,7 @@ export default class AdminEnquiryPage extends Component {
                                         <a role="main" tabIndex="-1">View Attachment</a>
                                     </li>
                                     <li role="presentation">
-                                        <a role="main" tabIndex="-1" onClick={() => {this.updateQuotation(true)}}>Edit Quotations</a>
+                                        <a role="main" tabIndex="-1" onClick={ () => this.openUpdateQuoteDialog(original, enquiryId)}>Edit Quotations</a>
                                     </li>
                                     <li role="presentation">
                                         <a role="main" tabIndex="-1">View Message</a>
@@ -1086,104 +1104,6 @@ export default class AdminEnquiryPage extends Component {
             }
         ];
         return columnsList;
-    }
-
-   
-  renderUpdateQuoteDialog() {
-    if(this.state.quoteUpdateForEnquiryId && this.state.quoteUpdateForEnquiryId > 0) {
-      if(this.state.enquiryQuoteUpdated) {
-        const updateQuoteDialogActions = [
-          <FlatButton label="Close" primary={true} onClick={() => {this.closeUpdateQuoteDialog(true)}}/>
-        ];
-
-        return (<Dialog
-          title="Update Enquiry Quote Details"
-          actions={updateQuoteDialogActions}
-          modal={true}
-          open={true}>
-            <div className="success">
-              Update Quote for enquiry successfully
-            </div>  
-          </Dialog>);
-      } else {
-        const updateQuoteDialogActions = [
-          <FlatButton label="Update" primary={true} onClick={() => {this.updateQuote(this.state.quoteUpdateForEnquiryId)}}/>,
-          <FlatButton label="Cancel" primary={true} onClick={() => {this.closeUpdateQuoteDialog(false)}}/>
-        ];
-
-        return (<Dialog
-          title="Update Enquiry Quote Details"
-          actions={updateQuoteDialogActions}
-          modal={true}
-          open={true}>
-            <div className="contact-form leftHalf">
-              <div className="label">Customer Quote</div>
-              <div className="field">
-                <input className="inputField" type="text" name="customerQuote" value={this.state.updateQuoteForm.customerQuote} 
-                  onChange={this.handleQuoteFormFieldChange} />
-                <div className="errorField">{this.state.updateQuoteFormError.customerQuote}</div>
-              </div>
-            </div>
-            <div className="contact-form leftHalf">
-              <div className="label">Inspector Quote</div>
-              <div className="field">
-                <input className="inputField" type="text"  name="inspectorQuote" value={this.state.updateQuoteForm.inspectorQuote} 
-                  onChange={this.handleQuoteFormFieldChange} />
-                <div className="errorField">{this.state.updateQuoteFormError.inspectorQuote}</div>
-              </div>
-            </div>
-            <div className="clear"></div>  
-          </Dialog>);
-      }
-    } else 
-      return null;
-  }
-
-  handleQuoteFormFieldChange(event) {
-    event.persist();
-    this.setState((state) => { state.updateQuoteForm[event.target.name] = event.target.value});
-  }
-
-  updateQuote(enquiryId) {
-    
-    var updateQuoteFormError =  { customerQuote: "", inspectorQuote: ""};
-    var error = false;
-    if(this.state.updateQuoteForm.customerQuote == "") {
-      error = true;
-      updateQuoteFormError.customerQuote = "This field is mandatory";
-    }
-    if(this.state.updateQuoteForm.inspectorQuote == "") {
-      error = true;
-      updateQuoteFormError.inspectorQuote = "This field is mandatory";
-    }
-    if(error) {
-      this.setState((state) => {state.updateQuoteFormError = updateQuoteFormError});
-      return;
-    }
-
-    this.props.updateEnquiryQuote(enquiryId, this.state.updateQuoteForm);
-  }
-
-  renderActions(enquiry) {
-    return (
-        <div className="global_grid_menu_insidetabs no-padding col-xs-12 col-sm-12">
-            <div className="dropdown-right clear custom-dropdown">
-                <DropdownButton
-                    title={
-                        <span><i className="fa fa-ellipsis-v"></i></span>
-                    }
-                    id="global_grid_menu_insidetabs"
-                >
-                    <MenuItem>Edit Enquiry</MenuItem>
-                    <MenuItem>Add to Inspectors</MenuItem>
-                    <MenuItem>Send to Inspectors</MenuItem>
-                    <MenuItem>Send to Clients</MenuItem>
-                    <MenuItem>Create Order</MenuItem>
-                    <MenuItem>Delete</MenuItem>                   
-                </DropdownButton>
-            </div>
-        </div>
-      );
 }
 
 _loadApiDatapageLoadFilter(requestData){
@@ -1259,7 +1179,7 @@ _loadApiDatapageLoad(requestData){
                              
                             <ReactTable
                               data={rows1.enquiryQuotation}
-                              columns={this._setColumnsListSubComponent()}
+                              columns={this._setColumnsListSubComponent(rows1.id)}
                               showPagination={false}
                               minRows = {0}
                               />
@@ -1293,6 +1213,20 @@ _loadApiDatapageLoad(requestData){
               saveEnquiryMarkups = {this.saveEnquiryMarkups.bind(this)}
             />
       )
+  }
+
+  renderUpdateQuoteDialog(){
+    let response = '';
+    if(!isEmptyObject(this.state.quoteUpdateForEnquiryObject)) {
+        response = (
+            <EditQuotation quotation={this.state.quotation}
+                closeUpdateQuoteDialog = {this.closeUpdateQuoteDialog}
+                onChange = {this.onChangeEditQuote}
+                updateQuote = {this.updateQuote}
+            />
+        )    
+    }
+    return response;
   }
 
   render() {

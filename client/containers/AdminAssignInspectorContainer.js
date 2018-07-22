@@ -1,22 +1,26 @@
 import { connect } from 'react-redux'
-import AdminAssignInspectorPage from '../components/admin/enquiry/AdminAssignInspectorPage.jsx';
+import AdminAssignInspectorPage from '../components/admin/enquiry/AdminAssignInspectorPage';
 
-import { getInspectorsList , assignInspector  } from '../actions/admin';
+import { getInspectorsList , assignInspector , changeAssignInspectorStatus } from '../actions/admin';
 
 const mapStateToProps = (state) => {
     const {adminReducer, error} = state;
-    const { getInspectorsList, assignInspector, adminAuthToken, userProfile } = adminReducer;
-    return  {userProfile, adminAuthToken, assignInspector, getInspectorsList, error};
+    const { adminInspectorsList, assignInspectorStatus, adminAuthToken, userProfile } = adminReducer;
+    return  {userProfile, adminAuthToken, assignInspectorStatus, adminInspectorsList, error};
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
       searchInspectorsForEnquiry: (payload) => {
-        dispatch(getInspectorsList());
+        dispatch(getInspectorsList(payload));
       },
       assignInspectorsForEnquiry: (payload) => {
         dispatch(assignInspector(payload));
-      }
+      },
+      changeAssignInspectorStatus: (payload) => {
+        dispatch(changeAssignInspectorStatus(payload));
+      },
+
 	};
 }
 

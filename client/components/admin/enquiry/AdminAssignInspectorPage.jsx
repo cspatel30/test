@@ -1,94 +1,20 @@
-
 import React, { Component } from 'react';
+import _ from 'lodash';
+import {WAIT} from '../../../constants/ActionsTypes.js';
 import { Switch, Route, Redirect } from 'react-router-dom';
-
-import BootstrapTable from 'react-bootstrap-table-next';
-
-import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-
-var moment = require('moment');
-
-const styles = {
-  assignInspectorDialog: {
-    width: '95%',
-    maxWidth: '95%',
-    margin: '0 auto',
-    boxSizing: 'border-box',
-    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-    position: 'relative',
-    zIndex: 1500,
-    opacity: 1,
-    transform: 'translate(0px, 64px)'
-  },
-  column: {
-    overflow: 'auto',
-    textOverflow: 'initial'
-  }
-}
-
-const columns = [{
-  dataField: 'name',
-  text: 'Name',
-  align: 'center',
-  style: styles.column
-}, {
-  dataField: 'company',
-  text: 'Company',
-  align: 'center',
-  style: styles.column
-}, {
-  dataField: 'email',
-  text: 'Email',
-  align: 'center',
-  style: styles.column
-}, {
-  dataField: 'positionDisplayName',
-  text: 'Position',
-  align: 'center',
-  style: styles.column
-}, {
-  dataField: 'qualificationDisplayName',
-  text: 'Qualificiation',
-  align: 'center',
-  style: styles.column
-}, {
-  dataField: 'experienceYears',
-  text: 'Experience (Yrs)',
-  align: 'center',
-  style: styles.column
-}, {
-  dataField: 'highestRankAshore',
-  text: 'Highest Rank Ashore',
-  align: 'center',
-  style: styles.column
-}, {
-  dataField: 'highestRankOnboard',
-  text: 'Highest Rank Onboard',
-  align: 'center',
-  style: styles.column
-}, {
-  dataField: 'totalInspections',
-  text: 'Total Inspections',
-  align: 'center',
-  style: styles.column
-}, {
-  dataField: 'userId',
-  text: 'View',
-  formatter: profileViewButtonRenderer,
-  align: 'center',
-  style: styles.column
-}];
-
-function profileViewButtonRenderer(cell, row) {
-  return (<a href={"/inspector/profile/"+row.userId} target="_blank">
-    <div className="btn">
-      <button onClick={(e) => e.stopPropagation()}>View Profile</button>
-    </div>
-    </a>
-  );
-}
+import { DropdownButton, MenuItem } from 'react-bootstrap';
+import ReactTable from "react-table";
+import { NavLink } from 'react-router-dom';
+import { _getDeafultColumnsWidth, _selectNewRecordsIfAllSelected, toggleSelectAll,
+ toggleRow, _removeColumnsIfNotNeeded, _createFiltersQueryString, _createSortedDataString,
+ _setTableStateWithPagination, _getSelectedRecordsKeyArray  } 
+ from '../reactTableCustomFunctions.js';
+import { isEmptyObject } from '../../../common/global.jsx';
+import Confirm from 'react-confirm-bootstrap';
+import moment from 'moment';
+import PageBase from '../PageBase';
+import '../admin.scss';
 
 export default class AdminAssignInspectorPage extends Component {
 
@@ -96,74 +22,461 @@ export default class AdminAssignInspectorPage extends Component {
     super(props);
 
     this.state = {
-      selectedEnquiryId: this.props.match.params.enquiryId,
-      selectedRows: {}
-    }
-
-    this.onRowSelect = this.onRowSelect.bind(this);
+    selectedEnquiryId: this.props.match.params.enquiryId,  
+    tableStates:  {
+            rows: [],
+            columns: [],
+            page: 1,
+            pageSize: 20,
+            totalRecords: 1,
+            totalPagesWithRecords: 1,
+            sorted: "",
+            filtered: "",
+            dataTableLoading: false,
+            filtered: [],  selected: {}, selectAll: 0, setDefaultSelectedRecords:false,
+            imagePath : "",
+            apiCallRecords : {callOccurance:0, noRecordExist: false},
+            previewImage: {imagePreviewOpen: false, selectedImage: "", title: "" },
+            selected: {}, selectAll: 0,
+        }
+    };
+    this._setColumnsList = this._setColumnsList.bind(this);
+    this.setSelectedRecordsInState = this.setSelectedRecordsInState.bind(this);
+    this._loadApiDatapageLoad =  this._loadApiDatapageLoad.bind(this);
+    this._loadApiDatapageLoadFilter =  _.debounce(this._loadApiDatapageLoadFilter.bind(this), WAIT);
+    this._getApiCall = this._getApiCall.bind(this);
     this.assignInspectors = this.assignInspectors.bind(this);
   }
 
   componentWillMount() {
-    this.props.searchInspectorsForEnquiry(this.props.match.params.enquiryId);
+    if(this.props.adminAuthToken) {
+      this._getApiCall();
+    }
   }
 
-  onRowSelect(row, isSelect, rowIndex) { 
-    console.log('...row', row, isSelect, rowIndex);
-    if(isSelect) {
-      this.setState((state) => { state.selectedRows[row.userId] = true;});
-    } else {
-      this.setState((state) => { delete state.selectedRows[row.userId]});
-    }
-  } 
+  _getApiCall(){
+        let { tableStates } = this.state;
+        
+        let queryData = {
+            startIndex: parseInt(tableStates.page-1),
+            pageSize: tableStates.pageSize,
+            // sorted: tableStates.sorted,
+            // filtered: tableStates.filtered
+        };
 
+        // const { conditionalRequiredFilter } = this.props;
+        // if(conditionalRequiredFilter){
+        //     if(queryData.filtered){
+        //         queryData.filtered = queryData.filtered+'&'+conditionalRequiredFilter;
+        //     }
+        //     else {
+        //         queryData.filtered = conditionalRequiredFilter;
+        //     }
+
+        // }      
+        this.props.searchInspectorsForEnquiry(queryData);  
+  }
+  componentWillReceiveProps(props) {
+    if(!this.props.adminAuthToken && props.adminAuthToken && (!this.props.adminRefreshApiList || props.adminRefreshApiList!=this.props.adminRefreshApiList )) {
+       this._getApiCall();
+    }
+    if((isEmptyObject(this.props.adminInspectorsList) || isEmptyObject(this.state.tableStates.rows)) && !isEmptyObject(props.adminInspectorsList)){
+        let { tableStates } = this.state;
+        let tableStatesCustom = _setTableStateWithPagination(tableStates,  props.adminInspectorsList.data);
+        this.setState((state) => { state.tableStates = tableStatesCustom});        
+    }
+
+    /*Check if assign inspector successful */
+    if(!this.assignInspectorStatus && props.assignInspectorStatus){
+        this.props.changeAssignInspectorStatus(false);
+        this.props.history.push('/admin/enquiries');
+    }
+  }
+
+  
   assignInspectors() {
-    if(Object.keys(this.state.selectedRows).length == 0) {
-      alert("Please select atleast 1 inspector");
+    const { tableStates } = this.state;
+    if(Object.keys(tableStates.selected).length == 0) {
+        alert("Please select atleast 1 inspector");
     } else {
-      this.props.assignInspectorsForEnquiry(this.state.selectedEnquiryId, Object.keys(this.state.selectedRows));
+        this.props.assignInspectorsForEnquiry(
+          {
+            enquiryId:  [parseInt( this.state.selectedEnquiryId)],
+            inspectorId:  _getSelectedRecordsKeyArray(tableStates.selected)
+          }
+        );
     }
   }
 
-  renderErrorMessage() {
-    if(this.props.error && this.props.error.message) {
-      return (<div className="error">{this.props.error.message}</div>);
-    } else
-      return null;
+  setSelectedRecordsInState = (rowResponse) => {
+        let { tableStates } = this.state;
+        tableStates.selected = rowResponse.selected;
+        tableStates.selectAll = rowResponse.selectAll;
+        this.setState({
+            tableStates
+        });
+    }
+
+
+  _setColumnsList = () => {
+        let columnsList = [];
+        const { removeColumnsFromGrid, _updateUserActiveStatus,
+            isListOpenInModal, showInlineDetailInfo } = this.props;
+        const { markupFieldsDeduction, tableStates } = this.state;
+        columnsList =  [
+              {
+                id: "checkbox",
+                accessor: "",
+                Cell: ({ original }) => {
+                    return (
+                        <label className="label-checkbox">
+                        {tableStates.selected[original.id]}-
+                            {
+                                removeColumnsFromGrid && removeColumnsFromGrid.indexOf("select")>-1
+                                    ?"":
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox"
+                                            checked={tableStates.selected[original.id] === true}
+                                            onChange={() => {
+                                                 let rowResponse = toggleRow(original.id, tableStates.selected, this.props.selectOneRecordOnly? tableStates.rows:false);
+                                                 this.setSelectedRecordsInState(rowResponse);
+                                            }}
+                                        />
+                                        <span className="custom-checkbox"></span>
+                                    </div>
+                            }
+
+                        </label>
+
+                    );
+                },
+                Header: x => {
+                    return (
+                        <label className="label-checkbox">
+                            {
+                                removeColumnsFromGrid && removeColumnsFromGrid.indexOf("selectAll")>-1
+                                    ?"":
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox"
+                                            checked={tableStates.selectAll === 1}
+                                            ref={input => {
+                                                if (input) {
+                                                    input.indeterminate = tableStates.selectAll === 2;
+                                                }
+                                            }}
+                                            onChange={() => {
+                                                let rowResponse = toggleSelectAll(tableStates.selectAll, tableStates.rows);
+                                                this.setSelectedRecordsInState(rowResponse);
+                                            }}
+                                        />
+                                        <span className="custom-checkbox"></span>
+                                    </div>
+                            }
+
+                        </label>
+                    );
+                },
+                sortable: false,
+                filterable: false,
+                width: 45,
+                style: _getDeafultColumnsWidth({minWidth:45}),
+                headerStyle:  _getDeafultColumnsWidth({minWidth:45})
+              },
+             {
+                id: "firstName",
+                Header: 'Name',
+                accessor: "firstName",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.firstName + ' '+ original.lastName}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+            {
+                id: "company",
+                Header: 'Company',
+                accessor: "company",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.company}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+                id: "email",
+                Header: 'Email',
+                accessor: "email",
+                Cell: ({ original }) => {
+                    return (
+                        <div>
+                          {original.email}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+                id: "position",
+                Header: 'Position',
+                accessor: "position",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.position}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+             {
+              id: "qualification",
+              Header: 'Qualification',
+              accessor: "qualification",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.qualification}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "inspectionType",
+              Header: 'Inspection Type',
+              accessor: "inspectionType",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.inspectionType?original.inspectionType:""}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+            {
+                id: "experienceYears",
+                Header: 'Experience in years',
+                accessor: "experienceYears",
+                Cell: ({ original }) => {
+                    return (
+                        <div  className="columns-lower-Case-text">
+                          {original.experienceYears}
+                        </div>
+
+                    );
+                },
+                sortable:false,
+                filterable: false,
+                style: _getDeafultColumnsWidth(),
+                headerStyle:  _getDeafultColumnsWidth()
+            },
+            
+            {
+              id: "highestRankAshore",
+              Header: 'Highest Rank Ashore',
+              accessor: "highestRankAshore",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.highestRankAshore}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+           {
+              id: "totalInspectionDone",
+              Header: 'Total inspections',
+              accessor: "totalInspectionDone",
+              Cell: ({ original }) => {
+                  return (
+                      <div  className="columns-lower-Case-text">
+                        {original.totalInspectionDone}
+                      </div>
+
+                  );
+              },
+              sortable:false,
+              filterable: false,
+              style: _getDeafultColumnsWidth(),
+              headerStyle:  _getDeafultColumnsWidth()
+          },
+          {
+                id: "actions",
+                accessor: "",
+                Cell: ({ original }) => {
+                    let oppositeStatus = (original.status=="1")?"inactive":"active";
+                    let userStatus  = (original.status!="1")?"inactive":"active";
+                    return (
+                        <div className="action-tab-datables">
+                            <div  className="dropdown-right">
+                                <DropdownButton
+                                    title={
+                                        <span><i className="fa fa-ellipsis-v"></i></span>
+                                    }
+                                    id={original.id}
+                                >
+                                    <li role="presentation">
+                                        <NavLink to={'/inspector/profile/'+original.id}>View profile</NavLink>
+                                    </li>
+                                </DropdownButton>
+                            </div>
+                        </div>
+                    );
+                },
+                Header: x => {
+                    return (
+                        <span></span>
+                    );
+                },
+                sortable: false,
+                filterable: false,
+                resizable: false,
+                width: 60,
+                style: _getDeafultColumnsWidth({minWidth:60}),
+                headerStyle:  _getDeafultColumnsWidth({minWidth:60})
+            }
+
+
+        ];
+
+        columnsList = _removeColumnsIfNotNeeded(columnsList, removeColumnsFromGrid);
+
+        columnsList = [
+            {
+                columns:columnsList
+            }
+        ];
+        return columnsList;
+  }
+
+  _loadApiDatapageLoadFilter(requestData){
+      this._loadApiDatapageLoad(requestData);
+  }
+
+_loadApiDatapageLoad(requestData){
+    const { tableStates } = this.state;
+    let pageNumber = requestData.page + 1;
+
+    if (requestData.pageSize !== tableStates.pageSize) {
+        pageNumber = 1;
+    }
+
+    let filteredData = "";
+    if (requestData.filtered && requestData.filtered.length > 0) {
+        filteredData = _createFiltersQueryString(requestData.filtered);
+    }
+
+    let sortedData = '';
+    if (requestData.sorted && requestData.sorted.length > 0) {
+        let id = requestData.sorted[0].id;
+        sortedData = _createSortedDataString(id, requestData.sorted[0].desc);
+    }
+
+    this.setState({
+        page: pageNumber,
+        pageSize: requestData.pageSize,
+        sorted: sortedData,
+        filtered: filteredData,
+        dataTableLoading: true
+
+    }, function stateUpdateComplete() {
+        this._getApiCall();
+    }.bind(this));
+      
+    }
+
+   renderTableList(list) {
+    const { subComponentTableData, tableStates } = this.state;
+    return (
+         <ReactTable
+            data={list}
+            filterable
+            columns={this._setColumnsList()}
+            defaultPageSize={tableStates.pageSize}
+            minRows={0}
+            showPagination={tableStates.totalRecords > tableStates.pageSize ? true : false}
+            pageSizeOptions={[20]}
+            pages={tableStates.totalPagesWithRecords ? tableStates.totalPagesWithRecords : 1}
+            manual
+            freezeWhenExpanded={true}
+            onFetchData={(state, instance) => {
+                if(state.filtered && state.filtered.length > 0) {
+                    this._loadApiDatapageLoadFilter(state);
+                } else {
+                     this._loadApiDatapageLoad(state);
+                }
+            }}
+            className={ "-striped -highlight apply-action-column-datatabl"}
+            >
+            </ReactTable>
+                                  
+      )
+
+  }
+
+  renderAssignInspector(){
+    return (
+      <div>
+        <button className="cursor-pointer" onClick={this.assignInspectors}>Assign Inspectors</button>
+      </div>
+    )
   }
 
   render() {
-    const { selectedRows } = this.state;
-    var selectedUserIds = [];
-    if(this.props.currentEnquiry && this.props.currentEnquiry.inspectors && this.props.currentEnquiry.inspectors.length > 0) {
-      this.props.currentEnquiry.inspectors.map((mapping) => {selectedUserIds.push(mapping.inspector_user_id)});
+    const { tableStates } = this.state;
+    if(tableStates.rows && tableStates.rows.length > 0) {
+      return(
+          <PageBase title={"Enquiries"}>
+            <div>
+                {this.renderAssignInspector()}
+                {this.renderTableList(tableStates.rows)}
+            </div>
+      </PageBase>);
+    } else {
+      return(<div className="enquiries"> 
+        Fetching inspectors
+      </div>);
     }
-    console.log("selected = ", selectedUserIds);
-
-    const selectRow = 
-      { mode: 'checkbox', clickToSelect: true, bgColor: '#f7f7f7', 
-        onSelect: this.onRowSelect,
-        selected: Object.keys(selectedRows).map(x => parseInt(x)),
-      };
-
-    if(this.props.inspectorAssignedSuccess) {
-      return (<div className="success">Inspectors Assigned Successfully</div>);
-    }
-    else {
-      if(this.props.adminInspectorsList && this.props.adminInspectorsList.length > 0) {
-        return(
-          <div>
-            {this.renderErrorMessage()}
-            <div style={{marginTop: 10, marginBottom: 10, textAlign: 'right'}}><button onClick={this.assignInspectors}>Assign Inspectors</button></div>
-            <BootstrapTable keyField='userId' data={ this.props.adminInspectorsList } columns={ columns } striped condensed bordered={false}
-            noDataIndication="No matches found" selectRow={selectRow} store={ {selected : selectedUserIds } }/>
-          </div>);
-      } else {
-        return(<div>
-            {this.renderErrorMessage()}
-            Searching...
-        </div>);
-      }
-    }
+    
   }
 }

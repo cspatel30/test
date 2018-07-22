@@ -17,6 +17,8 @@ import {green500, red500, blue500, yellow600, orange600, fullWhite} from 'materi
 import AdminEnquiryContainer from '../containers/AdminEnquiryContainer.js';
 import AdminAssignInspectorContainer from '../containers/AdminAssignInspectorContainer.js';
 import AdminOrderContainer from '../containers/AdminOrderContainer.js';
+import Cookie from 'js-cookie';
+
 const styles = {
   listItem: {
     selected: {
@@ -50,6 +52,15 @@ export default class AdminPage extends Component {
     this.getListItemStyle = this.getListItemStyle.bind(this);
     this.renderSection = this.renderSection.bind(this);
   }
+
+  componentWillMount(){
+		let adminToken = Cookie.get('adminToken');
+		if(adminToken){
+      this.props.updateAdminAuthToken(adminToken);  
+      this.props.history.push('/admin/enquiries/');
+		}
+	}
+
 
   handleInputChange (event) {
     event.persist();
